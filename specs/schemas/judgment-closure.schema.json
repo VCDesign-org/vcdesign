@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Judgment Closure Protocol Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "layer",
+    "status",
+    "version",
+    "meta",
+    "input",
+    "output",
+    "invariants"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^vcdesign-protocol-[a-z0-9-]+$"
+    },
+    "title": {
+      "type": "string"
+    },
+    "layer": {
+      "type": "string",
+      "enum": ["core", "protocol", "pattern"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["stable", "draft", "deprecated"]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "meta": {
+      "type": "object",
+      "required": ["goal", "role"],
+      "properties": {
+        "goal": { "type": "string" },
+        "role": { "type": "string" },
+        "context": { "type": "string" }
+      }
+    },
+    "input": {
+      "type": "object",
+      "required": ["required_fields"]
+    },
+    "output": {
+      "type": "object",
+      "required": ["states"],
+      "properties": {
+        "states": {
+          "type": "object",
+          "properties": {
+            "ACCEPTED": { "$ref": "#/definitions/state" },
+            "DENIED":   { "$ref": "#/definitions/state" },
+            "UNKNOWN":  { "$ref": "#/definitions/state" }
+          },
+          "required": ["ACCEPTED", "DENIED", "UNKNOWN"]
+        }
+      }
+    },
+    "invariants": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "definitions": {
+    "state": {
+      "type": "object",
+      "required": ["meaning", "requirement", "next_action"],
+      "properties": {
+        "meaning": { "type": "string" },
+        "requirement": { "type": "string" },
+        "next_action": { "type": "string" }
+      }
+    }
+  }
+}

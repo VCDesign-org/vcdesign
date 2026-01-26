@@ -1,0 +1,50 @@
+# VCDesign Protocol: Judgment Closure
+# Purpose: Define the procedure for "closing" a judgment (ending the infinite regress).
+
+id: "vcdesign-protocol-judgment-closure"
+title: "Judgment Closure Protocol"
+layer: "protocol"
+status: "stable"
+version: "2.1.0"
+
+meta:
+  goal: "Explicitly sign, deny, or declare unknown for a specific judgment proposal."
+  role: "The gate to Responsibility."
+  context: "Occurs at an 'Explicit Verification Point' (also known as a Closure Point or Boundary)."
+
+# -------------------------------------------------------------------
+# Input Contract
+# -------------------------------------------------------------------
+input:
+  required_fields:
+    - facts: "Immutable facts upon which judgment is based."
+    - proposal: "The specific decision content to be signed."
+    - context: "Context traces (optional)."
+
+# -------------------------------------------------------------------
+# Output States (The Closure)
+# -------------------------------------------------------------------
+output:
+  states:
+    ACCEPTED:
+      meaning: "Responsibility is accepted."
+      requirement: "Must include a valid signature/owner."
+      next_action: "Promotable to Resolution."
+      
+    DENIED:
+      meaning: "Responsibility is refused."
+      requirement: "Must include a reason."
+      next_action: "Stop. Do not proceed."
+      
+    UNKNOWN:
+      meaning: "Cannot determine."
+      requirement: "Must include a reason."
+      next_action: "Escalate to higher authority or fallback (Fail-Safe)."
+
+# -------------------------------------------------------------------
+# Invariants
+# -------------------------------------------------------------------
+invariants:
+  - "No closure without explicit state."
+  - "ACCEPTED state effectively creates a 'Responsibility Asset'."
+  - "UNKNOWN must effectively pause the flow (never treat as yes)."

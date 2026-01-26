@@ -1,0 +1,47 @@
+# VCDesign Pattern: RCA Structure
+# Purpose: Define the standard internal structure of a Responsibility Closure Agent.
+
+id: "vcdesign-pattern-rca"
+title: "RCA Structural Pattern"
+layer: "pattern"
+status: "stable"
+
+meta:
+  role: "The active judge at the boundary."
+  implements: "vcdesign-protocol-judgment-closure"
+
+# -------------------------------------------------------------------
+# Internal Components
+# -------------------------------------------------------------------
+components:
+  policy_engine:
+    role: "Evaluates Facts against Criteria."
+    inputs: ["Facts", "Judgment Proposal"]
+    outputs: ["Pass/Fail/Unknown"]
+    
+  signer:
+    role: "Attaches cryptographic or authoritative signature."
+    condition: "Only signs if Policy Engine returns Pass."
+    
+  auditor:
+    role: "Records the transaction (Trace)."
+    requirement: "Must log Denials as well as acceptances."
+
+# -------------------------------------------------------------------
+# Configuration Pattern
+# -------------------------------------------------------------------
+configuration:
+  risk_tolerance:
+    enum: ["strict", "permissive", "learning"]
+    default: "strict"
+    
+  fallback_strategy:
+    enum: ["deny_all", "escalate_to_human", "defer"]
+    default: "deny_all"
+
+# -------------------------------------------------------------------
+# Implementation Guidelines
+# -------------------------------------------------------------------
+guidelines:
+  - "The RCA should be isolated from the 'Solver' logic (don't mix generation and judgment)."
+  - "The RCA must be stateless regarding the 'content' generation, but stateful regarding 'responsibility' history."

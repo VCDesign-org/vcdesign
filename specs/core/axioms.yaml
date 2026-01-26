@@ -1,0 +1,67 @@
+# VCDesign Core: Axioms (The Problem Space)
+# This file defines the "Unstable Value World" (UVW) condition.
+# It is the unmodifiable premise of VCDesign.
+
+id: "vcdesign-core-axioms"
+title: "Axioms of Unstable Value World"
+layer: "core"
+status: "stable"
+version: "2.1.0"
+
+meta:
+  name: "Unstable Value World (UVW)"
+  role: "Problem Space"
+  source: "external"
+  upstream: "https://github.com/unstable-value-world/unstable-value-world"
+  implication:
+    - "No system can guarantee permanent correctness."
+    - "Continuity requires active maintenance."
+
+# -------------------------------------------------------------------
+# The 5 Axioms (Observations)
+# -------------------------------------------------------------------
+axioms:
+  A1_ValueInstability:
+    statement: "Value is not static."
+    description: "Value is not an intrinsic property of an artifact; it is a relationship between an artifact and a satisfying context."
+    implication: "Value must be re-evaluated when context changes."
+  
+  A2_ContextDrift:
+    statement: "Context drifts."
+    description: "The context that makes a value valid changes over time (technological shift, social shift, user belief shift)."
+    implication: "Static bindings degrade over time."
+
+  A3_JudgmentDecay:
+    statement: "Judgments decay."
+    description: "A judgment made at time T0 loses confidence as time proceeds to T1, unless re-verified."
+    implication: "Trust must be leased, not owned permanently."
+
+  A4_NonSelfEvidence:
+    statement: "Meaning requires binding."
+    description: "The intent or value of an artifact is not self-evident from the artifact alone; it requires an external interpretive frame."
+    implication: "Artifacts without explicit binding are ambiguous noise."
+
+  A5_ResponsibilityGap:
+    statement: "Only humans bear responsibility."
+    description: "Machines process logic, but only humans (or legal entities) can bear responsibility for the outcome of that logic."
+    implication: "Automated systems must have a human-in-the-loop or a clear liability owner."
+
+# -------------------------------------------------------------------
+# Non-Assumptions (What we deliberately do NOT assume)
+# -------------------------------------------------------------------
+non_assumptions:
+  - id: no_teleology
+    statement: "Benevolent Teleology"
+    rejection: "The world does not naturally arc toward 'better' without effort."
+    
+  - id: no_consensus
+    statement: "Stable Consensus"
+    rejection: "'Good' is not universally agreed upon and does not stay agreed upon."
+    
+  - id: no_ai_understanding
+    statement: "AI Understanding"
+    rejection: "AI does not 'understand' value; it mimics patterns of value descriptions."
+
+  - id: no_finality
+    statement: "Permanent Solution"
+    rejection: "There is no 'final' architecture that solves value alignment once and for all."

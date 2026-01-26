@@ -1,0 +1,47 @@
+# VCDesign Pattern: Boundary Structure
+# Purpose: Define the generic structure of an "Explicit Verification Point" (Boundary).
+
+id: "vcdesign-pattern-boundary"
+title: "Boundary Structure Pattern"
+layer: "pattern"
+status: "stable"
+version: "1.0.0"
+
+meta:
+  concept: "A structural choke point where implicit values are blocked and explicit judgments are required."
+  implements: "vcdesign-core-decision-posture"
+
+# -------------------------------------------------------------------
+# Structure
+# -------------------------------------------------------------------
+boundary:
+  role: "The interface between Unverified Space (Outside) and Verified Space (Inside)."
+  
+  components:
+    guard:
+      description: "The agent or logic responsible for the check."
+      reference: "vcdesign-pattern-rca"
+      
+    handshake:
+      description: "The mechanism for promotion if accepted."
+      reference: "vcdesign-protocol-resolution-handshake"
+
+# -------------------------------------------------------------------
+# Flow
+# -------------------------------------------------------------------
+flow:
+  1. **Intercept**: All inputs must pause at the boundary.
+  2. **Assess**: The Guard (RCA) evaluates the input.
+  3. **Close**: The Guard issues ACCEPTED, DENIED, or UNKNOWN.
+  4. **Act**: 
+     - If ACCEPTED -> Handshake (Resolution).
+     - If DENIED -> Block.
+     - If UNKNOWN -> Escalate.
+
+# -------------------------------------------------------------------
+# Application
+# -------------------------------------------------------------------
+application:
+  - "Use at system ingress (API Gateways)."
+  - "Use at critical value transitions (e.g. LLM output to User)."
+  - "Use between untrusted components."

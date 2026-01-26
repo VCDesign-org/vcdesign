@@ -1,0 +1,22 @@
+name: Validate Specs
+
+on:
+  push:
+    paths:
+      - 'specs/**/*.yaml'
+      - 'specs/**/*.json'
+  pull_request:
+    paths:
+      - 'specs/**/*.yaml'
+      - 'specs/**/*.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: npm run validate

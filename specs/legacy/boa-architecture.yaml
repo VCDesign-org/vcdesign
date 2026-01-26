@@ -1,0 +1,15 @@
+# [Legacy] Boundary-Oriented Architecture (BOA)
+
+> [!WARNING]
+> **Superseded Content**
+> This specification is historical. The concepts have been absorbed into VCDesign Core and Patterns.
+
+## Migration Guide
+- **Boundary Concept**: See `../patterns/boundary-pattern.yaml` and `../core/decision-posture.yaml`.
+- **RCA / Guard**: See `../patterns/rca-pattern.yaml`.
+- **RP / Handshake**: See `../protocols/resolution-handshake.yaml`.
+
+## History
+"BOA" was the initial name for the architectural implementation of VCDesign.
+We realized that the "Boundary" is a natural consequence of the Core Decision Posture, not a separate architectural imposition.
+Therefore, strict BOA terminology has been retired in favor of plain VCDesign patterns.

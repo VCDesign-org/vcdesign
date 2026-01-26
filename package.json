@@ -1,0 +1,26 @@
+{
+  "name": "vsdesign",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "validate": "ajv -s specs/schemas/judgment-closure.schema.json -d specs/protocols/judgment-closure.yaml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VCDesign-org/vsdesign.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/VCDesign-org/vsdesign/issues"
+  },
+  "homepage": "https://github.com/VCDesign-org/vsdesign#readme",
+  "devDependencies": {
+    "ajv-cli": "^5.0.0",
+    "yaml-lint": "^1.7.0"
+  }
+}

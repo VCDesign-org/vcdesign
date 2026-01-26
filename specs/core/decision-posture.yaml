@@ -1,0 +1,64 @@
+# VCDesign Core: Decision Posture (The Response)
+# This file defines the irreducible Core of VCDesign.
+# "When in doubt, stop or review."
+
+id: "vcdesign-core-decision-posture"
+title: "Decision Posture (Stop or Review)"
+layer: "core"
+status: "stable"
+version: "2.1.0"
+
+meta:
+  principle: "The Safety of Pause"
+  role: "Constraint"
+  note: "This core defines unavoidable questions only. How to answer them is left to Protocols."
+
+# -------------------------------------------------------------------
+# The Central Principle
+# -------------------------------------------------------------------
+central_principle:
+  statement: "When value becomes questionable, review criteria or stop. There is no other option."
+  imperative: "Do not proceed blindly."
+
+# -------------------------------------------------------------------
+# Core Questions (The Unavoidable Check)
+# -------------------------------------------------------------------
+core_questions:
+  - "Is value still continuous?"
+  - "If not, what will be done?"
+
+# -------------------------------------------------------------------
+# Structural Consequence: Explicit Verification
+# -------------------------------------------------------------------
+structural_consequence:
+  - "To answer core questions, the system must have explicit points of verification."
+  - "Implicit assumptions must be halted until explicated."
+  - "Validation cannot be continuous everywhere; it must be discrete and placed effectively."
+
+# -------------------------------------------------------------------
+# Allowed Responses (The only valid states)
+# -------------------------------------------------------------------
+allowed_responses:
+  commit:
+    meaning: "Continuity is affirmed under current criteria."
+    action: "Close judgment and proceed (see protocols)."
+    
+  reconsider:
+    meaning: "Judgment will be revisited."
+    action: "Loop back to definition/binding."
+    
+  defer:
+    meaning: "Judgment remains open."
+    action: "Do not execute. Wait for input."
+    
+  abandon:
+    meaning: "Value continuity is explicitly abandoned."
+    action: "Stop. Release responsibility."
+
+# -------------------------------------------------------------------
+# Non-Commitments (What we do NOT prescribe)
+# -------------------------------------------------------------------
+non_commitments:
+  - "No required specific method (e.g. Agile, Waterfall)"
+  - "No required implementation language"
+  - "No required process framework"

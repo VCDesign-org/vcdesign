@@ -1,0 +1,59 @@
+# VCDesign Protocol: Resolution Handshake
+# Purpose: Define how a "Closed Judgment" becomes a "Resolution" (a committed Action).
+# Formerly: "Resolution Protocol (RP)" and "CCP Handshake"
+
+id: "vcdesign-protocol-resolution-handshake"
+title: "Resolution Handshake Protocol"
+layer: "protocol"
+status: "stable"
+version: "2.0.0"
+
+meta:
+  goal: "Promote a Closed Judgment to a Resolution (Responsibility Commitment)."
+  role: "The bridge between Meaning (Judgment) and Action (Resolution)."
+
+# -------------------------------------------------------------------
+# Prerequisite
+# -------------------------------------------------------------------
+prerequisite:
+  - "Judgment Closure must be ACCEPTED."
+  - "Responsible Actor must be identified."
+
+# -------------------------------------------------------------------
+# The Handshake Schema (Interaction Model)
+# -------------------------------------------------------------------
+handshake_schema:
+  internal_promotion:
+    description: "When judgment and resolution happen within one trusted boundary."
+    steps:
+      1. Verify Closure == ACCEPTED.
+      2. Verify Responsible Actor exists.
+      3. Commit Resolution Record.
+
+  external_handshake:
+    description: "When judgment provider and resolution consumer are different."
+    refers_to: "Content Continuity Protocol (CCP)"
+    required_fields:
+      - "handshake_meta (id, nonce, timestamp)"
+      - "continuity_claim (the guarantee)"
+      - "signature (the proof)"
+
+# -------------------------------------------------------------------
+# Output (The Resolution)
+# -------------------------------------------------------------------
+resolution_object:
+  definition: "A committed unit of responsibility."
+  required_fields:
+    - resolution_id
+    - responsible_actor
+    - scope
+    - expiry (time-bound)
+    - trace_reference (provenance)
+
+# -------------------------------------------------------------------
+# Routing (When Handshake Fails)
+# -------------------------------------------------------------------
+routing_on_failure:
+  - return_to_human: "Escalate to a human operator."
+  - quarantine: "Isolate the judgment as unsafe."
+  - deny: "Reject the action completely."
