@@ -1,0 +1,102 @@
+# origin: repo/boa-core/specs/responsibility_closure_agent.yaml
+# imported_at: 2026-01-26
+# status: draft-import
+# note: This file is a temporary baseline; deletion expected.
+
+# rca.yaml
+# Responsibility Closure Agent (RCA)
+#
+# Purpose:
+#   RCA is the agentic component responsible for "closing" a judgment.
+#   It evaluates a requested judgment and explicitly decides whether to
+#   accept responsibility (sign), deny it, or declare it unknown.
+#
+# Non-goals:
+#   - Do not generate new solutions (unless explicitly designed as a solver-agent).
+#   - Do not hide the "unknown" state.
+#   - Do not bypass the Requirement of explicit signature.
+
+responsibility_closure_agent:
+  meta:
+    name: "Responsibility Closure Agent"
+    short_name: "RCA"
+    version: "1.0.0"
+    status: "frozen"
+
+  governed_by:
+    vcdesign_core:
+      authoritative_spec: "/specs/vcdesign_core/vsdesign_core.yaml"
+      guarantees:
+        - does_not_redefine_value
+        - does_not_redefine_judgment
+        - does_not_redefine_responsibility
+
+  intent:
+  # ---- Core states ----
+  closure_states:
+    # RCA must emit exactly one of these states.
+    states:
+      - ACCEPTED:
+          description: "RCA accepts responsibility and signs the judgment."
+          implies: "Promotable to Resolution"
+      
+      - DENIED:
+          description: "RCA explicitly refuses to accept responsibility."
+          implies: "Must NOT proceed. Stop or Retry."
+      
+      - UNKNOWN:
+          description: "RCA cannot determine whether to accept or deny."
+          implies: "Escalate (Human/System) or fallback."
+
+  # ---- Inputs ----
+  input_contract:
+    facts:
+      required: true
+      description: "Immutable facts upon which the judgment is based."
+    
+    judgment_proposal:
+      required: true
+      description: "The proposed content/decision to be signed."
+    
+    context:
+      required: false
+      description: "Additional boundary context or prior traces."
+
+  # ---- Output contract (what downstream RP uses) ----
+  output_contract:
+    assessment:
+      fields:
+        request_id: { type: "string" }
+        state:
+          type: "enum"
+          values: ["ACCEPTED", "DENIED", "UNKNOWN"]
+        status_code:
+          type: "string"
+          note: "Granular reason code"
+        signature:
+          type: "object"
+          optional: true
+          note: "Proof of acceptance (human sig, digital sig, system log reference)"
+        reason:
+          type: "string"
+          optional: true
+          note: "Explanation for rejection or uncertainty"
+
+      # Always required
+      required:
+        - request_id
+        - state
+        - status_code
+
+      # Conditionally required
+      conditional_requirements:
+        - when: "state == ACCEPTED"
+        - require: ["signature"]
+        - when: "state in [DENIED, UNKNOWN]"
+        - require: ["reason"]
+
+  # ---- Audit / invariants ----
+  invariants:
+    - "RCA never modifies the content of the judgment_proposal (it only signs or rejects)."
+    - "ACCEPTED state must always accompany a signature/owner."
+    - "UNKNOWN must effectively pause the flow (never treat as yes)."

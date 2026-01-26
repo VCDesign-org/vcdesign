@@ -1,0 +1,195 @@
+# origin: repo/boa-core/specs/resolution_protocol.yaml
+# imported_at: 2026-01-26
+# status: draft-import
+# note: This file is a temporary baseline; deletion expected.
+
+
+resolution_protocol:
+  meta:
+    id: rp
+    name: "Resolution Protocol (RP)"
+    version: "1.3.0"
+    status: "frozen"
+
+  governed_by:
+    vcdesign_core:
+      authoritative_spec: "/specs/vcdesign_core/vsdesign_core.yaml"
+      guarantees:
+        - does_not_redefine_value
+        - does_not_redefine_judgment
+        - does_not_redefine_responsibility
+
+
+
+    # Fail-safe posture
+    fail_safe:
+      default: deny
+      on_violation: quarantine
+
+    # -------------------------------------------------------------------------
+    # Input contract (what RP expects to receive)
+    # -------------------------------------------------------------------------
+    input_contract:
+      # RCA output is REQUIRED. RP must not be invoked without it.
+      rca_assessment:
+        required: true
+        authoritative_spec: "./responsibility_closure_agent.yaml"
+        fields:
+          request_id:
+            type: string
+          state:
+            type: enum
+            values: [ACCEPTED, DENIED, UNKNOWN]
+          signature:
+            type: object
+            optional: true # Required only if ACCEPTED
+          reason:
+            type: string
+            optional: true
+
+      # Candidate judgment package (Meaning-side). RP does not validate truth.
+      meaning_candidate:
+        required: true
+        fields:
+          candidate_id: { type: string }
+          summary: { type: string }
+          hypothesis_ref: { type: string, optional: true }
+
+      # Minimum trace bundle must exist for auditability.
+      trace:
+        required: true
+        fields:
+          fact_bundle_id: { type: string }
+          decision_trace_refs:
+            type: array
+            items: { type: string }
+          observed_at: { type: string, format: date-time }
+
+      # Promotion intent (what responsibility would be created if promoted)
+      promotion_intent:
+        required: true
+        fields:
+          responsible_actor: { type: string }   # named human/org
+          purpose: { type: string }
+          scope: { type: string }
+          expiry: { type: string, format: date-time }
+
+    # -------------------------------------------------------------------------
+    # Invariants (must always hold)
+    # -------------------------------------------------------------------------
+    invariants:
+      - id: rp.inv.responsible_actor_required
+        en: "A named responsible actor is required for any resolution."
+        ja: "いかなる Resolution にも責務主体（人/組織）の明記が必要"
+
+
+      - id: rp.inv.fact_evidence_required
+        en: "Evidence must reference Facts and Decision Traces; unstated assumptions are invalid."
+        ja: "根拠は Fact と Decision Trace を参照し、暗黙前提は無効"
+
+      - id: rp.inv.time_bound
+        en: "Resolution must be purpose-bound and time-bound."
+        ja: "Resolution は目的と期限（適用範囲）を持たねばならない"
+
+      - id: rp.inv.rca_required
+        en: "RP must receive an RCA assessment; otherwise deny."
+        ja: "RP は RCA の出力を必須とし、欠落時は deny"
+
+      - id: rp.inv.no_promotion_if_rca_denies
+        en: "If RCA denies or is unknown, promotion to Resolution is forbidden."
+        ja: "RCA が DENIED/UNKNOWN の場合、Resolution への昇格は禁止"
+
+      # Pool escalation safety (PR-2)
+      - id: rp.inv.pool_queue_is_not_resolution
+        en: "Enqueuing to a responsibility pool is a tracked waiting state, not a completed resolution."
+        ja: "責任プールへの投入（キュー）は解決ではなく「解決待ち」の追跡状態である"
+
+      - id: rp.inv.ownership_must_be_explicit
+        en: "Responsibility must not be considered owned until an explicit owner assignment is recorded."
+        ja: "明示的な担当割当が記録されるまで、責任が「確定した」とみなしてはならない"
+
+    # -------------------------------------------------------------------------
+    # Gate rules (for Resolution promotion)
+    # -------------------------------------------------------------------------
+    gate_rules:
+      # Promotion is allowed ONLY if ALL conditions are met.
+      promotion_allowed_when:
+        - rca_assessment.state == ACCEPTED
+
+      require:
+        - responsible_actor
+        - purpose
+        - scope
+        - expiry
+        - fact_bundle_id
+        - decision_trace_refs
+
+    # -------------------------------------------------------------------------
+    # Routing / return actions (when promotion is not allowed)
+    # -------------------------------------------------------------------------
+    routing:
+      when:
+        - rca_assessment.state != ACCEPTED
+        - missing_required_fields
+      actions:
+        - id: return_to_human
+          target: human
+          output_state: RETURNED_TO_HUMAN
+
+        - id: return_to_pool
+          target: responsibility_pool
+          required_fields:
+            - target_pool_id
+          output_state: WAITING_FOR_ASSIGNMENT
+
+      pool_rules:
+        # Queue is NOT ownership. Ownership becomes true only after assignment.
+        ownership_state_model:
+          WAITING_FOR_ASSIGNMENT:
+            owned: false
+          ASSIGNED_TO_OWNER:
+            owned: true
+
+        # RP only references pool_id. Pool definition/ops live in binding/manifest.
+        pool_reference_only: true
+
+    # -------------------------------------------------------------------------
+    # Output contract (what RP emits)
+    # -------------------------------------------------------------------------
+    output_contract:
+      fields:
+        rp_result:
+          type: enum
+          values: [PROMOTED_TO_RESOLUTION, ROUTED, DENIED, QUARANTINED]
+
+        resolution_record:
+          optional: true
+          emitted_when: PROMOTED_TO_RESOLUTION
+          fields:
+            resolution_id: { type: string }
+            responsible_actor: { type: string }
+            purpose: { type: string }
+            scope: { type: string }
+            expiry: { type: string, format: date-time }
+            trace:
+              fact_bundle_id: { type: string }
+              decision_trace_refs:
+                type: array
+                items: { type: string }
+
+        routing_record:
+          optional: true
+          emitted_when: ROUTED
+          fields:
+            action_id: { type: string }  # return_to_human / return_to_pool
+            state: { type: string }      # RETURNED_TO_HUMAN / WAITING_FOR_ASSIGNMENT
+            target_pool_id: { type: string, optional: true }
+            reason: { type: string }
+
+        violations:
+          optional: true
+          emitted_when: [DENIED, QUARANTINED]
+          fields:
+            violation_ids:
+              type: array
+              items: { type: string }
