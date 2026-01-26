@@ -1,0 +1,72 @@
+# VCDesign Chapter: C3 Trust & Responsibility Erosion
+# A pattern where opaque judgments lead to system rejection and responsibility voids.
+
+id: "vcdesign-chapter-c3"
+title: "Trust & Responsibility Erosion Chapter"
+layer: "chapter"
+status: "draft"
+version: "0.2.0"
+
+meta:
+  pattern_ref: "vcdesign-chapter-definition"
+  description: "When lack of 'Meaning' prevents humans from taking ownership."
+
+chapter:
+  premise:
+    - "System provides outputs (data/predictions)."
+    - "Humans are expected to act on them."
+
+  progression:
+    - name: "opaque_output"
+      description: "System outputs results without explanation or confidence context. Humans cannot judge validity."
+      affected_boundaries:
+        - B4
+      typical_failure_modes:
+        - "Score-only output (e.g. 'Risk: 80%')."
+        - "No linkage to source data."
+
+    - name: "responsibility_void"
+      description: "Humans hesitate to act because they cannot explain the decision. Decisions stall."
+      affected_boundaries:
+        - B6
+      typical_failure_modes:
+        - "Defensive inaction ('I didn't decide this')."
+        - "Escalation to developers instead of business owners."
+
+    - name: "rejection"
+      description: "The system is bypassed entirely to avoid liability. Value drops to zero."
+      affected_boundaries:
+        - B3
+      typical_failure_modes:
+        - "System is running but ignored."
+        - "Metric dashboards are green but usage is zero."
+
+  observables:
+    - "Users say 'I don't know why it says that'."
+    - "Decisions are routed to 'whoever built the bot' instead of operational owners."
+    - "Usage metrics drop despite 'high accuracy'."
+
+  missing_actions:
+    - "Creation of a shared Interpretive Frame (Meaning)."
+    - "Explicit Judgment Closure on 'Is this explainable enough?'"
+
+  canonical_triggers:
+    - "Black-box AI models."
+    - "High-stakes environments (medical, financial)."
+
+  detection_questions:
+    - "Can the user explain *why* they accepted the system's output?"
+    - "Is there a named owner for the outcome of the system's advice?"
+
+  recommended_posture:
+    decision_posture: "defer"
+    rationale: "Require 'Explainability' or 'Meaning' artifacts before enabling Judgment Closure. Action without understanding allows impact without accountability."
+
+  relevant_boundaries:
+    - B3
+    - B4
+    - B6
+
+  relevant_specs:
+    protocols: ["judgment-closure"]
+    patterns: ["boundary-pattern", "rca-pattern"]

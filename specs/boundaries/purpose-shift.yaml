@@ -1,0 +1,57 @@
+# specs/boundaries/purpose-shift.yaml
+meta:
+  id: CASE-PURPOSE-SHIFT
+  title: Purpose Shift Case
+  layer: boundaries
+  status: draft
+  version: 0.1.0
+
+boundary:
+  description: >
+    A case study where the purpose of a system changes silently,
+    causing a transition failure across B4 (Meaning) to B6 (Responsibility).
+
+  canonical_scenarios:
+    - AI system is introduced with a clear operational goal,
+      but evaluation metrics are later changed to pursue
+      secondary organizational benefits, altering the original meaning.
+
+  boundary_transition:
+    phase_1:
+      primary: B4  # Data ↔ Meaning
+      status: closed
+    phase_2:
+      primary: B6  # Responsibility Assignment
+      secondary:
+        - B7       # Organizational Boundary
+      status: broken
+
+  failure_modes:
+    - Original purpose becomes unexplainable to stakeholders.
+    - Evaluation criteria change without explicit ownership.
+    - Organizational consensus on AI purpose collapses.
+
+  missing_elements_observed:
+    - No closure when changing evaluation metrics.
+    - No responsible actor for purpose redefinition.
+    - No cross-organizational handshake on goal change.
+
+  recommended_handling:
+    decision_posture: defer
+    rationale: >
+      Purpose redefinition without explicit closure
+      invalidates prior judgments and responsibilities.
+    protocols:
+      - judgment-closure
+      - resolution-handshake
+    patterns:
+      - boundary-pattern
+      - rca-pattern
+
+  expiry_and_revisit:
+    required: true
+    typical_expiry: "upon KPI change or management restructure"
+
+references:
+  chapters:
+    - ../chapters/c1-purpose-drift.yaml

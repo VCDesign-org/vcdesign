@@ -1,0 +1,95 @@
+# specs/chapters/c4-reality-drift.yaml
+meta:
+  id: C4
+  title: Reality Drift Chapter
+  layer: chapters
+  status: draft
+  version: 0.1.0
+
+chapter:
+  premise:
+    - The system operates correctly according to internal metrics.
+    - Learning, prediction, or optimization processes complete without errors.
+    - The reference to "reality" is assumed to remain stable over time.
+
+  progression:
+    - name: "implicit_reference_shift"
+      description: >
+        The system's reference to reality shifts silently due to feedback loops,
+        data definition changes, or environmental variation, without explicit re-judgment.
+      affected_boundaries:
+        - B4   # Data ↔ Meaning
+        - B16  # Model ↔ Reality
+      typical_failure_modes:
+        - "Self-generated outputs are reused as training data."
+        - "Data semantics change without detection."
+
+    - name: "undetected_divergence"
+      description: >
+        Outputs remain plausible or internally consistent, masking growing divergence
+        from real-world conditions.
+      affected_boundaries:
+        - B10  # Temporal Boundary
+        - B13  # Interpretation Boundary
+      typical_failure_modes:
+        - "Accuracy metrics remain acceptable while real-world fit degrades."
+        - "Seasonal or contextual shifts are ignored."
+
+    - name: "responsibility_misalignment"
+      description: >
+        As divergence accumulates, impact grows beyond the scope of original responsibility,
+        but no actor is positioned to intervene.
+      affected_boundaries:
+        - B6   # Responsibility Assignment
+        - B17  # Impact ↔ Accountability
+      typical_failure_modes:
+        - "No one owns the decision to stop or reset learning/optimization."
+        - "Problems are discovered late and handled ad-hoc."
+
+  missing_actions:
+    - "Explicit human judgment on whether continued learning remains valid."
+    - "Periodic re-validation of the model's reference to real-world conditions."
+    - "Clear stop/review points for cumulative optimization or learning effects."
+    - "Alignment of impact scope with accountable actors."
+
+  canonical_triggers:
+    - "Continuous or periodic re-training using generated outputs."
+    - "Changes in data providers, definitions, or aggregation granularity."
+    - "Environmental or seasonal shifts affecting underlying phenomena."
+    - "Expansion of optimization scope over time."
+
+  observables:
+    - "Outputs look reasonable but no longer match on-the-ground reality."
+    - "Problems are reported as 'subtle' or 'hard to explain.'"
+    - "Quality degradation is detected later than expected."
+
+  detection_questions:
+    - "What does the model currently treat as 'reality'?"
+    - "Has the reference data changed since the last explicit judgment?"
+    - "Who is authorized to stop learning or optimization?"
+    - "Does responsibility still match the current impact scope?"
+
+  recommended_posture:
+    decision_posture: defer
+    rationale: >
+      When reality reference cannot be explicitly justified,
+      continued operation risks amplifying undetected divergence.
+
+  relevant_boundaries:
+    - B4
+    - B10
+    - B13
+    - B6
+    - B16
+    - B17
+
+  relevant_specs:
+    core:
+      - ../core/decision-posture.yaml
+      - ../core/continuity-claim.yaml
+    protocols:
+      - ../protocols/judgment-closure.yaml
+      - ../protocols/resolution-handshake.yaml
+    patterns:
+      - ../patterns/boundary-pattern.yaml
+      - ../patterns/rca-pattern.yaml

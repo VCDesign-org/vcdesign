@@ -1,0 +1,49 @@
+# specs/boundaries/model-reality.yaml
+meta:
+  id: B16
+  title: Model ↔ Reality Boundary
+  layer: boundaries
+  status: draft
+  version: 0.1.0
+
+boundary:
+  description: >
+    The boundary that ensures a model's inputs, outputs, and learning processes
+    remain grounded in and representative of real-world conditions.
+
+  typical_triggers:
+    - Continuous or periodic retraining.
+    - Use of model-generated outputs as training data.
+    - Feedback loops without external grounding.
+    - Long-running autonomous optimization.
+
+  failure_modes:
+    - Models learn primarily from their own outputs.
+    - Internal consistency increases while real-world validity decreases.
+    - Divergence remains undetected due to stable internal metrics.
+
+  default_posture:
+    decision_posture: defer
+    rationale: >
+      Without explicit verification of real-world grounding,
+      continued learning or optimization cannot be responsibly assumed valid.
+
+  recommended_handling:
+    protocols:
+      - judgment-closure
+    patterns:
+      - boundary-pattern
+      - rca-pattern
+
+  monitoring_signals:
+    - Ratio of generated data in training inputs.
+    - Drift between model predictions and external ground truth.
+    - Changes in data source definitions or semantics.
+
+  expiry_and_revisit:
+    required: true
+    typical_expiry: "fixed interval or major data change"
+
+references:
+  chapters:
+    - ../chapters/c4-reality-drift.yaml

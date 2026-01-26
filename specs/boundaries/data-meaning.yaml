@@ -1,0 +1,46 @@
+# specs/boundaries/data-meaning.yaml
+meta:
+  id: CASE-DATA-MEANING
+  title: Data Meaning Case
+  layer: boundaries
+  status: draft
+  version: 0.1.0
+
+boundary:
+  description: >
+    A case study where AI output lacks semantic context, preventing
+    human judgment and violating the B4 (Data ↔ Meaning) boundary.
+
+  canonical_scenarios:
+    - Defect detection AI returns classification results
+      without exposing reasons, confidence, or supporting evidence,
+      preventing humans from forming actionable meaning.
+
+  failure_modes:
+    - AI outputs results without semantic explanation.
+    - Humans cannot explain or justify AI-based judgments.
+    - Final judgment responsibility stalls or disappears.
+
+  missing_elements_observed:
+    - No explanation artifacts for AI judgments.
+    - No shared interpretive frame between AI and humans.
+    - No closure point for "is this judgment explainable enough to proceed".
+
+  recommended_handling:
+    decision_posture: defer
+    rationale: >
+      Judgments without shared meaning
+      cannot be responsibly owned by humans.
+    protocols:
+      - judgment-closure
+    patterns:
+      - boundary-pattern
+      - rca-pattern
+
+  expiry_and_revisit:
+    required: true
+    typical_expiry: "upon model update or domain shift"
+
+references:
+  chapters:
+    - ../chapters/c3-trust-erosion.yaml

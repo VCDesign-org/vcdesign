@@ -1,0 +1,72 @@
+# VCDesign Chapter: C2 Automation Burden
+# A pattern where partial automation increases manual load and dissolves responsibility.
+
+id: "vcdesign-chapter-c2"
+title: "Automation Burden Chapter"
+layer: "chapter"
+status: "draft"
+version: "0.2.0"
+
+meta:
+  pattern_ref: "vcdesign-chapter-definition"
+  description: "When automation creates more work than it saves, and hides the cost."
+
+chapter:
+  premise:
+    - "Automation was introduced to reduce workload."
+    - "Initial ROI calculation assumed seamless integration."
+
+  progression:
+    - name: "naive_insertion"
+      description: "AI/Automation is introduced but requires 'human bridges' (data entry, formatting, verification) that were not scoped."
+      affected_boundaries:
+        - B2
+      typical_failure_modes:
+        - "Unscoped data cleaning tasks."
+        - "Double-entry of data (System A + System B)."
+
+    - name: "shadow_workload"
+      description: "Operators perform the bridge tasks silently. The system appears to work, but human cost rises."
+      affected_boundaries:
+        - B8
+      typical_failure_modes:
+        - "Hidden overtime."
+        - "Quality checks skipped to save time."
+
+    - name: "resentment_and_reject"
+      description: "Operators reject the system or bypass it to survive. Trust collapses."
+      affected_boundaries:
+        - B9
+      typical_failure_modes:
+        - "Active sabotage of input data."
+        - "Reversion to manual paper processes."
+
+  observables:
+    - "Manual data entry increases after automation."
+    - "Operators maintain 'secret spreadsheets' alongside the system."
+    - "Disconnect between 'Automated Status' and reality."
+
+  missing_actions:
+    - "Judgment Closure on the *integration* workload."
+    - "Explicit Resolution defining who owns the bridge tasks."
+
+  canonical_triggers:
+    - "Top-down DX mandates."
+    - "Buying a tool without process design."
+
+  detection_questions:
+    - "Has the total human time increased?"
+    - "Are there undefined manual steps required to keep the automation running?"
+
+  recommended_posture:
+    decision_posture: "defer"
+    rationale: "Halt expansion. Map the hidden workload. Re-close B2 boundary. Unaccounted human cost invalidates the ROI judgment."
+
+  relevant_boundaries:
+    - B2
+    - B8
+    - B9
+
+  relevant_specs:
+    protocols: ["judgment-closure"]
+    patterns: ["boundary-pattern"]

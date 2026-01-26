@@ -1,0 +1,71 @@
+meta:
+  id: CHAPTER_PATTERN
+  title: Chapter Pattern Template
+  layer: chapters
+  status: stable
+  version: 0.2.0
+
+chapter_pattern:
+  intent: >
+    A "Chapter" is a time-based design unit describing how value,
+    meaning, and responsibility shift or erode during ongoing operations.
+    It is not a single incident, but a progression structure.
+
+  fields:
+    premise:
+      description: Initial conditions that made the system appear valid.
+      type: list[string]
+
+    progression:
+      description: Ordered phases that describe how the chapter unfolds.
+      type: list[phase]
+
+    missing_actions:
+      description: Actions that should have occurred to prevent erosion.
+      type: list[string]
+
+    canonical_triggers:
+      description: Common triggers that start or accelerate the chapter.
+      type: list[string]
+
+    observables:
+      description: Observable symptoms that indicate the chapter is underway.
+      type: list[string]
+
+    detection_questions:
+      description: Questions to detect the chapter in real operations.
+      type: list[string]
+
+    recommended_posture:
+      description: Default VCDesign decision posture when detected.
+      type: object
+      fields:
+        decision_posture: "defer | commit | abandon | reconsider"
+        rationale: string
+
+    relevant_boundaries:
+      description: Boundary IDs (B-Numbers) commonly involved in this chapter.
+      type: list[string]
+
+    relevant_specs:
+      description: Specs to consult when handling this chapter.
+      type: object
+
+  phase_schema:
+    name:
+      description: Snake_case identifier for the phase.
+      type: string
+    description:
+      description: What happens in this phase.
+      type: string
+    affected_boundaries:
+      description: List of Boundary IDs (B-Numbers) only.
+      type: list[string]
+    typical_failure_modes:
+      description: Specific ways the boundary fails in this phase.
+      type: list[string]
+
+  notes:
+    - Chapters are "When" units; boundaries are "Where" units.
+    - affected_boundaries must use IDs (e.g. "B4"), not descriptions.
+    - If uncertain, prefer "defer" and explicitly close a judgment later.

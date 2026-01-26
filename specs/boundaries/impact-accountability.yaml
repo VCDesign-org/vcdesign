@@ -1,0 +1,49 @@
+# specs/boundaries/impact-accountability.yaml
+meta:
+  id: B17
+  title: Impact ↔ Accountability Boundary
+  layer: boundaries
+  status: draft
+  version: 0.1.0
+
+boundary:
+  description: >
+    The boundary that aligns the scope and magnitude of a system's impact
+    with clearly assigned responsibility and decision authority.
+
+  typical_triggers:
+    - Expansion of optimization or decision scope.
+    - Cross-departmental or organizational effects.
+    - Automation influencing strategic or managerial decisions.
+
+  failure_modes:
+    - Impact grows beyond the authority of the original owner.
+    - Responsibility becomes diffused or contested.
+    - Decisions continue without a clear accountable actor.
+
+  default_posture:
+    decision_posture: defer
+    rationale: >
+      Decisions whose impact exceeds accountable authority
+      must not proceed without explicit re-assignment of responsibility.
+
+  recommended_handling:
+    protocols:
+      - judgment-closure
+      - resolution-handshake
+    patterns:
+      - boundary-pattern
+      - rca-pattern
+
+  monitoring_signals:
+    - Increase in affected stakeholders or departments.
+    - Escalation paths becoming unclear or informal.
+    - Disputes over who should decide or intervene.
+
+  expiry_and_revisit:
+    required: true
+    typical_expiry: "upon scope expansion or organizational change"
+
+references:
+  chapters:
+    - ../chapters/c4-reality-drift.yaml

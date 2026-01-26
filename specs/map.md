@@ -15,8 +15,22 @@
 *Read this to implement the system.*
 - **[Boundary Structure](patterns/boundary-pattern.yaml)**: The generic structure of an Explicit Verification Point.
 - **[RCA Pattern](patterns/rca-pattern.yaml)**: The structure of a Responsibility Closure Agent.
-- **[Examples](examples/llm-change-approval.md)**: Concrete applications of these concepts.
 
-## 4. Reference
+## 4. Chapters (The "When" - Narratives)
+*Read this to understand how value, meaning, and responsibility erode or shift over time.*
+- **[Chapter Definitions](chapters/chapter-pattern.yaml)**: The structure of a Chapter.
+- **[C1: Purpose Drift](chapters/c1-purpose-drift.yaml)**: The silent rewriting of purpose.
+- **[C2: Automation Burden](chapters/c2-automation-burden.yaml)**: When automation increases manual workload.
+- **[C3: Trust & Responsibility Erosion](chapters/c3-trust-erosion.yaml)**: When opaque judgments cause rejection.
+- **[C4: Reality Drift](chapters/c4-reality-drift.yaml)**: When model reference diverges from reality (B16).
+
+## 5. Reference
+- **[Boundary Taxonomy](boundaries/taxonomy.md)**: **The Types.** A catalog of known responsibility boundaries (B1-B17).
+- **[Boundary Cases](boundaries/)**: **Knowledge Base.** Raw case studies.
+  - [Purpose Shift](boundaries/purpose-shift.yaml)
+  - [Automation Manual](boundaries/automation-manual.yaml)
+  - [Data Meaning](boundaries/data-meaning.yaml)
+  - [Impact Accountability](boundaries/impact-accountability.yaml) (B17)
 - **[Glossary](glossary/glossary.md)**: Terminology definitions.
 - **[Schemas](schemas/)**: Machine-readable schemas and validation tools.
+- **[Examples](examples/llm-change-approval.md)**: Concrete applications.

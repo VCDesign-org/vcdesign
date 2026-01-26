@@ -11,6 +11,7 @@ See the **[Specification Map](map.md)** for the full overview.
     *   Start here to understand *why* and *what*.
 *   **[protocols/](protocols/)**: **The Procedures.** Standardized ways to close judgments and hand off responsibility.
 *   **[patterns/](patterns/)**: **The Structures.** Reference patterns (like Boundary Structures and RCA) to implement the core.
+*   **[chapters/](chapters/)**: **The Narratives (The "When").** Time-based failure patterns (e.g. Purpose Drift, Trust Erosion).
 *   **[glossary/](glossary/)**: Terminology.
 
 ## Status

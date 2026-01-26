@@ -1,0 +1,46 @@
+# specs/boundaries/automation-manual.yaml
+meta:
+  id: CASE-AUTOMATION
+  title: Automation Manual Intervention Case
+  layer: boundaries
+  status: draft
+  version: 0.1.0
+
+boundary:
+  description: >
+    A case study where automation increases manual workload due to poor integration,
+    violating the B2 (Automation ↔ Manual) boundary.
+
+  canonical_scenarios:
+    - AI inspection system is introduced, but requires additional
+      manual data entry (forms, photos) on top of existing workflows,
+      increasing on-site workload.
+
+  failure_modes:
+    - Manual workload increases instead of decreasing.
+    - AI input tasks are duplicated with existing operational tasks.
+    - Responsibility for integration is implicitly shifted to operators.
+
+  missing_elements_observed:
+    - No explicit definition of operational integration.
+    - No judgment on acceptable workload increase.
+    - No closure point for "should we proceed with this AI input scheme".
+
+  recommended_handling:
+    decision_posture: defer
+    rationale: >
+      Automation without explicit workload integration
+      creates hidden human cost and responsibility leakage.
+    protocols:
+      - judgment-closure
+    patterns:
+      - boundary-pattern
+      - rca-pattern
+
+  expiry_and_revisit:
+    required: true
+    typical_expiry: "upon workflow change or volume increase"
+
+references:
+  chapters:
+    - ../chapters/c2-automation-burden.yaml

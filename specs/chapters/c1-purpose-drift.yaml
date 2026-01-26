@@ -1,0 +1,75 @@
+# VCDesign Chapter: C1 Purpose Drift
+# A specific pattern of value decay where the purpose shifts without re-judgment.
+
+id: "vcdesign-chapter-c1"
+title: "Purpose Drift Chapter"
+layer: "chapter"
+status: "draft"
+version: "0.3.0"
+
+meta:
+  pattern_ref: "vcdesign-chapter-definition"
+  description: "The silent rewriting of 'Why we are doing this'."
+
+chapter:
+  premise:
+    - "Initial judgment was valid."
+    - "B4 (Data-Meaning) Boundary was once closed."
+
+  progression:
+    - name: "implicit_shift"
+      description: "Purpose or expectation changes (e.g. from 'Experiment' to 'Production') without explicit judgment."
+      affected_boundaries:
+        - B4
+        - B6
+      typical_failure_modes:
+        - "Metric hacking (Goodhart's Law)."
+        - "Scope creep without re-authorization."
+
+    - name: "normalization"
+      description: "The new implied meaning becomes treated as obvious. Dissent becomes difficult."
+      affected_boundaries:
+        - B7
+      typical_failure_modes:
+        - "On-boarding documents conflict with reality."
+        - "Critical questions are dismissed as 'noise'."
+
+    - name: "breakdown"
+      description: "Responsibility and explanation collapse when an incident occurs."
+      affected_boundaries:
+        - B6
+        - B17
+      typical_failure_modes:
+        - "No one can explain original intent."
+        - "Decisions stall during crisis."
+
+  observables:
+    - "KPIs change without a change record."
+    - "Divergence between 'Design Document' and 'Usage Reality'."
+    - "Stakeholders use different metaphors for the same system."
+
+  missing_actions:
+    - "Re-judgment (Closure) at the moment of purpose change."
+    - "Resolution handshake across the organization."
+
+  canonical_triggers:
+    - "KPI change."
+    - "Management message change."
+    - "Cost pressure."
+
+  detection_questions:
+    - "Has the purpose changed without re-judgment?"
+    - "Can the original judgment still be explained?"
+
+  recommended_posture:
+    decision_posture: "defer"
+    rationale: "Explicitly re-close the 'Meaning' boundary (B4) before proceeding. Continued operation on shifted purpose is unauthorized."
+
+  relevant_boundaries:
+    - B4
+    - B6
+    - B7
+
+  relevant_specs:
+    protocols: ["judgment-closure", "resolution-handshake"]
+    patterns: ["boundary-pattern"]
