@@ -9,6 +9,12 @@ responsibility_closure_loop:
     Ensures that judgment and responsibility are not skipped in system design and implementation gaps.
     It operationalizes the VCDesign philosophy into a concrete design process loop: P -> D -> Δ -> R.
 
+  constitutional_alignment:
+    P: "VC-A-001 (Judgment must not be implicit)"
+    Delta: "VC-G-002 (Uncertainty must remain visible)"
+    R: "VC-G-001 (Responsibility Anchor) & VC-G-003 (Closed Loop)"
+
+
   core_loop:
     P:
       name: "Preconditions / Promise"
