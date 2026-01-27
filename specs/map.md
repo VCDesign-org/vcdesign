@@ -6,6 +6,11 @@
 - **[Decision Posture](core/decision-posture.yaml)**: The "Stop or Review" rule (The Response).
 - **[Continuity Claim](core/continuity-claim.yaml)**: Our stance on prioritizing continuity over optimization.
 
+> **Note**: **[RCL (Responsibility Closure Loop)](rcl/responsibility_closure_loop.yaml)** is a cross-cutting Standard.
+> It is not part of explicit Core/Protocols/Patterns layers, but guarantees design completion
+> by ensuring every Δ (Definition Gap) is assigned to an explicit R (Close / Defer to Pool / Abort).
+
+
 ## 2. Protocols (The "How" - Procedures)
 *Read this to understand the rules of engagement.*
 - **[Judgment Closure](protocols/judgment-closure.yaml)**: How to close a judgment (Accept/Deny/Unknown).
