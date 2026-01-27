@@ -42,18 +42,19 @@ allowed_responses:
   commit:
     meaning: "Continuity is affirmed under current criteria."
     action: "Close judgment and proceed (see protocols)."
-    
+
   reconsider:
     meaning: "Judgment will be revisited."
-    action: "Loop back to definition/binding."
-    
+    action: "Loop back to P/definition/binding. (Not a Resolution action itself.)"
+
   defer:
-    meaning: "Judgment remains open."
-    action: "Do not execute. Wait for input."
-    
+    meaning: "Judgment is not executed now; it is explicitly deferred as a Resolution."
+    action: "Assign to Responsibility Pool (DeferToPool). Wait for required input under pool rules."
+
   abandon:
     meaning: "Value continuity is explicitly abandoned."
-    action: "Stop. Release responsibility."
+    action: "Stop system (Abort) and close responsibility explicitly."
+
 
 # -------------------------------------------------------------------
 # Non-Commitments (What we do NOT prescribe)
