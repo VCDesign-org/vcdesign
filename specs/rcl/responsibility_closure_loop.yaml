@@ -1,0 +1,49 @@
+responsibility_closure_loop:
+  meta:
+    name: "Responsibility Closure Loop (RCL)"
+    version: "1.0.0"
+    status: "Standard"
+    maintainer: "VCDesign Project"
+
+  purpose: >
+    Ensures that judgment and responsibility are not skipped in system design and implementation gaps.
+    It operationalizes the VCDesign philosophy into a concrete design process loop: P -> D -> Δ -> R.
+
+  core_loop:
+    P:
+      name: "Preconditions / Promise"
+      description: "What must be true, and what must never be decided automatically."
+    D:
+      name: "Do / Decision / Display"
+      description: "Execution, UI, AI assistance (never the final judgment)."
+    Delta:
+      name: "Delta (Δ)"
+      description: "Facts indicating that P is not fulfilled (not executed, delayed, boundary violation)."
+    R:
+      name: "Resolution (R)"
+      description: "Explicit closure of responsibility (stop, return to human, accept risk, assign to pool)."
+      valid_actions:
+        - "Finalize Decision (Close)"  # 判断を下す
+        - "Assign to Pool (Defer)"     # プールに入れて時を待つ（これもResolutionとする）
+        - "Stop System (Abort)"        # 止める
+
+  axiom:
+    design_completion: "Identifying Δ and assigning it to a Resolution (including Pooling) constitutes a complete design."
+
+  components:
+    manifest:
+      description: "Format for humans to describe 'what to decide and what to own as responsibility'."
+      template_ref: "/specs/templates/responsibility_manifest.template.yaml"
+    
+    auditor:
+      description: "Auditor perspective to check for gaps in definitions."
+      prompt_ref: "/policies/rcl/auditor.prompt.md"
+
+  integration_guide:
+    step_1: "Create a Manifest describing responsibility definitions."
+    step_2: "Audit using the Auditor perspective (Human or AI)."
+    step_3: "Reflect in Implementation so that Δ requires R."
+
+  vcdesign_alignment:
+    Decision_Closure: "RCL is the iterative process to achieve Decision Closure."
+    Responsibility_Pools: "RCL defines how items enter and leave Responsibility Pools."

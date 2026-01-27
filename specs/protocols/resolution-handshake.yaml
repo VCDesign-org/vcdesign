@@ -6,11 +6,26 @@ id: "vcdesign-protocol-resolution-handshake"
 title: "Resolution Handshake Protocol"
 layer: "protocol"
 status: "stable"
-version: "2.0.0"
+version: "2.1.0"
 
 meta:
   goal: "Promote a Closed Judgment to a Resolution (Responsibility Commitment)."
   role: "The bridge between Meaning (Judgment) and Action (Resolution)."
+
+# -------------------------------------------------------------------
+# Constitutional Definition
+# -------------------------------------------------------------------
+constitutional_role:
+  - "Close decision loops"
+  - "Enable revision, rollback, or termination"
+
+# RP is NOT "how to decide".
+# RP IS "how not to break the value chain after deciding".
+
+constitution_compliance:
+  VC-G-003: "RP ensures every decision belongs to a closed loop."
+  termination_principle: "RP provides the path for Proper Termination."
+  chapter_model: "RP signals the completion of a Chapter."
 
 # -------------------------------------------------------------------
 # Prerequisite

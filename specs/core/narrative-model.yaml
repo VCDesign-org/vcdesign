@@ -1,0 +1,22 @@
+# VCDesign Core: Narrative Model
+# Defines the "Model" of operation and value continuity.
+# Introduces "Chapter" as a core design unit.
+
+id: "vcdesign-core-narrative-model"
+title: "Narrative Model (Chapter & Operation)"
+layer: "core"
+status: "stable"
+version: "1.0.0"
+
+# -------------------------------------------------------------------
+# Narrative Insights (The Model)
+# -------------------------------------------------------------------
+narrative_insights:
+  chapter_as_unit:
+    - "Decision basis"
+    - "Responsible agent"
+    - "Passable forward state"
+  value_continuity_definition:
+    - "Value persists only across chapters"
+  operation_redefinition:
+    - "Operation is judgment renewal"

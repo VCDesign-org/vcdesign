@@ -5,10 +5,30 @@ id: "vcdesign-pattern-rca"
 title: "RCA Structural Pattern"
 layer: "pattern"
 status: "stable"
+version: "2.1.0"
 
 meta:
   role: "The active judge at the boundary."
   implements: "vcdesign-protocol-judgment-closure"
+
+# -------------------------------------------------------------------
+# Constitutional Definition
+# -------------------------------------------------------------------
+constitutional_role:
+  - "Anchor responsibility for a decision"
+  - "Prevent responsibility diffusion"
+  - "Enable explicit acceptance or rejection"
+
+prohibitions:
+  - "MUST NOT select the 'optimal' solution (Optimization is not Judgment)."
+  - "MUST NOT guarantee correctness (Responsibility is about owning failure)."
+  - "MUST NOT define value (Value is defined by the context/human)."
+
+constitution_compliance:
+  VC-A-001: "RCA makes the judgment point explicit."
+  VC-A-002: "RCA names the specific subject of responsibility."
+  VC-G-001: "Any decision without an RCA is invalid."
+  VC-R-003: "RCA explicitly refuses automated/externalized responsibility."
 
 # -------------------------------------------------------------------
 # Internal Components

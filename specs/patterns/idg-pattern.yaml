@@ -1,0 +1,44 @@
+# VCDesign Pattern: IDG Structure
+# Purpose: Define the Interface Determinability Gate to preserve uncertainty.
+
+id: "vcdesign-pattern-idg"
+title: "IDG Structural Pattern"
+layer: "pattern"
+status: "stable"
+version: "2.1.0"
+
+meta:
+  role: "The gatekeeper of uncertainty."
+
+# -------------------------------------------------------------------
+# Constitutional Definition
+# -------------------------------------------------------------------
+constitutional_role:
+  - "Expose indeterminacy explicitly"
+  - "Block forced decisions under uncertainty"
+
+# IDG is not a "decision maker". It is a "gate to prevent crushing the unknown".
+
+constitution_compliance:
+  VC-G-002: "IDG ensures uncertainty remains visible."
+  VC-A-001: "IDG prevents implicit judgment by forcing explicit handling."
+  VC-R-001: "IDG blocks momentum-based or addiction-based forced decisions."
+
+# -------------------------------------------------------------------
+# Internal Components
+# -------------------------------------------------------------------
+components:
+  ambiguity_sensor:
+    role: "Detects if the input context is sufficient for a deterministic decision."
+    outputs: ["Determinable", "Indeterminate"]
+
+  blocker:
+    role: "Halts execution if Indeterminate, unless an explicit override mechanism is active."
+    action: "Stop and Expose."
+
+# -------------------------------------------------------------------
+# Implementation Guidelines
+# -------------------------------------------------------------------
+guidelines:
+  - "IDG must not 'fix' the input. It must reject ambiguity."
+  - "IDG fails safe (stops) rather than fails open (guesses)."

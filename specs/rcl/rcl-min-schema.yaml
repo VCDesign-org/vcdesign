@@ -1,0 +1,47 @@
+rcl_min_schema:
+  meta:
+    rcl_version: "1.0.0"
+    scope_id: "<chapter_or_project_id>"
+    created_at: "<iso8601>"
+
+  P:
+    promise: "<e.g. 業務効率化>"
+    must_be_true:
+      - "<condition_1>"
+      - "<condition_2>"
+    must_not_auto_decide:
+      - "<non_automatable_decision_1>"
+      - "<non_automatable_decision_2>"
+    review_cycle_hint:
+      cadence: "<e.g. 6 months>"
+      next_review_due: "<iso8601|optional>"
+
+  D:
+    current_state:
+      - "<implementation / operation / display state>"
+    ai_assist_allowed:
+      - "<what AI may suggest>"
+    ai_assist_forbidden:
+      - "<what AI must not finalize>"
+
+  Delta:
+    open_deltas:
+      - delta_id: "DELTA-001"
+        fact: "<P not satisfied fact>"
+        detected_at: "<iso8601>"
+        severity: "<low|medium|high>"
+        due_by: "<iso8601|optional>"
+        evidence:
+          - "<log / observation / interview>"
+        suggested_R:
+          action: "<Close|DeferToPool|Abort>"
+          rationale: "<why this action>"
+          target_pool: "<pool_id|optional>"
+
+  R:
+    resolutions:
+      - delta_id: "DELTA-001"
+        action: "<Close|DeferToPool|Abort>"
+        decided_by: "<human|role|pool>"
+        decided_at: "<iso8601>"
+        notes: "<conditions / handoff / rationale>"

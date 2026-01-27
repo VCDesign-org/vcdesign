@@ -1,0 +1,121 @@
+# VCDesign Core: Constitution
+# Defines the "Why" and "Attitude" of VCDesign.
+# This file serves as the moral and philosophical anchor for the specifications.
+
+id: "vcdesign-core-constitution"
+title: "Constitution & Philosophy"
+layer: "core"
+status: "stable"
+version: "1.1.0"
+
+# -------------------------------------------------------------------
+# Core Constitution (Structured Axioms & Guarantees)
+# -------------------------------------------------------------------
+vcdesign_constitution_core:
+  purpose:
+    - id: VC-P-001
+      statement: >
+        VCDesign exists to prevent the discontinuity of value,
+        judgment, and responsibility across time.
+
+  axioms:
+    - id: VC-A-001
+      statement: >
+        Judgment is a design object and must not be left implicit.
+    - id: VC-A-002
+      statement: >
+        Responsibility must be explicitly anchored to a human
+        or accountable organizational entity.
+    - id: VC-A-003
+      statement: >
+        Value exists only if it can be carried forward beyond
+        the current decision or system state.
+    - id: VC-A-004
+      statement: >
+        AI may generate interpretations and options,
+        but must not be the final anchor of responsibility.
+
+  guarantees:
+    - id: VC-G-001
+      statement: >
+        No decision shall be executed without an identifiable
+        responsibility anchor (RCA).
+    - id: VC-G-002
+      statement: >
+        Uncertainty must remain visible and must not be erased
+        by optimization or automation.
+    - id: VC-G-003
+      statement: >
+        Every decision must belong to a closed loop that allows
+        revision, reflection, or termination.
+
+  reject_conditions:
+    - id: VC-R-001
+      statement: >
+        Designs that derive value primarily from addiction,
+        compulsion, or cognitive manipulation are not compatible
+        with VCDesign.
+    - id: VC-R-002
+      statement: >
+        Designs that justify value destruction by short-term
+        profit or engagement metrics are not compatible
+        with VCDesign.
+    - id: VC-R-003
+      statement: >
+        Designs that externalize responsibility to systems,
+        algorithms, or abstract optimization goals are not
+        compatible with VCDesign.
+
+  chapter_model:
+    definition: >
+      A chapter is the minimum unit in which judgment,
+      responsibility, and value continuity are jointly handled.
+    required_elements:
+      - decision_basis
+      - responsibility_anchor
+      - carry_forward_state
+
+  applicability_clause:
+    id: VC-AP-001
+    statement: >
+      VCDesign is applicable only when value continuity can be
+      reasonably preserved within an explicitly defined design scope.
+
+  non_applicability_conditions:
+    - id: VC-NAP-001
+      statement: >
+        VCDesign is not applicable when continued growth or expansion
+        beyond the original design scope is required without a
+        corresponding increase in accountable responsibility.
+    - id: VC-NAP-002
+      statement: >
+        VCDesign is not applicable when the only way to preserve value
+        is to exceed the design scope while responsibility cannot be
+        explicitly escalated or reassigned.
+    - id: VC-NAP-003
+      statement: >
+        VCDesign is not applicable when termination, rollback, or
+        abandonment is structurally or politically disallowed.
+
+  advisory_statement:
+    id: VC-ADV-001
+    statement: >
+      If any of the non-applicability conditions are met during
+      design or operation, VCDesign shall advise that value continuity
+      is unlikely to be preserved.
+
+  termination_principle:
+    statement: >
+      Proper termination is a valid and necessary outcome
+      when value continuity can no longer be preserved.
+
+# -------------------------------------------------------------------
+# Manifesto (Design Attitudes)
+# -------------------------------------------------------------------
+manifesto:
+  attitudes:
+    - static_stability
+    - dynamic_adaptability
+    - spatial_safety
+    - emergency_avoidance
+    - proper_termination
