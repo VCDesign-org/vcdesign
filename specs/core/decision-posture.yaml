@@ -62,3 +62,14 @@ non_commitments:
   - "No required specific method (e.g. Agile, Waterfall)"
   - "No required implementation language"
   - "No required process framework"
+
+# -------------------------------------------------------------------
+# RCL Alignment (Correspondence to Responsibility Closure Loop)
+# -------------------------------------------------------------------
+rcl_alignment:
+  mapping:
+    commit: "Close"
+    defer: "DeferToPool"
+    abandon: "Abort"
+    reconsider: "Re-open P or revise bindings (not a Resolution action itself)"
+

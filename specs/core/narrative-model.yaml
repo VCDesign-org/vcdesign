@@ -16,6 +16,9 @@ narrative_insights:
     - "Decision basis"
     - "Responsible agent"
     - "Passable forward state"
+    - "Open deltas (Δ)"
+    - "Resolution log (R)"
+    - "Pool entries (Defer as Resolution)"
   value_continuity_definition:
     - "Value persists only across chapters"
   operation_redefinition:
