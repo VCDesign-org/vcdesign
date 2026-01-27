@@ -12,8 +12,12 @@ meta:
   role: "The gate to Responsibility."
   context: "Occurs at an 'Explicit Verification Point' (also known as a Closure Point or Boundary)."
 
+preconditions:
+  - "Responsibility Closure Loop (RCL) is defined and Δ is assigned to R before closure."
+
 # -------------------------------------------------------------------
 # Input Contract
+
 # -------------------------------------------------------------------
 input:
   required_fields:
