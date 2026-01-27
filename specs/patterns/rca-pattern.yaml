@@ -11,8 +11,15 @@ meta:
   role: "The active judge at the boundary."
   implements: "vcdesign-protocol-judgment-closure"
 
+
+preconditions:
+  - "Responsibility Closure Loop (RCL) is defined and operational."
+notes:
+  - "RCA does not substitute RCL. RCA assumes responsibility only after Δ is assigned to R."
+
 # -------------------------------------------------------------------
 # Constitutional Definition
+
 # -------------------------------------------------------------------
 constitutional_role:
   - "Anchor responsibility for a decision"
