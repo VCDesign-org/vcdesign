@@ -1,12 +1,14 @@
 # VCDesign Core: Axioms (The Problem Space)
 # This file defines the "Unstable Value World" (UVW) condition.
 # It is the unmodifiable premise of VCDesign.
+# 日本語要約: 価値・文脈・判断・責任の不安定性を前提として定義する。
 
 id: "vcdesign-core-axioms"
 title: "Axioms of Unstable Value World"
 layer: "core"
 status: "stable"
 version: "2.1.0"
+license: "MIT"
 
 meta:
   name: "Unstable Value World (UVW)"

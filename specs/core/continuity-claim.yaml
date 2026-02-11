@@ -1,11 +1,13 @@
 # VCDesign Core: Continuity Claim (The Stance)
 # This file defines our mutable stance: "We choose to claim continuity."
+# 日本語要約: 現時点での継続性優先の立場と運用上の約束を示す。
 
 id: "vcdesign-core-continuity-claim"
 title: "Continuity Claim"
 layer: "core"
 status: "draft"
 version: "2.1.0"
+license: "MIT"
 
 meta:
   role: "Worldview / Stance"

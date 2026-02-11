@@ -1,12 +1,14 @@
 # VCDesign Core: Decision Posture (The Response)
 # This file defines the irreducible Core of VCDesign.
 # "When in doubt, stop or review."
+# 日本語要約: 実行時の判断姿勢を定義し、禁止条件の適用元を参照する。
 
 id: "vcdesign-core-decision-posture"
 title: "Decision Posture (Stop or Review)"
 layer: "core"
 status: "stable"
 version: "2.1.0"
+license: "MIT"
 
 meta:
   principle: "The Safety of Pause"
@@ -30,6 +32,8 @@ core_questions:
 # -------------------------------------------------------------------
 # Enforcement Reference (Normative Source)
 # -------------------------------------------------------------------
+# Single source of truth for start/operation prohibitions:
+# specs/core/constitution.yaml (VC-X-001..003)
 enforcement_ref:
   source: "./constitution.yaml"
   applies:

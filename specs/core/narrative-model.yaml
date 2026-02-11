@@ -1,12 +1,14 @@
 # VCDesign Core: Narrative Model
 # Defines the "Model" of operation and value continuity.
 # Introduces "Chapter" as a core design unit.
+# 日本語要約: 時間経過の中で判断と責任を継承する運用モデルを示す。
 
 id: "vcdesign-core-narrative-model"
 title: "Narrative Model (Chapter & Operation)"
 layer: "core"
 status: "stable"
 version: "1.0.0"
+license: "MIT"
 
 # -------------------------------------------------------------------
 # Narrative Insights (The Model)

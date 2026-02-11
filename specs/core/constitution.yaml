@@ -1,12 +1,14 @@
 # VCDesign Core: Constitution
 # Defines VCDesign as a law-level specification.
 # This file intentionally avoids implementation techniques.
+# 日本語要約: VCDesignの法則層を定義し、設計時の禁止条件と優先順位を示す。
 
 id: "vcdesign-core-constitution"
 title: "Constitution (Law Layer)"
 layer: "core"
 status: "stable"
 version: "2.0.0"
+license: "MIT"
 
 # -------------------------------------------------------------------
 # Declaration
@@ -35,6 +37,13 @@ boundary_principle:
     The core asserts only that boundaries exist as an abstract condition.
     Concrete boundary catalogs belong to implementation or reference layers.
 
+term_unification:
+  implementation_boundary_predefinition:
+    ja: "実装境界事前定義"
+    en: "Implementation Boundary Predefinition"
+    definition: >
+      Boundaries must be intentionally defined before implementation starts.
+
 responsibility_metrics_positioning:
   statement: >
     Responsibility metrics are observation instruments for auditing continuity;
@@ -60,7 +69,7 @@ precedence_rule:
 prohibited_states:
   - id: VC-X-001
     statement: >
-      Implementation must not start when boundaries are not intentionally defined.
+      実装境界事前定義が満たされない限り、実装を開始してはならない。
   - id: VC-X-002
     statement: >
       Implementation must not start when the locus of judgment cannot be explained.
@@ -69,6 +78,7 @@ prohibited_states:
       Operation must not proceed when responsibility attribution cannot be explained.
 
 non_negotiable_start_condition:
+  # See also: specs/core/decision-posture.yaml#enforcement_ref
   statement_ja: >
     システム設計において、判断の所在と責任の帰属が説明できない状態で
     実装を開始してはならない。

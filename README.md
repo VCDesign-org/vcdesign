@@ -6,6 +6,7 @@ VCDesign (Value Continuity Design) is a set of specifications not for "how to bu
 
 ## What is VCDesign?
 VCDesign is a design specification to prevent the loss of continuity in **Judgment**, **Responsibility**, and **Time / Operations** in highly automated systems.
+Core term: **Implementation Boundary Predefinition** (boundaries must be intentionally defined before implementation starts).
 
 As a core start condition, implementation must not begin unless the locus of judgment and the attribution of responsibility are explainable.
 
@@ -32,3 +33,6 @@ We recommend reading in the following order:
 ## Status
 Core specifications are **Stable**.
 Protocols and Patterns are **Stable** but extensible.
+
+## License
+This repository is licensed under the **MIT License**. See `LICENSE`.

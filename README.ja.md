@@ -11,6 +11,7 @@ VCDesign（Value Continuity Design）は、
 VCDesign は、**高度な自動化を含むシステム**において、
 **判断 (Judgment)**、**責任 (Responsibility)**、そして
 **時間 (Time / Operations)** の連続性を失わないための設計仕様です。
+Core用語: **実装境界事前定義**（実装開始前に境界を意図的に定義すること）。
 
 Core の開始条件として、判断の所在と責任の帰属が説明できない状態で
 実装を開始してはなりません。
@@ -44,3 +45,6 @@ Core の開始条件として、判断の所在と責任の帰属が説明でき
 ## ステータス (Status)
 Core 仕様は **Stable**（安定）です。
 Protocols と Patterns は **Stable** ですが、拡張可能です。
+
+## ライセンス
+本リポジトリは **MIT License** です。`LICENSE` を参照してください。
