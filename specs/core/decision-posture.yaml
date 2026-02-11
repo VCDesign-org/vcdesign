@@ -11,7 +11,7 @@ version: "2.1.0"
 meta:
   principle: "The Safety of Pause"
   role: "Constraint"
-  note: "This core defines unavoidable questions only. How to answer them is left to Protocols."
+  note: "This core defines unavoidable questions only. Concrete procedures belong to implementation layers."
 
 # -------------------------------------------------------------------
 # The Central Principle
@@ -28,6 +28,16 @@ core_questions:
   - "If not, what will be done?"
 
 # -------------------------------------------------------------------
+# Enforcement Reference (Normative Source)
+# -------------------------------------------------------------------
+enforcement_ref:
+  source: "./constitution.yaml"
+  applies:
+    - "VC-X-001"
+    - "VC-X-002"
+    - "VC-X-003"
+
+# -------------------------------------------------------------------
 # Structural Consequence: Explicit Verification
 # -------------------------------------------------------------------
 structural_consequence:
@@ -41,19 +51,19 @@ structural_consequence:
 allowed_responses:
   commit:
     meaning: "Continuity is affirmed under current criteria."
-    action: "Close judgment and proceed (see protocols)."
+    action: "Proceed with explicit responsibility."
 
   reconsider:
     meaning: "Judgment will be revisited."
-    action: "Loop back to P/definition/binding. (Not a Resolution action itself.)"
+    action: "Re-open criteria and assumptions."
 
   defer:
-    meaning: "Judgment is not executed now; it is explicitly deferred as a Resolution."
-    action: "Assign to Responsibility Pool (DeferToPool). Wait for required input under pool rules."
+    meaning: "Judgment is not executed now; it is explicitly deferred."
+    action: "Preserve accountability and wait for required input."
 
   abandon:
     meaning: "Value continuity is explicitly abandoned."
-    action: "Stop system (Abort) and close responsibility explicitly."
+    action: "Stop the current line of execution with explicit accountability."
 
 
 # -------------------------------------------------------------------
@@ -63,14 +73,3 @@ non_commitments:
   - "No required specific method (e.g. Agile, Waterfall)"
   - "No required implementation language"
   - "No required process framework"
-
-# -------------------------------------------------------------------
-# RCL Alignment (Correspondence to Responsibility Closure Loop)
-# -------------------------------------------------------------------
-rcl_alignment:
-  mapping:
-    commit: "Close"
-    defer: "DeferToPool"
-    abandon: "Abort"
-    reconsider: "Re-open P or revise bindings (not a Resolution action itself)"
-

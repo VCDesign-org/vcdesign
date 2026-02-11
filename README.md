@@ -2,12 +2,16 @@
 
 VCDesign (Value Continuity Design) is a set of specifications not for "how to build," but for designing how to protect the created value throughout time.
 
+> VCDesign is law; VC-AD is its implementation at the current technical level.
+
 ## What is VCDesign?
-VCDesign is a design specification to prevent the loss of continuity in **Judgment**, **Responsibility**, and **Time / Operations** in AI and automated systems.
+VCDesign is a design specification to prevent the loss of continuity in **Judgment**, **Responsibility**, and **Time / Operations** in highly automated systems.
+
+As a core start condition, implementation must not begin unless the locus of judgment and the attribution of responsibility are explainable.
 
 It aims to explicitly structure where individual judgments are closed, who takes responsibility, and how they evolve over time during operations, even as the system scales.
 
-These specifications are not merely reading material. They are defined as an **executable design language** intended to be used by humans and Generative AI for **design assistance**, **judgment support**, and **code generation**.
+These specifications are not merely reading material. They are defined as an **executable design language** intended to be used by humans and advanced automation support for **design assistance**, **judgment support**, and **code generation**.
 
 ## Where to start?
 See the **[Specification Map](specs/map.md)** for the full overview.

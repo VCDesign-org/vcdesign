@@ -1,129 +1,100 @@
 # VCDesign Core: Constitution
-# Defines the "Why" and "Attitude" of VCDesign.
-# This file serves as the moral and philosophical anchor for the specifications.
+# Defines VCDesign as a law-level specification.
+# This file intentionally avoids implementation techniques.
 
 id: "vcdesign-core-constitution"
-title: "Constitution & Philosophy"
+title: "Constitution (Law Layer)"
 layer: "core"
 status: "stable"
-version: "1.1.0"
+version: "2.0.0"
 
 # -------------------------------------------------------------------
-# Core Constitution (Structured Axioms & Guarantees)
+# Declaration
 # -------------------------------------------------------------------
-vcdesign_constitution_core:
-  references:
-    standards:
-      - "/specs/rcl/responsibility_closure_loop.yaml"
-    implementation_min_schema:
-      - "/specs/rcl/rcl-min-schema.yaml"
-    guidance:
-      - "/docs/rcl/rcl-incomplete-design.md"
+core_relationship_definition:
+  statement_ja: "VCDesignは法則であり、VC-ADはその現在技術水準における具体化である。"
+  statement_en: "VCDesign is law; VC-AD is its implementation at the current technical level."
 
-  purpose:
-    - id: VC-P-001
-      statement: >
-        VCDesign exists to prevent the discontinuity of value,
-        judgment, and responsibility across time.
+philosophical_declaration:
+  statement: >
+    VCDesign defines conditions for preserving value continuity across time.
+    It does not prescribe specific tools, protocols, or stack decisions.
 
-  axioms:
-    - id: VC-A-001
-      statement: >
-        Judgment is a design object and must not be left implicit.
-    - id: VC-A-002
-      statement: >
-        Responsibility must be explicitly anchored to a human
-        or accountable organizational entity.
-    - id: VC-A-003
-      statement: >
-        Value exists only if it can be carried forward beyond
-        the current decision or system state.
-    - id: VC-A-004
-      statement: >
-        AI may generate interpretations and options,
-        but must not be the final anchor of responsibility.
+core_principles:
+  - id: VC-P-001
+    statement: "A human must be able to explain why the system exists."
+  - id: VC-P-002
+    statement: "Judgment must remain inheritable across people and time."
+  - id: VC-P-003
+    statement: "Boundaries exist and must not be ignored."
+  - id: VC-P-004
+    statement: "Responsibility must not disappear during operation or handoff."
 
-  guarantees:
-    - id: VC-G-001
-      statement: >
-        No decision shall be executed without an identifiable
-        responsibility anchor (RCA).
-    - id: VC-G-002
-      statement: >
-        Uncertainty must remain visible and must not be erased
-        by optimization or automation.
-    - id: VC-G-003
-      statement: >
-        Every decision must belong to a closed loop that allows
-        revision, reflection, or termination.
+boundary_principle:
+  statement: >
+    The core asserts only that boundaries exist as an abstract condition.
+    Concrete boundary catalogs belong to implementation or reference layers.
 
-  reject_conditions:
-    - id: VC-R-001
-      statement: >
-        Designs that derive value primarily from addiction,
-        compulsion, or cognitive manipulation are not compatible
-        with VCDesign.
-    - id: VC-R-002
-      statement: >
-        Designs that justify value destruction by short-term
-        profit or engagement metrics are not compatible
-        with VCDesign.
-    - id: VC-R-003
-      statement: >
-        Designs that externalize responsibility to systems,
-        algorithms, or abstract optimization goals are not
-        compatible with VCDesign.
+responsibility_metrics_positioning:
+  statement: >
+    Responsibility metrics are observation instruments for auditing continuity;
+    they are not the design itself and must not replace judgment design.
 
-  chapter_model:
-    definition: >
-      A chapter is the minimum unit in which judgment,
-      responsibility, and value continuity are jointly handled.
-    required_elements:
-      - decision_basis
-      - responsibility_anchor
-      - carry_forward_state
+# -------------------------------------------------------------------
+# Operational Implications
+# -------------------------------------------------------------------
+operational_implications:
+  - "Design must keep the rationale of judgments recoverable."
+  - "Handoffs must preserve accountability, not just outputs."
+  - "When boundary assumptions change, judgment validity must be re-checked."
+  - "Optimization that erases responsibility is invalid."
 
-  applicability_clause:
-    id: VC-AP-001
+precedence_rule:
+  statement: >
+    When conflict arises, value continuity takes precedence over performance,
+    efficiency, and convenience.
+
+# -------------------------------------------------------------------
+# Prohibited States (Design Must Not Start / Proceed)
+# -------------------------------------------------------------------
+prohibited_states:
+  - id: VC-X-001
     statement: >
-      VCDesign is applicable only when value continuity can be
-      reasonably preserved within an explicitly defined design scope.
-
-  non_applicability_conditions:
-    - id: VC-NAP-001
-      statement: >
-        VCDesign is not applicable when continued growth or expansion
-        beyond the original design scope is required without a
-        corresponding increase in accountable responsibility.
-    - id: VC-NAP-002
-      statement: >
-        VCDesign is not applicable when the only way to preserve value
-        is to exceed the design scope while responsibility cannot be
-        explicitly escalated or reassigned.
-    - id: VC-NAP-003
-      statement: >
-        VCDesign is not applicable when termination, rollback, or
-        abandonment is structurally or politically disallowed.
-
-  advisory_statement:
-    id: VC-ADV-001
+      Implementation must not start when boundaries are not intentionally defined.
+  - id: VC-X-002
     statement: >
-      If any of the non-applicability conditions are met during
-      design or operation, VCDesign shall advise that value continuity
-      is unlikely to be preserved.
-
-  termination_principle:
+      Implementation must not start when the locus of judgment cannot be explained.
+  - id: VC-X-003
     statement: >
-      Proper termination is a valid and necessary outcome
-      when value continuity can no longer be preserved.
+      Operation must not proceed when responsibility attribution cannot be explained.
+
+non_negotiable_start_condition:
+  statement_ja: >
+    システム設計において、判断の所在と責任の帰属が説明できない状態で
+    実装を開始してはならない。
+  statement_en: >
+    In system design, implementation must not start unless the locus of judgment
+    and the attribution of responsibility are explainable.
 
 # -------------------------------------------------------------------
-# Manifesto (Design Attitudes)
+# Time Layer
 # -------------------------------------------------------------------
-manifesto:
-  attitudes:
-    - static_stability
-    - dynamic_adaptability
-    - spatial_safety
-    - emergency_avoidance
-    - proper_termination
+time_layer:
+  - "Implementations disappear."
+  - "Technologies change."
+  - "Judgments must be inheritable."
+  - "Responsibility moves across actors and phases."
+
+# -------------------------------------------------------------------
+# Footer References (Implementation Examples Only)
+# -------------------------------------------------------------------
+implementation_examples_footer:
+  note: "The following are implementation-side examples, not Core definitions."
+  examples:
+    - "CPP"
+    - "RCAITL"
+    - "TDDD"
+
+termination_law:
+  statement: >
+    システムは、説明可能な判断が継承され続ける限りにおいてのみ、存在価値を持つ。

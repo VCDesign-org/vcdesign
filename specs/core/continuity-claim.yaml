@@ -33,13 +33,13 @@ stance:
     - "Optimization without continuity is considered a failure."
 
 # -------------------------------------------------------------------
-# AI / Human Relation
+# Automation / Human Relation
 # -------------------------------------------------------------------
-ai_human_relation:
-  - "AI operates within defined judgment constraints."
-  - "Humans define the continuity criteria."
+automation_human_relation:
+  - "Highly automated components operate within defined judgment constraints."
+  - "Humans define continuity criteria."
   - "The system does not invent value; it preserves continuity of defined value."
-  - "AI operates only under Judgment Closure / Handshake constraints."
+  - "Automation must remain accountable to explicit judgment governance."
 
 # -------------------------------------------------------------------
 # Distinctions

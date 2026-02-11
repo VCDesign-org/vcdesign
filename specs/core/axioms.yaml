@@ -43,8 +43,8 @@ axioms:
 
   A5_ResponsibilityGap:
     statement: "Only humans bear responsibility."
-    description: "Machines process logic, but only humans (or legal entities) can bear responsibility for the outcome of that logic."
-    implication: "Automated systems must have a human-in-the-loop or a clear liability owner."
+    description: "Automated components process logic, but only humans (or legal entities) can bear responsibility for outcomes."
+    implication: "Highly automated systems must retain a clear liability owner."
 
 # -------------------------------------------------------------------
 # Non-Assumptions (What we deliberately do NOT assume)
@@ -58,9 +58,9 @@ non_assumptions:
     statement: "Stable Consensus"
     rejection: "'Good' is not universally agreed upon and does not stay agreed upon."
     
-  - id: no_ai_understanding
-    statement: "AI Understanding"
-    rejection: "AI does not 'understand' value; it mimics patterns of value descriptions."
+  - id: no_automation_understanding
+    statement: "Automated Understanding"
+    rejection: "Highly automated systems do not inherently understand value; they process modeled patterns."
 
   - id: no_finality
     statement: "Permanent Solution"
