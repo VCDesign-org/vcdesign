@@ -8,7 +8,7 @@
 - **[Case Schema](core/schema_case.yaml)**: Data structure for cases.
 - **[Log Schema](core/schema_log.yaml)**: Data structure for decision logs.
 
-> **Note**: **[RCL (Responsibility Closure Loop)](rcl/responsibility_closure_loop.yaml)** is a cross-cutting Standard.
+> **Note**: **[RCL (Responsibility Closure Loop)](patterns/rcl/responsibility_closure_loop.yaml)** is a cross-cutting Standard.
 > It is not part of explicit Core/Protocols/Patterns layers, but guarantees design completion
 > by ensuring every Δ (Definition Gap) is assigned to an explicit R (Close / Defer to Pool / Abort).
 
@@ -22,6 +22,7 @@
 *Read this to implement the system.*
 - **[Boundary Structure](patterns/boundary-pattern.yaml)**: The generic structure of an Explicit Verification Point.
 - **[RCA Pattern](patterns/rca-pattern.yaml)**: The structure of a Responsibility Closure Agent.
+- **[RCL (Responsibility Closure Loop)](patterns/rcl/responsibility_closure_loop.yaml)**: The design pattern for ensuring responsibility closure.
 
 ## 4. Chapters (The "When" - Narratives)
 *Read this to understand how value, meaning, and responsibility erode or shift over time.*

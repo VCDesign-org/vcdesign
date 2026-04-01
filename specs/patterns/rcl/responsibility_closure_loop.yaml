@@ -9,6 +9,8 @@ responsibility_closure_loop:
     Ensures that judgment and responsibility are not skipped in system design and implementation gaps.
     It operationalizes the VCDesign philosophy into a concrete design process loop: P -> D -> Δ -> R.
 
+    # 注釈: 本ループは設計時の完全性を保証するものであり、運用時は core.yaml の PDΔA フローとして具現化される。
+
   constitutional_alignment:
     P: "VC-A-001 (Judgment must not be implicit)"
     Delta: "VC-G-002 (Uncertainty must remain visible)"
@@ -27,7 +29,10 @@ responsibility_closure_loop:
       description: "Facts indicating that P is not fulfilled (not executed, delayed, boundary violation)."
     R:
       name: "Resolution (R)"
-      description: "Explicit closure of responsibility (stop, return to human, accept risk, assign to pool)."
+      description: >
+        Explicit closure of responsibility (stop, return to human, accept risk, assign to pool).
+        # マッピング: 運用時は core.yaml の Action (A) として具現化。
+        # Close → Fix/Retire, Defer → Defer, Abort → Retire (参照: /specs/core/core.yaml)
       valid_actions:
         - "Finalize Decision (Close)"  # 判断を下す
         - "Assign to Pool (Defer)"     # プールに入れて時を待つ（これもResolutionとする）

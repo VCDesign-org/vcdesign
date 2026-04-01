@@ -1,0 +1,38 @@
+# RCL と core.yaml の関係整理ポイント
+
+## 現在の関係概要
+- **core.yaml**: VCDesign OS の基本フローとして PDΔA (Precondition → Do → Delta → Action) を定義
+- **rcl/**: Responsibility Closure Loop (RCL) として P → D → Δ → R (Resolution) を定義
+
+両者は表裏一体だが、微妙に異なる用語とスコープを持つ。
+
+## 整理ポイント
+
+### 1. 用語の整合性
+- **RCL の "R" (Resolution)**: Close / Defer to Pool / Abort の3つの選択肢
+- **core.yaml の "A" (Action)**: Fix / Reframe / Defer / Retire の4つの選択肢
+- **整理案**: RCL を core.yaml の Action に統合するか、RCL を「設計時」のResolution、core を「運用時」のAction と位置づけ
+
+### 2. スコープの明確化
+- **RCL**: 設計・実装時の責任クロージャー（設計の完全性を保証）
+- **core.yaml**: 運用時の章遷移フロー（価値継続の維持）
+- **整理案**: RCL を「設計フェーズ」のプロセス、core を「運用フェーズ」のフローとして分離
+
+### 3. 統合の可能性
+- **統合案1**: RCL の R を core.yaml の Action にマッピング
+  - Close → Fix/Retire
+  - Defer to Pool → Defer
+  - Abort → Retire
+- **統合案2**: RCL を core/ に移動し、core.yaml の一部として扱う
+- **統合案3**: 両者を別々に維持し、map.md で関係を明記
+
+### 4. 推奨アクション
+- まず、rcl/responsibility_closure_loop.yaml の内容を core.yaml の PDΔA と比較
+- 矛盾があれば、core.yaml を優先（統合後）
+- RCL が設計プロセスとして有用なら残し、運用フローとして core.yaml を補完する形に整理
+- 必要に応じて rcl/ を specs/patterns/ に移動（設計パターンとして）
+
+### 5. チェックポイント
+- RCL の axiom "Identifying Δ and assigning it to a Resolution constitutes a complete design." が core.yaml と矛盾しないか
+- RCL の components (manifest, auditor) が core/ のスキーマと統合可能か
+- map.md の Note 部分を更新して関係を明確に記述
