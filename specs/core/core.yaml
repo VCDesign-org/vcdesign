@@ -29,7 +29,8 @@ vcdesign_core:
 
     supervisor:
       description: >
-        責任の消失を防ぎ、最終収束を行う章
+        責任の消失を防ぎ、最終収束を行う章。
+        最終収束点として、すべての deferred 案件をクローズする義務がある。
 
   flow:
     name: PDΔA

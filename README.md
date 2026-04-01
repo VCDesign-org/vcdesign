@@ -24,7 +24,7 @@ We recommend reading in the following order:
 
 ## Directory Structure
 
-* **[specs/core/](specs/core/)**: **The Authority.** The minimal, unavoidable definitions of VCDesign.
+* **[specs/core/](specs/core/)**: **The Authority.** The minimal, unavoidable definitions of VCDesign. 思想を知りたければ各YAMLの冒頭コメントを読み、実装したければスキーマに従う。
 * **[specs/protocols/](specs/protocols/)**: **The Procedures.** Standardized ways to close judgments and hand off responsibility.
 * **[specs/patterns/](specs/patterns/)**: **The Structures.** Reference patterns (like Boundary Structures and RCA) to implement the core.
 * **[specs/chapters/](specs/chapters/)**: **The Narratives (The "When").** Time-based design units describing how judgment and responsibility shift over time (not phases or versions).
