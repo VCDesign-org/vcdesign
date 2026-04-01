@@ -26,6 +26,15 @@ Core の開始条件として、判断の所在と責任の帰属が説明でき
 人間や高度な自動化支援が**設計支援・判断支援・コード生成**に利用できる、
 **実行可能な設計言語**として定義されています。
 
+### VCDesign の中核原則
+VCDesign は、価値の連続性を目的として、章と責任の遷移によってシステムを構造化するための開発 OS です。
+
+#### 基本原則
+- **責任非消失原則**: 責任は常にどこかに存在しなければならない。
+- **説明可能性原則**: すべての判断は人間に説明可能でなければならない。
+- **AI 非責任原則**: AI は支援するが、責任は負わない。
+- **Δ 駆動原則**: システムは前提条件からの逸脱（Δ）を検出して作動する。
+
 ## どこから読むか (Where to start?)
 全体の俯瞰図については **[Specification Map](specs/map.md)** を参照してください。
 
@@ -36,7 +45,7 @@ Core の開始条件として、判断の所在と責任の帰属が説明でき
 
 ## ディレクトリ構造 (Directory Structure)
 
-* **[specs/core/](specs/core/)**: **The Authority.** VCDesign の最小限かつ不可避な定義。
+* **[specs/core/](specs/core/)**: **The Authority.** VCDesign の最小限かつ不可避な定義。思想を知りたければ各 YAML の冒頭コメントを読み、実装したければスキーマに従ってください。
 * **[specs/protocols/](specs/protocols/)**: **The Procedures.** 判断を閉じ、責任を引き渡すための標準的な手順。
 * **[specs/patterns/](specs/patterns/)**: **The Structures.** コアを実装するための参照パターン（境界構造やRCAなど）。
 * **[specs/chapters/](specs/chapters/)**: **The Narratives (The "When").** フェーズやバージョンではなく、判断や責任の時間的変化（When）を扱う設計単位。
