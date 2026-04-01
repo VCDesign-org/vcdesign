@@ -2,9 +2,11 @@
 
 ## 1. The Core (The "Why" and "What")
 *Start here. This defines the problem and the unavoidable response.*
-- **[Axioms](core/axioms.yaml)**: The 5 definitions of the "Unstable Value World" (Problem Space).
-- **[Decision Posture](core/decision-posture.yaml)**: The "Stop or Review" rule (The Response).
-- **[Continuity Claim](core/continuity-claim.yaml)**: Our stance on prioritizing continuity over optimization.
+- **[Core](core/core.yaml)**: The basic OS, PDΔA flow, and responsibility model.
+- **[Policies](core/policies.yaml)**: Governance, AI boundaries, and control rules.
+- **[Metrics](core/metrics.yaml)**: Responsibility metrics and Δ detection.
+- **[Case Schema](core/schema_case.yaml)**: Data structure for cases.
+- **[Log Schema](core/schema_log.yaml)**: Data structure for decision logs.
 
 > **Note**: **[RCL (Responsibility Closure Loop)](rcl/responsibility_closure_loop.yaml)** is a cross-cutting Standard.
 > It is not part of explicit Core/Protocols/Patterns layers, but guarantees design completion
