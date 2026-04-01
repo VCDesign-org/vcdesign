@@ -1,0 +1,86 @@
+# VCDesign Core 変更案（日本語版Webサイト用）
+
+## 概要
+VCDesignのcoreが大きく変更されたため、site/ja/index.htmlの内容を更新する必要があります。現在のページは概要のみで、coreの詳細な概念が不足しています。変更案として、coreの新しいプリミティブ、フロー、ポリシーなどを紹介するセクションを追加します。
+
+## 変更点の提案
+
+### 1. 新しいセクションの追加: "VCDesign Core の概要"
+- 位置: "これは何のための仕様か" セクションの後。
+- 内容:
+  - VCDesign Coreの概念説明。
+  - プリミティブ（chapter, responsibility, delta, action）の紹介。
+  - PDΔAフローの説明。
+  - 責任モデルとライフサイクルの概要。
+
+### 2. 既存セクションの更新: "2026年時点での実装"
+- coreの変更を反映し、value-review, VC-AD, TDDDがcoreに基づいていることを明記。
+- 各リンクの説明をcoreの文脈で更新。
+
+### 3. 新しいセクションの追加: "Core Metrics と Policies"
+- 位置: "診断（Diagnostics）" セクションの後。
+- 内容:
+  - Base Metricsの概要（owner_missing, ai_overreachなど）。
+  - Policiesの原則（AI Governance, Reframe Controlなど）。
+
+### 4. 仕様参照セクションの更新
+- core.yaml, metrics.yaml, policies.yamlへのリンクを追加。
+- GitHubリポジトリのリンクを強調。
+
+### 5. フッターの更新
+- 2026年の変更を反映した文言。
+
+## 具体的なテキスト案
+
+### 新セクション: VCDesign Core の概要
+```
+<section id="core-overview">
+    <h2 class="usage-title">VCDesign Core の概要</h2>
+    <p>
+        VCDesign Coreは、価値継続を目的とした開発OSです。章（Chapter）と責任（Responsibility）の遷移によってシステムを構成します。
+    </p>
+    <h3>プリミティブ</h3>
+    <ul>
+        <li><strong>Chapter:</strong> 価値を継続させるための責任配置単位</li>
+        <li><strong>Responsibility:</strong> 章を成立させる主体およびその配置</li>
+        <li><strong>Delta:</strong> 章の成立条件または責任配置の維持可能性が崩れた兆候</li>
+        <li><strong>Action:</strong> Fix, Reframe, Defer, Retire の4タイプ</li>
+    </ul>
+    <h3>PDΔAフロー</h3>
+    <p>
+        Precondition → Do → Delta → Action のサイクルで、システムの価値を継続的に守ります。
+    </p>
+    <h3>責任モデル</h3>
+    <p>
+        各章にはOwner, Supporters, Final Deciderが必要です。Final Deciderは常に人間でなければなりません。
+    </p>
+</section>
+```
+
+### 更新: 2026年時点での実装
+- 各項目の説明をcoreに基づいて調整。
+- 例: value-review → "価値と境界を確定し、ChapterのPreconditionを定義"
+
+### 新セクション: Core Metrics と Policies
+```
+<section id="core-metrics-policies">
+    <h2 class="usage-title">Core Metrics と Policies</h2>
+    <p>
+        Core Metricsは責任のズレを検知するための指標群です。例: Owner Missing, AI Overreach。
+    </p>
+    <p>
+        PoliciesはAIの判断制約やReframeの制御を定義します。AIは最終判断を持てず、人間が責任を担います。
+    </p>
+</section>
+```
+
+## 実装手順
+1. index.htmlに上記セクションを追加。
+2. CSSでスタイル調整（必要に応じて）。
+3. 英語版（site/en/）は後で反映。
+
+## 注意点
+- 変更は日本語のみ。
+- coreの変更を正確に反映。
+- 読みやすさを重視。</content>
+<parameter name="filePath">/Users/hironobu/Documents/src/vsdesign/site/ja/core_change_proposal.txt

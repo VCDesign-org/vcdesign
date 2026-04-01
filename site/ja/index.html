@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>VCDesign</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <main class="frame">
+        <header>
+            <nav class="lang-nav"> <a href="/" class="lang-link">English</a> </nav>
+            <h1 class="hero-title">VCDesign</h1>
+            <p class="hero-subtitle">(Value Continuity Design)</p>
+            <p class="hero-tagline"> VCDesign（Value Continuity Design）。<br /> 「どう作るか」ではなく、作られた後の価値を、<br />
+                時間の中でどう守り抜くかの設計原則を定義します。 </p>
+        </header>
+        <section id="constitution">
+            <h2 class="usage-title">VCDesign 憲法</h2>
+            <div class="constitution-grid">
+                <div class="constitution-item">
+                    <span class="constitution-label">VCDesign 憲法 (Constitution)</span>
+                    <div class="constitution-entry">
+                        <h3 class="constitution-heading">第1条：価値の継続 (Continuity of Value)</h3>
+                        <p class="constitution-text">システムの目的は機能の維持ではなく、価値の継続である。</p>
+                        <p class="constitution-text">価値が損なわれた時、システムはΔ（ズレ）を起点として自らを変容させる義務を負う。</p>
+                    </div>
+                    <div class="constitution-entry">
+                        <h3 class="constitution-heading">第2条：責任の所在 (Locality of Responsibility)</h3>
+                        <p class="constitution-text">すべての振る舞いには、それを引き受ける「章（Chapter）」が存在しなければならない。</p>
+                        <p class="constitution-text">責任が不明瞭な状態（owner_missing）を放置することは、システムの終焉を意味する。</p>
+                    </div>
+                    <div class="constitution-entry">
+                        <h3 class="constitution-heading">第3条：人間の主権 (Human Sovereignty)</h3>
+                        <p class="constitution-text">AIと自動化は判断を助けるが、責任を持たない。</p>
+                        <p class="constitution-text">最終的な意味の確定および構造変更（Reframe / Retire）は、常に人間が主導し、説明可能でなければならない。</p>
+                    </div>
+                </div>
+                <div class="constitution-item">
+                    <span class="constitution-label">VCDesign マニフェスト (Manifesto)</span>
+                    <div class="constitution-entry">
+                        <h3 class="constitution-heading">1. 章の有限性を愛せ (Embrace Finite Chapters)</h3>
+                        <p class="constitution-text">章（Chapter）は不変の真理ではない。</p>
+                        <p class="constitution-text">現実との乖離やΔの蓄積により、章は必ず漂流（Drifting）する。</p>
+                        <p class="constitution-text">変化は失敗ではなく、価値継続のための遷移（Reframe）の前提である。</p>
+                    </div>
+                    <div class="constitution-entry">
+                        <h3 class="constitution-heading">2. Δを隠すな、徴候を祝え (Celebrate Delta Signals)</h3>
+                        <p class="constitution-text">Δ（ズレ）は進化の入口である。</p>
+                        <p class="constitution-text">責任メトリクスを用いて違和感を観測し、drifting を宣言せよ。</p>
+                        <p class="constitution-text">沈黙する正常よりも、観測された異常を優先せよ。</p>
+                    </div>
+                    <div class="constitution-entry">
+                        <h3 class="constitution-heading">3. 過去への忠実さより、未来への一貫性を (Consistency over Legacy)</h3>
+                        <p class="constitution-text">判断ログ（Decision Log）は過去の再現ではなく、「価値への接続（Purpose Linkage）」を記録するものである。</p>
+                        <p class="constitution-text">すべての判断は未来への説明責任を持つ。</p>
+                    </div>
+                    <div class="constitution-entry">
+                        <h3 class="constitution-heading">4. 責任を閉じよ、さもなくば上位へ送れ (Close or Defer)</h3>
+                        <p class="constitution-text">曖昧な責任はシステムを劣化させる。</p>
+                        <p class="constitution-text">解決できるならFixせよ。できないならDeferせよ。</p>
+                        <p class="constitution-text">責任を持ったまま放置することを禁止する。</p>
+                    </div>
+                    <div class="constitution-entry">
+                        <h3 class="constitution-heading">5. 意味のない自動化を引退させよ (Retire the Meaningless)</h3>
+                        <p class="constitution-text">価値を生まない章、コード、データは維持してはならない。</p>
+                        <p class="constitution-text">Value Reviewを通じて、役割を終えた構造にはRetireを与えよ。</p>
+                        <p class="constitution-text">継続しないこともまた、設計である。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="usage-context">
+            <h2 class="usage-title">VCDesign の概要</h2>
+            <p> VCDesign は、完成したシステムを「どう作るか」ではなく、<br /> 運用の時間の中で、システムの価値を<strong>「どう失われないように設計するか」</strong>を扱う仕様群です。 </p>
+            <p> VCDesign Coreは、価値継続を目的とした開発OSです。章（Chapter）と責任（Responsibility）の遷移によってシステムを構成します。 </p>
+            <p> 「価値を継続させる」とは、 </p>
+            <ul style="padding-left: 1.6em; margin: 0 0 14px;">
+                <li>設計時の期待（価値）を明確にする</li>
+                <li>今の状態がその期待を保てているか確認する</li>
+                <li>保てていなければ、改善する。できなければ諦める</li> という「当たり前のサイクル」を設計に織り込む事を指します。
+            </ul>
+            <h3>プリミティブ</h3>
+            <ul>
+                <li><strong>Chapter:</strong> 価値を継続させるための責任配置単位</li>
+                <li><strong>Responsibility:</strong> 章を成立させる主体およびその配置</li>
+                <li><strong>Delta:</strong> 章の成立条件または責任配置の維持可能性が崩れた兆候</li>
+                <li><strong>Action:</strong> Fix, Reframe, Defer, Retire の4タイプ</li>
+            </ul>
+            <h3>PDΔAフロー</h3>
+            <p>
+                Precondition → Do → Delta → Action のサイクルで、システムの価値を継続的に守ります。
+            </p>
+            <h3>責任モデル</h3>
+            <p>
+                各章にはOwner, Supporters, Final Deciderが必要です。Final Deciderは常に人間でなければなりません。
+            </p>
+        </section>
+
+        <section id="core-metrics-policies">
+            <h2 class="usage-title">Core Metrics と Policies</h2>
+            <p>
+                Core Metricsは責任のズレを検知するための指標群です。例: Owner Missing, AI Overreach。
+            </p>
+            <p>
+                PoliciesはAIの判断制約やReframeの制御を定義します。AIは最終判断を持てず、人間が責任を担います。
+            </p>
+        </section>
+
+        <!-- SPECS / LINKS: Machine-readable + human navigation -->
+        <section id="specs">
+            <h2 class="usage-title">仕様（Specs）を参照する</h2>
+            <p> 仕様は読み物ではなく、設計支援と実装支援に使う「道具」です。<br /> 生成AIに渡す場合は、YAML Index のリンク集が最短です。 </p>
+            <ul class="link-list">
+                <li> <a class="link-anchor" href="https://github.com/VCDesign-org/vcdesign"> <span
+                            class="label">vcdesign-core (GitHub)</span> <span class="desc">VCDesign specs / protocols /
+                            patterns（正本） - Core, Metrics, Policiesを含む</span> </a> </li>
+                <li> <a class="link-anchor" href="https://github.com/VCDesign-org/continuity-claim-protocol"> <span
+                            class="label">continuity-claim-protocol (GitHub)</span> <span
+                            class="desc">継続性クレームのプロトコルと実装指針</span> </a> </li>
+            </ul>
+        </section>
+
+        <!-- DEMO: The shortest path to "use" VCDesign -->
+        <section id="demo" class="demo-section">
+            <h2 class="usage-title">2026年時点での実装(value-review,VC-AD,TDDD)</h2>
+
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="./value-review/">
+                        <span class="label">システム価値の定義（企画）：value-review</span>
+                        <span class="desc">Value Review Sheet を中心に、価値と境界を確定し、ChapterのPreconditionを定義</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="./vc-ad/">
+                        <span class="label">AIを最大限活かすための境界定義（設計）：VC-AD</span>
+                        <span class="desc">AI時代に見落とされがちな境界の地図を定義し、Responsibilityの配置を支援</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="./tddd/">
+                        <span class="label">対話AIとコード自動生成AI活用（開発）：TDDD</span>
+                        <span class="desc">生成AI時代の実務的な開発運転方法の記録。Delta観測とAction選択を実践</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="research">
+            <h2 class="usage-title">Research &amp; Analysis</h2>
+            <p> VCDesign に関するサードパーティによる研究、分析的レビュー、および独立した評価資料。 </p>
+            <p style="font-size: 0.85rem; color: #FCD34D; margin: 16px 0 8px;"> ※
+                これらの指標・研究資料は提案的・探索的なものであり、正規定義や合否判定を示すものではありません。 </p>
+            <ul class="link-list">
+                <li> <a class="link-anchor" href="./research/deepresearch-2026-03.pdf"> <span
+                            class="label">2026-03<br>自律型システムにおける価値継続設計（VCDesign）：責任ガバナンスと産業的レジリエンスの次世代OS</span>
+                    </a> </li>
+                <li> <a class="link-anchor" href="./research/deepresearch-2026-01.pdf"> <span
+                            class="label">2026-01<br>不安定な価値の世界（Unstable Value World）におけるシステム設計論：VCDesign
+                            と境界指向アーキテクチャ（BOA）の包括的分 析レポート</span> </a> </li>
+            </ul>
+        </section>
+        <footer>
+            <div> このサイトは「再作成前提設計」に基づき再構成されています。<br /> 読み物は後から追加し、仕様（プロトコル）はリポジトリに永続します。 </div>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+    </main>
+</body>
+
+</html>

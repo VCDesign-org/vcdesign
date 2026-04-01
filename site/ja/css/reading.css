@@ -1,0 +1,161 @@
+.page-main {
+    max-width: 680px;
+    width: 100%;
+    padding: 120px 24px 200px;
+}
+
+.nav-back {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: color var(--transition-fast, 0.18s ease-out);
+    z-index: 100;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line-color, rgba(255, 255, 255, 0.1));
+}
+
+.nav-back:hover {
+    color: #F8FAFC;
+    border-color: var(--accent);
+}
+
+@media (max-width: 900px) {
+    .nav-back {
+        position: absolute;
+    }
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    font-family: system-ui, -apple-system, sans-serif;
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+h1,
+h2,
+h3 {
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "游明朝", "MS Mincho", serif;
+    font-weight: 600;
+    color: #F8FAFC;
+    letter-spacing: 0.05em;
+}
+
+h1 {
+    font-size: 2.0rem;
+    margin: 0 0 40px;
+    line-height: 1.4;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 60px 0 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+p {
+    margin-bottom: 2em;
+    text-align: justify;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0;
+}
+
+ul li {
+    position: relative;
+    padding-left: 1.5em;
+    margin-bottom: 1em;
+    color: #E2E8F0;
+}
+
+ul li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+}
+
+p a,
+li a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color var(--transition-fast, 0.18s ease-out);
+}
+
+p a:hover,
+li a:hover {
+    color: #C7D2FE;
+}
+
+blockquote {
+    margin: 48px 0;
+    padding: 0;
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.6;
+    color: #F3F4F6;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 60px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 40px 0;
+    font-size: 0.95rem;
+}
+
+th,
+td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+td {
+    vertical-align: top;
+}
+
+footer {
+    margin-top: 120px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+}

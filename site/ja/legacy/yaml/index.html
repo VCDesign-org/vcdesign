@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>VCDesign YAML Index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --bg: #0B0E12;
+            --panel: rgba(255, 255, 255, 0.06);
+            --line: rgba(255, 255, 255, 0.12);
+            --ink: #F8FAFC;
+            --muted: #B4BDC7;
+            --accent: #22D3EE;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at 20% 0%, rgba(34, 211, 238, 0.12), transparent 45%),
+                linear-gradient(160deg, #0B0E12, #131A23 55%, #1C1B1E 100%);
+            color: var(--ink);
+            font-family: "Avenir Next", "Futura", "Gill Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+            line-height: 1.7;
+        }
+
+        main {
+            width: min(980px, 100%);
+            margin: 0 auto;
+            padding: 40px 22px 64px;
+        }
+
+        header {
+            padding: 20px 22px;
+            border-radius: 18px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            letter-spacing: 0.08em;
+        }
+
+        p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .copy-row {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .copy-btn {
+            appearance: none;
+            border: 1px solid rgba(34, 211, 238, 0.4);
+            background: rgba(34, 211, 238, 0.12);
+            color: var(--ink);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent);
+        }
+
+        .copy-note {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        section {
+            margin-top: 28px;
+            padding: 20px 22px;
+            border-radius: 16px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+        }
+
+        h2 {
+            margin: 0 0 12px;
+            font-size: 1.15rem;
+            letter-spacing: 0.08em;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 10px;
+        }
+
+        a {
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+        }
+
+        a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        .path {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>VCDesign YAML Index</h1>
+            <p>生成AIが確実に取得できるよう、GitHub raw への直リンクを列挙しています。</p>
+            <div class="copy-row">
+                <button class="copy-btn" id="copy-links">リンク一覧をコピー</button>
+                <span class="copy-note" id="copy-status">一括貼り付け用にrawリンクを改行でコピーします。</span>
+            </div>
+        </header>
+
+        <section>
+            <h2>VCDesign Core</h2>
+            <ul>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/vcdesign-core/refs/heads/main/specs/vcdesign_core.yaml">vcdesign_core.yaml</a>
+                    <span class="path">specs/vcdesign_core.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/vcdesign-core/refs/heads/main/specs/constitution.yaml">constitution.yaml</a>
+                    <span class="path">specs/constitution.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/vcdesign-core/refs/heads/main/specs/manifesto.yaml">manifesto.yaml</a>
+                    <span class="path">specs/manifesto.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/vcdesign-core/refs/heads/main/specs/concepts/chapter.yaml">chapter.yaml</a>
+                    <span class="path">specs/concepts/chapter.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/vcdesign-core/refs/heads/main/specs/concepts/decision_closure.yaml">decision_closure.yaml</a>
+                    <span class="path">specs/concepts/decision_closure.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/vcdesign-core/refs/heads/main/specs/concepts/operation.yaml">operation.yaml</a>
+                    <span class="path">specs/concepts/operation.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/vcdesign-core/refs/heads/main/specs/concepts/responsibility_pools.yaml">responsibility_pools.yaml</a>
+                    <span class="path">specs/concepts/responsibility_pools.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/vcdesign-core/refs/heads/main/specs/concepts/the_continuer.yaml">the_continuer.yaml</a>
+                    <span class="path">specs/concepts/the_continuer.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/vcdesign-core/refs/heads/main/specs/protocols/responsibility_closure_loop.yaml">responsibility_closure_loop.yaml</a>
+                    <span class="path">specs/protocols/responsibility_closure_loop.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/vcdesign-core/refs/heads/main/specs/templates/responsibility_manifest.template.yaml">responsibility_manifest.template.yaml</a>
+                    <span class="path">specs/templates/responsibility_manifest.template.yaml</span>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>BOA Core</h2>
+            <ul>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/boa-core/refs/heads/main/specs/boa_core.yaml">boa_core.yaml</a>
+                    <span class="path">specs/boa_core.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/boa-core/refs/heads/main/specs/resolution_protocol.yaml">resolution_protocol.yaml</a>
+                    <span class="path">specs/resolution_protocol.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/boa-core/refs/heads/main/specs/responsibility_closure_agent.yaml">responsibility_closure_agent.yaml</a>
+                    <span class="path">specs/responsibility_closure_agent.yaml</span>
+                </li>
+                <li>
+                    <a href="https://raw.githubusercontent.com/VCDesign-org/boa-core/refs/heads/main/specs/protocols/ccp_handshake.yaml">ccp_handshake.yaml</a>
+                    <span class="path">specs/protocols/ccp_handshake.yaml</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        (function () {
+            const button = document.getElementById('copy-links');
+            const status = document.getElementById('copy-status');
+
+            if (!button || !status) {
+                return;
+            }
+
+            const rawLinks = Array.from(document.querySelectorAll('a[href^="https://raw.githubusercontent.com/VCDesign-org/"]'))
+                .map((link) => link.getAttribute('href'))
+                .filter(Boolean);
+
+            button.addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText(rawLinks.join('\n'));
+                    const original = status.textContent;
+                    status.textContent = 'コピーしました。';
+                    setTimeout(() => {
+                        status.textContent = original;
+                    }, 1600);
+                } catch (e) {
+                    status.textContent = 'コピーに失敗しました。手動で選択してください。';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

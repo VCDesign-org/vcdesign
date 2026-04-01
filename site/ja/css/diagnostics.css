@@ -1,0 +1,117 @@
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f7f7f7;
+    color: #222;
+}
+
+header {
+    padding: 32px 20px;
+    background: #111;
+    color: #fff;
+}
+
+header h1 {
+    margin: 0 0 8px 0;
+    font-size: 1.6rem;
+}
+
+header p {
+    margin: 0;
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+
+main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card h2 {
+    font-size: 1.1rem;
+    margin: 0 0 8px;
+}
+
+.card p {
+    font-size: 0.9rem;
+    margin: 0 0 12px;
+    line-height: 1.5;
+}
+
+.card small {
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.card button {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.card button:hover {
+    background: #333;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    padding: 12px 16px;
+    font-size: 0.8rem;
+    color: #444;
+    text-align: center;
+}
+
+footer strong {
+    color: #000;
+}
+
+/* Added for Back to Home button */
+.lang-nav {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.lang-link {
+    color: #ddd;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    transition: all 0.2s ease-out;
+}
+
+.lang-link:hover {
+    color: #fff;
+    border-color: #22D3EE;
+    background: rgba(34, 211, 238, 0.12);
+}

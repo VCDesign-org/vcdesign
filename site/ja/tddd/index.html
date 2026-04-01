@@ -1,0 +1,592 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>TDDD（TODO Driven Development）</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <main class="frame">
+
+        <header>
+            <nav class="lang-nav">
+                <a href="../index.html" class="lang-link">Home</a>
+            </nav>
+
+            <h1 class="hero-title">TDDD</h1>
+            <p class="hero-subtitle">(TODO Driven Development)</p>
+            <p class="hero-tagline">
+                TDDD（TODO Driven Development）は、特定時代の生成AI環境における実務的な開発運転方法の記録です。
+            </p>
+        </header>
+
+        <section id="toc">
+            <h2 class="usage-title">Contents</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="#why">
+                        <span class="label">Why TDDD</span>
+                        <span class="desc">TDDDを残す理由と位置づけ</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#advanced">
+                        <span class="label">TDDD 応用編（2026）</span>
+                        <span class="desc">実務で回すための具体手順と境界の扱い</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#resources">
+                        <span class="label">Resources</span>
+                        <span class="desc">TDDD の関連ドキュメント</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="why">
+            <h2 class="usage-title">Why TDDD</h2>
+
+            <h3>なぜ TDDD が必要なのか</h3>
+            <p>
+                TDDD（TODO Driven Development）は、<br>
+                新しい開発技法を発明するために生まれたものではない。
+            </p>
+            <p>
+                <strong>すでに起きてしまった変化に、開発プロセスを追いつかせるため</strong><br>
+                に生まれた。
+            </p>
+
+            <h3>実装の死</h3>
+            <p>
+                生成AIの登場により、<br>
+                「実装を書くこと」はもはや開発の中核ではなくなった。
+            </p>
+            <ul>
+                <li>コードは高速に生成される</li>
+                <li>品質は一定以上に揃う</li>
+                <li>書き直しのコストは極端に下がった</li>
+            </ul>
+            <p>
+                その結果、コードは <strong>消耗品</strong> になった。<br>
+                今日書かれたコードは、<br>
+                明日にはAIによって消され、書き直される前提で存在している。
+            </p>
+            <p>それでもなお、システムは動き続けなければならない。</p>
+
+            <h3>変わったのは「How」ではない</h3>
+            <p>
+                この変化は、<br>
+                「どう書くか（How）」が変わった話ではない。
+            </p>
+            <p>
+                本質的に変わったのは、<br>
+                <strong>「どこで止めるか（Where）」</strong><br>
+                である。
+            </p>
+
+            <h3>整備士は飛行機から降りる</h3>
+            <p>かつてエンジニアは、</p>
+            <ul>
+                <li>設計者であり</li>
+                <li>実装者であり</li>
+                <li>トラブル時の整備士でもあった</li>
+            </ul>
+            <p>
+                つまり、<strong>飛行中も機内に同乗する存在</strong>だった。<br>
+                しかし、生成AIによって実装が自動化されると、<br>
+                エンジニアは次第に機内から降ろされる。
+            </p>
+            <p>
+                離陸前に設計と判断を済ませ、<br>
+                離陸後は「触れない」ことが前提になる。
+            </p>
+            <p>
+                これは選択ではない。<br>
+                <strong>構造的に起きている変化</strong>である。
+            </p>
+
+            <h3>問題は「誰が操縦しているか」ではない</h3>
+            <p>よくある議論はこうだ。</p>
+            <ul>
+                <li>AIが操縦しているのか</li>
+                <li>人間が操縦しているのか</li>
+            </ul>
+            <p>しかし、本当の問題はそこではない。</p>
+            <p>
+                <strong>操縦桿がどこにあるか</strong><br>
+                そして<br>
+                <strong>操縦の判断がどこに記録されているか</strong><br>
+                である。
+            </p>
+
+            <h3>コードは判断を保持できない</h3>
+            <p>
+                コードは実装を保持するが、<br>
+                <strong>判断を保持しない</strong>。
+            </p>
+            <ul>
+                <li>なぜこの仕様にしたのか</li>
+                <li>なぜこの境界で止めたのか</li>
+                <li>なぜこの例外を許したのか</li>
+            </ul>
+            <p>
+                それらはコメントや設計書に断片的に残るが、<br>
+                コードそのものは判断の媒体にならない。
+            </p>
+            <p>
+                生成AI時代において、<br>
+                コードに判断を預けることは危険である。
+            </p>
+
+            <h3>TODO は判断を保持できる</h3>
+            <p>
+                TODO は、<br>
+                未来の実装に対する <strong>判断のメッセージ</strong> である。
+            </p>
+            <ul>
+                <li>ここまでやる</li>
+                <li>ここから先はやらない</li>
+                <li>この条件を満たす必要がある</li>
+                <li>この点は確認が必要である</li>
+            </ul>
+            <p>
+                TODO は、<br>
+                実装が消えても消えない。
+            </p>
+            <p>
+                実装が書き換わっても、<br>
+                TODO に残された判断は次の実装に引き継がれる。
+            </p>
+
+            <h3>TDDD がやっていること</h3>
+            <p>TDDD は単純である。</p>
+            <ul>
+                <li>判断を TODO に集約する</li>
+                <li>実装は TODO を実行するだけにする</li>
+                <li>問題が起きたらコードではなく TODO を直す</li>
+            </ul>
+            <p>これだけである。</p>
+
+            <h3>なぜループなのか</h3>
+            <p>生成AIは一度で正解に到達しない。人間も同じである。</p>
+            <p>
+                だから TDDD は、<br>
+                一発で完成させることを目指さない。
+            </p>
+            <ul>
+                <li>TODO を作る</li>
+                <li>実装する</li>
+                <li>確認する</li>
+                <li>TODO を更新する</li>
+            </ul>
+            <p><strong>判断を更新し続けるループ</strong>として開発を捉える。</p>
+
+            <h3>なぜ境界が重要なのか</h3>
+            <p>
+                生成AIは、<br>
+                境界が曖昧な場所で必ず暴れる。
+            </p>
+            <ul>
+                <li>やっていいこと</li>
+                <li>やってはいけないこと</li>
+                <li>今回は対象外のこと</li>
+            </ul>
+            <p>
+                これを明示しない限り、<br>
+                AIは善意で越境する。
+            </p>
+            <p>
+                TDDD では、<br>
+                境界を TODO の形で明示する。
+            </p>
+            <p>
+                境界は設計書ではなく、<br>
+                <strong>実行前提の判断として TODO に置かれる</strong>。
+            </p>
+
+            <h3>なぜ年次版なのか</h3>
+            <p>TDDD は現在のツール構成に依存している。</p>
+            <ul>
+                <li>対話型生成AI</li>
+                <li>自動生成AI</li>
+                <li>IDE内AI支援</li>
+            </ul>
+            <p>
+                これらが統合されれば、<br>
+                TODO生成と実装は一体化するだろう。
+            </p>
+            <p>
+                その時、TDDD の形も変わる。<br>
+                だからこれは永遠の理論ではない。<br>
+                <strong>その年の現実に合わせた運転方法</strong>である。
+            </p>
+
+            <h3>TDDD が置きたいもの、置かないもの</h3>
+            <p>TDDD は思想を最小に保つ。</p>
+            <ul>
+                <li>AIガバナンス</li>
+                <li>設計哲学</li>
+                <li>組織論</li>
+                <li>責任設計</li>
+            </ul>
+            <p>
+                これらは <strong>TDDD の外側</strong> に置く。<br>
+                それらを Loop A に載せることはできるが、<br>
+                TDDD 自体はそれを強制しない。
+            </p>
+
+            <h3>まとめ</h3>
+            <p>実装はもう主役ではない。</p>
+            <p>残るのは、</p>
+            <ul>
+                <li>判断</li>
+                <li>境界</li>
+                <li>期待</li>
+            </ul>
+            <p>
+                TDDD は、<br>
+                それらを TODO という形で未来に渡すための<br>
+                <strong>最小の開発ループ</strong>である。
+            </p>
+            <p>
+                コードが消えても、<br>
+                TODO が残っていれば、<br>
+                開発は続けられる。
+            </p>
+        </section>
+
+        <section id="advanced">
+            <h2 class="usage-title">TDDD 応用編（2026）</h2>
+
+            <h3>これは何か</h3>
+            <p>
+                このドキュメントは、TDDD を <strong>実務で安定して回すための具体手順</strong> を示します。<br>
+                設計理論は最小限に留め、「どう使えば事故らないか」を中心に書きます。
+            </p>
+
+            <h3>応用編で前提にする2つの理由</h3>
+            <p><strong>設計の理由</strong>：再作成前提であることが、価値の継続につながる。</p>
+            <p><strong>手段の理由</strong>：対話型生成AIと自動生成AIには、まだ明確な役割差がある。</p>
+            <p>TDDD 応用編は、この2点だけを前提に組み立てます。</p>
+
+            <h3>TDDD 応用編の全体サイクル</h3>
+            <ol>
+                <li>対話型生成AIで TODO を作る</li>
+                <li>自動生成AIに TODO を実行させる</li>
+                <li>レビューして TODO に戻す</li>
+            </ol>
+            <p>これを繰り返します。</p>
+
+            <h3>1. 対話型生成AIで TODO を作る</h3>
+            <p>ここが <strong>最重要工程</strong> です。</p>
+
+            <h3>1-1. 仕様を把握させる</h3>
+            <ul>
+                <li>会話で説明する</li>
+                <li>既存資料を貼り付ける</li>
+                <li>曖昧でも構わない</li>
+            </ul>
+            <p>
+                目的は「正解を出すこと」ではなく、<strong>前提を揃えること</strong> です。
+            </p>
+
+            <h3>1-2. AIが暴れてよい境界を決める</h3>
+            <p>必ず次を明示します。</p>
+            <ul>
+                <li>今回やること</li>
+                <li>今回やらないこと</li>
+                <li>外に影響を出してはいけない範囲</li>
+            </ul>
+            <p>例：</p>
+            <pre class="code-block"><code>- 外部 API には触らない
+- DB スキーマは変更しない
+- ファイル I/O は行わない
+</code></pre>
+
+            <h3>1-3. 境界内の TODO を作らせる</h3>
+            <p>
+                対話型AIに、こう頼みます。<br>
+                この境界の中だけで、実装用 TODO を作ってください。<br>
+                やらないことも含めて明示してください。
+            </p>
+
+            <h3>1-4. 必要なら YAML を出させる</h3>
+            <ul>
+                <li>入出力</li>
+                <li>状態</li>
+                <li>設定</li>
+            </ul>
+            <p>コードより先に <strong>構造だけ</strong> を YAML にします。</p>
+            <p>成果物：</p>
+            <pre class="code-block"><code>todo/
+  ├─ TODO.md
+  └─ schema.yaml（必要な場合）
+</code></pre>
+
+            <h3>2. 自動生成AIに TODO を実行させる</h3>
+            <p>ここでは <strong>判断させない</strong>。</p>
+
+            <h3>2-1. 大きなシステムは「1境界1PJ」</h3>
+            <ul>
+                <li>境界ごとにリポジトリやフォルダを分ける</li>
+                <li>AIが迷わないサイズにする</li>
+            </ul>
+            <p>これは設計思想ではなく、AIの認知限界への対策です。</p>
+
+            <h3>2-2. TODO フォルダを唯一の根拠にする</h3>
+            <p>
+                自動生成AIには、必ずこう指示します。<br>
+                todo フォルダの内容のみを根拠に、xx言語で実装してください。<br>
+                TODO に書かれていないことは実装しないでください。
+            </p>
+
+            <h3>2-3. おかしな動きが出たら「テストを TODO にする」</h3>
+            <ul>
+                <li>コードを直させない</li>
+                <li>「この動作を確認するテストを作って」と頼む</li>
+            </ul>
+            <p>例：</p>
+            <ul>
+                <li>[ ] 入力が None の場合に例外が出ないことを確認するテストを追加</li>
+            </ul>
+            <p>手順：</p>
+            <ol>
+                <li>本人による動作確認</li>
+                <li>実行する</li>
+                <li>期待と違う点を確認する</li>
+                <li>修正は次工程で行う</li>
+            </ol>
+
+            <h3>3. レビューと再TODO化</h3>
+
+            <h3>3-1. 可能なら別の自動生成AIでリファクタリング</h3>
+            <ul>
+                <li>コード整理</li>
+                <li>重複削除</li>
+                <li>読みやすさ向上</li>
+            </ul>
+            <p>※ 人間と違う観点でテストを増やすことには、あまり意味はありません。</p>
+
+            <h3>3-2. 最初に TODO を作った対話型AIにレビューさせる</h3>
+            <ul>
+                <li>この実装は TODO を満たしているか</li>
+                <li>境界を越えていないか</li>
+                <li>判断が足りていない部分はどこか</li>
+            </ul>
+
+            <h3>3-3. フィードバックはすべて TODO に戻す</h3>
+            <ul>
+                <li>コードを直す前に TODO を直す</li>
+                <li>判断を固定する</li>
+                <li>このサイクルを繰り返す</li>
+            </ul>
+            <ol>
+                <li>TODO を作る</li>
+                <li>実装する</li>
+                <li>確認する</li>
+                <li>TODO を直す</li>
+            </ol>
+            <p>TDDD は一発完成を目指しません。</p>
+
+            <h3>境界をつなげるテクニック（大規模化の入口）</h3>
+            <p>
+                TDDD は境界単体では小さいが、疎結合にすれば拡張できます。
+            </p>
+            <p>使えるテクニック例：</p>
+            <ul>
+                <li>境界間は「データ構造」だけで接続する</li>
+                <li>関数呼び出しより JSON / YAML / DTO を使う</li>
+                <li>直接参照しない（Adapter / Facade を挟む）</li>
+                <li>境界間通信は「失敗前提」で設計する</li>
+            </ul>
+            <p>こうすると：</p>
+            <ul>
+                <li>片方を捨てられる</li>
+                <li>再作成できる</li>
+                <li>AIを変えられる</li>
+            </ul>
+
+            <h3>応用編の限界</h3>
+            <ul>
+                <li>人命・安全系</li>
+                <li>物理制御</li>
+                <li>法的責任が強い領域</li>
+            </ul>
+            <p>これらには別の設計が必要です。</p>
+
+            <h3>まとめ</h3>
+            <ul>
+                <li>判断は対話型AIで行う</li>
+                <li>実装は自動生成AIに任せる</li>
+                <li>境界で切り、疎結合でつなぐ</li>
+                <li>TODO を消さない</li>
+            </ul>
+            <p>
+                TDDD 応用編は、再作成され続けることを前提にした実務的な開発ループです。
+            </p>
+
+            <h3>応用編補足：11の境界という「見えない地図」</h3>
+            <p>
+                TDDD 応用編で最も重要なのは、<strong>「どこで区切るか」</strong> を誤らないことです。
+            </p>
+            <p>
+                その判断を助けるために、VCDesign / VC-AD では
+                AIが見落としがちな「コードの外側の制約」を <strong>11の境界</strong> として整理しています。
+            </p>
+            <p>
+                これらはコード（As Code）として表現しにくく、AIが最も暴れやすい領域です。
+            </p>
+
+            <h3>11の境界の全体像</h3>
+            <p>11の境界は、性質ごとに4つのグループに分かれます。</p>
+
+            <h3>Group 1：変えられない前提（Context）</h3>
+            <p><strong>設計で解決しようとしてはいけない境界</strong></p>
+            <ol>
+                <li>物理・現場制約</li>
+                <li>組織・境界</li>
+                <li>ガバナンス</li>
+            </ol>
+            <p>例：</p>
+            <ul>
+                <li>物理的に離れている</li>
+                <li>組織や責任主体が違う</li>
+                <li>法律や規程で決まっている</li>
+            </ul>
+            <p><strong>TDDDでの扱い</strong></p>
+            <ul>
+                <li>TODO に「前提条件」として明示する</li>
+                <li>実装で解決しようとしない</li>
+                <li>AIに「受け入れる前提」として固定する</li>
+            </ul>
+
+            <h3>Group 2：選ぶだけのリソース（Resource）</h3>
+            <p><strong>設計ではなく「選択」の結果で決まる境界</strong></p>
+            <ol>
+                <li>実行基盤</li>
+                <li>ネットワーク</li>
+                <li>プラットフォーム</li>
+            </ol>
+            <p>例：</p>
+            <ul>
+                <li>クラウド / オンプレ</li>
+                <li>レイテンシ・帯域</li>
+                <li>マネージド / 自前</li>
+            </ul>
+            <p><strong>TDDDでの扱い</strong></p>
+            <ul>
+                <li>境界をまたがない単位で PJ を分ける</li>
+                <li>TODO に「前提となる選択」を書く</li>
+                <li>実装中に変えない</li>
+            </ul>
+
+            <h3>Group 3：守るべき品質標準（Standard）</h3>
+            <p><strong>AIが勝手に壊してはいけない境界</strong></p>
+            <ol>
+                <li>信頼性（SRE）</li>
+                <li>セキュリティ</li>
+                <li>可観測性</li>
+            </ol>
+            <p>例：</p>
+            <ul>
+                <li>リトライ方針</li>
+                <li>権限管理</li>
+                <li>ログ・メトリクスの形式</li>
+            </ul>
+            <p><strong>TDDDでの扱い</strong></p>
+            <ul>
+                <li>TODO に「守るべき制約」として明示</li>
+                <li>自動生成AIに判断させない</li>
+                <li>必要ならチェック用テストを TODO 化する</li>
+            </ul>
+
+            <h3>Group 4：VC-ADの主戦場（Core Domain）</h3>
+            <p><strong>正解がなく、意思決定しか存在しない境界</strong></p>
+            <ol>
+                <li>分散の本質</li>
+                <li>データ意味論</li>
+            </ol>
+            <p>例：</p>
+            <ul>
+                <li>整合性 vs 可用性</li>
+                <li>二重処理を許すか</li>
+                <li>金額・数量の意味</li>
+            </ul>
+            <p><strong>TDDDでの扱い</strong></p>
+            <ul>
+                <li>必ず対話型AI＋人間で判断する</li>
+                <li>判断結果を TODO に残す</li>
+                <li>実装はその判断を「実行」するだけ</li>
+            </ul>
+            <p>
+                ここは <strong>AIが最も苦手な領域</strong> であり、
+                TDDD 応用編で最も丁寧に扱う必要があります。
+            </p>
+
+            <h3>応用編での実践的な使い方</h3>
+
+            <h3>境界分割のチェック</h3>
+            <p>1つの境界で PJ / TODO を切る前に、次を確認します。</p>
+            <ul>
+                <li>11の境界のどれを含んでいるか</li>
+                <li>複数グループをまたいでいないか</li>
+                <li>特に Group 4 が混ざっていないか</li>
+            </ul>
+            <p>混ざっていたら <strong>分割する</strong>。</p>
+
+            <h3>境界をつなげるときの原則（疎結合）</h3>
+            <ul>
+                <li>境界間はデータ構造で接続する</li>
+                <li>直接参照しない</li>
+                <li>失敗を前提にする</li>
+                <li>片方を捨てられるようにする</li>
+            </ul>
+            <p>
+                これにより、TDDD を <strong>大規模システムにも適用可能</strong> にできます。
+            </p>
+
+            <h3>TDDDと11の境界の関係</h3>
+            <ul>
+                <li>TDDD は「どう回すか」の話</li>
+                <li>11の境界は「どこで切るか」の地図</li>
+                <li>VCDesign / VC-AD は「なぜそう切るか」の説明</li>
+            </ul>
+            <p>応用編では、<strong>地図を見ながら運転する</strong> ところまでを扱います。</p>
+
+            <h3>まとめ</h3>
+            <ul>
+                <li>AIは境界を知らない</li>
+                <li>境界を教えるのは人間の役割</li>
+                <li>判断は TODO に残す</li>
+                <li>実装は境界内に閉じ込める</li>
+            </ul>
+            <p>
+                これができれば、TDDD は小規模だけでなく
+                <strong>現実の大規模システムにも拡張できる</strong>。
+            </p>
+        </section>
+
+        <section id="resources">
+            <h2 class="usage-title">Resources</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="https://github.com/VCDesign-org/tddd-playbook">
+                        <span class="label">tddd-playbook (GitHub)</span>
+                        <span class="desc">TDDD の関連ドキュメントと運用記録</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+
+    </main>
+</body>
+
+</html>

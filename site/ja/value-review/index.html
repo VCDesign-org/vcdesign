@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>VCDesign Value Review</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <main class="frame">
+
+        <header>
+            <nav class="lang-nav">
+                <a href="../index.html" class="lang-link">Home</a>
+            </nav>
+
+            <h1 class="hero-title">Value Review</h1>
+            <p class="hero-subtitle">(VCDesign Value Review)</p>
+            <p class="hero-tagline">
+                価値が毀損しない状態で実装へ渡すための判断記録と検討シート。
+            </p>
+        </header>
+
+        <section id="toc">
+            <h2 class="usage-title">Contents</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="#overview">
+                        <span class="label">README</span>
+                        <span class="desc">価値設計リポジトリの位置づけ</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#sheet">
+                        <span class="label">Value Review Sheet</span>
+                        <span class="desc">L1〜L4 の検討テンプレート</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#resources">
+                        <span class="label">Resources</span>
+                        <span class="desc">関連リポジトリ</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="overview">
+            <h2 class="usage-title">README</h2>
+
+            <h3>vcdesign-value-review</h3>
+            <p>
+                <code>vcdesign-value-review</code> は、<strong>システムに着手する前に</strong><br>
+                「どの価値を、どの境界の内側で守るか」を確定するための <strong>価値設計リポジトリ</strong>です。
+            </p>
+            <p>
+                このリポジトリは <strong>設計思想の主張</strong>でも <strong>実装ガイド</strong>でもありません。<br>
+                <strong>判断の痕跡</strong>を残し、価値が毀損しない状態で実装へ渡すために存在します。
+            </p>
+
+            <h3>これは何か</h3>
+            <ul>
+                <li><strong>VCDesign Value Review Sheet</strong>（L1〜L4）を中心に</li>
+                <li>Δ（差分）を定義し</li>
+                <li>許容Δ / 非許容Δ を線引きし</li>
+                <li>RCL に昇格するためのゲート条件を固定する</li>
+            </ul>
+
+            <h3>これは何ではない</h3>
+            <ul>
+                <li>VC-AD の拡張ではない</li>
+                <li>実装手順書ではない（TODO生成やYAML出力手順はTDDD側）</li>
+                <li>RCLそのものではない（RCLは L4 Pass 後の成果物）</li>
+                <li>AIの憲法・規範のコレクションではない</li>
+            </ul>
+
+            <h3>どんな案件に効くか（適用範囲）</h3>
+            <p>以下の条件を満たすPJに向く：</p>
+            <ul>
+                <li>価値が事前に確定できない（運用して初めて効く/効かないが分かる）</li>
+                <li>失敗が不可逆 or 高コスト（信用/業務停止/データ破損/やり直し困難）</li>
+                <li>人が最終責任を持つ（完全自動化できない/すべきでない）</li>
+                <li>典型：基盤系、業務系、データ連携、分析・監視、運用自動化、OT/IT境界</li>
+            </ul>
+            <p>※ ゲーム、広告LP、エンタメなど「高速に試して捨てられる」領域では過重になりやすい。</p>
+
+            <h3>このリポジトリの成果物</h3>
+            <ul>
+                <li><code>value-review-sheet.md</code>：価値設計テンプレ（L1〜L4）</li>
+                <li><code>delta-definition.md</code>：Δの最小定義</li>
+                <li><code>allowed-disallowed-delta.md</code>：許容Δ / 非許容Δ の線引き</li>
+                <li><code>rcl-gate.md</code>：RCLに昇格する条件（入口にしないための門）</li>
+                <li><code>scope-by-responsibility.md</code>：企画サイズを「責任の体積」で見る補助文書（任意）</li>
+                <li><code>idk-lamp.md</code>：判断不能を可視化する停止灯（任意）</li>
+            </ul>
+
+            <h3>用語の最小説明</h3>
+            <ul>
+                <li><strong>Δ（デルタ）</strong>：設計時の前提（P）と実際の事実（D）の間に生じた「観測可能な差分」</li>
+                <li><strong>許容Δ</strong>：人が説明責任を保持したまま回収できるΔ</li>
+                <li><strong>非許容Δ</strong>：放置すると価値/信頼/責任のいずれかを回復不能に毀損するΔ</li>
+                <li><strong>RCL</strong>：価値を最大化しきった設計が最後に引き受ける「責任計器」（このrepoには置かない）</li>
+            </ul>
+
+            <h3>原則</h3>
+            <blockquote>
+                全体像が見えていない段階でRCLを書くと、設計ではなく責任の押し付けになる。<br>
+                RCLは入口ではない。<strong>価値を最大化しきった設計が最後に引き受ける“覚悟の線”</strong>である。
+            </blockquote>
+        </section>
+
+        <section id="sheet">
+            <h2 class="usage-title">Value Review Sheet</h2>
+
+            <h3>VCDesign Value Review Sheet（v0.1）</h3>
+            <blockquote>
+                <strong>目的</strong>：RCLを書く前に、設計価値が毀損していないかをレビューするための検討シート。<br>
+                <strong>位置づけ</strong>：このシートは「検討書」。<strong>L4 Pass のみが RCL に昇格</strong>する。
+            </blockquote>
+
+            <h3>使い方（最小）</h3>
+            <ol>
+                <li>L1：業務フロー（Do）を列挙する（まずは操作列でOK）</li>
+                <li>L2：各Doの裏にある PDΔA を展開する（Man / Machine / Material）</li>
+                <li>L3：システム介入を選別する（Detect / Notify / Block / Ignore）</li>
+                <li>L4：フロー全体として最大価値かをレビューし、Pass なら RCL に昇格する</li>
+            </ol>
+
+            <h3>L1. 業務フロー（Do列挙）</h3>
+
+            <h3>L1-1. フロー（Do）一覧</h3>
+            <ul>
+                <li>Do-01：</li>
+                <li>Do-02：</li>
+                <li>Do-03：</li>
+                <li>Do-04：</li>
+            </ul>
+
+            <h3>L1-2. 境界（最低限）</h3>
+            <blockquote>11の境界を全部使わない。最小は「人／システム／データ／外部」。</blockquote>
+            <ul>
+                <li>人（役割）：</li>
+                <li>システム（対象・外部）：</li>
+                <li>データ（主要マスタ／台帳／ログ）：</li>
+                <li>外部（他部署・他社・法規・物理）：</li>
+            </ul>
+
+            <h3>L2. Doごとの PDΔA（Man / Machine / Material）</h3>
+            <blockquote>
+                <strong>Doは責任の終点ではなく入口。</strong><br>
+                ここで「文化としてのPDCA」ではなく、<strong>観測可能な差分Δ</strong>に寄せる。
+            </blockquote>
+
+            <h3>L2-テンプレ（Do 1つにつき 1ブロック）</h3>
+            <p><strong>Do-XX：&lt;Doの名前&gt;</strong></p>
+
+            <h3>Man（人）</h3>
+            <ul>
+                <li>P（前提）：</li>
+                <li>D（実行）：</li>
+                <li>Δ（差分：何がズレると問題になるか）：</li>
+                <li>A（Δへの対応：誰が何をするか）：</li>
+                <li>証拠（Evidence：説明に使うもの）：</li>
+            </ul>
+
+            <h3>Machine（機械/システム）</h3>
+            <ul>
+                <li>P：</li>
+                <li>D：</li>
+                <li>Δ：</li>
+                <li>A：</li>
+                <li>証拠：</li>
+            </ul>
+
+            <h3>Material（データ/情報）</h3>
+            <ul>
+                <li>P：</li>
+                <li>D：</li>
+                <li>Δ：</li>
+                <li>A：</li>
+                <li>証拠：</li>
+            </ul>
+
+            <h3>L3. 介入ポリシー（何をどうしたいか）</h3>
+            <blockquote>
+                L2で出たΔのうち、<strong>どれにシステムが介入するか</strong>を決める。<br>
+                ここで「全部やる」は基本NG。<strong>やらない（Ignore）も設計</strong>。
+            </blockquote>
+
+            <h3>L3-1. 介入レベル（4択）</h3>
+            <ul>
+                <li>Detect：検知する（気づけるようにする）</li>
+                <li>Notify：提示する（迷わず実行できるようにする）</li>
+                <li>Block：歯止め（条件を満たさないと進めない）</li>
+                <li>Ignore：何もしない（人の責任のまま残す）</li>
+            </ul>
+
+            <h3>L3-2. Do別の介入方針</h3>
+            <ul>
+                <li>Do-01：
+                    対象Δ（L2のどれ？）：
+                    介入レベル（Detect/Notify/Block/Ignore）：
+                    介入の根拠（なぜそこ？）：
+                    <strong>決してやらないこと（境界）</strong>：</li>
+                <li>Do-02：</li>
+                <li>Do-03：</li>
+            </ul>
+
+            <h3>L3-3. Block（歯止め）を選ぶ場合のみ</h3>
+            <ul>
+                <li>歯止め条件（何が満たされないと進めないか）：</li>
+                <li>例外（緊急時）：誰が・何を根拠に・どう解除するか：</li>
+                <li>解除の証拠（承認ログ／チケット／署名など）：</li>
+            </ul>
+
+            <h3>L4. 最大価値レビュー（ゲート）</h3>
+            <blockquote>機能量ではなく「責任を持ち続けられる形か」で判定する。</blockquote>
+
+            <h3>L4-1. 最大価値チェック（Yes/No）</h3>
+            <ul>
+                <li>[ ] Doが操作列で終わっていない（各DoにΔが定義されている）</li>
+                <li>[ ] 非許容Δが明確（曖昧なまま“正常”として流れない）</li>
+                <li>[ ] 介入は過剰ではない（Ignoreが意図的に残されている）</li>
+                <li>[ ] 自動が判断を奪っていない（説明責任が人に残っている）</li>
+                <li>[ ] 失敗時に「誰が何を見て説明するか」が言える（Evidenceがある）</li>
+                <li>[ ] 境界を越えていない（決めてはいけないことを決めていない）</li>
+            </ul>
+
+            <h3>L4-2. 結論（短文）</h3>
+            <ul>
+                <li>この設計が最大化している価値：</li>
+                <li>この設計が意図的に捨てた価値：</li>
+                <li>最大価値を毀損するリスク（トップ3）：</li>
+            </ul>
+
+            <h3>L4-3. 判定</h3>
+            <ul>
+                <li>判定：Pass / Revise / Fail</li>
+                <li>Pass条件（RCLへ昇格する条件）：</li>
+                <li>Revise時の差戻しポイント（L1/L2/L3のどこをやり直すか）：</li>
+            </ul>
+
+            <h3>RCLへの昇格（このシートの外）</h3>
+            <blockquote>
+                <strong>L4 Pass のみ</strong>、RCL Sheetを作成する。<br>
+                RCLは「作るための道具」ではなく、<strong>設計価値を守る計器</strong>である。
+            </blockquote>
+        </section>
+
+        <section id="resources">
+            <h2 class="usage-title">Resources</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="https://github.com/VCDesign-org/vcdesign-value-review/tree/main">
+                        <span class="label">vcdesign-value-review (GitHub)</span>
+                        <span class="desc">Value Review の管理リポジトリ</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+
+    </main>
+</body>
+
+</html>

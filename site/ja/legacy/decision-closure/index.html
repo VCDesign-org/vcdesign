@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Decision Closure - VCDesign</title>
+    <meta name="description" content="Decision Closure: AIが判断を閉じてよいかを構造的に判定し、閉じられない時は人に返すための安全設計。">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/page-shell.css">
+    <link rel="stylesheet" href="../css/paging.css">
+    <link rel="stylesheet" href="../css/reading.css">
+    <style>
+        :root {
+            --bg-base: #0F172A;
+            --accent: #818CF8;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --link-hover-bg: rgba(129, 140, 248, 0.08);
+            --transition-fast: 0.18s ease-out;
+            --line-color: rgba(129, 140, 248, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../index.html" class="nav-back">← Home</a>
+
+    <main class="page-main">
+        <div class="page-content">
+            <div class="narrative-stream">
+                <section class="chapter" id="intro">
+                    <h1>Decision Closure（判断閉包）</h1>
+                    <p>Decision Closure は、<br>
+                        <strong>AI が判断を閉じてよいかを構造的に判定する</strong>ための安全設計です。</p>
+                    <p>結論を出すことよりも、<br>
+                        <strong>閉じられない状態を正しく止めること</strong>を優先します。</p>
+                </section>
+
+                <section class="chapter" id="gatekeeper">
+                    <h2>AI Gatekeeper（Decision Closure Structure）</h2>
+                    <p>AI Gatekeeper は、AI が自身の出力によって判断を閉じてよいかを判定する実装構造です。<br>
+                        用途未定義世界において Decision Closure を安全に実行するためのプロトコルです。</p>
+                    <p>判断の結果は常に次の二択です。</p>
+                    <ul>
+                        <li><strong>AI-Closed</strong>：AI の出力で判断が完結してよい</li>
+                        <li><strong>Human-Closed</strong>：AI は判断を閉じず、人に返す</li>
+                    </ul>
+                    <p>デフォルトは Human-Closed です。</p>
+                </section>
+
+                <section class="chapter" id="five-steps">
+                    <h2>判断閉路の5ステップ</h2>
+                    <p>AI Gatekeeper は、次の5ステップで判定を行います。<br>
+                        いずれかが破綻した時点で Human-Closed に遷移します。</p>
+                    <ol>
+                        <li><strong>Responsibility Scope</strong>（責任主体の単一性）: 責任主体は1人か</li>
+                        <li><strong>No Psychological Revocation</strong>（心理的取消への非依存）: 心理的取消に依存していないか</li>
+                        <li><strong>Physical Revocability</strong>（物理的可逆性）: 物理的に直接取り消せるか</li>
+                        <li><strong>No Action Chaining</strong>（行動連鎖の欠如）: 行動が連鎖しないか</li>
+                        <li><strong>No Social Context</strong>（社会的文脈の欠如）: 社会的文脈を帯びていないか</li>
+                    </ol>
+                    <p>心理的取消（空気を読めば止められる等）は、<br>
+                        設計上「存在しない」と扱います。</p>
+                </section>
+
+                <section class="chapter" id="accuracy">
+                    <h2>精度を扱わない理由</h2>
+                    <p>本構造では「精度」を直接扱いません。</p>
+                    <p>用途未定義世界では、どこまで正確である必要があるかが分からないためです。<br>
+                        代わりに<strong>可逆性</strong>（間違っても直接取り消せるか）に置き換えて判定します。</p>
+                </section>
+
+                <section class="chapter" id="ccp">
+                    <h2>CCP と Decision Closure Safety（DCS）</h2>
+                    <p>CCP Handshake では、DCS により AI が判断を閉じてよいかを<br>
+                        <strong>5つの Validation Steps</strong>でチェックします。</p>
+                    <p>これは BOA / RCA に基づき、AI が判断を閉じてよい条件を構造的に判定するための設計です。</p>
+                </section>
+
+                <section class="chapter" id="mapping">
+                    <h2>VCDesign との対応（抜粋）</h2>
+                    <p>Decision Closure は、VCDesign の外部接続において以下のように写像されます。</p>
+                    <ul>
+                        <li>DCS（Decision Closure）→ CCP の <strong>reversal_signal</strong></li>
+                        <li>決めてよい／いけない（BOA/IDG）→ <strong>trust.validation_level</strong></li>
+                    </ul>
+                    <p>CCP は DCS の判定ロジックを変更してはならない。<br>
+                        これは VCDesign の膜を守るための強制ルールです。</p>
+                </section>
+
+                <section class="chapter" id="summary">
+                    <h2>まとめ</h2>
+                    <ul>
+                        <li>Decision Closure は「閉じられるか」を判定する安全構造</li>
+                        <li>結論よりも「止まれること」を優先する</li>
+                        <li>判断不能は隠さず、Human-Closed を返す</li>
+                    </ul>
+                    <p>Decision Closure は、<br>
+                        判断を自動化するための設計ではなく、<br>
+                        <strong>判断を壊さないための設計</strong>です。</p>
+                </section>
+            </div>
+
+            <nav class="story-nav">
+                <a href="#intro" class="story-dot" data-title="Intro" aria-label="Jump to Intro"></a>
+                <a href="#gatekeeper" class="story-dot" data-title="AI Gatekeeper" aria-label="Jump to AI Gatekeeper"></a>
+                <a href="#five-steps" class="story-dot" data-title="5 Steps" aria-label="Jump to Five Steps"></a>
+                <a href="#accuracy" class="story-dot" data-title="Accuracy" aria-label="Jump to Accuracy"></a>
+                <a href="#ccp" class="story-dot" data-title="CCP / DCS" aria-label="Jump to CCP"></a>
+                <a href="#mapping" class="story-dot" data-title="Mapping" aria-label="Jump to Mapping"></a>
+                <a href="#summary" class="story-dot" data-title="Summary" aria-label="Jump to Summary"></a>
+            </nav>
+
+            <footer>
+                © 2026 VCDesign
+            </footer>
+        </div>
+    </main>
+</body>
+
+</html>

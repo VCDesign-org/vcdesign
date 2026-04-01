@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BOA Core - VCDesign</title>
+    <meta name="description" content="BOA Core: A boundary design for handling decision, responsibility, and stopping in AI-involved systems without breaking them.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/page-shell.css">
+    <link rel="stylesheet" href="../css/reading.css">
+    <style>
+        :root {
+            --bg-base: #0F172A;
+            --accent: #06B6D4;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --link-hover-bg: rgba(6, 182, 212, 0.1);
+            --transition-fast: 0.18s ease-out;
+            --line-color: rgba(6, 182, 212, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../index.html" class="nav-back">← Home</a>
+
+    <main class="page-main">
+        <div class="page-content">
+            <h1>BOA Core</h1>
+
+            <p>BOA Core is<br>
+                <strong>a set of structures for handling decision, responsibility, and stopping<br>
+                    in systems involving AI without breaking them</strong>.</p>
+
+            <p>This repository is not about producing the correct answer.<br>
+                It exists to <strong>correctly stop when a decision cannot be made</strong>.</p>
+
+            <hr>
+
+            <h2>This Is Not a Framework</h2>
+            <p>BOA / RCA / RP are not a layered architecture or framework in the general sense.</p>
+            <ul>
+                <li>They are not layers for dividing processing</li>
+                <li>They are not role assignments for organizing responsibilities</li>
+            </ul>
+            <p>They are all <strong>checkpoints that appear along the flow of decision</strong>.</p>
+
+            <hr>
+
+            <h2>The Three Included Structures</h2>
+            <ul>
+                <li><strong>BOA (Boundary-Oriented Architecture)</strong> — Declares the boundary where decisions are allowed</li>
+                <li><strong>RCA (Responsibility Closure Agent)</strong> — Takes responsibility for and completes the decision</li>
+                <li><strong>RP (Resolution Protocol)</strong> — Explicitly chooses to proceed, stop, or return the decision</li>
+            </ul>
+
+            <p>The important point is that <strong>these do not exist simultaneously</strong>.</p>
+
+            <hr>
+
+            <h2>Basic Flow of Decision (Summary)</h2>
+            <ol>
+                <li>The system reaches BOA</li>
+                <li>RCA performs an Assessment (evaluation of willingness to take responsibility)</li>
+                <li>RP activates only if RCA indicates “Accepted”</li>
+                <li>RP always returns one of the following
+                    <ul>
+                        <li>Resolve (decide)</li>
+                        <li>Reject (discard)</li>
+                        <li>Return (return to human or upstream)</li>
+                    </ul>
+                </li>
+                <li>RCA closes responsibility for the decision</li>
+            </ol>
+
+            <hr>
+
+            <h2>Why BOA Comes First</h2>
+            <p>BOA is not the first technology. It is the first <strong>declaration of boundary</strong>.</p>
+            <ul>
+                <li>How far AI judgment is allowed</li>
+                <li>Where it must stop</li>
+                <li>Whose responsibility it becomes</li>
+            </ul>
+            <p>If these are ambiguous, neither RP nor RCA can carry meaning.</p>
+
+            <hr>
+
+            <h2>Roles and Questions</h2>
+            <p>BOA / RCA / RP each operate in different dimensions—
+                similar to the relationship of place, person, and rule.</p>
+
+            <h3>BOA — Boundary-Oriented Architecture</h3>
+            <p><strong>Question: Where should judgment occur?</strong></p>
+            <p>BOA separates the system by boundary and defines where AI may judge and where humans must judge.</p>
+
+            <h3>RCA — Responsibility Closure Agent</h3>
+            <p><strong>Question: Do you take responsibility for this judgment?</strong></p>
+            <p>RCA is the subject that judges within the boundary, expressing ACCEPTED / DENIED / UNKNOWN.</p>
+
+            <h3>RP — Resolution Protocol</h3>
+            <p><strong>Question: Can this be recognized as a formal resolution?</strong></p>
+            <p>RP verifies procedural legitimacy—signature, required trace, and explicit responsibility.</p>
+
+            <hr>
+
+            <h2>Failure, Stop, and Return</h2>
+            <p>The failure BOA Core avoids most is<br>
+                <strong>allowing a decision to proceed when it cannot be made</strong>.</p>
+
+            <p><strong>Stop is normal</strong> here. If boundary conditions are not met, the decision never starts.</p>
+
+            <p><strong>Return is a responsible action</strong>. It explicitly declares:
+                “not now,” “not under this condition,” or “return to human/design.”</p>
+
+            <p>Silence is not allowed. Doing nothing or treating failure as success erases responsibility.</p>
+
+            <p>BOA Core is not a design to automate judgment,<br>
+                but a design to <strong>prevent judgment from breaking</strong>.</p>
+
+            <footer>
+                © 2026 VCDesign
+            </footer>
+        </div>
+    </main>
+</body>
+
+</html>

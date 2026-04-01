@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Continuity Claim Layer - VCDesign</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/page-shell.css">
+    <link rel="stylesheet" href="../css/reading.css">
+    <style>
+        :root {
+            --bg-base: #0F172A;
+            --accent: #818CF8;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --line-color: rgba(129, 140, 248, 0.4);
+            --transition-fast: 0.18s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../index.html" class="nav-back">← Home</a>
+
+    <main class="page-main">
+            <div class="page-content">
+<div class="auxiliary-line">
+
+            <h1>Continuity Claim Layer</h1>
+
+            <p>VCDesign is not a function that directly controls the system.<br>
+                This layer is a protocol for defining the <strong>Status</strong> where the system can claim that "Value
+                is Continuous (Value Continuous)".</p>
+
+            <h2>The Final Guard</h2>
+
+            <blockquote>
+                <p><strong>This structure never improves value.</strong><br>
+                    <strong>It only prevents claiming continuity when value has already drifted.</strong>
+                </p>
+            </blockquote>
+
+            <p>You must not bring any expectations of "productivity improvement" or "efficiency" into this layer.<br>
+                This defines when the signboard (Claim) that the system is VCDesign compliant should be revoked.</p>
+
+            <h2>The Claim</h2>
+
+            <p>The system can claim to be "VCDesign compliant" only while all three of the following elements are
+                functioning:</p>
+
+            <ol>
+                <li>
+                    <strong>The Core (Logic to Protect)</strong><br>
+                    In-design value (Constitution, BOA, Closure of Responsibility) is protected.
+                </li>
+                <li>
+                    <strong>The Sensor (Context Drift Sensor)</strong><br>
+                    Sensors that detect changes in premises or context drift (Drift) are operating and are not being
+                    ignored.
+                </li>
+                <li>
+                    <strong>The Loop (Judgment Return Cycle)</strong><br>
+                    A cycle that stops the system or returns it to design upon detection is functioning.
+                </li>
+            </ol>
+
+            <p>When even one of these is missing, the system may continue to move, but the assertion of
+                <strong>"Continuity" immediately becomes void (INVALID)</strong>.</p>
+
+            <h2>The Mechanism (Judgment Logic)</h2>
+
+            <p>This layer monitors the following signal transitions and determines the status.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sensor State</th>
+                        <th>Loop Action</th>
+                        <th>Claim Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Normal</td>
+                        <td>(Monitoring)</td>
+                        <td><strong>VALID</strong></td>
+                        <td>Operating normally.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Drift Detected</strong></td>
+                        <td><strong>No Action / Ignored</strong></td>
+                        <td><strong style="color: #F87171;">INVALID</strong></td>
+                        <td>Warning was ignored. No longer VCDesign.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Drift Detected</strong></td>
+                        <td><strong>Returned / Stopped</strong></td>
+                        <td><strong>VALID (Maintaining)</strong></td>
+                        <td>Because it stopped/returned to protect value, the VCDesign status is maintained.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>"Stopping" is not a failure.<br>
+                Only "running out of control without stopping" means the loss of Claim.</p>
+
+            <footer>
+                © 2026 VCDesign
+            </footer>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>

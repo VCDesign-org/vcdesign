@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>BOA Core - VCDesign</title>
+    <meta name="description" content="BOA Core: AIが関与するシステムで判断・責任・停止を壊さずに扱うための境界設計。">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/page-shell.css">
+    <link rel="stylesheet" href="../css/reading.css">
+    <style>
+        :root {
+            --bg-base: #0F172A;
+            --accent: #06B6D4;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --link-hover-bg: rgba(6, 182, 212, 0.1);
+            --transition-fast: 0.18s ease-out;
+            --line-color: rgba(6, 182, 212, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../index.html" class="nav-back">← Home</a>
+
+    <main class="page-main">
+        <div class="page-content">
+            <h1>BOA Core</h1>
+
+            <p>BOA Core は、<br>
+                AI が関与するシステムにおいて、<br>
+                <strong>判断・責任・停止を壊さずに扱うための構造群</strong>です。</p>
+
+            <p>このリポジトリは「正しい答えを出す」ためのものではありません。<br>
+                <strong>「判断できない状態を、正しく止める」</strong>ために存在します。</p>
+
+            <hr>
+
+            <h2>これはフレームワークではない</h2>
+            <p>BOA / RCA / RP は、一般的な意味でのレイヤードアーキテクチャやフレームワークではありません。</p>
+            <ul>
+                <li>処理を分割するための層ではない</li>
+                <li>責務を整理するための役割分担でもない</li>
+            </ul>
+            <p>これらはすべて、<br>
+                <strong>判断の流れに沿って現れる「関所」</strong>です。</p>
+
+            <hr>
+
+            <h2>含まれる3つの構造</h2>
+            <ul>
+                <li><strong>BOA (Boundary-Oriented Architecture)</strong> — 判断が許される境界を宣言する</li>
+                <li><strong>RCA (Responsibility Closure Agent)</strong> — 判断の責任を引き受け、完了させる</li>
+                <li><strong>RP (Resolution Protocol)</strong> — 判断を進める／止める／戻すことを明示的に選ぶ</li>
+            </ul>
+
+            <p>重要なのは、<strong>これらが同時に存在するのではない</strong>という点です。</p>
+
+            <hr>
+
+            <h2>判断の基本フロー（要約）</h2>
+            <ol>
+                <li>システムは BOA に到達する</li>
+                <li>RCA が Assessment（判断引き受けの評価）を行う</li>
+                <li>RCA が「引き受ける（Accepted）」とした場合のみ RP が起動する</li>
+                <li>RP は必ず以下のいずれかを返す
+                    <ul>
+                        <li>Resolve（決める）</li>
+                        <li>Reject（却下する）</li>
+                        <li>Return（人や上流に戻す）</li>
+                    </ul>
+                </li>
+                <li>RCA が、この判断の責任を閉じる</li>
+            </ol>
+
+            <hr>
+
+            <h2>BOA が先に置かれる理由</h2>
+            <p>BOA は最初の技術ではありません。<br>
+                最初に置かれるべき<strong>境界の宣言</strong>です。</p>
+            <ul>
+                <li>AI の判断がどこまで許されるのか</li>
+                <li>どこで止めるのか</li>
+                <li>誰の責任になるのか</li>
+            </ul>
+            <p>これが曖昧なままでは、RP も RCA も意味を持ちません。</p>
+
+            <hr>
+
+            <h2>3つの役割と問い</h2>
+            <p>BOA / RCA / RP は、それぞれ異なる次元の役割を担います。<br>
+                「場所・人・ルール」に似た関係です。</p>
+
+            <h3>BOA — Boundary-Oriented Architecture</h3>
+            <p><strong>問い：「どこで判断を行うべきか？」</strong></p>
+            <p>BOA はシステムを境界で分離する構造です。<br>
+                AI が判断してよい領域と、人間が判断すべき領域を分けます。</p>
+
+            <h3>RCA — Responsibility Closure Agent</h3>
+            <p><strong>問い：「この判断を引き受けるか？」</strong></p>
+            <p>RCA は BOA で定義された場所で判断を行う主体です。<br>
+                ACCEPTED / DENIED / UNKNOWN の意思を示します。</p>
+
+            <h3>RP — Resolution Protocol</h3>
+            <p><strong>問い：「それは正式な解決として認められるか？」</strong></p>
+            <p>RP は手続きの正当性を検査します。<br>
+                署名・必須項目・責任主体が揃っているかを確認します。</p>
+
+            <hr>
+
+            <h2>失敗・停止・返却の扱い</h2>
+            <p>BOA Core が最も避けるべき失敗は、<br>
+                <strong>判断できないのに判断が進んでしまうこと</strong>です。</p>
+
+            <p><strong>Stop（停止）は正常系</strong>です。<br>
+                境界条件を満たしていない場合、判断は開始されません。</p>
+
+            <p><strong>Return（返却）は責任ある動作</strong>です。<br>
+                「今は決められない」「この条件では決めるべきではない」ことを明示します。</p>
+
+            <p>沈黙は許されません。<br>
+                何も返さない・暗黙に成功とみなすことは、責任を消します。</p>
+
+            <p>BOA Core は、<br>
+                判断を自動化するための設計ではなく、<br>
+                <strong>判断を壊さないための設計</strong>です。</p>
+
+            <footer>
+                © 2026 VCDesign
+            </footer>
+        </div>
+    </main>
+</body>
+
+</html>

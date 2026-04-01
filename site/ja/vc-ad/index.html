@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>VC-AD — Value-Continuous AI Development</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <main class="frame">
+
+        <header>
+            <nav class="lang-nav">
+                <a href="../index.html" class="lang-link">← Home</a>
+            </nav>
+
+            <h1 class="hero-title">VC-AD</h1>
+            <p class="hero-subtitle">(Value-Continuous AI Development)</p>
+            <p class="hero-tagline">
+                実装は使い捨てられるが、価値は連続する。 AI時代の "Boundary-Driven" な開発プロトコル。
+            </p>
+        </header>
+
+        <section>
+            <h2 class="usage-title">概要</h2>
+            <p>
+                <strong>VC-AD（Value-Continuous AI Development）</strong> は、
+                AIによる圧倒的な実装スピードを享受しながら、人間が設計と責任の「中核」を掌握し続けるための開発プロトコルです。
+            </p>
+            <p>
+                実装の細部はAIに任せつつ、人間は以下の <strong>「価値の構造（骨格）」</strong> を定義することに集中します。
+            </p>
+            <ul>
+                <li><strong>Decision：</strong> なぜそう判断したのか（意図の固定）</li>
+                <li><strong>Boundary：</strong> どこまでなら自由にやってよいか（安全地帯の定義）</li>
+                <li><strong>Connection：</strong> システム同士をどう接続するか（越境の管理）</li>
+                <li><strong>Closure：</strong> 失敗時にどう責任を取るか（安全な停止）</li>
+                <li><strong>Component：</strong> それらがどこに適用されるか（適用範囲）</li>
+            </ul>
+            <p>
+                これらを構造化することで、「実装はAIによって高速に使い捨てられ、価値ある設計だけが連続する」 開発を実現します。
+            </p>
+        </section>
+
+        <section id="constitution-link">
+            <h2 class="usage-title">VC-AD 憲法</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="../constitution/">
+                        <span class="label">価値継続設計 基本憲法</span>
+                        <span class="desc">The Constitution of VCDesign</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="usage-title">VCDesign との関係</h2>
+            <p>
+                <strong>VCDesign</strong> が「価値を継続させるための設計原則（思想・憲法）」であるのに対し、
+                <strong>VC-AD</strong> はそれを <strong>AI開発プロセスとして具体化した実装指向の方法論</strong>です。
+            </p>
+            <ul>
+                <li>
+                    <strong>VCDesign：</strong>
+                    価値はどこで生まれ、どこで失われるか / 判断主体（人間／AI）の境界はどこか
+                </li>
+                <li>
+                    <strong>VC-AD：</strong>
+                    AIが実装を生成しても、価値と責任をどう保存するか / それをどうプロトコルとして管理するか
+                </li>
+            </ul>
+            <p>VC-AD は <strong>VCDesign の思想を、AI実装の現場に接続する役割</strong>を担います。</p>
+        </section>
+
+        <section>
+            <h2 class="usage-title">なぜ VC-AD なのか？</h2>
+            <p>
+                「AI時代の開発が抱える問題」や「VC-AD の基本構造（11の境界）」については、
+                以下のページで詳しく解説しています。
+            </p>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="why.html">
+                        <span class="label">なぜ VC-AD なのか</span>
+                        <span class="desc">AI時代の開発課題と、11の境界が必要な理由</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+
+
+        <section>
+            <h2 class="usage-title">使い方（Quickstart）</h2>
+            <p>
+                VC-ADは「全部を最初に設計する」手法ではありません。<br>
+                <strong>AIに実装を作らせる自由</strong>と、<strong>人間が責任を保持する境界</strong>を分離しながら進めます。<br>
+                下記のプロンプトを生成AIに貼り付ければ、支援してくれます。<br>
+            </p>
+
+            <h3>AIに渡す最小プロンプト（テンプレ）</h3>
+            <div class="prompt-wrapper">
+                <textarea id="vc-ad-prompt" class="prompt-box" readonly>以下のVC-ADプロトコル（YAML）を読み込んでください：
+
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/decisions/decisions.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/boundaries/boundaries.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/connections/connections.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/closures/closures.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/components/components.yaml
+
+対象: <component_id>（例: comp-payment-01）
+このコンポーネントの paths 配下を実装してください。
+適用される Boundaries / Connections / Closures に必ず従い、
+失敗時は Closure の定義に従って責務を閉じてください。</textarea>
+
+                <div class="prompt-actions">
+                    <button type="button" class="btn-copy" id="copy-btn">コピー</button>
+                </div>
+                <div class="prompt-note">※ ボタンを押すとプロンプト全体がコピーされます。</div>
+            </div>
+
+            <h3>Step 0: 無境界生成（まずはAIに暴れさせる）</h3>
+            <ul>
+                <li><strong>目的：</strong> スピード優先で、動くものを最速で作る</li>
+                <li>オンメモリ／ダミーIO／ローカルで動く最小の実装をAIに生成させる</li>
+                <li>途中で細かく指示せず、完成形までのTODOをまとめて渡す</li>
+                <li>この段階では「境界」は固定しない（壊せる前提）</li>
+            </ul>
+
+            <h3>Step 1: Boundaryの定義（守るべきラインを引く）</h3>
+            <ul>
+                <li><strong>目的：</strong> 永続化データや外部連携など、取り返しのつかない箇所を保護する</li>
+                <li>永続化・運用・責任が発生する地点を見つける</li>
+                <li>そこに「壊してはいけない条件（must/must-not）」をBoundaryとして定義する</li>
+                <li>例：PIIを外へ出さない／監査ログ必須／OT制御系へ直接書き込まない</li>
+            </ul>
+
+            <h3>Step 2: Connectionの定義（越境するルートを決める）</h3>
+            <ul>
+                <li><strong>目的：</strong> コンポーネント間の連携点（越境点）を明確にする</li>
+                <li>A→Bの越境点（API/イベント/バッチ）をConnectionとして宣言する</li>
+                <li>Connectionは「流れ」だけを書く（原則や事故処理は書かない）</li>
+            </ul>
+
+            <h3>Step 3: Closureの実装（失敗しても安全に終わらせる）</h3>
+            <ul>
+                <li><strong>目的：</strong> 異常が発生しても、システム全体を壊さずに安全に停止させる</li>
+                <li>各Connectionに対して、失敗時の終わらせ方をClosureとして定義する</li>
+                <li>リトライ／タイムアウト／サーキットブレーカー／冪等性／補償／人へのエスカレーション</li>
+                <li>目標は「失敗しても責務が閉じる」状態を作ること</li>
+            </ul>
+
+            <h3>Step 4: Componentの適用（どこで動くかを決める）</h3>
+            <ul>
+                <li><strong>目的：</strong> 実装が適用される具体的な場所（ディレクトリ・サービス）を確定する</li>
+                <li>どのディレクトリ／サービスに、どのBoundary/Connection/Closureが適用されるかをComponentで定義する</li>
+                <li>これにより、AIに渡す「実行可能な文脈単位」が確定する</li>
+            </ul>
+
+        </section>
+
+        <section>
+            <h2 class="usage-title">YAML プロトコルによる実装</h2>
+            <p>
+                VC-AD は、<code>decisions.yaml</code>, <code>boundaries.yaml</code> などのプロトコルとして具体化されています。<br>
+            </p>
+
+            <h3>例：boundaries.yaml (Snippet)</h3>
+            <pre class="code-block"><code>boundaries:
+  # PII（個人情報）をマスクせずに記録してはならない
+  - id: "b-logging-04"
+    name: "pii-privacy-protection"
+    description: "PII（個人情報）をマスクせずに記録してはならない"
+    type: "invariant"
+    derived_from_decisions: ["d-logging-04"]</code></pre>
+
+            <p>
+                これらは次のリポジトリで「参照実装 (Reference Protocol Set)」として公開されています。
+            </p>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="https://github.com/VCDesign-org/architecture-yaml-protocols">
+                        <span class="label">architecture-yaml-protocols (GitHub)</span>
+                        <span class="desc">VC-AD Reference Implementation</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="usage-title">リサーチ</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="2026-01deepreserch.pdf">
+                        <span class="label">2026-01 Deep Research</span>
+                        <span class="desc">生成AI自動コーディング時代における価値継
+                            続設計（VCDesign）と境界指向アーキテク
+                            チャ（VC-AD/BOA）の学術的考察</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="usage-title">まとめ</h2>
+            <p>
+                <strong>VC-AD</strong> は、
+                <strong>「実装が変わり続けても、判断と責任が価値として連続する開発手法」</strong>です。<br>
+                VCDesign の思想と、AI開発の現場をつなぐための <strong>実践的プロトコル</strong>として位置づけられます。
+            </p>
+        </section>
+
+        <footer>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+
+    </main>
+    <script>
+        (function () {
+            const btn = document.getElementById('copy-btn');
+            const ta = document.getElementById('vc-ad-prompt');
+
+            if (btn && ta) {
+                btn.addEventListener('click', async () => {
+                    ta.focus();
+                    ta.select();
+                    try {
+                        await navigator.clipboard.writeText(ta.value);
+                        const original = btn.textContent;
+                        btn.textContent = 'コピーしました';
+                        setTimeout(() => { btn.textContent = original; }, 1400);
+                    } catch (e) {
+                        // fallback
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

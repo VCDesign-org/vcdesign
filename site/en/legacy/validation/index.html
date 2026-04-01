@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>VCDesign Validation Report</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <style>
+        :root {
+            --bg-ink: #0B0E12;
+            --bg-mid: #131A23;
+            --bg-warm: #1C1B1E;
+            --paper: rgba(255, 255, 255, 0.03);
+            --paper-hover: rgba(255, 255, 255, 0.06);
+            --paper-strong: rgba(255, 255, 255, 0.08);
+            --line: rgba(255, 255, 255, 0.1);
+            --ink: #E2E8F0;
+            --muted: #94A3B8;
+            --accent: #F59E0B;
+            --accent-ok: #10B981;
+            --accent-ng: #EF4444;
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body {
+            margin: 0; padding: 0;
+            color: var(--ink);
+            background-color: var(--bg-ink);
+            background-image:
+                radial-gradient(circle at 15% 15%, rgba(245, 158, 11, 0.08), transparent 40%),
+                radial-gradient(circle at 85% 20%, rgba(34, 211, 238, 0.08), transparent 40%),
+                linear-gradient(180deg, var(--bg-ink) 0%, var(--bg-mid) 100%);
+            font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
+        }
+
+        body { display: flex; justify-content: center; min-height: 100vh; }
+
+        main { width: min(900px, 100%); padding: 64px 24px 96px; }
+
+        h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: 0.04em; color: #fff; }
+        h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); line-height: 1.3; margin-bottom: 12px; }
+        h2 { font-size: 1.5rem; margin-bottom: 24px; border-left: 4px solid var(--accent); padding-left: 16px; }
+        h3 { font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        p { margin: 0 0 16px; font-size: 1rem; color: var(--ink); }
+        ul { margin: 0 0 24px 24px; padding: 0; color: var(--muted); }
+        li { margin-bottom: 8px; }
+        a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+        a:hover { opacity: 0.8; text-decoration: underline; }
+
+        header {
+            margin-bottom: 48px;
+            text-align: center;
+        }
+        .hero-subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 32px; font-weight: 300; }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .home-link:hover {
+            color: #fff;
+            border-color: var(--accent);
+            text-decoration: none;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 12px;
+        }
+
+        section { margin-bottom: 64px; }
+        .summary-section {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: 14px;
+            padding: 32px 28px;
+            box-shadow: 0 24px 40px rgba(0, 0, 0, 0.35);
+        }
+        .summary-section h2 {
+            border-left-color: var(--accent);
+        }
+        .summary-grid {
+            display: block;
+        }
+        .summary-grid p {
+            margin-left: 16px;
+        }
+
+        .callout {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .note { font-size: 0.9rem; color: var(--muted); margin-top: 12px; display: block; }
+
+        .report-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .report-card {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background: var(--paper-strong);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .report-card:hover {
+            background: var(--paper-hover);
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            text-decoration: none;
+        }
+        .report-icon { font-size: 1.5rem; margin-right: 16px; }
+        .report-info strong { display: block; color: #fff; font-size: 1rem; }
+        .report-info span { font-size: 0.85rem; color: var(--muted); }
+
+        .quote {
+            margin: 32px 0;
+            padding: 24px;
+            background: rgba(245, 158, 11, 0.05);
+            border-left: 3px solid var(--accent);
+            color: #fff;
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .col-card {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 28px;
+        }
+        .col-yes { border-top: 4px solid var(--accent-ok); }
+        .col-no { border-top: 4px solid var(--muted); }
+
+        .col-card h3 { color: #fff; margin-bottom: 20px; }
+        .col-card ul { color: var(--ink); }
+        .col-card li::marker { color: var(--muted); }
+
+        @media (max-width: 768px) {
+            main { padding: 40px 20px; }
+            .comparison-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <header>
+            <div class="header-top">
+                <a href="../" class="home-link">← HOME</a>
+            </div>
+            <h1 class="hero-title">VCDesign Validation Report</h1>
+            <p class="hero-subtitle">- Structural comparison against existing architectures for preserving value over time -</p>
+            <p class="note" style="border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); display: inline-block; padding: 8px 16px;">
+                This page is material for deciding whether to adopt VCDesign.
+            </p>
+        </header>
+
+        <section>
+            <p>
+                We publish reports below that compare and evaluate VCDesign (Value Continuity Design)<br>
+                against representative architectures and AI operation practices.<br>
+                These were produced using generative AI (ChatGPT / Gemini)
+                to analyze the source code and design principles.
+            </p>
+
+            <div class="report-links">
+                <a href="./20260125-report1.pdf" class="report-card">
+                    <span class="report-icon">📄</span>
+                    <div class="report-info">
+                        <strong>ChatGPT analysis report</strong>
+                        <span>VCDesign vs Clean Architecture / HITL</span>
+                    </div>
+                </a>
+                <a href="./20260125-report2.pdf" class="report-card">
+                    <span class="report-icon">📄</span>
+                    <div class="report-info">
+                        <strong>Gemini analysis report</strong>
+                        <span>Paradigm shift from ruler to lawgiver (control to structure)</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="callout">
+                <p><strong>Premises of this report:</strong></p>
+                <p style="margin-bottom:0; color:var(--muted); font-size: 0.95rem;">
+                    This is not a simple philosophy overview. It compares, as a structure,
+                    where VCDesign steps in and where it does not, based on best practices
+                    such as Clean Architecture, DDD, and AI Ethics.<br><br>
+                    This is not a document that claims VCDesign is "correct."<br>
+                    It exists to clarify which problems it is effective for.
+                </p>
+            </div>
+        </section>
+
+        <section class="summary-section">
+            <h2>Summary (what this report clarifies)</h2>
+
+            <div class="summary-grid">
+                <div>
+                    <h3>1. VCDesign does not reject existing architectures</h3>
+                    <p>Clean Architecture and DDD remain effective for code structure and changeability.
+                        VCDesign does not replace them.</p>
+                </div>
+
+                <div>
+                    <h3>2. It designs the lifespan of judgment and responsibility</h3>
+                    <p>It provides a structure that preserves the premises of value over time,
+                        such as why a judgment was made and who holds responsibility.</p>
+                </div>
+
+                <div>
+                    <h3>3. HITL becomes architecture, not operations</h3>
+                    <p>It does not rely on human effort alone. It enforces structures where
+                        decisions without explicit human responsibility cannot execute.</p>
+                </div>
+
+                <div>
+                    <h3>4. Ethics and safety are not delegated to AI "goodness"</h3>
+                    <p>It rejects the idea that smarter AI is automatically safer.
+                        It limits the scope of AI involvement and anchors responsibility in humans.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>What can be said / what cannot be said</h2>
+            <div class="comparison-grid">
+                <div class="col-card col-yes">
+                    <h3 style="color: var(--accent-ok);">What can be said about VCDesign</h3>
+                    <p>It clearly takes responsibility for areas existing architectures could not protect.</p>
+                    <ul style="color: #fff;">
+                        <li>Systems that run long-term</li>
+                        <li>Meaning and premises change frequently</li>
+                        <li>AI participates in judgment processes</li>
+                        <li>Failures require heavy accountability</li>
+                    </ul>
+                    <p style="margin-top: 24px; font-weight: bold; color: #fff;">
+                        Not "design that produces the right answer"<br>
+                        but "design that structurally reduces the conditions of value collapse."
+                    </p>
+                </div>
+                <div class="col-card col-no">
+                    <h3 style="color: var(--muted);">What cannot be said about VCDesign</h3>
+                    <p>The following are outside the scope of VCDesign and are not guaranteed.</p>
+                    <ul>
+                        <li>Prioritizing speed and automation above all else</li>
+                        <li>Short-lived, disposable systems</li>
+                        <li>Defining what the correct ethics are</li>
+                        <li>Guaranteeing input data quality</li>
+                    </ul>
+                    <p style="margin-top: 24px; color: var(--muted);">
+                        A structure where human judgment and responsibility are not erased by time and AI.<br>
+                        Not promising more than that is itself a VCDesign principle.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Where this goes next</h2>
+            <p>
+                This report is not an endpoint, but a checkpoint.<br>
+                VCDesign gains meaning only through real-world iteration: implementations,
+                operational failures, and decisions not to apply it.
+            </p>
+
+            <div class="callout" style="text-align: center; border-color: var(--accent);">
+                <p style="margin-bottom: 8px;"><strong>Please decide</strong></p>
+                <p class="note" style="margin-top: 0;">
+                    If this still feels too heavy or excessive, VCDesign may be unnecessary at your current phase.<br>
+                    That is itself the right decision.
+                </p>
+            </div>
+
+            <p style="text-align: center; margin-top: 48px;">
+                <a href="../" style="color: var(--muted);">Back to Home</a>
+            </p>
+        </section>
+    </main>
+</body>
+</html>

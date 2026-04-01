@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Continuity Claim Layer - VCDesign</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/page-shell.css">
+    <link rel="stylesheet" href="../css/reading.css">
+    <style>
+        :root {
+            --bg-base: #0F172A;
+            --accent: #818CF8;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --line-color: rgba(129, 140, 248, 0.4);
+            --transition-fast: 0.18s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../index.html" class="nav-back">← Home</a>
+
+    <main class="page-main">
+            <div class="page-content">
+<div class="auxiliary-line">
+
+            <h1>Continuity Claim Layer (継続主張層)</h1>
+
+            <p>VCDesign は、システムを直接制御する機能ではありません。<br>
+                この層は、システムが「価値が継続している（Value Continuous）」と主張できる<strong>状態（Status）</strong>を定義するためのプロトコルです。</p>
+
+            <h2>The Final Guard (最終防衛線)</h2>
+
+            <blockquote>
+                <p><strong>This structure never improves value.</strong><br>
+                    <strong>It only prevents claiming continuity when value has already drifted.</strong>
+                </p>
+                <p>（この構造は、決して価値を向上させない。）<br>
+                    （これは、価値がすでに漂流しているにも関わらず『継続している』と主張することを防ぐだけである。）</p>
+            </blockquote>
+
+            <p>この層にいかなる「生産性向上」「効率化」の期待も持ち込んではなりません。<br>
+                これは、システムが VCDesign 準拠であるという看板（Claim）を、いつ剥奪すべきかを定義するものです。</p>
+
+            <h2>The Claim (主張の要件)</h2>
+
+            <p>システムが「VCDesign 準拠である」と主張できるのは、以下の3つの要素がすべて機能している間だけです。</p>
+
+            <ol>
+                <li>
+                    <strong>The Core (守るべき論理)</strong><br>
+                    設計内価値（憲法、BOA、責任の閉包）が守られていること。
+                </li>
+                <li>
+                    <strong>The Sensor (文脈乖離センサー)</strong><br>
+                    前提の変化や文脈のズレ（Drift）を検知するセンサーが稼働しており、無視されていないこと。
+                </li>
+                <li>
+                    <strong>The Loop (判断返却サイクル)</strong><br>
+                    検知時に、システムを停止または設計へ差し戻すサイクルが機能していること。
+                </li>
+            </ol>
+
+            <p>これらが一つでも欠けた時、システムは動き続けるかもしれませんが、<strong>「継続性（Continuity）」の主張は直ちに失効 (INVALID)</strong> します。</p>
+
+            <h2>The Mechanism (判定ロジック)</h2>
+
+            <p>この層は、以下のシグナル遷移を監視し、ステータスを決定します。</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sensor State</th>
+                        <th>Loop Action</th>
+                        <th>Claim Status</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Normal</td>
+                        <td>(Monitoring)</td>
+                        <td><strong>VALID</strong></td>
+                        <td>正常稼働中。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Drift Detected</strong></td>
+                        <td><strong>No Action / Ignored</strong></td>
+                        <td><strong style="color: #F87171;">INVALID</strong></td>
+                        <td>警告が無視された。もはやVCDesignではない。</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Drift Detected</strong></td>
+                        <td><strong>Returned / Stopped</strong></td>
+                        <td><strong>VALID (Maintaining)</strong></td>
+                        <td>価値を守るために停止・返却したため、VCDesignの状態は維持されている。</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>「止まること」は失敗ではありません。<br>
+                「止まらずに暴走すること」だけが、Claim の喪失を意味します。</p>
+
+            <footer>
+                © 2026 VCDesign
+            </footer>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>

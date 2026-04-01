@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Why VC-AD? - The Context Gap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <main class="frame">
+
+        <header>
+            <nav class="lang-nav">
+                <a href="index.html" class="lang-link">← Overview</a>
+            </nav>
+            <h1 class="hero-title">Why VC-AD?</h1>
+            <p class="hero-subtitle">The Context Gap: AIはなぜ文脈を読めないのか</p>
+        </header>
+
+        <section>
+            <h2 class="usage-title">AIは「地図」を持たずに走っている</h2>
+            <p>
+                現在のAIは、コードを書く能力において人間を凌駕しつつあります。<br>
+                しかし、AI開発の現場では「動くけれど、何かが違う」「修正するたびに別の場所が壊れる」という問題が多発しています。
+            </p>
+            <p>
+                原因は能力不足ではありません。<strong>「コンテキスト（文脈）の欠如」</strong>です。<br>
+                人間は「このディレクトリは認証系だから慎重に」「ここは将来マイクロサービスになる」といった <strong>暗黙の地図</strong> を頭の中に持っています。<br>
+                しかしAIにはその地図が見えていません。AIにとって、すべてのコードは等しく修正可能です。
+            </p>
+            <p>
+                この <strong>「人間だけに見えている地図」</strong> を可視化しない限り、AIは永遠に「無邪気な破壊者」であり続けます。
+            </p>
+        </section>
+
+        <section>
+            <h2 class="usage-title">見えない地図の正体：「11の境界」</h2>
+            <p>
+                VCDesignでは、AIが見落としがちな「コードの外側にある制約」を11のレイヤに分類しています。<br>
+                これらは、プログラム言語（As Code）として表現しにくく、プロジェクトの歴史や組織構造、物理的制約に依存する領域です。
+            </p>
+
+            <div class="boundary-list">
+                <h3>Group 1: 変えられない前提 (Context)</h3>
+                <dl>
+                    <dt>1. 物理・現場制約 / 10. 組織・境界 / 11. ガバナンス</dt>
+                    <dd>「物理的に離れている」「組織が違う」「法律で決まっている」。これらは設計で解決するものではなく、受け入れるべき前提条件です。</dd>
+                </dl>
+
+                <h3>Group 2: 選ぶだけのリソース (Resource)</h3>
+                <dl>
+                    <dt>2. 実行基盤 / 3. ネットワーク / 9. プラットフォーム</dt>
+                    <dd>クラウドやコンテナ技術によって隠蔽されていますが、性能特性やコスト構造は「選択」の結果です。</dd>
+                </dl>
+
+                <h3>Group 3: 守るべき品質標準 (Standard)</h3>
+                <dl>
+                    <dt>6. 信頼性(SRE) / 7. セキュリティ / 8. 可観測性</dt>
+                    <dd>「アクセス権限」「ログのフォーマット」。これらには明確なベストプラクティスがあり、AIが勝手に崩してはいけない領域です。</dd>
+                </dl>
+
+                <h3>Group 4: VC-ADの主戦場 (Core Domain)</h3>
+                <dl>
+                    <dt>4. 分散の本質 / 5. データ意味論</dt>
+                    <dd>「整合性を犠牲にしてでも可用性を取るか？」「二重課金を許すか？」。<br>
+                        ここには正解がなく、ビジネスの<strong>「意思決定（Decision）」</strong>だけが存在します。AIが最も苦手とする領域です。</dd>
+                </dl>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="usage-title">解決策：AIに「設計方法」を渡す</h2>
+            <p>
+                これらの境界を、毎回プロンプトでAIに説明するのは不可能です。<br>
+                そこで VC-AD は、最もシンプルで強力な解決策を提案します。
+            </p>
+            <p>
+                <strong>「境界定義ファイル（Boundaries YAML）を、「設計方法」としてリポジトリに置くこと」</strong>です。
+            </p>
+
+            <h3>The "Static Badge" Strategy</h3>
+            <p>
+                Gitにおける <code>.gitignore</code> や、エディタにおける <code>.editorconfig</code> のように、
+                <strong>「そこに置いてあるだけでAIが振る舞いを変えるファイル」</strong> を標準化します。
+            </p>
+            <ul class="step-list">
+                <li>
+                    <strong>Standardization（標準化）:</strong><br>
+                    「何を壊してはいけないか」の記述形式を統一する。
+                </li>
+                <li>
+                    <strong>Declaration（宣言）:</strong><br>
+                    リポジトリに <code>.vc-ad/boundaries.yaml</code> があることは、「このプロジェクトはAI制御下にある」という宣言になる。
+                </li>
+                <li>
+                    <strong>Compliance（遵守）:</strong><br>
+                    AIはコードを書く前に必ずこの「設計方法」を確認し、許可された範囲内（内側）だけで実装を行う。
+                </li>
+            </ul>
+            <p>
+                「見えない地図」を「見える宣言」に変える。<br>
+                これが、AI開発におけるコンテキスト・ギャップを埋めるための、VC-ADの基本戦略です。
+            </p>
+        </section>
+
+        <footer>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+
+    </main>
+</body>
+
+</html>

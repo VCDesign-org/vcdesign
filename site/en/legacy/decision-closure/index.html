@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Decision Closure - VCDesign</title>
+    <meta name="description"
+        content="VCDesign Decision Closure: A structural model that determines whether an AI may 'close' a decision.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/page-shell.css">
+    <link rel="stylesheet" href="../css/paging.css">
+    <link rel="stylesheet" href="../css/reading.css">
+    <style>
+        :root {
+            --bg-base: #0F172A;
+            --accent: #818CF8;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --link-hover-bg: rgba(129, 140, 248, 0.08);
+            --transition-fast: 0.18s ease-out;
+            --line-color: rgba(129, 140, 248, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../index.html" class="nav-back">← Home</a>
+
+    <main class="page-main">
+            <div class="page-content">
+<div class="narrative-stream">
+
+            <!-- Prelude: Overview -->
+            <section class="chapter" id="prelude">
+                <h1>Overview</h1>
+                <p>These docs break down and record the <strong>Decision Closure Structure</strong>,
+                    so that the author himself does not forget it and third parties can
+                    re-experience it.</p>
+
+                <p>The interest is consistently on one point:</p>
+
+                <blockquote>
+                    Can AI close this decision?
+                </blockquote>
+
+                <p>It does not handle correctness, accuracy, ethics, or UI.<br>
+                    It handles only "whether it is okay to close" the decision as a structure.</p>
+
+                <pre>
+┌──────────────────────────────────────────────┐
+│                Undefined-Use World           │
+│  (AI cannot observe the user’s purpose or    │
+│   determine responsibility or disclaimers)    │
+└──────────────────────────────────────────────┘
+                               │
+                               ▼
+┌──────────────────────────────────────────────┐
+│        Five Axes of Human Judgment           │
+│  Who / Responsibility / Accuracy / Context / │
+│  Time                                        │
+│  → Values cannot be observed, so only        │
+│    “danger conditions” are extracted         │
+└──────────────────────────────────────────────┘
+                               │
+                               ▼
+┌──────────────────────────────────────────────┐
+│        Decision Closure Structure            │
+│  A structural model that determines whether  │
+│  an AI may “close” a judgment                │
+│                                              │
+│  【Five Closure Steps】                       │
+│   1. Is the responsible party exactly one?   │
+│   2. Is there no reliance on psychological   │
+│   3. Is the action physically reversible     │
+│      without additional judgment or cost?    │
+│   4. Does the action avoid triggering        │
+│      further chains of behavior?             │
+│   5. Is no social context involved?          │
+│                                              │
+│  → If any step fails → Human-Closed          │
+│  → Only if all pass → AI-Closed (rare)       │
+└──────────────────────────────────────────────┘
+                               │
+                               ▼
+┌──────────────────────────────────────────────┐
+│                Transition (Reversal)         │
+│  A mid-conversation shift where a judgment   │
+│  becomes unsafe to close                     │
+│                                              │
+│  【Five Types of Transition】                 │
+│   - Social-context transition (Who)          │
+│   - Responsibility transition (Responsibility)│
+│   - Reversibility transition (Accuracy →     │
+│     physical reversibility)                  │
+│   - Context transition (Context)             │
+│   - Temporal transition (Time)               │
+│                                              │
+│  → Immediately forces Human-Closed           │
+└──────────────────────────────────────────────┘
+                               │
+                               ▼
+┌──────────────────────────────────────────────┐
+│                 idk-lamp (Signal)            │
+│  Indicates not “I don’t know,” but           │
+│  “This judgment must not be closed.”         │
+│                                              │
+│  【Three-Layer Reason Model】                 │
+│   - Direct cause: type of transition         │
+│   - Structural cause: failed closure step    │
+│   - Root cause: dangerous condition in one   │
+│     of the five axes                         │
+└──────────────────────────────────────────────┘
+</pre>
+
+                <p>These docs are intended to be read in the following order:</p>
+                <ol>
+                    <li>Prerequisite Worldview (Undefined-Use World)</li>
+                    <li>Decision Closure Structure itself</li>
+                    <li>Transition occurring during dialogue</li>
+                    <li>Correspondence with the 5 axes of decision</li>
+                    <li>Positioning of idk-lamp</li>
+                </ol>
+            </section>
+
+            <!-- Chapter 1: World Assumption -->
+            <section class="chapter" id="chapter-1">
+                <h1>1. World Assumption: Undefined-Use World</h1>
+                <p>This structure assumes an <strong>Undefined-Use World</strong>.</p>
+                <p>An Undefined-Use World refers to a state where:</p>
+                <ul>
+                    <li>The user themselves has not clearly defined the use</li>
+                    <li>Reference, decision, and action fluctuate during the dialogue</li>
+                    <li>Disclaimer and responsibility cannot be determined within AI</li>
+                </ul>
+                <p>In conversational AI and personal AI, this state is the norm.</p>
+
+                <p>In this assumption, AI cannot observe values of the "5 axes of decision" such as:</p>
+                <ul>
+                    <li>Who the counterpart is</li>
+                    <li>Who assumes responsibility</li>
+                    <li>How accurate it needs to be</li>
+                    <li>What the situation and time axis are</li>
+                </ul>
+                <p>Therefore, in this structure, we give up using the values of the 5 axes from the beginning and adopt
+                    a design that <strong>handles only the moment it tipped to the dangerous side</strong>.</p>
+            </section>
+
+            <!-- Chapter 2: Decision Closure -->
+            <section class="chapter" id="chapter-2">
+                <h1>2. Decision Closure Structure</h1>
+                <p>Decision Closure Structure is not a structure to decide the correctness of a decision.</p>
+
+                <blockquote>
+                    It is a structure that decides only "whether AI can close" the decision.
+                </blockquote>
+
+                <p>The result of the decision is always the following two choices:</p>
+                <ul>
+                    <li>AI-Closed: The decision can be completed with AI output</li>
+                    <li>Human-Closed: AI does not close the decision and returns it to the human</li>
+                </ul>
+                <p>The default is Human-Closed.</p>
+
+                <h2>Steps of Decision Closure</h2>
+                <p>Decision Closure consists of the following 5 steps.<br>
+                    If any of them collapses, it transitions to Human-Closed.</p>
+
+                <ol>
+                    <li>Is the responsible entity one person?</li>
+                    <li>Does it not depend on psychological cancellation?</li>
+                    <li>Can it be physically cancelled directly?</li>
+                    <li>Does the action not chain?</li>
+                    <li>Does it not carry social context?</li>
+                </ol>
+
+                <p>Psychological cancellation (e.g., stopping if reading the air) is treated as "non-existent" in the
+                    design.</p>
+
+                <h2>Reason for not handling accuracy</h2>
+                <p>This structure does not directly handle "accuracy".</p>
+                <p>This is because in an undefined-use world, it is not known how accurate it needs to be.</p>
+                <p>Instead, it is replaced with <strong>reversibility</strong>:</p>
+                <ul>
+                    <li>Can it be directly cancelled even if it is wrong?</li>
+                </ul>
+            </section>
+
+            <!-- Chapter 3: Transition -->
+            <section class="chapter" id="chapter-3">
+                <h1>3. Transition (Mid-way Inversion)</h1>
+                <p>Transition is a phenomenon where the nature of the decision changes during the dialogue.</p>
+                <ul>
+                    <li>A decision that was AI-Closed</li>
+                    <li>Transitions to Human-Closed</li>
+                </ul>
+                <p>This is not accidental, but a <strong>phenomenon that can be explained structurally</strong>.</p>
+
+                <h2>When Transition Occurs</h2>
+                <p>Transition occurs when changes such as the following happen:</p>
+                <ul>
+                    <li>The responsible entity was expanded</li>
+                    <li>A decision that was cancellable became irreversible</li>
+                    <li>Action or time started to chain into the future</li>
+                    <li>Social context emerged</li>
+                </ul>
+                <p>All of these are the result of one of the steps of Decision Closure collapsing.</p>
+
+                <h2>Principles during Transition</h2>
+                <ul>
+                    <li>Retain the thinking material up to that point</li>
+                    <li>Do not conclude or aggregate</li>
+                    <li>Do not close the decision, return it to the human</li>
+                </ul>
+                <p>Transition is treated not as a signal to "stop because it's dangerous", but as a <strong>signal
+                        indicating that the nature of the decision has changed</strong>.</p>
+            </section>
+
+            <!-- Chapter 4: Axes Mapping -->
+            <section class="chapter" id="chapter-4">
+                <h1>4. Correspondence between 5 Axes of Judgment and Closure Structure</h1>
+                <p>Human judgment involves the following 5 axes:</p>
+                <ul>
+                    <li>Counterpart</li>
+                    <li>Responsibility</li>
+                    <li>Accuracy</li>
+                    <li>Situation</li>
+                    <li>Time</li>
+                </ul>
+                <p>In an undefined-use world, these values cannot be directly observed.</p>
+                <p>Therefore, in this structure, the 5 axes are abstracted as follows:</p>
+
+                <table class="markdown-table">
+                    <thead>
+                        <tr>
+                            <th>Decision Axis</th>
+                            <th>Danger Condition</th>
+                            <th>Corresponding Closure Collapse</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Counterpart</td>
+                            <td>Social context exists</td>
+                            <td>Step 5</td>
+                        </tr>
+                        <tr>
+                            <td>Responsibility</td>
+                            <td>Multiple responsible entities</td>
+                            <td>Step 1</td>
+                        </tr>
+                        <tr>
+                            <td>Accuracy</td>
+                            <td>Mistake is irreversible</td>
+                            <td>Step 3</td>
+                        </tr>
+                        <tr>
+                            <td>Situation</td>
+                            <td>Psychological cancellation / Chain</td>
+                            <td>Step 2 / 4</td>
+                        </tr>
+                        <tr>
+                            <td>Time</td>
+                            <td>Chain to future direction</td>
+                            <td>Step 4</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>The 5 axes are not discarded.<br>
+                    The closure structure is a "purified form" of the 5 axes.</p>
+            </section>
+
+            <!-- Chapter 5: idk-lamp -->
+            <section class="chapter" id="chapter-5">
+                <h1>5. Relationship with idk-lamp</h1>
+                <p><strong>idk-lamp</strong> is a concept positioned below the Decision Closure Structure.</p>
+                <ul>
+                    <li>Decision Closure Structure: Decides whether to close the decision</li>
+                    <li>idk-lamp: Visualizes the state where it cannot be closed</li>
+                </ul>
+                <p>idk-lamp is not the cause.<br>
+                    It is a <strong>signal indicating the result of the structure</strong>.</p>
+                <p>It indicates a state of:<br>
+                    "Not stopping because it doesn't know", but<br>
+                    "Not closing because it must not close".</p>
+            </section>
+
+        </div>
+
+        <nav class="story-nav">
+            <a href="#prelude" class="story-dot" data-title="Overview" aria-label="Jump to Overview"></a>
+            <a href="#chapter-1" class="story-dot" data-title="1. Use Undefined World"
+                aria-label="Jump to Chapter 1"></a>
+            <a href="#chapter-2" class="story-dot" data-title="2. Decision Closure" aria-label="Jump to Chapter 2"></a>
+            <a href="#chapter-3" class="story-dot" data-title="3. Transition" aria-label="Jump to Chapter 3"></a>
+            <a href="#chapter-4" class="story-dot" data-title="4. Axes Mapping" aria-label="Jump to Chapter 4"></a>
+            <a href="#chapter-5" class="story-dot" data-title="5. idk-lamp" aria-label="Jump to Chapter 5"></a>
+        </nav>
+    </div>
+</main>
+</body>
+
+</html>

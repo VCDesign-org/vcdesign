@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Why VC-AD? - The Context Gap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <main class="frame">
+
+        <header>
+            <nav class="lang-nav">
+                <a href="index.html" class="lang-link">← Overview</a>
+            </nav>
+            <h1 class="hero-title">Why VC-AD?</h1>
+            <p class="hero-subtitle">The Context Gap: Why AI Cannot Read Context</p>
+        </header>
+
+        <section>
+            <h2 class="usage-title">AI is Running Without a "Map"</h2>
+            <p>
+                Current AI is starting to surpass humans in the ability to write code.<br>
+                However, in AI development fields, problems like "it works, but something is wrong" or "fixing one thing
+                breaks another" occur frequently.
+            </p>
+            <p>
+                The cause is not a lack of ability. It is a <strong>"Lack of Context"</strong>.<br>
+                Humans hold an <strong>implicit map</strong> in their heads, such as "be careful here because it's
+                authentication" or "this will become a microservice in the future".<br>
+                However, AI cannot see that map. To AI, all code is equally modifiable.
+            </p>
+            <p>
+                Unless we visualize this <strong>"map visible only to humans"</strong>, AI will remain an "innocent
+                destroyer" forever.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="usage-title">The True Nature of the Invisible Map: "11 Boundaries"</h2>
+            <p>
+                VCDesign classifies the "constraints outside the code" that AI tends to overlook into 11 layers.<br>
+                These are areas that are difficult to express as programming language (As Code) and depend on project
+                history, organizational structure, and physical constraints.
+            </p>
+
+            <div class="boundary-list">
+                <h3>Group 1: Immutable Context (Context)</h3>
+                <dl>
+                    <dt>1. Physical/Site Constraints / 10. Organization/Boundary / 11. Governance</dt>
+                    <dd>"Physically separated", "Different organization", "Determined by law". These are not things to
+                        be solved by design but prerequisites to be accepted.</dd>
+                </dl>
+
+                <h3>Group 2: Selectable Resources (Resource)</h3>
+                <dl>
+                    <dt>2. Execution Infrastructure / 3. Network / 9. Platform</dt>
+                    <dd>Although hidden by cloud and container technologies, performance characteristics and cost
+                        structures are the result of "selection".</dd>
+                </dl>
+
+                <h3>Group 3: Quality Standards to Protect (Standard)</h3>
+                <dl>
+                    <dt>6. Reliability (SRE) / 7. Security / 8. Observability</dt>
+                    <dd>"Access permissions", "Log formats". These have clear best practices, and are areas AI should
+                        not arbitrarily break.</dd>
+                </dl>
+
+                <h3>Group 4: VC-AD's Core Domain (Core Domain)</h3>
+                <dl>
+                    <dt>4. Distributed Nature / 5. Data Semantics</dt>
+                    <dd>"Sacrifice consistency for availability?", "Allow double billing?".<br>
+                        There is no correct answer here, only <strong>"Business Decisions"</strong> exist. This is the
+                        area AI struggles with the most.</dd>
+                </dl>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="usage-title">Solution: Give AI a "Design Method"</h2>
+            <p>
+                It is impossible to explain these boundaries to AI in a prompt every time.<br>
+                Therefore, VC-AD proposes the simplest and most powerful solution.
+            </p>
+            <p>
+                <strong>"Place a Boundaries YAML file in the repository as a design method."</strong>
+            </p>
+
+            <h3>The "Static Badge" Strategy</h3>
+            <p>
+                Just like <code>.gitignore</code> in Git or <code>.editorconfig</code> in editors,
+                we standardize a <strong>"file that changes AI behavior just by being there"</strong>.
+            </p>
+            <ul class="step-list">
+                <li>
+                    <strong>Standardization:</strong><br>
+                    Unify the description format of "what must not be broken".
+                </li>
+                <li>
+                    <strong>Declaration:</strong><br>
+                    The presence of <code>.vc-ad/boundaries.yaml</code> in the repository becomes a declaration
+                    that "this project is under AI control".
+                </li>
+                <li>
+                    <strong>Compliance:</strong><br>
+                    AI must check this "design method" before writing code and implement only within the permitted
+                    range (inside).
+                </li>
+            </ul>
+            <p>
+                Turn the "invisible map" into a "visible declaration".<br>
+                This is VC-AD's basic strategy to fill the context gap in AI development.
+            </p>
+        </section>
+
+        <footer>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+
+    </main>
+</body>
+
+</html>
