@@ -14,6 +14,15 @@ It aims to explicitly structure where individual judgments are closed, who takes
 
 These specifications are not merely reading material. They are defined as an **executable design language** intended to be used by humans and advanced automation support for **design assistance**, **judgment support**, and **code generation**.
 
+### VCDesign Core Principles
+VCDesign is a development OS that structures systems through chapter and responsibility transitions for the purpose of value continuity.
+
+#### Basic Principles
+- **Responsibility Non-Disappearance Principle**: Responsibility must always exist somewhere.
+- **Explainability Principle**: All judgments must be explainable by humans.
+- **AI Non-Responsibility Principle**: AI assists but does not hold responsibility.
+- **Δ-Driven Principle**: Systems operate based on detecting deviations (Δ) from preconditions.
+
 ## Where to start?
 See the **[Specification Map](specs/map.md)** for the full overview.
 
