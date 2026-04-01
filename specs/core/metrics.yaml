@@ -1,0 +1,266 @@
+vcdesign_metrics:
+  version: 0.1
+
+  # 継承エッセンス: axioms.yaml より
+  # 思想的背景: 「デジタルモデルと現実は一致しない(A01)」「自動化は認知負荷とゴーストを生む(A02)」。ゆえに、定量的数値だけでなく、責任のズレ（Δ）を観測する本メトリクスが必要となる。
+
+  concept:
+    description: >
+      responsibility_metrics は、章の成立条件および責任配置の維持可能性を
+      観測するための基底指標群である。
+      これらは単なる運用アラートではなく、Δ評価の入力となる。
+
+  evaluation_model:
+    levels:
+      - observation
+      - warning
+      - delta_candidate
+      - delta_confirmed
+
+    rules:
+      - single_observation_is_not_always_delta
+      - sustained_or_repeated_condition_required
+      - responsibility_impact_must_be_considered
+      - domain_chapter_may_extend_metrics
+
+  base_metrics:
+
+    - id: owner_missing
+      name: Owner Missing
+      description: >
+        章の owner が不在、未割当、または事実上機能していない状態。
+      intent: >
+        責任の消失を検知する。
+      typical_signals:
+        - no_responsible_actor_assigned
+        - assigned_owner_not_acting
+        - work_items_accumulating_without_action
+      meaning:
+        - responsibility_disappearing
+        - chapter_silently_dying
+      default_threshold:
+        type: duration_or_backlog
+        example:
+          duration: "24h"
+          backlog_count: 10
+      candidate_actions:
+        - defer
+        - reframe
+        - fix
+      notes:
+        - domain_specific_threshold_required
+
+    - id: owner_conflict
+      name: Owner Conflict
+      description: >
+        複数主体が同一責任を同時に持つ、または責任境界が矛盾している状態。
+      intent: >
+        二重責任・責任競合を検知する。
+      typical_signals:
+        - multiple_actors_claiming_ownership
+        - inconsistent_role_assignment
+        - contradictory_operational_instructions
+      meaning:
+        - responsibility_boundary_broken
+        - decision_path_unstable
+      default_threshold:
+        type: immediate_or_repeated
+        example:
+          repeated_count: 2
+      candidate_actions:
+        - fix
+        - defer
+        - reframe
+
+    - id: ai_overreach
+      name: AI Overreach
+      description: >
+        AIが補助範囲を超えて、実質的な最終判断や責任配置を握っている状態。
+      intent: >
+        AIの越権を検知する。
+      typical_signals:
+        - ai_recommendation_auto_accepted
+        - human_review_nominal_only
+        - decision_reason_not_human_explainable
+      meaning:
+        - governance_boundary_broken
+        - final_decision_shifted_to_ai
+      default_threshold:
+        type: ratio_or_pattern
+        example:
+          acceptance_ratio: 0.9
+          duration: "1h"
+      candidate_actions:
+        - fix
+        - reframe
+        - defer
+      notes:
+        - requires_policy_linkage
+
+    - id: unresolved_duration_exceeded
+      name: Unresolved Duration Exceeded
+      description: >
+        未解決状態が許容時間を超過している状態。
+      intent: >
+        放置と保留の劣化を検知する。
+      typical_signals:
+        - ticket_open_too_long
+        - defer_without_resolution
+        - repeated_review_without_closure
+      meaning:
+        - closure_loop_failing
+        - defer_stagnation_possible
+      default_threshold:
+        type: duration
+        example:
+          duration: "7d"
+      candidate_actions:
+        - defer
+        - reframe
+        - retire
+      notes:
+        - supervisor_chapter_should_own_this
+
+    - id: promise_broken
+      name: Promise Broken
+      description: >
+        Pで定義された成立条件、禁止条件、引き受け条件が破られた状態。
+      intent: >
+        章の前提破綻を検知する。
+      typical_signals:
+        - required_input_missing
+        - forbidden_operation_detected
+        - precondition_no_longer_true
+      meaning:
+        - chapter_validity_lost
+        - active_state_no_longer_justified
+      default_threshold:
+        type: immediate_or_confirmed
+        example:
+          immediate: true
+      candidate_actions:
+        - fix
+        - reframe
+        - retire
+
+    - id: repeated_reframe
+      name: Repeated Reframe
+      description: >
+        短期間に Reframe が繰り返されている状態。
+      intent: >
+        構造そのものの不安定性を検知する。
+      typical_signals:
+        - multiple_reframes_same_scope
+        - frequent_boundary_changes
+        - chapter_churn
+      meaning:
+        - architecture_instability
+        - poor_boundary_definition
+      default_threshold:
+        type: count_in_window
+        example:
+          count: 3
+          window: "14d"
+      candidate_actions:
+        - reframe
+        - defer
+        - retire
+      notes:
+        - often requires supervisor review
+
+    - id: operator_overload
+      name: Operator Overload
+      description: >
+        現場判断主体に、本来構造で吸収すべき負荷が押し戻されている状態。
+      intent: >
+        現場側の責任過負荷を検知する。
+      typical_signals:
+        - excessive_manual_judgment_count
+        - alert_fatigue
+        - decision_latency_increase
+      meaning:
+        - chapter_support_failure
+        - quality_control_not_working
+      default_threshold:
+        type: rate_or_latency
+        example:
+          latency_growth_ratio: 1.5
+          repeated_events: 20
+      candidate_actions:
+        - fix
+        - reframe
+      notes:
+        - especially useful for operational domains
+
+    - id: defer_stagnation
+      name: Defer Stagnation
+      description: >
+        Deferされた案件が、再評価主体・期限・次回判断時刻を持たないまま停滞している状態。
+      intent: >
+        Deferの名を借りた放置を検知する。
+      typical_signals:
+        - no_next_review_at
+        - no_temporary_owner
+        - defer_without_progress
+      meaning:
+        - meta_responsibility_missing
+        - supervisor_control_failure
+      default_threshold:
+        type: immediate_or_duration
+        example:
+          duration: "48h"
+      candidate_actions:
+        - fix
+        - defer
+        - reframe
+
+    - id: retirement_pending_too_long
+      name: Retirement Pending Too Long
+      description: >
+        Retire候補と認識されているが、終了判断が先送りされ続けている状態。
+      intent: >
+        不要な章や監視対象の残置を検知する。
+      typical_signals:
+        - retire_candidate_not_closed
+        - known_obsolete_scope_still_active
+        - no_successor_but_not_terminated
+      meaning:
+        - cost_without_value
+        - false_continuity
+      default_threshold:
+        type: duration
+        example:
+          duration: "30d"
+      candidate_actions:
+        - retire
+        - defer
+
+  interpretation_rules:
+    - multiple_warnings_may_form_delta_candidate
+    - confirmed_delta_requires_contextual_judgment
+    - no_metric_alone_forces_reframe_except_policy_defined_cases
+    - metrics_are_inputs_to_rca_not_replacements_for_rca
+
+  composition_rules:
+    chapter_minimum:
+      required:
+        - owner_missing
+        - promise_broken
+      recommended:
+        - unresolved_duration_exceeded
+        - ai_overreach
+
+    chapter_extension_policy:
+      description: >
+        各章は base_metrics を継承し、必要に応じてドメイン固有の metrics を追加してよい。
+
+  output_contract:
+    description: >
+      各 metric の評価結果は、少なくとも status, observed_at, evidence, suggested_actions を返せること。
+    fields:
+      - metric_id
+      - status
+      - observed_at
+      - evidence
+      - suggested_actions
+      - confidence

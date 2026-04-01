@@ -1,0 +1,90 @@
+vcdesign_case:
+  version: 0.1
+
+  concept:
+    description: >
+      case は、章の中で生成・観測・処理され、
+      必要に応じて章間を移送される責任付き案件である。
+
+  required_fields:
+    - case_id
+    - chapter_id
+    - delta_level
+    - metrics_snapshot
+    - current_state
+    - owner
+    - final_decider
+    - action_history
+
+  optional_fields:
+    - temporary_owner
+    - next_review_at
+    - deadline
+    - related_case_ids
+    - tags
+
+  field_definitions:
+
+    case_id:
+      type: string
+      description: 一意な案件ID
+
+    chapter_id:
+      type: string
+      description: 現在この案件を扱っている章ID
+
+    delta_level:
+      type: enum
+      values:
+        - observation
+        - candidate
+        - confirmed
+      description: Δの確度レベル
+
+    metrics_snapshot:
+      type: object
+      description: >
+        観測時点の responsibility_metrics と evidence のスナップショット
+
+    current_state:
+      type: enum
+      values:
+        - draft
+        - active
+        - drifting
+        - deferred
+        - fixed
+        - reframed
+        - retired
+      description: 案件の現在状態
+
+    owner:
+      type: object
+      description: 現在の実行責任主体
+
+    temporary_owner:
+      type: object
+      description: Defer時などの暫定責任主体
+
+    final_decider:
+      type: object
+      description: 最終判断責任主体
+
+    next_review_at:
+      type: datetime
+      description: 次回レビュー時刻
+
+    deadline:
+      type: datetime
+      description: この案件の許容最終期限
+
+    action_history:
+      type: array
+      description: >
+        Fix / Reframe / Defer / Retire を含む遷移履歴
+
+  invariants:
+    - every_case_must_have_owner_or_temporary_owner
+    - deferred_case_must_have_next_review_at
+    - every_case_must_be_traceable
+    - action_history_must_not_be_empty_once_delta_confirmed

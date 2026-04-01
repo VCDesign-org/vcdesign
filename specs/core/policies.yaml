@@ -1,0 +1,216 @@
+vcdesign_policies:
+  version: 0.1
+
+  # 継承エッセンス: constitution.yaml より
+  # 最高原則: 「システムは法（仕様）の下にある」。AIの判断は常にこのポリシー（憲法）によって制約され、人間による「自己参照的修正」を最終権限とする。
+
+  concept:
+    description: >
+      policies は、VCDesign Core の上での判断と責任配置に対して
+      不可侵な制約とガイドラインを与える層である。
+      これにより、AI・人・システムの境界と、
+      Reframe / Defer / Retire の暴走を防ぐ。
+
+  ai_governance:
+
+    principle:
+      description: >
+        AIは判断を支援するが、責任を持たない。
+        最終判断および責任配置は常に人間が担う。
+
+    allowed:
+      - analysis
+      - pattern_detection
+      - recommendation
+      - anomaly_detection
+
+    conditional_allowed:
+      - auto_classification_with_review
+      - prioritization_with_human_override
+
+    forbidden:
+      - final_decision
+      - responsibility_assignment
+      - reframe_execution
+      - retire_execution
+
+    constraints:
+      - human_must_be_in_decision_loop
+      - ai_output_must_be_explainable
+      - ai_confidence_must_be_visible
+
+  reframe_control:
+
+    principle:
+      description: >
+        Reframe は責任構造を書き換える操作であり、
+        強い制御対象とする。
+
+    allowed_roles:
+      - supervisor
+      - domain_owner  # 例: maintenance_engineer（条件付き）
+
+    required_conditions:
+      - existing_chapter_not_sustainable
+      - delta_repeated_or_confirmed
+      - new_boundary_defined
+      - new_owner_assigned
+      - explanation_available
+
+    scope_control:
+      local_reframe:
+        allowed: true
+        description: >
+          章内部またはローカルスコープの改善。
+      structural_reframe:
+        allowed: conditional
+        requires:
+          - supervisor_approval
+          - explicit_record
+
+    safety_rules:
+      - reframe_must_not_leave_responsibility_unassigned
+      - reframe_must_define_new_preconditions
+      - reframe_must_define_exit_conditions
+
+  defer_control:
+
+    principle:
+      description: >
+        Defer は未解決の放置ではなく、
+        責任付きでの上位移送である。
+
+    required_fields:
+      - defer_reason
+      - next_review_at
+      - temporary_owner
+
+    constraints:
+      - every_defer_must_have_owner
+      - defer_must_have_deadline
+      - defer_must_be_traceable
+
+    escalation:
+      max_duration:
+        default: "7d"
+      action_on_exceed:
+        - supervisor_review
+        - forced_resolution
+
+    anti_patterns:
+      - defer_without_owner
+      - defer_without_next_review
+      - repeated_defer_without_progress
+
+  retire_control:
+
+    principle:
+      description: >
+        Retire は価値継続を意図的に終了する操作であり、
+        必ず説明可能でなければならない。
+
+    required_conditions:
+      - value_no_longer_needed
+      - cost_not_justified
+      - no_hidden_dependency
+      - explanation_available
+
+    required_actions:
+      - record_reason
+      - release_responsibility
+      - notify_related_chapters
+
+    constraints:
+      - retire_must_not_break_active_dependencies
+      - retire_must_be_reviewable
+
+  responsibility_rules:
+
+    invariants:
+      - responsibility_must_not_disappear
+      - every_chapter_must_have_owner
+      - final_decider_must_be_human
+
+    conflict_resolution:
+      priority:
+        - supervisor
+        - final_decider
+        - owner
+      rule: >
+        衝突時は上位責任者の判断を優先する
+
+    reassignment:
+      rules:
+        - must_be_explicit
+        - must_be_recorded
+        - must_define_scope
+
+  explainability:
+
+    principle:
+      description: >
+        すべての章および判断は、
+        人間が説明可能である必要がある。
+
+    requirements:
+      - decision_reason_must_exist
+      - responsibility_path_must_be_traceable
+      - delta_to_action_mapping_must_be_visible
+
+    failure_definition:
+      description: >
+        説明不能な状態は、価値継続不能とみなす。
+
+  lifecycle_governance:
+
+    principle:
+      description: >
+        章は状態を持ち、放置されてはならない。
+
+    constraints:
+      - drifting_must_be_evaluated
+      - deferred_must_be_reviewed
+      - retired_must_be_recorded
+
+    anti_patterns:
+      - infinite_active_without_review
+      - infinite_deferred
+      - hidden_retired
+
+  supervisor_role:
+
+    principle:
+      description: >
+        Supervisorは責任の最終収束点であり、
+        責任の消失を防ぐ。
+
+    responsibilities:
+      - accept_deferred_cases
+      - approve_reframe
+      - approve_retire
+      - resolve_conflicts
+      - enforce_policies
+
+    constraints:
+      - supervisor_must_not_delegate_final_decision_to_ai
+      - supervisor_must_close_or_reassign_every_case
+
+  policy_enforcement:
+
+    levels:
+      - advisory
+      - warning
+      - blocking
+
+    examples:
+      ai_final_decision:
+        level: blocking
+      missing_owner:
+        level: blocking
+      missing_explanation:
+        level: warning
+
+    principle:
+      description: >
+        ポリシー違反は、単なるログではなく、
+        遷移制御に影響を与える。

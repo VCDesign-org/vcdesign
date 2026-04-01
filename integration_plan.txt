@@ -1,0 +1,60 @@
+# VCDesign統合案
+
+## 現在の構成概要
+- **元バージョン（コミット済み）**: specs/ フォルダ以下の既存ファイル（axioms.yaml, constitution.yaml など）
+- **新バージョン（未コミット）**: ルートに5つのYAMLファイル（vcdesign-core.yaml, vcdesign_metrics.yaml, vcdesign_policies.yaml, case.yaml, decision_log.yaml）
+
+全体として、VCDesignは価値継続を目的とした開発OSの設計仕様であり、specs/ フォルダが仕様の中心。
+
+## 新バージョンの位置付け
+新バージョンはVCDesignのコア概念をより詳細に定義：
+- vcdesign-core.yaml: 基本プリミティブ、フロー、責任モデル
+- vcdesign_metrics.yaml: 責任メトリクスの定義
+- vcdesign_policies.yaml: AIガバナンス、Reframe/Defer/Retire制御
+- case.yaml: case（責任付き案件）のスキーマ
+- decision_log.yaml: 決定ログのスキーマ
+
+これらはspecs/core/ に統合するのが自然。
+
+## シンプルな統合案
+1. 新バージョンのファイルをspecs/core/ に移動し、以下のファイル名に調整：
+   - vcdesign-core.yaml → core.yaml (VCDesignの基本OS、PDΔAフローの定義)
+   - vcdesign_policies.yaml → policies.yaml (AIと人間の境界線、倫理、拒否権の定義)
+   - vcdesign_metrics.yaml → metrics.yaml (異常検知、Δ（ズレ）の判定基準)
+   - case.yaml → schema_case.yaml (案件（チケット）のデータ構造定義)
+   - decision_log.yaml → schema_log.yaml (判断履歴のデータ構造定義)
+2. 既存のcore/ ファイルを参照し、重複部分を統合（例: axioms.yaml の内容をcore.yaml にマージ）
+3. 全体の整合性を確認し、README.md などを更新
+4. コミットして統合完了
+
+この方法で、VCDesignの仕様を一箇所にまとめ、シンプルに管理可能。
+
+## 削除した方がいいもの（エッセンスを残す）
+完全に削除せず、エッセンスを新版ドキュメントに注釈として残すのが理想：
+- specs/core/axioms.yaml: 公理的な記述。新バージョンmetrics.yamlの冒頭に「なぜこれらのメトリクスが必要なのか」の背景思想として、例「デジタルと現実は一致しない」を1行残す。
+- specs/core/constitution.yaml: 憲法的な枠組み。新バージョンpolicies.yamlやcore.yamlに責任モデルとして統合。
+- specs/core/continuity-claim.yaml: 継続主張の概念。新バージョンschema_log.yamlの「なぜこのアクションを選んだか」フィールドの裏付けロジックとして統合。名前は消えても機能が生きていることを確認。
+- specs/core/decision-posture.yaml: 決定姿勢。新バージョンschema_log.yamlに具体化。
+- specs/core/narrative-model.yaml: ナラティブモデル。新バージョンcore.yamlにコア概念として整理。
+
+## エッセンスの継承マッピング（詳細）
+削除予定ファイルごとに、継承先ファイルと継承すべき具体的エッセンスを以下に示す：
+- axioms.yaml → metrics.yaml: 思想的背景: 「デジタルモデルと現実は一致しない(A01)」「自動化は認知負荷とゴーストを生む(A02)」。ゆえに、定量的数値だけでなく、責任のズレ（Δ）を観測する本メトリクスが必要となる。
+- constitution.yaml → policies.yaml: 最高原則: 「システムは法（仕様）の下にある」。AIの判断は常にこのポリシー（憲法）によって制約され、人間による「自己参照的修正」を最終権限とする。
+- continuity-claim.yaml → schema_log.yaml: 継続性の証明: ログの why_action フィールドは、単なる理由ではなく「過去の目的との一貫性（Purpose Linkage）」を証明する記述でなければならない。
+- decision-posture.yaml → schema_log.yaml: 決定の結実: 曖昧さを残さず状態を確定（Closure）させる姿勢。判断主体の confidence と共に、どのポリシーに基づいたかを明示する。
+- narrative-model.yaml → core.yaml: 運用の物語: PDΔAサイクルは、システムが「漂流（Drift）」から「回復（Reframe）」するまでのナラティブを構造化したものである。
+
+## 統合後のディレクトリ構造（specs/core/）
+統合が完了すると、specs/core/ は以下のように非常にスッキリとした構成になります：
+```
+specs/core/
+├── core.yaml        # OSの基本原理・PDΔAフロー（旧 axioms, narrative の魂を継承）
+├── policies.yaml    # ガバナンス・制約（旧 constitution の魂を継承）
+├── metrics.yaml     # 観測指標・Δ判定（旧 axioms の具体的落とし所）
+├── schema_case.yaml # 案件データ構造
+└── schema_log.yaml  # 判断履歴構造（旧 continuity, decision-posture の具現化）
+```
+
+## 最終化に向けたチェックポイント
+この構成で統合を進める際、以下の1点だけ最後に確認することをお勧めします。「Supervisor」のブートストラップ: core.yaml の中で、Supervisor（最終責任者）が「誰なのか」ではなく、**「どういう権限を持つか（例：全データの強制書き換え権限、AIの停止権限）」**が policies.yaml と矛盾なく記述されているか。

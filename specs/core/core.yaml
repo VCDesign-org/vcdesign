@@ -1,0 +1,141 @@
+vcdesign_core:
+  version: 0.1
+
+  concept:
+    description: >
+      VCDesignは、価値継続を目的とし、
+      章と責任の遷移によってシステムを構成する開発OSである。
+
+  primitives:
+
+    chapter:
+      description: >
+        価値を継続させるための責任配置単位
+
+    responsibility:
+      description: >
+        章を成立させる主体およびその配置
+
+    delta:
+      description: >
+        章の成立条件または責任配置の維持可能性が崩れた兆候
+
+    action:
+      types:
+        - fix
+        - reframe
+        - defer
+        - retire
+
+    supervisor:
+      description: >
+        責任の消失を防ぎ、最終収束を行う章
+
+  flow:
+    name: PDΔA
+
+    # 継承エッセンス: narrative-model.yaml より
+    # 運用の物語: PDΔAサイクルは、システムが「漂流（Drift）」から「回復（Reframe）」するまでのナラティブを構造化したものである。
+
+    steps:
+      - precondition
+      - do
+      - delta
+      - action
+
+    definition:
+      precondition: 成立条件
+      do: 実行・判断・表示
+      delta: ズレの観測
+      action: 遷移の選択
+
+  delta_definition:
+
+    levels:
+      - observation
+      - candidate
+      - confirmed
+
+    rules:
+      - transient_noise_is_not_delta
+      - sustained_deviation_required
+      - responsibility_impact_required
+
+  action_definition:
+
+    fix:
+      description: >
+        現在の章を維持したまま修正する
+
+    reframe:
+      description: >
+        新しい章を生成し責任を再配置する
+
+    defer:
+      description: >
+        責任を上位章へ移送し保留する
+
+    retire:
+      description: >
+        価値継続を意図的に終了する
+
+  responsibility_model:
+
+    required_fields:
+      - owner
+      - supporters
+      - final_decider
+
+    constraints:
+      - owner_must_exist
+      - final_decider_must_be_human
+      - ai_cannot_be_final_decider
+
+  lifecycle:
+
+    states:
+      - draft
+      - active
+      - drifting
+      - deferred
+      - fixed
+      - reframed
+      - retired
+
+    transitions:
+      drifting:
+        - fix
+        - reframe
+        - defer
+        - retire
+
+  responsibility_metrics:
+
+    base_metrics:
+      - owner_missing
+      - owner_conflict
+      - ai_overreach
+      - unresolved_duration_exceeded
+      - promise_broken
+
+    description: >
+      責任状態の異常を検出する指標群
+
+  constraints:
+
+    ai_usage:
+      allowed:
+        - analysis
+        - suggestion
+        - pattern_detection
+
+      forbidden:
+        - final_decision
+        - responsibility_assignment
+
+  invariants:
+
+    - responsibility_must_not_disappear
+    - every_defer_must_have_owner
+    - every_chapter_must_be_explainable
+    - delta_must_trigger_evaluation

@@ -1,0 +1,86 @@
+vcdesign_decision_log:
+  version: 0.1
+
+  concept:
+    description: >
+      decision_log は、Δ評価と Action選択の理由を記録する
+      説明可能性の監査証跡である。
+
+  required_fields:
+    - log_id
+    - case_id
+    - chapter_id
+    - recorded_at
+    - why_delta
+    - why_action
+    - policy_applied
+
+  optional_fields:
+    - evaluator
+    - ai_involvement
+    - confidence
+    - notes
+
+  field_definitions:
+
+    log_id:
+      type: string
+      description: 一意なログID
+
+    case_id:
+      type: string
+      description: 対象案件ID
+
+    chapter_id:
+      type: string
+      description: 判断が行われた章ID
+
+    recorded_at:
+      type: datetime
+      description: 記録時刻
+
+    why_delta:
+      type: object
+      description: >
+        どの signals / metrics / evidence により
+        Δと判断したか
+
+    why_action:
+      type: object
+      description: >
+        # 継承エッセンス: continuity-claim.yaml より
+        # 継続性の証明: ログの why_action フィールドは、単なる理由ではなく「過去の目的との一貫性（Purpose Linkage）」を証明する記述でなければならない。
+        なぜ Fix / Reframe / Defer / Retire の
+        その選択になったか
+
+    policy_applied:
+      type: array
+      description: >
+        適用された policy とその enforcement level
+        例: warning / blocking
+
+    evaluator:
+      type: object
+      description: 判断主体（human / ai / system）
+
+    ai_involvement:
+      type: object
+      description: >
+        AIが関与した場合、その役割と範囲
+
+    confidence:
+      type: number
+      description: >
+        # 継承エッセンス: decision-posture.yaml より
+        # 決定の結実: 曖昧さを残さず状態を確定（Closure）させる姿勢。判断主体の confidence と共に、どのポリシーに基づいたかを明示する。
+        判断の確信度
+
+    notes:
+      type: string
+      description: 補足説明
+
+  invariants:
+    - every_confirmed_delta_should_have_decision_log
+    - every_reframe_should_have_explicit_why_action
+    - every_retire_should_have_explanation
+    - policy_applied_must_be_recorded_when_present
