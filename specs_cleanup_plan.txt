@@ -1,0 +1,66 @@
+# specs/ フォルダの各サブフォルダ判定結果
+
+## boundaries/
+- **内容**: automation-manual.yaml, data-meaning.yaml, impact-accountability.yaml, model-reality.yaml, purpose-shift.yaml, taxonomy.md
+- **概要**: VCDesignにおける境界（boundary）の定義と分類
+- **判定**: 残す - VCDesignの重要な概念である境界を定義しており、必要
+
+## chapters/
+- **内容**: README.ja.md, README.md, c1-purpose-drift.yaml, c2-automation-burden.yaml, c3-trust-erosion.yaml, c4-reality-drift.yaml, chapter-pattern.yaml
+- **概要**: 章（chapter）の構造と時間軸での変化パターン
+- **判定**: 残す - VCDesignの中心的な「章」概念を定義
+
+## core/
+- **内容**: core.yaml, metrics.yaml, policies.yaml, schema_case.yaml, schema_log.yaml
+- **概要**: VCDesignのコア定義（統合済み）
+- **判定**: 残す - 統合後のコア仕様
+
+## examples/
+- **内容**: llm-change-approval.md
+- **概要**: LLM変更承認の例
+- **判定**: 残す - 実践的な使用例として有用
+
+## glossary/
+- **内容**: glossary.md
+- **概要**: 用語集
+- **判定**: 残す - 仕様理解に不可欠
+
+## legacy/
+- **内容**: README.md, boa-architecture.yaml
+- **概要**: レガシーアーキテクチャ（BOA）
+- **判定**: 削除 - レガシーであり、現在のVCDesignとは無関係
+
+## patterns/
+- **内容**: boundary-pattern.yaml, idg-pattern.yaml, rca-pattern.yaml
+- **概要**: 設計パターン（境界、IDG、RCA）
+- **判定**: 残す - 実装パターンとして重要
+
+## protocols/
+- **内容**: judgment-closure.yaml, resolution-handshake.yaml
+- **概要**: 判断クロージャーと解決ハンドシェイクのプロトコル
+- **判定**: 残す - VCDesignの運用プロトコル
+
+## rcl/
+- **内容**: RCL_LOCAL_AI_VALIDATION.md, README.md, mapping/, rcl-min-schema.yaml, responsibility_closure_loop.yaml
+- **概要**: Responsibility Closure Loop (RCL) の定義
+- **判定**: 残す - VCDesignのプロセスループ
+
+## schemas/
+- **内容**: README.md, judgment-closure.schema.json
+- **概要**: JSONスキーマ定義
+- **判定**: 残す - データ構造の検証用
+
+## map.md
+- **内容**: 全体マップ
+- **概要**: specsの全体像を示すマップ
+- **判定**: 残す - ナビゲーション用
+
+## README.md
+- **内容**: specsの説明
+- **概要**: specsフォルダの概要
+- **判定**: 残す - ドキュメント用
+
+## まとめ
+- **残すフォルダ**: boundaries/, chapters/, core/, examples/, glossary/, patterns/, protocols/, rcl/, schemas/
+- **削除フォルダ**: legacy/
+- **残すファイル**: map.md, README.md
