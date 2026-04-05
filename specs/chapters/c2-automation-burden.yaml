@@ -1,5 +1,5 @@
 # VCDesign Chapter: C2 Automation Burden
-# A pattern where partial automation increases manual load and dissolves responsibility.
+# Pattern where automation increases load and dissolves responsibility
 
 id: "vcdesign-chapter-c2"
 title: "Automation Burden Chapter"
@@ -9,7 +9,7 @@ version: "0.2.0"
 
 meta:
   pattern_ref: "vcdesign-chapter-definition"
-  description: "When automation creates more work than it saves, and hides the cost."
+  description: "Automation creates more work than it saves, hiding the cost."
 
 chapter:
   premise:
@@ -18,7 +18,9 @@ chapter:
 
   progression:
     - name: "naive_insertion"
-      description: "AI/Automation is introduced but requires 'human bridges' (data entry, formatting, verification) that were not scoped."
+      description: >
+        AI/Automation requires human bridges: data entry, formatting,
+        verification not scoped.
       affected_boundaries:
         - B2
       typical_failure_modes:
@@ -26,7 +28,9 @@ chapter:
         - "Double-entry of data (System A + System B)."
 
     - name: "shadow_workload"
-      description: "Operators perform the bridge tasks silently. The system appears to work, but human cost rises."
+      description: >
+        Operators silently perform bridge tasks. System works, but human
+        cost rises.
       affected_boundaries:
         - B8
       typical_failure_modes:
@@ -34,7 +38,9 @@ chapter:
         - "Quality checks skipped to save time."
 
     - name: "resentment_and_reject"
-      description: "Operators reject the system or bypass it to survive. Trust collapses."
+      description: >
+        Operators reject the system or bypass it to survive. Trust
+        collapses.
       affected_boundaries:
         - B9
       typical_failure_modes:
@@ -60,7 +66,9 @@ chapter:
 
   recommended_posture:
     decision_posture: "defer"
-    rationale: "Halt expansion. Map the hidden workload. Re-close B2 boundary. Unaccounted human cost invalidates the ROI judgment."
+    rationale: >
+      Halt expansion. Map the hidden workload. Re-close B2 boundary.
+      Unaccounted human cost invalidates ROI judgment.
 
   relevant_boundaries:
     - B2
