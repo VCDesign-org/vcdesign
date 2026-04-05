@@ -72,10 +72,34 @@
                 </div>
             </div>
         </section>
+        <section id="authority">
+            <h2 class="usage-title">VCDesign Authority 宣言</h2>
+            <p>VCDesignの現行authorityは以下で構成される</p>
+            <ul>
+                <li>core/core.yaml</li>
+                <li>core/policies.yaml</li>
+                <li>core/metrics.yaml</li>
+            </ul>
+            <p>patterns（RCL等）は「Coreへの適用構造」</p>
+            <p>legacy配下は「歴史的ドキュメントであり現行仕様ではない」</p>
+        </section>
         <section id="usage-context">
-            <h2 class="usage-title">VCDesign の概要</h2>
-            <p> VCDesign は、完成したシステムを「どう作るか」ではなく、<br /> 運用の時間の中で、システムの価値を<strong>「どう失われないように設計するか」</strong>を扱う仕様群です。 </p>
-            <p> VCDesign Coreは、価値継続を目的とした開発OSです。章（Chapter）と責任（Responsibility）の遷移によってシステムを構成します。 </p>
+            <h2 class="usage-title">VCDesign の構造</h2>
+            <p>VCDesign は以下の階層構造で構成されます：</p>
+            <ol>
+                <li><strong>Core（最上位）</strong>: PDΔA構造、Action(A)、Metricsとの関係</li>
+                <li><strong>Policies / Metrics</strong>: ガバナンス、AI境界、制御ルール</li>
+                <li><strong>Boundaries</strong>: 責任境界の分類</li>
+                <li><strong>Patterns（RCL等）</strong>: Coreへの適用構造</li>
+                <li><strong>Legacy</strong>: 歴史的ドキュメント（現行仕様ではない）</li>
+            </ol>
+            <h3>Core紹介</h3>
+            <p>VCDesign Coreは、価値継続を目的とした開発OSです。PDΔAフロー（Precondition → Do → Delta → Action）でシステムの価値を継続的に守ります。</p>
+            <ul>
+                <li><strong>PDΔA構造</strong>: 事前条件設定、実行、Δ検知、アクション実行のサイクル</li>
+                <li><strong>Action(A)</strong>: Fix, Reframe, Defer, Retire の4タイプ</li>
+                <li><strong>Metricsとの関係</strong>: 責任メトリクスを用いてΔを検知し、価値継続を確保</li>
+            </ul>
             <p> 「価値を継続させる」とは、 </p>
             <ul style="padding-left: 1.6em; margin: 0 0 14px;">
                 <li>設計時の期待（価値）を明確にする</li>
@@ -89,10 +113,6 @@
                 <li><strong>Delta:</strong> 章の成立条件または責任配置の維持可能性が崩れた兆候</li>
                 <li><strong>Action:</strong> Fix, Reframe, Defer, Retire の4タイプ</li>
             </ul>
-            <h3>PDΔAフロー</h3>
-            <p>
-                Precondition → Do → Delta → Action のサイクルで、システムの価値を継続的に守ります。
-            </p>
             <h3>責任モデル</h3>
             <p>
                 各章にはOwner, Supporters, Final Deciderが必要です。Final Deciderは常に人間でなければなりません。

@@ -80,15 +80,35 @@
             </div>
         </section>
 
+        <section id="authority">
+            <h2 class="usage-title">VCDesign Authority Declaration</h2>
+            <p>The current authority of VCDesign consists of the following:</p>
+            <ul>
+                <li>core/core.yaml</li>
+                <li>core/policies.yaml</li>
+                <li>core/metrics.yaml</li>
+            </ul>
+            <p>Patterns (such as RCL) are "application structures to the Core"</p>
+            <p>The legacy directory contains "historical documents and not current specifications"</p>
+        </section>
+
         <section id="usage-context">
-            <h2 class="usage-title">VCDesign Overview</h2>
-            <p>
-                VCDesign is a set of specifications not for "how to build" a finished system, but for<br />
-                <strong>how to design so that a system's value does not get lost over time during operation.</strong>
-            </p>
-            <p>
-                VCDesign Core is a development OS for value continuity. It structures systems through transitions of Chapters and Responsibilities.
-            </p>
+            <h2 class="usage-title">VCDesign Structure</h2>
+            <p>VCDesign is structured in the following hierarchy:</p>
+            <ol>
+                <li><strong>Core (Top Level)</strong>: PDΔA structure, Action(A), relationship with Metrics</li>
+                <li><strong>Policies / Metrics</strong>: Governance, AI boundaries, control rules</li>
+                <li><strong>Boundaries</strong>: Classification of responsibility boundaries</li>
+                <li><strong>Patterns (such as RCL)</strong>: Application structures to the Core</li>
+                <li><strong>Legacy</strong>: Historical documents (not current specifications)</li>
+            </ol>
+            <h3>Core Introduction</h3>
+            <p>VCDesign Core is a development OS aimed at value continuity. It continuously protects the system's value through the PDΔA flow (Precondition → Do → Delta → Action).</p>
+            <ul>
+                <li><strong>PDΔA Structure</strong>: Cycle of setting preconditions, execution, Δ detection, and action execution</li>
+                <li><strong>Action(A)</strong>: Four types: Fix, Reframe, Defer, Retire</li>
+                <li><strong>Relationship with Metrics</strong>: Use responsibility metrics to detect Δ and ensure value continuity</li>
+            </ul>
             <p>
                 "Sustaining value" means embedding this obvious cycle into design:
             </p>
@@ -104,10 +124,6 @@
                 <li><strong>Delta:</strong> A sign that the conditions of a Chapter or its responsibility allocation are no longer holding</li>
                 <li><strong>Action:</strong> Four action types: Fix, Reframe, Defer, Retire</li>
             </ul>
-            <h3>PDΔA Flow</h3>
-            <p>
-                Systems protect value continuously through the cycle of Precondition → Do → Delta → Action.
-            </p>
             <h3>Responsibility Model</h3>
             <p>
                 Every Chapter requires an Owner, Supporters, and a Final Decider. The Final Decider must always be human.

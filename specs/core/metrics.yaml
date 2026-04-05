@@ -3,6 +3,7 @@ vcdesign_metrics:
 
   # 継承エッセンス: axioms.yaml より
   # 思想的背景: 「デジタルモデルと現実は一致しない(A01)」「自動化は認知負荷とゴーストを生む(A02)」。ゆえに、定量的数値だけでなく、責任のズレ（Δ）を観測する本メトリクスが必要となる。
+  # Key Principle: Metrics detect deviation of meaning, not performance.
 
   concept:
     description: >

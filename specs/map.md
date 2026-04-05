@@ -1,5 +1,13 @@
 # VCDesign Specification Map
 
+## VCDesign Authority Declaration
+VCDesignの現行authorityは以下で構成される
+- core/core.yaml
+- core/policies.yaml
+- core/metrics.yaml
+- patterns（RCL等）は「Coreへの適用構造」
+- legacy配下は「歴史的ドキュメントであり現行仕様ではない」
+
 ## 1. The Core (The "Why" and "What")
 *Start here. This defines the problem and the unavoidable response.*
 - **[Core](core/core.yaml)**: The basic OS, PDΔA flow, and responsibility model.

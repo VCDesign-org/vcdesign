@@ -14,6 +14,14 @@ It aims to explicitly structure where individual judgments are closed, who takes
 
 These specifications are not merely reading material. They are defined as an **executable design language** intended to be used by humans and advanced automation support for **design assistance**, **judgment support**, and **code generation**.
 
+### VCDesign Authority Declaration
+VCDesignの現行authorityは以下で構成される
+- core/core.yaml
+- core/policies.yaml
+- core/metrics.yaml
+- patterns（RCL等）は「Coreへの適用構造」
+- legacy配下は「歴史的ドキュメントであり現行仕様ではない」
+
 ### VCDesign Core Principles
 VCDesign is a development OS that structures systems through chapter and responsibility transitions for the purpose of value continuity.
 
