@@ -20,31 +20,10 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Validate YAML files
         run: |
-          # Install yamllint if needed, or use basic validation
           which yamllint || pip install yamllint
-          yamllint specs/**/*.yaml || echo "YAML validation failed"
-      - name: Check Authority Declaration in docs
-        run: |
-          grep -q "Authority Declaration" README.md || (echo "Authority Declaration not found in README.md" && exit 1)
-          grep -q "core/core.yaml" README.md || (echo "core/core.yaml not referenced in README.md" && exit 1)
-          grep -q "core/policies.yaml" README.md || (echo "core/policies.yaml not referenced in README.md" && exit 1)
-          grep -q "core/metrics.yaml" README.md || (echo "core/metrics.yaml not referenced in README.md" && exit 1)
-          grep -q "Authority Declaration" specs/map.md || (echo "Authority Declaration not found in specs/map.md" && exit 1)
-          grep -q "core/core.yaml" specs/map.md || (echo "core/core.yaml not referenced in specs/map.md" && exit 1)
-          grep -q "core/policies.yaml" specs/map.md || (echo "core/policies.yaml not referenced in specs/map.md" && exit 1)
-          grep -q "core/metrics.yaml" specs/map.md || (echo "core/metrics.yaml not referenced in specs/map.md" && exit 1)
-          grep -q "Authority Declaration" site/en/index.html || (echo "Authority Declaration not found in site/en/index.html" && exit 1)
-          grep -q "core/core.yaml" site/en/index.html || (echo "core/core.yaml not referenced in site/en/index.html" && exit 1)
-          grep -q "core/policies.yaml" site/en/index.html || (echo "core/policies.yaml not referenced in site/en/index.html" && exit 1)
-          grep -q "core/metrics.yaml" site/en/index.html || (echo "core/metrics.yaml not referenced in site/en/index.html" && exit 1)
-          grep -q "Authority Declaration" site/ja/index.html || (echo "Authority Declaration not found in site/ja/index.html" && exit 1)
-          grep -q "core/core.yaml" site/ja/index.html || (echo "core/core.yaml not referenced in site/ja/index.html" && exit 1)
-          grep -q "core/policies.yaml" site/ja/index.html || (echo "core/policies.yaml not referenced in site/ja/index.html" && exit 1)
-          grep -q "core/metrics.yaml" site/ja/index.html || (echo "core/metrics.yaml not referenced in site/ja/index.html" && exit 1)
-      - name: Check Legacy Warnings
-        run: |
-          find site/en/legacy -name "index.html" -exec grep -q "Historical Document Notice" {} \; || (echo "Warning not found in some en legacy pages" && exit 1)
-          find site/ja/legacy -name "index.html" -exec grep -q "歴史的ドキュメントのお知らせ" {} \; || (echo "Warning not found in some ja legacy pages" && exit 1)
+          yamllint -c .yamllint specs/**/*.yaml
+      - name: Validate docs and legacy notices
+        run: bash .github/scripts/validate_docs.sh
