@@ -1,3 +1,4 @@
 repo/
 .DS_Store
 node_modules/
+repomix-output.xml
