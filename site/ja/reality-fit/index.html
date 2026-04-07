@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Reality Fit | VCDesign</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <main class="frame">
+        <header>
+            <nav class="lang-nav">
+                <a href="../index.html" class="lang-link">← Home</a>
+                <a href="../../en/reality-fit/" class="lang-link">English</a>
+            </nav>
+            <h1 class="hero-title">Reality Fit</h1>
+            <p class="hero-subtitle">Adaptive Loop Model</p>
+            <p class="hero-tagline">
+                VCDesign の Core / Policies / Metrics が、現実のAI運用ループへどう接続するかを説明します。
+            </p>
+        </header>
+
+        <section>
+            <h2 class="usage-title">位置づけ</h2>
+            <p>
+                このページはVCDesignの現行authorityを説明する補助ページです。
+                authorityは <code>core/core.yaml</code>、<code>core/policies.yaml</code>、<code>core/metrics.yaml</code> のままであり、
+                このページは第四のauthorityではありません。
+            </p>
+        </section>
+
+        <section>
+            <h2 class="usage-title">4つのループ</h2>
+            <ul>
+                <li><strong>Physical Loop</strong>: 実行、安定性、連続系ダイナミクス</li>
+                <li><strong>Semantic Loop</strong>: 解釈、delta-to-meaning変換、非連続推論</li>
+                <li><strong>Value Loop</strong>: 目的、制約、最適化方向</li>
+                <li><strong>Responsibility Loop</strong>: 最終判断、停止、説明責任</li>
+            </ul>
+            <p>
+                VCDesignは、適応をこれらのループ間の責任付き協調として扱います。
+            </p>
+            <p>
+                これは PDΔA と並ぶ独立制御モデルではありません。PDΔA を時間スケールと責任配置に沿って分解した説明です。
+            </p>
+        </section>
+
+        <section>
+            <h2 class="usage-title">時間スケール</h2>
+            <p>
+                各ループは異なる時間定数で動きます。高速な実行ループが、低速な価値判断や責任判断を書き換えてはなりません。
+            </p>
+        </section>
+
+        <section>
+            <h2 class="usage-title">LLM の配置</h2>
+            <p>
+                LLMは主としてSemantic Loopに配置されます。解釈や推奨は許可されますが、
+                Physical Loopの直接制御、価値目的の自律設定、Responsibility Loopの最終権限保持は許可されません。
+            </p>
+        </section>
+
+        <section>
+            <h2 class="usage-title">境界と停止可能性</h2>
+            <p>
+                非連続推論と連続制御の間にある越境には、安全ゲート、追跡可能性、人間override、停止経路が必要です。
+            </p>
+            <p>
+                Boundary は単なる変換層ではなく、責任を明示的に再確認または再配置しなければならない点でもあります。
+            </p>
+        </section>
+
+        <section>
+            <h2 class="usage-title">成長の定義</h2>
+            <p>
+                成長は単なるモデル性能の向上ではありません。
+                責任制約下での運用整合の改善として定義されます。
+            </p>
+        </section>
+
+        <section>
+            <h2 class="usage-title">Authority との対応</h2>
+            <ul>
+                <li><strong>Core</strong>: ループ分離、時間スケール分離、境界媒介</li>
+                <li><strong>Policies</strong>: LLM配置制約、安全ゲート、停止可能性</li>
+                <li><strong>Metrics</strong>: delta品質、整合性品質、一貫性、停止準備度</li>
+            </ul>
+        </section>
+
+        <footer>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+    </main>
+</body>
+
+</html>

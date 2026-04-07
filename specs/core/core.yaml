@@ -5,6 +5,8 @@ vcdesign_core:
     description: >
       VCDesignは、価値継続を目的とし、
       章と責任の遷移によってシステムを構成する開発OSである。
+      現実運用においては、これは物理・意味・価値・責任の
+      ループを分離しつつ接続する適応構造として読まれる。
 
   primitives:
 
@@ -49,6 +51,135 @@ vcdesign_core:
       do: 実行・判断・表示
       delta: ズレの観測
       action: 遷移の選択
+
+  reality_fit_definition:
+    description: >
+      VCDesignが扱う価値継続は、
+      現実の運用系においては単一の制御ループではなく、
+      異なる時間スケールと責任を持つ複数のループの協調として現れる。
+
+  adaptive_loop_model:
+    description: >
+      現実適用におけるVCDesign Coreの上位説明。
+      PDΔAは各ループで観測・判断・遷移を起こす最小構造であり、
+      その統治は責任モデルの下に置かれる。
+      4ループ構造は独立した制御モデルではなく、
+      PDΔAサイクルを時間スケールと責任配置に沿って分解した表現である。
+
+    loop_layers:
+      - id: physical_loop
+        name: Physical Loop
+        role:
+          - stability
+          - execution
+          - continuous_dynamics
+        typical_timescale: ms_to_hours
+        relation_to_continuity: preserves_continuous_real_world_stability_and_execution
+        relation_to_responsibility: operates_within_constraints_defined_by_higher_responsibility
+        allowed_components:
+          - sensors
+          - actuators
+          - transactional_services
+          - deterministic_control
+        forbidden_components:
+          - llm_as_direct_controller
+          - autonomous_goal_redefinition
+          - final_authority_assignment
+        failure_mode: unstable_execution_or_real_world_harm
+        relation_to_delta: delta_emerges_as_continuous_deviation_or_operational_instability
+
+      - id: semantic_loop
+        name: Semantic Loop
+        role:
+          - interpretation
+          - delta_to_meaning
+          - discontinuous_inference
+        typical_timescale: seconds_to_days
+        relation_to_continuity: translates_continuous_change_into_discrete_meaning
+        relation_to_responsibility: supports_human_judgment_but_does_not_own_final_responsibility
+        allowed_components:
+          - llm
+          - classifiers
+          - analyzers
+          - human_review_tools
+        forbidden_components:
+          - direct_physical_actuation
+          - autonomous_final_decision
+          - autonomous_responsibility_assignment
+        failure_mode: misinterpretation_or_false_delta_reading
+        relation_to_delta: delta_is_interpreted_and_translated_into_candidate_meaning
+
+      - id: value_loop
+        name: Value Loop
+        role:
+          - objective
+          - constraints
+          - direction_of_optimization
+        typical_timescale: days_to_quarters
+        relation_to_continuity: defines_what_kind_of_continuity_is_worth_preserving
+        relation_to_responsibility: value_revision_requires_explicit_human_review_and_ownership
+        allowed_components:
+          - policy_models
+          - review_boards
+          - explicit_goal_definitions
+          - human_value_review
+        forbidden_components:
+          - llm_owned_objective_setting
+          - hidden_goal_shift
+          - unreviewed_policy_rewrite
+        failure_mode: optimization_drift_or_goal_corruption
+        relation_to_delta: delta_is_judged_against_stated_value_and_constraints
+
+      - id: responsibility_loop
+        name: Responsibility Loop
+        role:
+          - final_decision
+          - halt
+          - accountability
+        typical_timescale: immediate_to_cross_lifecycle
+        relation_to_continuity: preserves_governable_continuity_by_allowing_intervention_and_halt
+        relation_to_responsibility: holds_final_human_accountability_for_all_loop_coordination
+        governance_note: not_a_computational_loop_but_a_governance_structure_that_can_intervene_in_all_loops
+        allowed_components:
+          - human_final_decider
+          - supervisors
+          - audit_logs
+          - escalation_paths
+        forbidden_components:
+          - ai_final_authority
+          - untraceable_decision
+          - irreversible_action_without_halt_path
+        failure_mode: responsibility_loss_or_unstoppable_operation
+        relation_to_delta: delta_forces_accountable_judgment_and_action_selection
+
+    temporal_separation:
+      principle:
+        description: >
+          ループごとの時間定数を分離しない限り、
+          速い実行系と遅い価値判断系が相互に汚染し、
+          誤制御と責任喪失を招く。
+      rules:
+        - fast_loops_must_not_autonomously_rewrite_slow_loop_constraints
+        - semantic_updates_must_not_bypass_value_review
+        - value_revision_must_not_bypass_responsibility_judgment
+        - responsibility_loop_must_be_able_to_interrupt_all_lower_loops
+
+  boundary_mediation:
+    description: >
+      AI適用は、非連続な知能出力を連続系へ安全に接続する境界設計問題として扱う。
+      Boundaryは変換層であるだけでなく、
+      責任の再確認または再配置を明示しなければならない切断点である。
+    continuous_to_discrete_boundary:
+      description: >
+        連続的な現象を意味解釈可能なΔ候補へ変換する境界。
+    discrete_to_continuous_boundary:
+      description: >
+        離散的な判断結果を現実の実行へ反映する前に安全制約へ通す境界。
+    requirements:
+      - safe_translation_required
+      - policy_check_required
+      - responsibility_trace_required
+      - halt_path_required
 
   delta_definition:
 
@@ -133,6 +264,8 @@ vcdesign_core:
       forbidden:
         - final_decision
         - responsibility_assignment
+        - direct_physical_control
+        - autonomous_value_redefinition
 
   invariants:
 
@@ -140,3 +273,11 @@ vcdesign_core:
     - every_defer_must_have_owner
     - every_chapter_must_be_explainable
     - delta_must_trigger_evaluation
+    - adaptive_loops_must_remain_under_responsibility_governance
+    - boundary_mediation_must_exist_between_discontinuous_inference_and_continuous_control
+
+  final_definition:
+    description: >
+      AIとは、非連続な知能を連続系へ安全接続するための境界設計問題である。
+      自律的成長とは、異なる時間スケールのループ群が
+      責任統治の下で協調し、運用整合を改善し続ける適応構造である。

@@ -10,9 +10,10 @@ VCDesignの現行authorityは以下で構成される
 
 ## 1. The Core (The "Why" and "What")
 *Start here. This defines the problem and the unavoidable response.*
-- **[Core](core/core.yaml)**: The basic OS, PDΔA flow, and responsibility model.
-- **[Policies](core/policies.yaml)**: Governance, AI boundaries, and control rules.
-- **[Metrics](core/metrics.yaml)**: Responsibility metrics and Δ detection.
+- **[Core](core/core.yaml)**: The basic OS, PDΔA flow, responsibility model, and the reality-fit definition that separates physical / semantic / value / responsibility loops across time scales.
+- **[Policies](core/policies.yaml)**: Governance, AI boundaries, LLM placement constraints, haltability, and control rules.
+- **[Metrics](core/metrics.yaml)**: Responsibility metrics, Δ detection, and growth measurement as operational fit under responsibility constraints.
+- **[AI Adaptive Loop Model](core/ai-adaptive-loop-model.md)**: A readable guide that explains how the authority connects to real AI operating loops without becoming a new authority.
 - **[Case Schema](core/schema_case.yaml)**: Data structure for cases.
 - **[Log Schema](core/schema_log.yaml)**: Data structure for decision logs.
 

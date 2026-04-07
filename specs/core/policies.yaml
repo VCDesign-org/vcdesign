@@ -38,6 +38,58 @@ vcdesign_policies:
       - human_must_be_in_decision_loop
       - ai_output_must_be_explainable
       - ai_confidence_must_be_visible
+      - llm_must_remain_within_semantic_loop
+      - responsibility_trace_must_be_preserved
+
+  llm_placement:
+
+    principle:
+      description: >
+        LLMは主としてSemantic Loopに配置される。
+        解釈支援は許可されるが、物理制御・価値設定・最終責任の保持は許可されない。
+
+    primarily_allowed_in:
+      - semantic_loop
+
+    forbidden_direct_control:
+      - physical_loop
+      - value_loop
+      - responsibility_loop
+
+    constraints:
+      - llm_must_not_directly_control_physical_loop
+      - llm_must_not_autonomously_set_value_objectives
+      - llm_must_not_hold_final_authority
+      - llm_outputs_require_explicit_gate_before_real_world_effect
+
+  boundary_safety:
+
+    principle:
+      description: >
+        非連続な推論結果を現実系へ接続するすべての境界は、
+        安全ゲートと停止経路を備えなければならない。
+
+    boundaries:
+      continuous_to_discrete_boundary:
+        required: true
+        description: >
+          現実信号をΔ候補および意味候補へ変換する境界。
+      discrete_to_continuous_boundary:
+        required: true
+        description: >
+          離散的な判断・推奨を実行系へ反映する前の制御境界。
+
+    mandatory_controls:
+      - safety_gate_required
+      - human_override_required
+      - halt_path_required
+      - boundary_decision_logging_required
+      - policy_check_before_execution
+
+    anti_patterns:
+      - direct_llm_to_actuator_path
+      - silent_goal_rewrite
+      - irreversible_action_without_review_gate
 
   reframe_control:
 
@@ -156,6 +208,7 @@ vcdesign_policies:
       - decision_reason_must_exist
       - responsibility_path_must_be_traceable
       - delta_to_action_mapping_must_be_visible
+      - boundary_translation_must_be_traceable
 
     failure_definition:
       description: >
@@ -195,6 +248,24 @@ vcdesign_policies:
       - supervisor_must_not_delegate_final_decision_to_ai
       - supervisor_must_close_or_reassign_every_case
 
+  haltability:
+
+    principle:
+      description: >
+        停止可能性はオプションではなく責任統治の成立条件である。
+
+    required_capabilities:
+      - human_intervention_possible
+      - arbitrary_halt_possible
+      - decision_accountability_traceable
+      - rollback_or_safe_state_defined
+
+    rules:
+      - every_operational_path_must_have_halt_owner
+      - emergency_stop_must_bypass_nonessential_automation
+      - human_override_must_be_executable_under_degraded_conditions
+      - post_halt_review_must_record_reason_and_responsibility
+
   policy_enforcement:
 
     levels:
@@ -204,6 +275,10 @@ vcdesign_policies:
 
     examples:
       ai_final_decision:
+        level: blocking
+      llm_direct_physical_control:
+        level: blocking
+      missing_halt_path:
         level: blocking
       missing_owner:
         level: blocking

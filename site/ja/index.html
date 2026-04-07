@@ -82,6 +82,10 @@
             </ul>
             <p>patterns（RCL等）は「Coreへの適用構造」</p>
             <p>legacy配下は「歴史的ドキュメントであり現行仕様ではない」</p>
+            <p>
+                現実のAI運用では、このauthorityは Physical / Semantic / Value / Responsibility の4ループ分離として読まれ、
+                その統治は常に人間の責任下に置かれます。
+            </p>
         </section>
         <section id="usage-context">
             <h2 class="usage-title">VCDesign の構造</h2>
@@ -99,6 +103,8 @@
                 <li><strong>PDΔA構造</strong>: 事前条件設定、実行、Δ検知、アクション実行のサイクル</li>
                 <li><strong>Action(A)</strong>: Fix, Reframe, Defer, Retire の4タイプ</li>
                 <li><strong>Metricsとの関係</strong>: 責任メトリクスを用いてΔを検知し、価値継続を確保</li>
+                <li><strong>Adaptive Loop Model</strong>: AI運用を単一制御層に潰さず、PDΔAを Physical / Semantic / Value / Responsibility の観点へ分解して扱う</li>
+                <li><strong>時間スケール分離</strong>: 高速な実行ループが、低速な価値判断や責任判断を書き換えないようにする</li>
             </ul>
             <p> 「価値を継続させる」とは、 </p>
             <ul style="padding-left: 1.6em; margin: 0 0 14px;">
@@ -126,6 +132,14 @@
             </p>
             <p>
                 PoliciesはAIの判断制約やReframeの制御を定義します。AIは最終判断を持てず、人間が責任を担います。
+            </p>
+            <p>
+                その上で、LLMは主としてSemantic Loopに限定され、越境には安全ゲートと停止経路が必要であり、
+                成長は責任制約下での運用整合の改善として測られます。
+            </p>
+            <p>
+                この4ループ読解は PDΔA と並ぶ第二の中核ではなく、PDΔA を時間スケールと責任配置に沿って現実運用へ展開した説明です。
+                Responsibility は計算ループではなく、全ループへ介入できる統治機能として扱われます。
             </p>
         </section>
 
@@ -158,6 +172,12 @@
                     <a class="link-anchor" href="./vc-ad/">
                         <span class="label">AIを最大限活かすための境界定義（設計）：VC-AD</span>
                         <span class="desc">AI時代に見落とされがちな境界の地図を定義し、Responsibilityの配置を支援</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="./reality-fit/">
+                        <span class="label">Reality Fit / Adaptive Loop Model</span>
+                        <span class="desc">Core・Policies・Metrics が現実のAI運用ループと停止可能な境界設計にどう接続するかを説明</span>
                     </a>
                 </li>
                 <li>

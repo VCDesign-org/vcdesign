@@ -24,6 +24,8 @@ VCDesignの現行authorityは以下で構成される
 
 ### VCDesign Core Principles
 VCDesign is a development OS that structures systems through chapter and responsibility transitions for the purpose of value continuity.
+In real AI operations, this is read as a responsibility-governed separation of four loops: Physical, Semantic, Value, and Responsibility.
+LLMs belong primarily in the Semantic Loop, while growth is defined as improved operational fit under responsibility constraints rather than mere model capability increase.
 
 #### Basic Principles
 - **Responsibility Non-Disappearance Principle**: Responsibility must always exist somewhere.
@@ -36,6 +38,7 @@ See the **[Specification Map](specs/map.md)** for the full overview.
 
 We recommend reading in the following order:
 1. **[specs/core/](specs/core/)** (Authority): Why this design is necessary, what must be protected.
+   See also **[specs/core/ai-adaptive-loop-model.md](specs/core/ai-adaptive-loop-model.md)** for the readable explanation of how Core / Policies / Metrics connect to real AI operating loops.
 2. **[specs/protocols/](specs/protocols/)** (How / Operations): When to close judgments and how to hand off responsibility.
 3. **[specs/chapters/](specs/chapters/)** (When): Which designs are necessary at what point in the timeline.
 

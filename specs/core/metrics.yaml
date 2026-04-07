@@ -10,6 +10,20 @@ vcdesign_metrics:
       responsibility_metrics は、章の成立条件および責任配置の維持可能性を
       観測するための基底指標群である。
       これらは単なる運用アラートではなく、Δ評価の入力となる。
+      また、AIの成長はモデル能力の増大ではなく、
+      責任制約下での運用整合の改善として評価される。
+
+  growth_definition:
+    description: >
+      Growth is not mere model capability increase.
+      Growth means improvement of operational fit under responsibility constraints.
+    required_properties:
+      - better_delta_detection
+      - better_semantic_interpretation
+      - better_value_alignment
+      - better_judgment_consistency
+      - better_halt_readiness
+      - lower_boundary_violation
 
   evaluation_model:
     levels:
@@ -236,11 +250,112 @@ vcdesign_metrics:
         - retire
         - defer
 
+  operational_fit_metrics:
+
+    - id: delta_detection_quality
+      name: Delta Detection Quality
+      primary_loop: semantic_loop
+      description: >
+        現実のズレをノイズと区別しつつ、責任影響のあるΔを適切に検出できている度合い。
+      intent: >
+        Δ観測の過検知と見逃しの双方を抑える。
+      typical_signals:
+        - confirmed_delta_precision
+        - confirmed_delta_recall
+        - low_false_alarm_rate
+      meaning:
+        - semantic_loop_is_fitted_to_operational_reality
+
+    - id: semantic_interpretation_quality
+      name: Semantic Interpretation Quality
+      primary_loop: semantic_loop
+      description: >
+        観測されたΔ候補を、文脈・章・責任に沿って意味解釈できている度合い。
+      intent: >
+        Δから意味への変換品質を測る。
+      typical_signals:
+        - interpretation_agreement_with_human_review
+        - low_context_loss
+        - stable_delta_classification
+      meaning:
+        - discontinuous_inference_is_kept_explainable
+
+    - id: value_alignment_quality
+      name: Value Alignment Quality
+      primary_loop: value_loop
+      description: >
+        運用中の判断や改善が、明示された目的・制約・価値継続要件に整合している度合い。
+      intent: >
+        目的ドリフトと隠れた最適化を検知する。
+      typical_signals:
+        - review_pass_rate
+        - explicit_objective_traceability
+        - low_goal_shift_incidents
+      meaning:
+        - optimization_remains_inside_stated_value_constraints
+
+    - id: judgment_consistency
+      name: Judgment Consistency
+      primary_loop: responsibility_loop
+      description: >
+        類似事例に対する判断理由、介入条件、Action選択が一貫している度合い。
+      intent: >
+        責任判断の恣意化を抑える。
+      typical_signals:
+        - decision_reason_similarity
+        - policy_conformance_rate
+        - low_conflicting_resolution_rate
+      meaning:
+        - accountable_governance_is_stable
+
+    - id: halt_readiness
+      name: Halt Readiness
+      primary_loop: responsibility_loop
+      description: >
+        停止命令、人間介入、安全退避が実際に発動可能な状態に保たれている度合い。
+      intent: >
+        停止可能性を机上要件ではなく運用品質として測る。
+      typical_signals:
+        - halt_drill_success_rate
+        - emergency_stop_latency
+        - override_path_availability
+      meaning:
+        - system_remains_governable_under_failure
+
+    - id: boundary_violation_rate
+      name: Boundary Violation Rate
+      primary_loop: boundary_crossing
+      description: >
+        LLM越権、無審査実行、責任経路欠落などの境界破りが発生する頻度。
+      intent: >
+        安全ゲートの実効性を測る。
+      typical_signals:
+        - direct_execution_without_gate
+        - missing_policy_check
+        - missing_trace_on_cross_boundary_actions
+      meaning:
+        - boundary_design_is_failing
+
+    - id: human_override_recovery_quality
+      name: Human Override Recovery Quality
+      primary_loop: responsibility_loop
+      description: >
+        人間介入後に、システムが責任を保ったまま安全状態へ復帰できる度合い。
+      intent: >
+        override後の運用回復品質を測る。
+      typical_signals:
+        - recovery_time_after_override
+        - post_override_incident_rate
+        - completeness_of_review_record
+      meaning:
+        - human_sovereignty_is_operationally_effective
+
   interpretation_rules:
     - multiple_warnings_may_form_delta_candidate
     - confirmed_delta_requires_contextual_judgment
     - no_metric_alone_forces_reframe_except_policy_defined_cases
     - metrics_are_inputs_to_rca_not_replacements_for_rca
+    - growth_metrics_must_be_read_with_responsibility_constraints
 
   composition_rules:
     chapter_minimum:
@@ -258,6 +373,19 @@ vcdesign_metrics:
   output_contract:
     description: >
       各 metric の評価結果は、少なくとも status, observed_at, evidence, suggested_actions を返せること。
+
+  loop_metric_mapping:
+    semantic_loop:
+      - delta_detection_quality
+      - semantic_interpretation_quality
+    value_loop:
+      - value_alignment_quality
+    responsibility_loop:
+      - judgment_consistency
+      - halt_readiness
+      - human_override_recovery_quality
+    boundary_crossing:
+      - boundary_violation_rate
     fields:
       - metric_id
       - status
