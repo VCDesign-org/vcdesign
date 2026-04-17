@@ -80,8 +80,8 @@ Definitions of terms used in VCDesign and UVW (Unstable Value World).
 **References:** [Core](../core/core.yaml), [Policies](../core/policies.yaml)
 
 ## Term: Resolution
-**EN:** A committed Action with a specified Responsible Actor, Scope, and Expiry. The output of a successful Judgment Closure.  
-**JA:** 責任ある主体（Responsible Actor）、適用範囲（Scope）、有効期限（Expiry）が明記されたコミット済みの行動（Action）。正常な Judgment Closure の出力。  
+**EN:** A Responsibility Asset promoted by Resolution Handshake into a committed Action with a specified Responsible Actor, Scope, and Expiry.  
+**JA:** Responsibility Asset が Resolution Handshake によって、責任ある主体（Responsible Actor）、適用範囲（Scope）、有効期限（Expiry）を持つコミット済みの行動（Action）へ昇格したもの。  
 **References:** [Resolution Handshake Protocol](../protocols/resolution-handshake.yaml)  
 
 ## Term: Resolution Handshake
@@ -89,6 +89,11 @@ Definitions of terms used in VCDesign and UVW (Unstable Value World).
 **JA:** 閉じた判断（Closed Judgment）を解決（Resolution / 責任のコミットメント）へと昇格させるためのプロトコル。  
 **References:** [Resolution Handshake Protocol](../protocols/resolution-handshake.yaml)  
 **Aliases:** RP (Resolution Protocol), Handshake
+
+## Term: Responsibility Asset
+**EN:** A responsibility-bearing judgment effectively created by `Judgment Closure = ACCEPTED`. It is distinct from Resolution because it is not yet necessarily an executable committed action.  
+**JA:** `Judgment Closure = ACCEPTED` によって実質的に生成される責任付き判断。まだ必ずしも実行可能なコミット済み Action ではないため、Resolution とは区別される。  
+**References:** [Judgment Closure Protocol](../protocols/judgment-closure.yaml), [Core Glossary](../core/glossary.md)
 
 ## Term: Responsibility
 **EN:** The state of being answerable for the consequences of a Judgment. In UVW, this is a scarce resource.  

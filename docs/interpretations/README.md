@@ -39,9 +39,15 @@ They should not be used to:
 VCDesign is not justified by category theory.
 It is only explainable through it.
 
+These documents intentionally stop before formal proof.
+A formalization would require defining categories, objects, morphisms,
+identity, composition, and laws separately from the operational VCDesign
+specification.
+
 Current documents:
 
 - `vcdesign-and-category-theory.md`
 - `responsibility-monad-reading.md`
 - `temporal-irreversibility.md`
 - `string-diagram-reading.md`
+- `mapping.md`

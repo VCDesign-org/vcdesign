@@ -13,6 +13,7 @@ VCDesignの現行authorityは以下で構成される
 - **[Core](core/core.yaml)**: The basic OS, PDΔA flow, responsibility model, and the reality-fit definition that separates physical / semantic / value / responsibility loops across time scales.
 - **[Policies](core/policies.yaml)**: Governance, AI boundaries, LLM placement constraints, haltability, and control rules.
 - **[Metrics](core/metrics.yaml)**: Responsibility metrics, Δ detection, and growth measurement as operational fit under responsibility constraints.
+- **[Core Glossary](core/glossary.md)**: Canonical distinctions that affect conformance, especially Judgment Proposal, Responsibility Asset, Resolution, Delta, IDG, RCA, and RCL.
 - **[AI Adaptive Loop Model](core/ai-adaptive-loop-model.md)**: A readable guide that explains how the authority connects to real AI operating loops without becoming a new authority.
 - **[Case Schema](core/schema_case.yaml)**: Data structure for cases.
 - **[Log Schema](core/schema_log.yaml)**: Data structure for decision logs.
@@ -51,3 +52,8 @@ VCDesignの現行authorityは以下で構成される
 - **[Glossary](glossary/glossary.md)**: Terminology definitions.
 - **[Schemas](schemas/)**: Machine-readable schemas and validation tools.
 - **[Examples](examples/llm-change-approval.md)**: Concrete applications.
+  - [Minimal Lifecycle Example](examples/vcdesign-minimal-lifecycle.md)
+- **[Validation](validation/)**: Conformance and anti-pattern checks.
+  - [Conformance Cases](validation/vcdesign-conformance-cases.md)
+  - [Anti-Patterns](validation/vcdesign-anti-patterns.md)
+- **[Temporal Governance](policies/temporal-governance.md)**: Boundary between technical rollback and append-only responsibility trace.
