@@ -1,0 +1,16 @@
+*
+!specs/
+!specs/**
+
+specs/.DS_Store
+specs/**/.DS_Store
+specs/**/README.md
+specs/**/README.ja.md
+specs/examples/**
+specs/schemas/**
+specs/patterns/rcl/RCL_LOCAL_AI_VALIDATION.md
+specs/patterns/rcl/mapping/**
+!specs/README.md
+!specs/chapters/README.md
+!specs/glossary/glossary.md
+!specs/map.md
