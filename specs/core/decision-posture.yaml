@@ -1,0 +1,175 @@
+meta:
+  id: DECISION_POSTURE
+  title: Decision Posture Specification
+  layer: core
+  status: stable
+  version: 0.1.0
+  authority: normative
+
+# -------------------------------------------------------------------
+# Purpose
+# -------------------------------------------------------------------
+purpose: >
+  Defines the four decision postures available in VCDesign and the
+  criteria for selecting each. A decision posture is the rule
+  "Stop or Review" applied when judgment confidence is at risk.
+
+  Posture selection is a design decision, not a runtime shortcut.
+  Each posture must be justified by the specific Delta and loop context.
+
+# -------------------------------------------------------------------
+# Posture Definitions
+# -------------------------------------------------------------------
+postures:
+
+  defer:
+    id: POSTURE-DEFER
+    label: Defer
+    definition: >
+      Halt forward progress on the current resolution path.
+      Escalate for explicit re-judgment at the identified boundary
+      before resuming. Responsibility is temporarily suspended,
+      not abandoned.
+    when_to_use:
+      - Delta cannot be resolved by the current responsible actor's authority
+      - The correct interpretation of the Delta requires higher-loop judgment
+        (e.g., semantic or value loop re-evaluation)
+      - A reframe may be needed but its scope is not yet clear
+      - The system is in a drifting state but safe to pause
+    preconditions_for_validity:
+      - An interim owner must be named (AP-004: ownerless defer is invalid)
+      - A next_review_at date must be set
+      - An escalation path to supervisor or domain owner must be specified
+    typical_loops: [semantic_loop, value_loop, responsibility_loop]
+    risk_of_misuse: >
+      Defer can become judgment avoidance. See AP-009 (Defer-as-Avoidance).
+      Use reconsider or commit when the situation permits lower-cost resolution.
+
+  commit:
+    id: POSTURE-COMMIT
+    label: Commit
+    definition: >
+      Accept the current judgment and proceed with execution.
+      The responsible actor explicitly closes the boundary and
+      takes accountability for the outcome.
+    when_to_use:
+      - Physical loop stability requires immediate action; halting is more
+        dangerous than deciding under partial information
+      - The Delta is well-understood and within the current actor's authority
+      - Evidence is sufficient for the responsible actor to accept accountability
+      - Delay would cause irreversible harm or cascade failure
+    preconditions_for_validity:
+      - The responsible actor must be identified and present
+      - The action scope must fall within the actor's authority (B17)
+      - The decision log must record: facts observed, evidence assessed,
+        actor identity, timestamp
+    typical_loops: [physical_loop, semantic_loop]
+    example: >
+      A physical control loop detects sensor drift crossing a safety threshold.
+      Halting to re-evaluate would leave actuators in an unsafe state.
+      The on-site operator commits: accepts the reading, applies a correction
+      action, and logs the decision with evidence and authority.
+
+  reconsider:
+    id: POSTURE-RECONSIDER
+    label: Reconsider
+    definition: >
+      Re-examine the current assumptions without halting operations.
+      The chapter premise or boundary placement may need revision,
+      but the system can continue while the re-examination occurs.
+    when_to_use:
+      - Delta signals are present but low-severity (no immediate harm risk)
+      - The chapter is still valid but a premise is weakening
+      - A prior judgment's rationale is no longer clearly articulable,
+        but the outcome has not yet failed
+      - The reconsideration can complete within the current loop's timescale
+    preconditions_for_validity:
+      - A re-examination owner must be assigned
+      - A completion deadline for the reconsideration must be set
+      - If reconsideration concludes the chapter is invalid, escalate to defer
+        or abandon
+    typical_loops: [semantic_loop, value_loop]
+    example: >
+      A team notices that the purpose statement for an ML model's
+      output classification has shifted slightly over six months.
+      The system is still producing acceptable results. Rather than
+      halting, the team assigns an owner to re-examine the chapter
+      premise within the next sprint, with a defined exit criterion.
+
+  abandon:
+    id: POSTURE-ABANDON
+    label: Abandon
+    definition: >
+      Stop pursuing the current value. The chapter has failed
+      irrecoverably, or the cost of continuity now exceeds the
+      value being protected. Responsibility is formally released.
+    when_to_use:
+      - The value proposition underlying the chapter no longer holds
+      - Continuing would protect a goal that no longer exists or is harmful
+      - Reframing or deferring would only delay an inevitable discontinuation
+      - A supervisor or domain owner has determined that retirement is required
+    preconditions_for_validity:
+      - Abandon must be authorized by the supervisor or final_decider
+      - All downstream dependents must be notified (per policies.yaml retire_control)
+      - The responsibility must be formally released and recorded, not silently dropped
+      - A retire action (core.yaml action_definition: retire) must be logged
+    typical_loops: [value_loop, responsibility_loop]
+    example: >
+      An automation system was built to optimize a supply chain route.
+      The underlying supply chain has been discontinued. No reframe
+      can produce a valid purpose for the system. The supervisor
+      formally abandons the chapter, notifies all stakeholders,
+      releases responsibility, and logs the retire action.
+
+# -------------------------------------------------------------------
+# Posture Selection Logic
+# -------------------------------------------------------------------
+selection_guide:
+  step_1_assess_loop: >
+    Identify which adaptive loop is primarily affected by the Delta.
+    Physical loop Deltas bias toward commit (halting may be unsafe).
+    Value loop Deltas bias toward defer or abandon (rewriting objectives
+    requires higher authority).
+
+  step_2_assess_authority: >
+    Can the current responsible actor resolve the Delta within their
+    authority (B17)? If no → defer. If yes, proceed to step 3.
+
+  step_3_assess_severity: >
+    Is the Delta high-severity or time-critical?
+    - High severity, time-critical, within authority → commit
+    - High severity, not time-critical → defer
+    - Low severity, chapter still valid → reconsider
+    - Chapter value proposition failed → abandon
+
+  step_4_document: >
+    Regardless of posture chosen, log: posture selected, rationale,
+    evidence observed, actor identity, next review or action required.
+
+# -------------------------------------------------------------------
+# Posture vs. Anti-Pattern Guard
+# -------------------------------------------------------------------
+anti_defer_guard:
+  description: >
+    Before selecting defer, answer these questions. If all answers are
+    "no", defer may be judgment avoidance (see AP-009).
+  questions:
+    - "Does resolving this Delta require authority I do not have?"
+    - "Does resolving this Delta require a higher loop's re-evaluation?"
+    - "Is there genuine uncertainty that cannot be resolved with available evidence?"
+    - "Have I named an interim owner, escalation path, and review date?"
+
+# -------------------------------------------------------------------
+# Normative Reference
+# -------------------------------------------------------------------
+normative_links:
+  - id: core.yaml
+    relation: "action_definition (fix, reframe, defer, retire) maps to posture outcomes"
+  - id: policies.yaml
+    relation: "defer_control and retire_control enforce posture preconditions"
+  - id: AP-004
+    relation: "ownerless defer is an anti-pattern"
+  - id: AP-009
+    relation: "defer-as-avoidance is an anti-pattern"
+  - id: B17
+    relation: "authority scope check required before commit"

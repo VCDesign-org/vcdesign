@@ -84,9 +84,11 @@
             <h2 class="usage-title">VCDesign Authority Declaration</h2>
             <p>The current authority of VCDesign consists of the following:</p>
             <ul>
-                <li>core/core.yaml</li>
-                <li>core/policies.yaml</li>
-                <li>core/metrics.yaml</li>
+                <li><strong>core/core.yaml</strong> — PDΔA, adaptive loops, and the responsibility model</li>
+                <li><strong>core/policies.yaml</strong> — Governance, AI constraints, and haltability requirements</li>
+                <li><strong>core/metrics.yaml</strong> — Metrics for detecting responsibility misalignment</li>
+                <li><strong>core/axioms.yaml</strong> — Axioms A1–A5: the irreducible commitments underlying all specs</li>
+                <li><strong>core/decision-posture.yaml</strong> — Normative definitions of defer / commit / reconsider / abandon</li>
             </ul>
             <p>Patterns (such as RCL) are "application structures to the Core"</p>
             <p>The legacy directory contains "historical documents and not current specifications"</p>
@@ -136,6 +138,32 @@
             </p>
         </section>
 
+        <section id="agent-era">
+            <h2 class="usage-title">Designed for the Agent Era</h2>
+            <p>
+                VCDesign applies not only to standalone AI models, but to<br />
+                <strong>AI Agents</strong> that execute tools, chain operations, and run over extended time horizons.
+            </p>
+            <p>
+                As agents become more capable, the temptation to delegate based on capability alone grows.<br />
+                But <strong>capability is not authority.</strong><br />
+                An agent without a declared execution boundary, a named responsible actor,
+                and a defined halt condition is a source of accidents.
+            </p>
+            <h3>The 5-Layer Frame (external explanation model)</h3>
+            <ol>
+                <li><strong>Model Layer</strong> — Inference, interpretation, and proposals (output only, no execution)</li>
+                <li><strong>Agent Layer</strong> — Execution boundaries, tool control, and multi-agent coordination</li>
+                <li><strong>Responsibility Layer</strong> — Who holds what, and who makes the final call</li>
+                <li><strong>Time Layer</strong> — Separation of time scales; fast loops must not silently rewrite slow-loop constraints</li>
+                <li><strong>Human Sovereignty Layer</strong> — The authority to intervene, halt, and explain, retained by humans</li>
+            </ol>
+            <p>
+                Capability at a lower layer must not expand without governance structures in place at the layers above.<br />
+                See <code>specs/core/agent-era-model.md</code> for the full 12-principle framework.
+            </p>
+        </section>
+
         <section id="core-metrics-policies">
             <h2 class="usage-title">Core Metrics and Policies</h2>
             <p>
@@ -152,6 +180,77 @@
                 The four-loop reading is not a second core beside PDΔA. It is a reality-fit decomposition of PDΔA across
                 time scales and responsibilities, while responsibility remains a governance function over all loops.
             </p>
+        </section>
+
+        <section id="maturity-profile">
+            <h2 class="usage-title">Organizational Diagnosis: Maturity Profile</h2>
+            <p>
+                A framework for diagnosing where an organization or system stands across the five governance layers.<br />
+                Each layer is rated on a <strong>4-level scale</strong>.
+            </p>
+            <table style="width:100%; border-collapse:collapse; margin: 16px 0;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left; padding:8px; border-bottom:1px solid #444;">Level</th>
+                        <th style="text-align:left; padding:8px; border-bottom:1px solid #444;">Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="padding:8px;"><strong>Unstructured</strong></td><td style="padding:8px;">No structure. No corresponding design element exists.</td></tr>
+                    <tr><td style="padding:8px;"><strong>Defined</strong></td><td style="padding:8px;">Exists on paper, but not enforced in practice.</td></tr>
+                    <tr><td style="padding:8px;"><strong>Enforced</strong></td><td style="padding:8px;">Operational and active; violations trigger controls.</td></tr>
+                    <tr><td style="padding:8px;"><strong>Governed</strong></td><td style="padding:8px;">Audited, improved, and re-evaluated on a continuous cycle.</td></tr>
+                </tbody>
+            </table>
+            <p>Example diagnosis output:</p>
+            <pre style="background:#1a1a1a; padding:16px; border-radius:6px; font-size:0.85rem; overflow-x:auto;">Model Layer:          Enforced
+Agent Layer:          Defined
+Responsibility Layer: Unstructured  ← this limits the whole system
+Time Layer:           Defined
+Human Sovereignty:    Enforced</pre>
+            <p>
+                The lowest-rated layer defines the overall governance ceiling of the system.<br />
+                See <code>specs/validation/vcdesign-maturity-profile.md</code> for the full rubric.
+            </p>
+        </section>
+
+        <section id="use-cases">
+            <h2 class="usage-title">Adoption Use Cases</h2>
+            <p>Three examples of VCDesign applied to concrete agent governance scenarios.</p>
+            <ul class="link-list">
+                <li>
+                    <div class="link-anchor">
+                        <span class="label">AI Coding Agent</span>
+                        <span class="desc">
+                            Opening a PR is not Judgment Closure. Responsibility for generated code is fixed to the
+                            human who issued the instruction. Execution gates and approval traces must be designed explicitly.<br />
+                            <code>specs/examples/coding-agent-boundary.md</code>
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <div class="link-anchor">
+                        <span class="label">Security Agent (Mythos-type)</span>
+                        <span class="desc">
+                            Three-tier execution boundary design (autonomous / gated / human-only).
+                            Commit posture under high-velocity incidents, with a responsibility trace
+                            that survives false-positive outcomes without blame collapse.<br />
+                            <code>specs/examples/agent-governance-security.md</code>
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <div class="link-anchor">
+                        <span class="label">Factory Operations Agent (Physical Loop Protection)</span>
+                        <span class="desc">
+                            Removing the direct AI-to-PLC path is the first design decision.
+                            Physical Loop and Semantic Loop are strictly separated.
+                            AI halt and physical safety interlock operate independently.<br />
+                            <code>specs/examples/factory-agent-safe-loop.md</code>
+                        </span>
+                    </div>
+                </li>
+            </ul>
         </section>
 
         <!-- SPECS / LINKS: Machine-readable + human navigation -->

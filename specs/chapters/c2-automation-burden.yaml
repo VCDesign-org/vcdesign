@@ -4,7 +4,7 @@
 id: "vcdesign-chapter-c2"
 title: "Automation Burden Chapter"
 layer: "chapter"
-status: "draft"
+status: "stable"
 version: "0.2.0"
 
 meta:

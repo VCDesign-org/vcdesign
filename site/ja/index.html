@@ -76,9 +76,11 @@
             <h2 class="usage-title">VCDesign Authority 宣言</h2>
             <p>VCDesignの現行authorityは以下で構成される</p>
             <ul>
-                <li>core/core.yaml</li>
-                <li>core/policies.yaml</li>
-                <li>core/metrics.yaml</li>
+                <li><strong>core/core.yaml</strong> — PDΔA・適応ループ・責任モデルの基底</li>
+                <li><strong>core/policies.yaml</strong> — ガバナンス・AI制約・停止可能性の規範</li>
+                <li><strong>core/metrics.yaml</strong> — 責任逸脱の観測指標群</li>
+                <li><strong>core/axioms.yaml</strong> — A1〜A5：すべての仕様の基底となる公理</li>
+                <li><strong>core/decision-posture.yaml</strong> — defer / commit / reconsider / abandon の規範的定義</li>
             </ul>
             <p>patterns（RCL等）は「Coreへの適用構造」</p>
             <p>legacy配下は「歴史的ドキュメントであり現行仕様ではない」</p>
@@ -125,6 +127,31 @@
             </p>
         </section>
 
+        <section id="agent-era">
+            <h2 class="usage-title">Agent Era への対応</h2>
+            <p>
+                VCDesign は、モデル単体の AI 時代だけでなく、<br />
+                ツール実行・連鎖操作・長時間動作を行う <strong>AI Agent の時代</strong>にも適用できます。
+            </p>
+            <p>
+                Agent が高性能になるほど、「能力があるから任せる」という判断が増えます。<br />
+                しかし <strong>能力は権限ではありません。</strong><br />
+                実行境界・責任者・停止条件を設計しない Agent は事故源になります。
+            </p>
+            <h3>5層構造（外部説明フレーム）</h3>
+            <ol>
+                <li><strong>Model Layer</strong> — 推論・解釈・提案（出力のみ、実行なし）</li>
+                <li><strong>Agent Layer</strong> — 実行境界・ツール制御・Multi-Agent 協調</li>
+                <li><strong>Responsibility Layer</strong> — 誰が何を保持し、誰が最終判断するか</li>
+                <li><strong>Time Layer</strong> — 時間スケールの分離と、速いループが遅いループを上書きしないための構造</li>
+                <li><strong>Human Sovereignty Layer</strong> — 人間が最終的に介入・停止・説明できる主権</li>
+            </ol>
+            <p>
+                下位レイヤーの能力は、上位レイヤーの統治構造なしに拡大してはなりません。<br />
+                詳細は <code>specs/core/agent-era-model.md</code> を参照してください。
+            </p>
+        </section>
+
         <section id="core-metrics-policies">
             <h2 class="usage-title">Core Metrics と Policies</h2>
             <p>
@@ -141,6 +168,76 @@
                 この4ループ読解は PDΔA と並ぶ第二の中核ではなく、PDΔA を時間スケールと責任配置に沿って現実運用へ展開した説明です。
                 Responsibility は計算ループではなく、全ループへ介入できる統治機能として扱われます。
             </p>
+        </section>
+
+        <section id="maturity-profile">
+            <h2 class="usage-title">導入診断：Maturity Profile</h2>
+            <p>
+                組織・システムが AI ガバナンスの各層においてどの段階にあるかを診断するフレームワークです。<br />
+                5層それぞれを <strong>4段階</strong> で評価します。
+            </p>
+            <table style="width:100%; border-collapse:collapse; margin: 16px 0;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left; padding:8px; border-bottom:1px solid #444;">Level</th>
+                        <th style="text-align:left; padding:8px; border-bottom:1px solid #444;">意味</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="padding:8px;"><strong>Unstructured</strong></td><td style="padding:8px;">構造なし。設計上の対応物が存在しない</td></tr>
+                    <tr><td style="padding:8px;"><strong>Defined</strong></td><td style="padding:8px;">文書上は存在するが、実運用では強制されていない</td></tr>
+                    <tr><td style="padding:8px;"><strong>Enforced</strong></td><td style="padding:8px;">実運用で機能しており、違反時に制御が発動する</td></tr>
+                    <tr><td style="padding:8px;"><strong>Governed</strong></td><td style="padding:8px;">監査・改善・再評価まで回っており、継続的に維持される</td></tr>
+                </tbody>
+            </table>
+            <p>診断例：</p>
+            <pre style="background:#1a1a1a; padding:16px; border-radius:6px; font-size:0.85rem; overflow-x:auto;">Model Layer:          Enforced
+Agent Layer:          Defined
+Responsibility Layer: Unstructured  ← ここが全体の限界
+Time Layer:           Defined
+Human Sovereignty:    Enforced</pre>
+            <p>
+                最も低いレベルの層が、システム全体のガバナンス限界を決めます。<br />
+                詳細は <code>specs/validation/vcdesign-maturity-profile.md</code> を参照してください。
+            </p>
+        </section>
+
+        <section id="use-cases">
+            <h2 class="usage-title">導入ユースケース</h2>
+            <p>VCDesign を具体的な Agent ガバナンスに適用した事例です。</p>
+            <ul class="link-list">
+                <li>
+                    <div class="link-anchor">
+                        <span class="label">AI コーディング Agent</span>
+                        <span class="desc">
+                            PR オープン ≠ Judgment Closure。コード生成物の責任者を「指示を出した人間」に固定し、
+                            実行ゲートと承認トレースを設計する。<br />
+                            <code>specs/examples/coding-agent-boundary.md</code>
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <div class="link-anchor">
+                        <span class="label">セキュリティ Agent（Mythos 型）</span>
+                        <span class="desc">
+                            影響水準3階層（自律可 / ゲート必要 / 人間決定必須）による実行境界設計。
+                            高速インシデント対応での commit ポスチャーと誤検知時の責任トレース。<br />
+                            <code>specs/examples/agent-governance-security.md</code>
+                        </span>
+                    </div>
+                </li>
+                <li>
+                    <div class="link-anchor">
+                        <span class="label">工場運用 Agent（物理ループ保護）</span>
+                        <span class="desc">
+                            AI から PLC への直接パス禁止が最優先設計決定。
+                            Physical Loop と Semantic Loop を厳格に分離し、
+                            AI 停止と物理安全機構を独立して設計する。<br />
+                            <code>specs/examples/factory-agent-safe-loop.md</code>
+                        </span>
+                    </div>
+                </li>
+            </ul>
         </section>
 
         <!-- SPECS / LINKS: Machine-readable + human navigation -->

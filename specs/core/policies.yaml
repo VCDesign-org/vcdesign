@@ -40,6 +40,16 @@ vcdesign_policies:
       - ai_confidence_must_be_visible
       - llm_must_remain_within_semantic_loop
       - responsibility_trace_must_be_preserved
+      - model_capability_does_not_imply_authority
+      - agent_execution_requires_explicit_boundary
+      - high_impact_ai_requires_governance_trace
+
+    agent_era_note:
+      description: >
+        Agent 化（ツール実行・連鎖操作・長時間動作）は、
+        モデルと異なり境界が操作ごとに発生する。
+        能力の増大は権限の自動付与を意味しない。
+        すべての実行境界に対して boundary_safety の制御が適用される。
 
   llm_placement:
 
@@ -85,11 +95,25 @@ vcdesign_policies:
       - halt_path_required
       - boundary_decision_logging_required
       - policy_check_before_execution
+      - tool_using_agent_requires_execution_gate
+      - agent_plan_must_not_bypass_policy_check
+
+    agent_execution_gate:
+      description: >
+        ツール利用型 Agent が離散的な計画を現実系（ファイル・API・DB 等）へ
+        反映する前に、policy 適合チェックと責任者承認が必要。
+        「計画が合理的である」ことと「実行が許可されている」ことは別問題である。
+      required_checks:
+        - action_within_declared_boundary
+        - responsible_actor_identified
+        - reversibility_assessed
+        - halt_path_confirmed
 
     anti_patterns:
       - direct_llm_to_actuator_path
       - silent_goal_rewrite
       - irreversible_action_without_review_gate
+      - agent_plan_treated_as_execution_approval
 
   reframe_control:
 
@@ -203,6 +227,8 @@ vcdesign_policies:
       description: >
         すべての章および判断は、
         人間が説明可能である必要がある。
+        Agent Era においては、内部推論の完全な透明性は必須ではないが、
+        外部責任説明（採用理由・実行履歴・責任経路・停止条件）は必須である。
 
     requirements:
       - decision_reason_must_exist
@@ -210,9 +236,37 @@ vcdesign_policies:
       - delta_to_action_mapping_must_be_visible
       - boundary_translation_must_be_traceable
 
+    levels:
+      low_impact:
+        description: >
+          影響が局所的かつ可逆な操作。
+        requires:
+          - decision_reason_must_exist
+      medium_impact:
+        description: >
+          複数ステップの実行、または外部システムへの書き込みを含む操作。
+        requires:
+          - decision_reason_must_exist
+          - delta_to_action_mapping_must_be_visible
+      high_impact:
+        description: >
+          不可逆な操作、組織外への影響、または権限境界付近の判断。
+          Agent の長時間動作や multi-agent 連携を含む。
+        requires:
+          - decision_reason_must_exist
+          - delta_to_action_mapping_must_be_visible
+          - responsibility_path_must_be_traceable
+          - halt_condition_must_be_defined
+          - adoption_reason_must_be_recorded
+
+    impact_classification_note: >
+      影響水準は responsible actor が事前に宣言し、
+      supervisorが承認する。未宣言の操作は high_impact として扱う。
+
     failure_definition:
       description: >
         説明不能な状態は、価値継続不能とみなす。
+        特に high_impact 操作で責任経路が追跡不能な場合は即時 blocking。
 
   lifecycle_governance:
 
@@ -265,6 +319,15 @@ vcdesign_policies:
       - emergency_stop_must_bypass_nonessential_automation
       - human_override_must_be_executable_under_degraded_conditions
       - post_halt_review_must_record_reason_and_responsibility
+      - halt_must_remain_possible_during_partial_agent_failure
+      - halt_owner_must_be_named_for_each_operational_agent
+
+    agent_haltability_note:
+      description: >
+        長時間動作 Agent は「起動時に停止可能か」を設計要件として確認する。
+        部分的な Agent 障害（ツール応答なし・ループ検出等）の状態でも
+        halt_owner が介入できる経路を保持しなければならない。
+        halt_owner は Agent 起動前に named かつ operational でなければならない。
 
   policy_enforcement:
 

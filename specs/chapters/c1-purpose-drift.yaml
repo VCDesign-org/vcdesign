@@ -4,7 +4,7 @@
 id: "vcdesign-chapter-c1"
 title: "Purpose Drift Chapter"
 layer: "chapter"
-status: "draft"
+status: "stable"
 version: "0.3.0"
 
 meta:

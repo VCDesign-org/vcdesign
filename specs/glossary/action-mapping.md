@@ -1,4 +1,21 @@
+---
+meta:
+  id: ACTION_MAPPING
+  title: Action Mapping — Legacy vs. RCL vs. Core
+  layer: glossary
+  status: stable
+  authority: normative
+---
+
 # Action Mapping: Legacy vs. RCL vs. Core
+
+## Status
+
+**Normative.** This mapping is the authoritative cross-reference between
+RCL terminology (Close / Abort / Defer) and Core PDΔA action types
+(Fix / Reframe / Retire / Defer). Implementations must use Core terms.
+This document is listed in `map.md` as a required reference when
+translating between RCL output and Core action execution.
 
 ## Overview
 This document clarifies the mapping between terms used in legacy documents, RCL (Responsibility Closure Loop), and the current Core specifications. It aims to eliminate confusion in terminology and establish the canonical terms for VCDesign.

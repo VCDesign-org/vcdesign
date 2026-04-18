@@ -275,6 +275,8 @@ vcdesign_core:
     - delta_must_trigger_evaluation
     - adaptive_loops_must_remain_under_responsibility_governance
     - boundary_mediation_must_exist_between_discontinuous_inference_and_continuous_control
+    - capability_must_not_be_confused_with_authority
+    - high_speed_loops_must_not_rewrite_governance_without_explicit_review
 
   final_definition:
     description: >

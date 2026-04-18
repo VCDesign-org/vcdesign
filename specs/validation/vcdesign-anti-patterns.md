@@ -140,6 +140,46 @@ reassignment or reaffirmation.
 
 ---
 
+## AP-009: Defer-as-Avoidance
+
+### Pattern
+
+`decision_posture: defer` is selected reflexively—without checking whether
+commit or reconsider is possible—because defer feels "safer" or requires
+less immediate accountability.
+
+Symptoms:
+- Every detected Delta results in defer, regardless of severity or loop context
+- Deferred items accumulate faster than they are reviewed
+- The responsible actor cannot articulate *why* commit or reconsider was
+  insufficient for any specific case
+- Physical-loop Deltas (where halting is dangerous) are deferred rather than
+  committed
+
+### Why It Fails
+
+Defer is not a neutral holding state. It consumes responsibility capacity
+(A5), moves cost to the supervisor, and delays value protection.
+When defer becomes the default response to all uncertainty, it ceases
+to be a governance tool and becomes a mechanism for avoiding accountability.
+
+VCDesign requires that every posture selection be justified by the specific
+Delta, loop context, and actor authority—not by a general preference for
+caution. See `decision-posture.yaml` for selection criteria.
+
+### Required Correction
+
+Before selecting defer, apply the anti-defer guard from `decision-posture.yaml`:
+- Does this Delta require authority the current actor does not have?
+- Does it require a higher-loop re-evaluation that cannot be done now?
+- Is there genuine uncertainty that available evidence cannot resolve?
+- Has an interim owner, escalation path, and review date been named?
+
+If all answers are "no", select commit (if within authority and timely) or
+reconsider (if the chapter is still valid but a premise is weakening).
+
+---
+
 ## AP-008: Formal Structure Replaces Responsibility
 
 ### Pattern

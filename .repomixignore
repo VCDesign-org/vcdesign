@@ -1,16 +1,33 @@
+# Repomix exclusion rules for VCDesign
+# Goal: produce a single file that conveys VCDesign completely to an AI reader.
+# Authority lives in specs/. Everything else is tooling, site, or academic supplements.
+
+# --- Exclude everything by default ---
 *
+
+# --- Include the root entry point ---
+!README.md
+
+# --- Include all of specs/ ---
 !specs/
 !specs/**
 
+# --- Suppress noise inside specs/ ---
 specs/.DS_Store
 specs/**/.DS_Store
+
+# README files: exclude most (boilerplate navigation), keep meaningful ones
 specs/**/README.md
 specs/**/README.ja.md
-specs/examples/**
-specs/schemas/**
-specs/patterns/rcl/RCL_LOCAL_AI_VALIDATION.md
-specs/patterns/rcl/mapping/**
 !specs/README.md
 !specs/chapters/README.md
-!specs/glossary/glossary.md
-!specs/map.md
+
+# schemas/: JSON Schema is tooling, not explanatory for AI readers
+specs/schemas/**
+
+# docs/: academic formal interpretations (category theory, monad, etc.)
+# Too specialist for typical AI usage; kept out to reduce noise
+docs/**
+
+# site/: HTML, CSS, images, PDFs — not useful as text context
+site/**

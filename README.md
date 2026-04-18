@@ -19,6 +19,8 @@ VCDesignの現行authorityは以下で構成される
 - core/core.yaml
 - core/policies.yaml
 - core/metrics.yaml
+- core/axioms.yaml（A1〜A5：すべての仕様の基底となる公理）
+- core/decision-posture.yaml（defer/commit/reconsider/abandon の規範的定義）
 - patterns（RCL等）は「Coreへの適用構造」
 - legacy配下は「歴史的ドキュメントであり現行仕様ではない」
 
@@ -32,27 +34,33 @@ LLMs belong primarily in the Semantic Loop, while growth is defined as improved 
 - **Explainability Principle**: All judgments must be explainable by humans.
 - **AI Non-Responsibility Principle**: AI assists but does not hold responsibility.
 - **Δ-Driven Principle**: Systems operate based on detecting deviations (Δ) from preconditions.
+- **Capability ≠ Authority Principle**: High model capability does not grant decision authority. Every agent action requires an explicitly declared boundary and a named responsible actor.
 
 ## Where to start?
 See the **[Specification Map](specs/map.md)** for the full overview.
 
 We recommend reading in the following order:
 1. **[specs/core/](specs/core/)** (Authority): Why this design is necessary, what must be protected.
-   See also **[specs/core/ai-adaptive-loop-model.md](specs/core/ai-adaptive-loop-model.md)** for the readable explanation of how Core / Policies / Metrics connect to real AI operating loops.
+   - **[ai-adaptive-loop-model.md](specs/core/ai-adaptive-loop-model.md)**: How Core / Policies / Metrics connect to real AI operating loops.
+   - **[agent-era-model.md](specs/core/agent-era-model.md)**: 5-layer external explanation frame and 12 principles for governing AI agents (2026+).
 2. **[specs/protocols/](specs/protocols/)** (How / Operations): When to close judgments and how to hand off responsibility.
 3. **[specs/chapters/](specs/chapters/)** (When): Which designs are necessary at what point in the timeline.
+4. **[specs/examples/](specs/examples/)** (Applied): Concrete use cases — AI coding agent, security agent, factory operations agent.
 
 ## Directory Structure
 
-* **[specs/core/](specs/core/)**: **The Authority.** The minimal, unavoidable definitions of VCDesign. Read the opening comments in each YAML to understand the philosophy; follow the schema to implement it.
+* **[specs/core/](specs/core/)**: **The Authority.** The minimal, unavoidable definitions of VCDesign.
 * **[specs/protocols/](specs/protocols/)**: **The Procedures.** Standardized ways to close judgments and hand off responsibility.
-* **[specs/patterns/](specs/patterns/)**: **The Structures.** Reference patterns (like Boundary Structures and RCA) to implement the core.
-* **[specs/chapters/](specs/chapters/)**: **The Narratives (The "When").** Time-based design units describing how judgment and responsibility shift over time (not phases or versions).
-* **[specs/glossary/](specs/glossary/)**: Terminology.
+* **[specs/patterns/](specs/patterns/)**: **The Structures.** Reference patterns (Boundary, RCA, IDG, RCL) to implement the core.
+* **[specs/chapters/](specs/chapters/)**: **The Narratives (The "When").** Time-based design units describing how judgment and responsibility shift over time.
+* **[specs/boundaries/](specs/boundaries/)**: **The Boundary Taxonomy.** Canonical registry (B1–B17) and case studies of responsibility boundaries.
+* **[specs/glossary/](specs/glossary/)**: Terminology, including the normative action mapping (Legacy / RCL / Core).
+* **[specs/validation/](specs/validation/)**: Conformance cases, anti-patterns, and the **[Maturity Profile](specs/validation/vcdesign-maturity-profile.md)** for organizational diagnosis.
+* **[specs/examples/](specs/examples/)**: Concrete applications — minimal lifecycle, LLM approval workflow, and three agent governance use cases.
 
 ## Status
 Core specifications are **Stable**.
-Protocols and Patterns are **Stable** but extensible.
+Protocols, Patterns, and Chapters are **Stable** but extensible.
 
 ## License
 This repository is licensed under the **MIT License**. See `LICENSE`.

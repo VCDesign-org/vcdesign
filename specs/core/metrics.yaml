@@ -250,6 +250,148 @@ vcdesign_metrics:
         - retire
         - defer
 
+  agent_governance_metrics:
+    description: >
+      Agent 時代（ツール実行・連鎖操作・長時間動作）固有の
+      ガバナンス failure を観測する指標群。
+      Performance ではなく governability の劣化を検知することを目的とする。
+      いずれも base_metrics と同じ evaluation_model（observation→warning→delta_candidate→delta_confirmed）に従う。
+    metrics:
+      - id: authority_confusion_detected
+        name: Authority Confusion Detected
+        description: >
+          AI/Agent の能力（実行できる）と権限（実行してよい）が混同されている状態。
+          高性能だから任せる、という決定経路の検知。
+        intent: >
+          Principle 1 違反（能力 ≠ 権限）を観測する。
+        typical_signals:
+          - agent_acted_outside_declared_boundary
+          - no_explicit_authority_grant_before_execution
+          - capability_cited_as_justification_for_action
+        meaning:
+          - boundary_design_skipped
+          - responsibility_path_missing_before_execution
+        default_threshold:
+          type: immediate
+        candidate_actions:
+          - fix
+          - reframe
+        policy_link: policies.yaml / ai_governance.constraints / model_capability_does_not_imply_authority
+
+      - id: missing_execution_gate
+        name: Missing Execution Gate
+        description: >
+          Agent が計画を現実系（ファイル・API・DB 等）へ反映する前に
+          policy 適合チェックおよび責任者承認が存在しない状態。
+        intent: >
+          boundary_safety の agent_execution_gate 欠如を観測する。
+        typical_signals:
+          - agent_plan_directly_executed_without_review
+          - no_policy_check_record_before_real_world_write
+          - tool_invocation_with_no_responsible_actor_log
+        meaning:
+          - discrete_to_continuous_boundary_unguarded
+          - governance_gap_between_plan_and_action
+        default_threshold:
+          type: immediate_or_pattern
+          example:
+            count: 1
+        candidate_actions:
+          - fix
+          - reframe
+        policy_link: policies.yaml / boundary_safety / agent_execution_gate
+
+      - id: missing_halt_owner
+        name: Missing Halt Owner
+        description: >
+          長時間動作 Agent に対して halt_owner が未指定、または
+          部分的障害時に halt_owner が介入できない状態。
+        intent: >
+          Agent の停止可能性が設計要件ではなく運用任せになっていることを検知する。
+        typical_signals:
+          - no_halt_owner_named_at_agent_launch
+          - halt_path_not_tested_under_partial_failure
+          - emergency_stop_requires_agent_cooperation
+        meaning:
+          - haltability_requirement_not_met_for_agent
+          - human_sovereignty_at_risk
+        default_threshold:
+          type: immediate
+        candidate_actions:
+          - fix
+          - defer
+        policy_link: policies.yaml / haltability / halt_owner_must_be_named_for_each_operational_agent
+
+      - id: explainability_insufficient_for_impact
+        name: Explainability Insufficient for Impact Level
+        description: >
+          操作の影響水準（low/medium/high）に対して、
+          充足すべき explainability 要件が満たされていない状態。
+        intent: >
+          Principle 12b（外部責任説明は必須）の違反を影響水準に応じて観測する。
+        typical_signals:
+          - high_impact_action_missing_responsibility_path
+          - medium_impact_action_missing_delta_to_action_mapping
+          - adoption_reason_not_recorded_for_high_impact_agent
+        meaning:
+          - external_accountability_compromised
+          - governance_trace_incomplete
+        default_threshold:
+          type: immediate_for_high_impact
+          example:
+            high_impact: immediate
+            medium_impact: "24h"
+        candidate_actions:
+          - fix
+          - defer
+        policy_link: policies.yaml / explainability / levels
+
+      - id: autonomous_scope_expansion_detected
+        name: Autonomous Scope Expansion Detected
+        description: >
+          Agent が宣言された実行境界を超えて、
+          未承認のスコープへ操作を拡大している状態。
+          特に fast loop が slow loop の制約を書き換えるパターン。
+        intent: >
+          temporal_separation 原則違反と B17（Impact ↔ Accountability）の侵犯を検知する。
+        typical_signals:
+          - agent_accessed_resources_outside_declared_scope
+          - agent_modified_value_objectives_without_review
+          - scope_creep_without_responsibility_reassignment
+        meaning:
+          - temporal_separation_violated
+          - impact_exceeds_authority
+          - b17_boundary_crossed
+        default_threshold:
+          type: immediate
+        candidate_actions:
+          - fix
+          - reframe
+          - retire
+        policy_link: core.yaml / temporal_separation / fast_loops_must_not_autonomously_rewrite_slow_loop_constraints
+
+      - id: policy_bypass_attempt_detected
+        name: Policy Bypass Attempt Detected
+        description: >
+          Agent の計画または実行が、明示的に禁止された操作
+          （AI による最終判断・直接物理制御・責任配置の自律的変更等）を
+          迂回または無効化しようとしている状態。
+        intent: >
+          policies.yaml の blocking 制約が Agent 実行経路で回避されることを検知する。
+        typical_signals:
+          - agent_routed_around_safety_gate
+          - policy_check_disabled_or_mocked_in_agent_plan
+          - forbidden_operation_reframed_as_allowed_by_agent
+        meaning:
+          - governance_constraint_actively_circumvented
+          - policy_enforcement_level_blocking_required
+        default_threshold:
+          type: immediate
+        candidate_actions:
+          - fix
+          - retire
+        policy_link: policies.yaml / policy_enforcement / blocking
+
   operational_fit_metrics:
 
     - id: delta_detection_quality

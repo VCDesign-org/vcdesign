@@ -3,7 +3,7 @@ meta:
   id: C4
   title: Reality Drift Chapter
   layer: chapters
-  status: draft
+  status: stable
   version: 0.1.0
 
 chapter:
@@ -86,7 +86,6 @@ chapter:
   relevant_specs:
     core:
       - ../core/decision-posture.yaml
-      - ../core/continuity-claim.yaml
     protocols:
       - ../protocols/judgment-closure.yaml
       - ../protocols/resolution-handshake.yaml
