@@ -63,7 +63,8 @@ VCDesignの現行authorityは以下で構成される
   - [Security Agent](examples/agent-governance-security.md): Governance for autonomous threat-response agents (Mythos-type). Includes commit posture under high-velocity incidents.
   - [Factory Operations Agent](examples/factory-agent-safe-loop.md): Physical Loop / Semantic Loop separation for manufacturing AI. Safety-critical halt design.
 - **[Validation](validation/)**: Conformance and anti-pattern checks.
-  - [Maturity Profile](validation/vcdesign-maturity-profile.md): Organizational diagnosis framework. 4-level scale (Unstructured → Defined → Enforced → Governed) × 5 layers, with per-layer rubrics.
+  - [Maturity Profile](validation/vcdesign-maturity-profile.md): Organizational diagnosis framework. 4-level scale × 5 layers with evidence, regression signals, and per-layer rubrics. **Start here if you want to evaluate your current AI governance posture before reading the full spec.**
+  - [Maturity Levels](validation/maturity-levels.md): Canonical definitions of Unstructured / Defined / Enforced / Governed shared across all profile assessments.
   - [Conformance Cases](validation/vcdesign-conformance-cases.md)
   - [Anti-Patterns](validation/vcdesign-anti-patterns.md)
 - **[Temporal Governance](policies/temporal-governance.md)**: Boundary between technical rollback and append-only responsibility trace.
