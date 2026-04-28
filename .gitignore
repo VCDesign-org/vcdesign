@@ -4,3 +4,4 @@ node_modules/
 repomix-output.xml
 repomix-output.txt
 .claude/
+sync.sh
