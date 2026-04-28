@@ -164,6 +164,63 @@ vcdesign_core:
         - value_revision_must_not_bypass_responsibility_judgment
         - responsibility_loop_must_be_able_to_interrupt_all_lower_loops
 
+  long_term_judgment_model:
+    description: >
+      長期ループにおける判断は、未来予測ではなく、
+      予測不可能な世界でも価値継続を壊しにくい判断基準を
+      明示することで成立する。
+
+    applies_to:
+      - value_loop
+      - responsibility_loop
+      - structural_reframe
+      - irreversible_action
+      - long_term_business_or_system_direction
+
+    criteria:
+      survive_downside:
+        description: 下振れしても致命傷にならないか
+        hard_stop_if: false
+
+      within_circle:
+        description: 判断主体の能力の輪の内側か
+        hard_stop_if: false
+
+      lindy_aspect:
+        description: 時間を超えて残った原理・需要・知恵に接続しているか
+        hard_stop_if: false_when_reversible
+        hard_stop_if_irreversible: true
+
+      compounding_possible:
+        description: 時間とともに価値・信頼・知識が積み上がるか
+
+      trust_counterparty:
+        description: 相手が信頼可能で、責任を共有できるか
+        hard_stop_if: low
+
+      learn_asset:
+        description: 失敗しても学習資産・判断資産が残るか
+
+      reversible:
+        description: 小さく試し、撤退・縮小・修正できるか
+
+      energy_fit:
+        description: 判断主体の生活・気力・継続力に合うか
+
+    decision_posture:
+      high_score: small_go
+      medium_score: defer_or_experiment
+      low_score: deny_or_reframe
+
+    principle:
+      - long_term_decision_must_not_be_treated_as_prediction
+      - long_term_decision_must_define_bet_size
+      - irreversible_action_requires_human_final_decider
+      - ai_may_score_but_must_not_close_long_term_judgment
+
+    note: >
+      ここで重要なのは、Go / No-Go ではなく、Go の大きさを決めることです。
+
   boundary_mediation:
     description: >
       AI適用は、非連続な知能出力を連続系へ安全に接続する境界設計問題として扱う。

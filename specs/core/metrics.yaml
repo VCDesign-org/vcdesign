@@ -492,6 +492,36 @@ vcdesign_metrics:
       meaning:
         - human_sovereignty_is_operationally_effective
 
+  long_term_judgment_metrics:
+    description: >
+      長期判断の質を評価するための指標群。
+      既存の metrics は「意味のズレを観測するもので、単なる性能指標ではない」という思想になっているため、
+      ここに長期判断系メトリクスを追加するのは整合します。
+    metrics:
+      - metric_id: lindy_alignment
+        description: >
+          判断が、時間を超えて残った原理・需要・運用知に接続しているか。
+
+      - metric_id: competence_boundary_fit
+        description: >
+          判断主体が、その領域を十分に理解し責任を取れる範囲内にいるか。
+
+      - metric_id: downside_survivability
+        description: >
+          判断が失敗した場合でも、章・責任・価値継続が破壊されないか。
+
+      - metric_id: skin_in_the_game_alignment
+        description: >
+          判断する主体と、結果の痛みを受ける主体が乖離していないか。
+
+      - metric_id: reversibility_score
+        description: >
+          判断が撤退・縮小・修正可能な形で実行されているか。
+
+      - metric_id: compounding_value_potential
+        description: >
+          時間経過により、知識・信頼・資産・関係性が蓄積するか。
+
   interpretation_rules:
     - multiple_warnings_may_form_delta_candidate
     - confirmed_delta_requires_contextual_judgment

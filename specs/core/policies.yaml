@@ -115,6 +115,50 @@ vcdesign_policies:
       - irreversible_action_without_review_gate
       - agent_plan_treated_as_execution_approval
 
+  long_term_decision_gate:
+    principle:
+      description: >
+        長期ループの判断は、人間の責任ループで閉じる。
+        AIは分析、反対意見、スコアリング、代替案提示を行ってよいが、
+        長期判断を最終確定してはならない。
+
+    ai_allowed:
+      - scenario_generation
+      - risk_identification
+      - lindy_check_support
+      - competence_boundary_check_support
+      - counterargument_generation
+      - score_drafting
+
+    ai_forbidden:
+      - final_long_term_decision
+      - irreversible_commitment
+      - autonomous_structural_reframe
+      - autonomous_responsibility_reassignment
+      - autonomous_value_objective_change
+
+    required_before_commit:
+      - human_final_decider
+      - explicit_bet_size
+      - downside_review
+      - competence_boundary_review
+      - lindy_aspect_review
+      - exit_condition
+      - next_review_at
+      - decision_log
+
+    hard_stops:
+      - fatal_downside_without_owner
+      - low_trust_counterparty
+      - outside_competence_circle_and_irreversible
+      - non_lindy_action_and_irreversible
+      - no_exit_condition
+      - no_human_final_decider
+
+    note: >
+      これは既存の AIは判断を支援するが責任を持たない 方針と自然に接続できます。
+      既存 policies でも、AIの final_decision、responsibility_assignment、reframe_execution、retire_execution は禁止されています。
+
   reframe_control:
 
     principle:

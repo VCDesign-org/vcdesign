@@ -19,6 +19,7 @@ vcdesign_decision_log:
     - evaluator
     - ai_involvement
     - confidence
+    - long_term_judgment
     - notes
 
   field_definitions:
@@ -78,6 +79,51 @@ vcdesign_decision_log:
     notes:
       type: string
       description: 補足説明
+
+    long_term_judgment:
+      type: object
+      description: >
+        長期ループに関わる判断について、
+        どの基準で Go / Small Go / Defer / Deny としたかを記録する。
+
+      fields:
+        criteria_score:
+          type: object
+          fields:
+            survive_downside: "yes | no | unknown"
+            within_circle: "yes | no | unknown"
+            lindy_aspect: "yes | no | unknown"
+            compounding_possible: "high | medium | low | unknown"
+            trust_counterparty: "high | medium | low | unknown"
+            learn_asset: "yes | no | unknown"
+            reversible: "yes | no | unknown"
+            energy_fit: "yes | no | unknown"
+
+        decision_size:
+          type: enum
+          values:
+            - no_go
+            - defer
+            - small_go
+            - scale_go
+
+        human_final_decider:
+          type: object
+
+        ai_role:
+          type: enum
+          values:
+            - none
+            - analysis
+            - scoring_support
+            - counterargument
+            - recommendation
+
+        exit_condition:
+          type: string
+
+        next_review_at:
+          type: datetime
 
   invariants:
     - every_confirmed_delta_should_have_decision_log
