@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>VMS | VCDesign</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 14px 0 4px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(34, 211, 238, 0.34);
+            color: #CFFAFE;
+            background: rgba(34, 211, 238, 0.10);
+            font-size: 0.82rem;
+        }
+
+        .loop-grid,
+        .value-grid,
+        .mode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+            margin: 14px 0 16px;
+        }
+
+        .spec-card {
+            padding: 15px 16px;
+            border-radius: 14px;
+            background: var(--paper-strong);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .spec-card h3 {
+            margin-top: 0;
+        }
+
+        .spec-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .decision-block {
+            margin: 16px 0 0;
+        }
+
+        .small-note {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="frame">
+        <header>
+            <nav class="lang-nav">
+                <a href="../index.html" class="lang-link">Home</a>
+                <a href="../ja/vms/" class="lang-link">日本語</a>
+            </nav>
+
+            <h1 class="hero-title">VMS</h1>
+            <p class="hero-subtitle">VCDesign Management Strategy</p>
+            <p class="hero-tagline">
+                VMS is an operating protocol for translating management concerns into VCDesign
+                Loops, Boundaries, and Decisions, so responsibility and value continuity can be designed explicitly.
+            </p>
+            <div class="pill-row">
+                <span class="pill">Loop Mapping</span>
+                <span class="pill">Boundary Design</span>
+                <span class="pill">Decision Closure</span>
+            </div>
+        </header>
+
+        <section id="toc">
+            <h2 class="usage-title">Contents</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="#purpose">
+                        <span class="label">Purpose</span>
+                        <span class="desc">What VMS handles and how it connects to management decisions</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#symptoms">
+                        <span class="label">Symptom Mapping</span>
+                        <span class="desc">Classify symptoms into four Loops</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#operation">
+                        <span class="label">Operation</span>
+                        <span class="desc">Onboarding, mode selection, and output structure</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#resources">
+                        <span class="label">Resources</span>
+                        <span class="desc">Minimum reading set for AI and the source repository</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="purpose">
+            <h2 class="usage-title">Purpose</h2>
+            <p>
+                VMS exists to clarify where responsibility lives in management decisions and to maximize
+                the continuity of business value.
+            </p>
+            <p>
+                AI may present alternatives, but final closure always remains with the manager.
+                VMS preserves that premise and closes each consultation as <strong>Boundary</strong>,
+                <strong>Metrics</strong>, and <strong>Decision</strong>.
+            </p>
+
+            <div class="value-grid">
+                <div class="spec-card">
+                    <h3>Monetary</h3>
+                    <p>Capital circulation and business continuity. Whether money remains and the business can continue.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Cultural</h3>
+                    <p>The history, aesthetics, and cultural value of the domain that must be protected.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Generative</h3>
+                    <p>Whether skills, spirit, and decision logic can be handed to the next generation.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="symptoms">
+            <h2 class="usage-title">Symptom Mapping</h2>
+            <p>
+                The first step is to classify a concern by Loop. This classification is not the answer;
+                it is the entry point for deciding which responsibility boundary to inspect.
+            </p>
+
+            <div class="loop-grid">
+                <div class="spec-card">
+                    <h3>Physical Loop</h3>
+                    <p><strong>Symptoms:</strong> no money left / cash flow is tight</p>
+                    <p class="small-note">Connects to Unit Economics, Throughput Accounting, and related frames.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Semantic Loop</h3>
+                    <p><strong>Symptoms:</strong> products do not sell / competitors are winning</p>
+                    <p class="small-note">Connects to JTBD, Value Proposition Canvas, and related frames.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Value Loop</h3>
+                    <p><strong>Symptoms:</strong> no passion / unclear reason for continuing</p>
+                    <p class="small-note">Connects to Ikigai, Purpose-Driven Management, and related frames.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Responsibility Loop</h3>
+                    <p><strong>Symptoms:</strong> nothing runs without me / successors are not growing</p>
+                    <p class="small-note">Connects to Generativity, DACI, and related frames.</p>
+                </div>
+            </div>
+
+            <h3>The first three questions</h3>
+            <ul>
+                <li><strong>current_pain:</strong> What is the hardest thing right now?</li>
+                <li><strong>desire:</strong> What would count as success?</li>
+                <li><strong>constraints:</strong> Where are the limits of time, money, and mental energy?</li>
+            </ul>
+        </section>
+
+        <section id="operation">
+            <h2 class="usage-title">Operation</h2>
+
+            <h3>Mode Selection</h3>
+            <div class="mode-grid">
+                <div class="spec-card">
+                    <h3>Maintain</h3>
+                    <p>Closure Mode. Protect boundaries and close responsibility.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Expand</h3>
+                    <p>Exploration Mode. Rediscover structure and test new hypotheses.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Ambiguous</h3>
+                    <p>Diagnostic Exploration. Structure discomfort and bridge it toward Closure.</p>
+                </div>
+            </div>
+
+            <h3>First Session</h3>
+            <ol>
+                <li>Enter the current symptom and identify the closest Loop</li>
+                <li>Set survival boundaries for cash, mind, and aesthetics</li>
+                <li>Generate the first Decision for the immediate concern</li>
+                <li>Select one Metric to monitor at the next review</li>
+            </ol>
+
+            <h3>Minimum Output</h3>
+            <div class="decision-block">
+                <pre class="code-block">Do:
+  - Concrete actions to take
+Don't:
+  - Things to stop immediately
+Outcome:
+  - The drift expected to improve
+
+boundary_definition:
+  - Boundaries created or updated in this decision
+metrics_to_watch:
+  - Value Drift / Boundary Invasion / Responsibility Deadlock
+decision_log:
+  owner: final decision owner
+  status: Instant / Pending / Discard
+  closure_check: which Loop this decision closes</pre>
+            </div>
+        </section>
+
+        <section id="extensions">
+            <h2 class="usage-title">Domain Extensions</h2>
+            <p>
+                VMS is the entry point for management judgment. Domain-specific consultations are handled
+                as knowledge extensions while preserving VMS responsibility principles.
+            </p>
+
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="./marketing/">
+                        <span class="label">VMS Marketing</span>
+                        <span class="desc">A subset for structuring marketing consultations while preserving options, unknowns, and answer rationale.</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="resources">
+            <h2 class="usage-title">Resources</h2>
+            <p>
+                VMS is not just reading material. It is a specification to pass to AI.
+                Provide the minimum reading set, then enter the management concern as a symptom.
+            </p>
+
+            <h3>Minimum Reading Set for AI</h3>
+            <ul>
+                <li><code>specs/VMS.yaml</code> decision principles, value definitions, responsibility placement</li>
+                <li><code>specs/prompt.txt</code> base instruction for AI</li>
+                <li><code>specs/Input_Interface.yaml</code> symptom classification and missing context</li>
+                <li><code>specs/Mode_Switcher.yaml</code> mode selection</li>
+                <li><code>specs/Output_Structure.yaml</code> output format</li>
+                <li><code>specs/User_Role_Definition.yaml</code> output granularity by user level</li>
+            </ul>
+
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="https://github.com/VCDesign-org/vms">
+                        <span class="label">VMS GitHub Repository</span>
+                        <span class="desc">The source repository for the VMS YAML specs and prompt.</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>VMS Marketing | VCDesign</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../css/main.css">
+    <style>
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 14px 0 4px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(34, 211, 238, 0.34);
+            color: #CFFAFE;
+            background: rgba(34, 211, 238, 0.10);
+            font-size: 0.82rem;
+        }
+
+        .domain-grid,
+        .spec-grid,
+        .flow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+            margin: 14px 0 16px;
+        }
+
+        .spec-card {
+            padding: 15px 16px;
+            border-radius: 14px;
+            background: var(--paper-strong);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .spec-card h3 {
+            margin-top: 0;
+        }
+
+        .spec-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .decision-block {
+            margin: 16px 0 0;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="frame">
+        <header>
+            <nav class="lang-nav">
+                <a href="../../index.html" class="lang-link">Home</a>
+                <a href="../" class="lang-link">VMS</a>
+                <a href="../../ja/vms/marketing/" class="lang-link">日本語</a>
+            </nav>
+
+            <h1 class="hero-title">VMS Marketing</h1>
+            <p class="hero-subtitle">Marketing Judgment Support Extension</p>
+            <p class="hero-tagline">
+                VMS Marketing is a knowledge extension layer that translates marketing consultations
+                into structure, comparable options, explicit unknowns, and explainable reasoning while preserving VCDesign decision principles.
+            </p>
+            <div class="pill-row">
+                <span class="pill">Routing</span>
+                <span class="pill">Judgment Proposal</span>
+                <span class="pill">Answer Log</span>
+            </div>
+        </header>
+
+        <section id="toc">
+            <h2 class="usage-title">Contents</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="#position">
+                        <span class="label">Position</span>
+                        <span class="desc">How this extension relates to VMS and what it covers</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#domains">
+                        <span class="label">Marketing Domains</span>
+                        <span class="desc">Where a consultation is routed before answers are drafted</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#flow">
+                        <span class="label">Processing Flow</span>
+                        <span class="desc">From question normalization to loggable answers</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#resources">
+                        <span class="label">Resources</span>
+                        <span class="desc">Specs and source materials to pass to AI</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="position">
+            <h2 class="usage-title">Position</h2>
+            <p>
+                VMS Marketing is not VCDesign itself. It is a marketing-focused subset that follows
+                VMS constraints while defining how AI should support marketing consultations.
+            </p>
+            <p>
+                Its purpose is not to automate marketing judgment. Its purpose is to give human decision makers
+                better questions, structures, comparison axes, visible uncertainty, and explainability.
+            </p>
+
+            <div class="spec-grid">
+                <div class="spec-card">
+                    <h3>Interpretation</h3>
+                    <p>Normalize what the consultation is asking and which stage of judgment it belongs to.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Proposal</h3>
+                    <p>Keep multiple candidate proposals and tradeoffs so judgment remains comparable.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Traceability</h3>
+                    <p>Record what was considered, what structure was used, and what remains uncertain.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="domains">
+            <h2 class="usage-title">Marketing Domains</h2>
+            <p>
+                A consultation is routed into one to four primary domains with weights.
+                Domains are not answers; they are shelves of perspectives and questions to consult.
+            </p>
+
+            <div class="domain-grid">
+                <div class="spec-card">
+                    <h3>Boundary</h3>
+                    <p>Which market, customer, use case, or price range should this compete in?</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Meaning</h3>
+                    <p>What should the brand be recognized as?</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Interaction</h3>
+                    <p>Where do understanding, drop-off, and continuity happen in the customer experience?</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Transmission</h3>
+                    <p>How can the message be understood, spread, and protected from misunderstanding?</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Execution</h3>
+                    <p>How should sales, channels, retention, and operating load be designed?</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Validation</h3>
+                    <p>Which assumptions, uncertainties, and real-world reactions need to be tested?</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="flow">
+            <h2 class="usage-title">Processing Flow</h2>
+
+            <div class="flow-grid">
+                <div class="spec-card">
+                    <h3>1. Normalize the Question</h3>
+                    <p>Identify what is being asked, the stage of the consultation, and the expected output format.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>2. Route</h3>
+                    <p>Use <code>router.yaml</code> to select related domains with weights.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>3. Judgment Proposal</h3>
+                    <p>Generate facts, assumptions, candidate proposals, unknowns, and routing trace.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>4. Consult Knowledge</h3>
+                    <p>Do not summarize theory directly; convert it into questions, comparison axes, and perspectives.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>5. Draft Answer</h3>
+                    <p>Return structure, options, tradeoffs, recommended direction, unknowns, and next questions.</p>
+                </div>
+                <div class="spec-card">
+                    <h3>6. Make It Loggable</h3>
+                    <p>Keep reasons and uncertainty compatible with <code>answer_log.yaml</code>.</p>
+                </div>
+            </div>
+
+            <h3>Additional Handling</h3>
+            <ul>
+                <li><strong>Expiry:</strong> add validity windows to medium-term decisions such as strategy, market, brand, and channel choices</li>
+                <li><strong>Reality Drift:</strong> treat post-execution signals as drift between meaning hypotheses and reality</li>
+                <li><strong>Resolution Handshake:</strong> organize the materials for adoption while leaving final closure with the human</li>
+            </ul>
+
+            <h3>Answer Template</h3>
+            <div class="decision-block">
+                <pre class="code-block">Summary:
+  - What this consultation is about
+Structure:
+  - Which domains are involved
+  - What the main issues are
+Options:
+  - Option A
+  - Option B
+  - Option C if needed
+Recommended direction:
+  - Which option to prioritize now
+  - Why it looks preferable
+Unknowns:
+  - What has not been confirmed yet
+Next questions:
+  - What should be checked next to move the decision forward</pre>
+            </div>
+        </section>
+
+        <section id="guardrails">
+            <h2 class="usage-title">Guardrails</h2>
+            <p>
+                A good answer is not a flashy idea. It makes the problem structure visible,
+                clarifies how options differ, keeps unknowns visible, and makes the next judgment easier.
+            </p>
+            <ul>
+                <li>AI belongs in the semantic loop and must not make the final judgment</li>
+                <li>Separate facts from assumptions</li>
+                <li>Do not fill unknowns by force</li>
+                <li>Do not lock onto one proposal without comparable alternatives</li>
+                <li>Keep answer reasons and reference structure traceable</li>
+            </ul>
+        </section>
+
+        <section id="resources">
+            <h2 class="usage-title">Resources</h2>
+            <p>
+                VMS Marketing is a specification set for marketing consultation support AI.
+                Use it together with the main VMS as a marketing-domain knowledge extension.
+            </p>
+
+            <h3>Minimum Reading Set for AI</h3>
+            <ul>
+                <li><code>specs/engine_config.yaml</code> overall configuration and processing pipeline</li>
+                <li><code>specs/router.yaml</code> router for marketing knowledge domains</li>
+                <li><code>specs/marketing_knowledge_protocol.yaml</code> domain-specific theories, perspectives, and questions</li>
+                <li><code>specs/judgment_proposal.yaml</code> decomposition into judgment-ready units</li>
+                <li><code>specs/answer_log.yaml</code> answer rationale, unknowns, and confidence log schema</li>
+                <li><code>system_prompt.md</code> base instruction for marketing consultation support AI</li>
+            </ul>
+
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="https://github.com/VCDesign-org/vms-marketing">
+                        <span class="label">VMS Marketing GitHub Repository</span>
+                        <span class="desc">The source repository for the VMS Marketing YAML specs and system prompt.</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+    </main>
+</body>
+
+</html>

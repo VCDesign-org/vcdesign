@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>VMS | VCDesign</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 14px 0 4px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(34, 211, 238, 0.34);
+            color: #CFFAFE;
+            background: rgba(34, 211, 238, 0.10);
+            font-size: 0.82rem;
+        }
+
+        .loop-grid,
+        .value-grid,
+        .mode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+            margin: 14px 0 16px;
+        }
+
+        .spec-card {
+            padding: 15px 16px;
+            border-radius: 14px;
+            background: var(--paper-strong);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .spec-card h3 {
+            margin-top: 0;
+        }
+
+        .spec-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .decision-block {
+            margin: 16px 0 0;
+        }
+
+        .small-note {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="frame">
+        <header>
+            <nav class="lang-nav">
+                <a href="../index.html" class="lang-link">← Home</a>
+            </nav>
+
+            <h1 class="hero-title">VMS</h1>
+            <p class="hero-subtitle">VCDesign Management Strategy</p>
+            <p class="hero-tagline">
+                VMS は、経営上の悩みを VCDesign の Loop、Boundary、Decision に変換し、
+                判断の責任と価値継続を設計するための運用プロトコルです。
+            </p>
+            <div class="pill-row">
+                <span class="pill">Loop Mapping</span>
+                <span class="pill">Boundary Design</span>
+                <span class="pill">Decision Closure</span>
+            </div>
+        </header>
+
+        <section id="toc">
+            <h2 class="usage-title">Contents</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="#purpose">
+                        <span class="label">Purpose</span>
+                        <span class="desc">VMS が扱うものと、経営判断への接続</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#symptoms">
+                        <span class="label">Symptom Mapping</span>
+                        <span class="desc">症状を 4 つの Loop に分類する</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#operation">
+                        <span class="label">Operation</span>
+                        <span class="desc">初回導入、モード選択、出力形式</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#resources">
+                        <span class="label">Resources</span>
+                        <span class="desc">AI に渡す最小読込セットと原資料</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="purpose">
+            <h2 class="usage-title">Purpose</h2>
+            <p>
+                VMS の目的は、経営者の意思決定における「責任の所在」を明確にし、
+                事業の価値継続を最大化することです。
+            </p>
+            <p>
+                AI は代替案を提示できます。しかし、最終的な決定権は常に経営者に残ります。
+                VMS はその前提を崩さず、相談内容を <strong>Boundary</strong>、
+                <strong>Metrics</strong>、<strong>Decision</strong> の形に閉じます。
+            </p>
+
+            <div class="value-grid">
+                <div class="spec-card">
+                    <h3>Monetary</h3>
+                    <p>資本循環と事業継続性。お金が残るか、事業として続くかを扱う。</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Cultural</h3>
+                    <p>ドメインの歴史、美学、守るべき文化的価値を扱う。</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Generative</h3>
+                    <p>後進へ技術・精神・判断ロジックを継承できるかを扱う。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="symptoms">
+            <h2 class="usage-title">Symptom Mapping</h2>
+            <p>
+                最初に、相談を「どの Loop の課題か」に分類します。
+                分類は答えではなく、どの責任境界から見直すかを決める入口です。
+            </p>
+
+            <div class="loop-grid">
+                <div class="spec-card">
+                    <h3>Physical Loop</h3>
+                    <p><strong>症状:</strong> お金が残らない / 資金繰りが苦しい</p>
+                    <p class="small-note">Unit Economics、Throughput Accounting などを接続する。</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Semantic Loop</h3>
+                    <p><strong>症状:</strong> 商品が売れない / 競合に負ける</p>
+                    <p class="small-note">JTBD、Value Proposition Canvas などを接続する。</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Value Loop</h3>
+                    <p><strong>症状:</strong> 情熱が湧かない / 何のためにやっているか不明</p>
+                    <p class="small-note">Ikigai、Purpose-Driven Management などを接続する。</p>
+                </div>
+                <div class="spec-card">
+                    <h3>Responsibility Loop</h3>
+                    <p><strong>症状:</strong> 自分がいないと回らない / 後継者が育たない</p>
+                    <p class="small-note">Generativity、DACI などを接続する。</p>
+                </div>
+            </div>
+
+            <h3>最初に聞く 3 つのこと</h3>
+            <ul>
+                <li><strong>current_pain:</strong> 今、一番しんどいことは何か</li>
+                <li><strong>desire:</strong> どうなれば「成功」か</li>
+                <li><strong>constraints:</strong> 時間・金・精神の限界値はどこか</li>
+            </ul>
+        </section>
+
+        <section id="operation">
+            <h2 class="usage-title">Operation</h2>
+
+            <h3>Mode Selection</h3>
+            <div class="mode-grid">
+                <div class="spec-card">
+                    <h3>守る</h3>
+                    <p>Closure Mode。境界の死守と責任の閉鎖を目的にする。</p>
+                </div>
+                <div class="spec-card">
+                    <h3>攻める</h3>
+                    <p>Exploration Mode。構造の再発見と新しい仮説の検証を目的にする。</p>
+                </div>
+                <div class="spec-card">
+                    <h3>わからない</h3>
+                    <p>Diagnostic Exploration。違和感を構造化し、Closure へ橋渡しする。</p>
+                </div>
+            </div>
+
+            <h3>初回セッション</h3>
+            <ol>
+                <li>現在の症状を入力し、どの Loop に近いかを判定する</li>
+                <li>生存境界として、金・心・美学の限界値を置く</li>
+                <li>直近の悩みに対する初回 Decision を生成する</li>
+                <li>次回レビューのために、監視する Metrics を 1 つ選ぶ</li>
+            </ol>
+
+            <h3>出力の最低要件</h3>
+            <div class="decision-block">
+                <pre class="code-block">Do:
+  - 具体的に実行すること
+Don't:
+  - 今すぐ止めること
+Outcome:
+  - 改善を期待するズレ
+
+boundary_definition:
+  - 今回設定・更新された境界線
+metrics_to_watch:
+  - 監視する Value Drift / Boundary Invasion / Responsibility Deadlock
+decision_log:
+  owner: 最終決定者
+  status: Instant / Pending / Discard
+  closure_check: この決断で閉じたループ</pre>
+            </div>
+        </section>
+
+        <section id="extensions">
+            <h2 class="usage-title">Domain Extensions</h2>
+            <p>
+                VMS は経営判断全般の入口です。特定領域の相談は、VMS の責任原則を保ったまま、
+                領域別の知識拡張として扱います。
+            </p>
+
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="./marketing/">
+                        <span class="label">VMS Marketing</span>
+                        <span class="desc">マーケティング相談を構造化し、比較案・不明点・回答根拠を残すためのサブセット。</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="resources">
+            <h2 class="usage-title">Resources</h2>
+            <p>
+                VMS は、読み物ではなく AI に渡して使う仕様です。
+                最小読込セットを渡したうえで、相談内容を症状として入力します。
+            </p>
+
+            <h3>生成 AI 向けの最小読込セット</h3>
+            <ul>
+                <li><code>specs/VMS.yaml</code> 判断原則、価値定義、責任の置き方</li>
+                <li><code>specs/prompt.txt</code> AI への基本指示</li>
+                <li><code>specs/Input_Interface.yaml</code> 症状の分類と不足情報の確認</li>
+                <li><code>specs/Mode_Switcher.yaml</code> モード選択</li>
+                <li><code>specs/Output_Structure.yaml</code> 出力フォーマット</li>
+                <li><code>specs/User_Role_Definition.yaml</code> 利用者レベルごとの粒度調整</li>
+            </ul>
+
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="https://github.com/VCDesign-org/vms">
+                        <span class="label">VMS GitHub Repository</span>
+                        <span class="desc">VMS の仕様リポジトリ。YAML とプロンプトの正本はこちらを参照してください。</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+    </main>
+</body>
+
+</html>
