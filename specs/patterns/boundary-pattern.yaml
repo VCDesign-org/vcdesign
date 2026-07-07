@@ -5,7 +5,7 @@ id: "vcdesign-pattern-boundary"
 title: "Boundary Structure Pattern"
 layer: "pattern"
 status: "stable"
-version: "1.0.0"
+version: "1.1.0"
 
 meta:
   concept: "A structural choke point where implicit values are blocked and explicit judgments are required."
@@ -16,15 +16,36 @@ meta:
 # -------------------------------------------------------------------
 boundary:
   role: "The interface between Unverified Space (Outside) and Verified Space (Inside)."
-  
+
   components:
     guard:
       description: "The agent or logic responsible for the check."
       reference: "vcdesign-pattern-rca"
-      
+
     handshake:
       description: "The mechanism for promotion if accepted."
       reference: "vcdesign-protocol-resolution-handshake"
+
+    tenure:
+      description: >
+        The continuity attribution of the boundary itself (v1.1.0).
+        A guard answers "is this crossing correct now?" (gate);
+        tenure answers "who holds this boundary over time?" (line).
+        See core/value-tenure-model.md.
+      fields:
+        owner:
+          description: >
+            この境界の現在の責任保有者。guard（チェックの実行主体）とは別に、
+            境界の定義そのものを保有し、見直しに責任を持つ主体。
+        accountability_on_cross:
+          description: >
+            越境が「誰も見ていない自律運用中」に起きた場合の責任帰属。
+            事後に押し付け先を探すのではなく、無人時間帯の帰属を事前に宣言する。
+            未宣言の場合、その境界は tenure 不在（gate のみ）とみなす。
+        drift_signals:
+          description: >
+            越境・逸脱・境界定義の陳腐化にどう気づくかの観点。
+            metrics.yaml の boundary_violation_rate / tenure_metrics と接続する。
 
 # -------------------------------------------------------------------
 # Flow

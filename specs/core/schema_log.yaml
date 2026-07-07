@@ -1,10 +1,12 @@
 vcdesign_decision_log:
-  version: 0.1
+  version: 0.2
 
   concept:
     description: >
       decision_log は、Δ評価と Action選択の理由を記録する
       説明可能性の監査証跡である。
+      version 0.2 で、責任の継承・再確認を責任イベントとして
+      記録する tenure_event を追加した（core/value-tenure-model.md 参照）。
 
   required_fields:
     - log_id
@@ -20,6 +22,7 @@ vcdesign_decision_log:
     - ai_involvement
     - confidence
     - long_term_judgment
+    - tenure_event
     - notes
 
   field_definitions:
@@ -125,8 +128,34 @@ vcdesign_decision_log:
         next_review_at:
           type: datetime
 
+    tenure_event:
+      type: object
+      description: >
+        責任の継続保有（Tenure）に関わるイベントの記録。
+        temporal-governance.md に従い、上書きではなく
+        新しいログエントリとして追記する。
+      fields:
+        event_type:
+          type: enum
+          values:
+            - custody_transfer   # 責任の引き渡し（case の custody_chain と対応）
+            - reaffirmation      # 「今も有効」の再確認（case の last_reaffirmed を更新）
+            - review_trigger_fired  # review_triggers の条件成立と、その評価
+        case_ref:
+          type: string
+          description: 対象 case_id（case 側の custody_chain / last_reaffirmed と相互参照）
+        detail:
+          type: object
+          description: >
+            custody_transfer の場合は from / to / reason / re_derivation_confirmed。
+            reaffirmation の場合は by / basis。
+            review_trigger_fired の場合は fired_trigger / evaluation / resulting_action。
+
   invariants:
     - every_confirmed_delta_should_have_decision_log
     - every_reframe_should_have_explicit_why_action
     - every_retire_should_have_explanation
     - policy_applied_must_be_recorded_when_present
+    # tenure invariants (v0.2)
+    - every_custody_transfer_should_have_decision_log
+    - reaffirmation_must_name_a_human_confirmer

@@ -1,10 +1,13 @@
 vcdesign_case:
-  version: 0.1
+  version: 0.2
 
   concept:
     description: >
       case は、章の中で生成・観測・処理され、
       必要に応じて章間を移送される責任付き案件である。
+      version 0.2 で、承認の一点（Gate）だけでなく
+      承認後の継続保有（Tenure）を記録する optional フィールド群を追加した。
+      背景は core/value-tenure-model.md を参照。
 
   required_fields:
     - case_id
@@ -22,6 +25,13 @@ vcdesign_case:
     - deadline
     - related_case_ids
     - tags
+    # tenure fields (v0.2): 承認後の継続責任を記録する。value-tenure-model.md 参照
+    - value_intent
+    - original_author
+    - custody_chain
+    - re_derivation_basis
+    - review_triggers
+    - last_reaffirmed
 
   field_definitions:
 
@@ -83,8 +93,71 @@ vcdesign_case:
       description: >
         Fix / Reframe / Defer / Retire を含む遷移履歴
 
+    value_intent:
+      type: string
+      description: >
+        この案件（またはその根拠となった決定）が生かし続けようとしている価値。
+        ドリフト（価値からのズレ）判定の基準線。
+        これが無い場合、Δ評価は前提条件のズレしか観測できない。
+
+    original_author:
+      type: object
+      description: >
+        原起案者と起案時点。履歴として固定され、以後変更しない。
+        現在の責任保有者は owner が表す（owner は交代しうる）。
+
+    custody_chain:
+      type: array
+      description: >
+        責任の継承履歴。owner の交代が起きるたびに追記する（append-only）。
+        temporal-governance.md の責任イベントとして扱い、削除・上書きしない。
+      item_fields:
+        from: 引き渡し元の責任主体
+        to: 引き受け先の責任主体
+        date: 引き渡し日時
+        reason: 交代理由（異動・退職・再編・過負荷再配分 等）
+        re_derivation_confirmed: >
+          引き受け先が re_derivation_basis から判断を
+          再導出できることを確認したか（yes / no / partial）
+
+    re_derivation_basis:
+      type: object
+      description: >
+        後任がこの判断を再導出するために必要な前提・文脈・根拠。
+        「何を決めたか」ではなく「なぜそう判断できたか」を、
+        原決定者がいなくても辿れる形で残す。
+
+    review_triggers:
+      type: array
+      description: >
+        見直しが必要になる「条件」。時間経過ではなく事象で書く。
+        next_review_at が「いつ見るか」であるのに対し、
+        review_triggers は「何が変われば見るべきか」を定義する。
+        例: 依存ベンダーの変更、前提としていた規制の改定、
+        利用者構成の閾値超過、モデル・基盤の入れ替え。
+
+    last_reaffirmed:
+      type: object
+      description: >
+        最後に「この判断は今も有効」と確認された記録。
+        Tenure は放置で減衰するため、by（確認者）と at（時刻）を持つ。
+        再確認の義務は事象駆動である（custody 交代時・review_trigger 発火時に必須）。
+        時間経過のみによる減衰は弱いシグナル（observation）として扱い、
+        定期打刻を強制しない。カレンダー駆動の再確認義務は、
+        review_triggers で退けた儀式化を reaffirmation に移すだけだからである。
+      fields:
+        by: 確認した責任主体
+        at: 確認時刻
+        basis: 確認の根拠（review_trigger の評価結果 等）
+
   invariants:
     - every_case_must_have_owner_or_temporary_owner
     - deferred_case_must_have_next_review_at
     - every_case_must_be_traceable
     - action_history_must_not_be_empty_once_delta_confirmed
+    # tenure invariants (v0.2)
+    - owner_change_must_append_custody_chain_entry
+    - custody_chain_must_be_append_only
+    - review_triggers_must_be_event_based_not_calendar_based
+    - case_with_custody_chain_must_have_re_derivation_basis
+    - reaffirmation_is_required_on_custody_transfer_and_trigger_fire_not_on_calendar

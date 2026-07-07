@@ -1,0 +1,36 @@
+# tenure_check.py self-test fixture: 異常系（2ケース）。
+# case 1: 責任空白の複合（ERROR×3 + WARN×3 を期待）
+#   - owner 空 / custody エントリの reason 欠落 / re_derivation_basis 無し
+#   - re_derivation_confirmed が "no" / review_triggers 無し / custody 交代後の reaffirmation 無し
+# case 2: 時間減衰のみ（INFO を期待。弱いシグナルであり ERROR/WARN にはならない）
+
+tenure_check_fixture_dirty:
+  cases:
+    - case_id: fixture-dirty-001
+      chapter_id: ch-fixture
+      current_state: active
+      owner:
+      final_decider:
+        actor: someone
+      custody_chain:
+        - from: alice
+          to: bob
+          date: 2026-04-01
+          # reason 欠落（ERROR）
+          re_derivation_confirmed: "no"
+      last_reaffirmed:
+        by: alice
+        at: 2026-01-10   # custody 交代（2026-04-01）より前 → 事象駆動の WARN
+
+    - case_id: fixture-dirty-002
+      chapter_id: ch-fixture
+      current_state: active
+      owner:
+        actor: bob
+      final_decider:
+        actor: dept_head
+      review_triggers:
+        - 依存ベンダーの変更
+      last_reaffirmed:
+        by: bob
+        at: 2025-06-01   # 恒久的に閾値超過 → INFO（弱いシグナル）のみ

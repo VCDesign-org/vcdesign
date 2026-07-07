@@ -1,0 +1,53 @@
+# tenure_check.py self-test fixture: 正常系。
+# findings 0（ERROR / WARN とも 0）で通ることを self-test が保証する。
+# 時間経過で発生しうるのは INFO（弱いシグナル）のみで、self-test は INFO を失敗にしない。
+
+tenure_check_fixture_clean:
+  case_id: fixture-clean-001
+  chapter_id: ch-fixture
+  delta_level: observation
+  current_state: active
+
+  metrics_snapshot:
+    observed_at: 2026-06-15
+
+  owner:
+    actor: sato
+
+  final_decider:
+    actor: dept_head
+    type: human
+
+  action_history:
+    - action: fix
+      at: 2026-06-15
+      reason: review trigger 評価により決定を維持
+
+  value_intent: >
+    顧客の金銭に関わる判断で誤案内を出さない。
+
+  original_author:
+    actor: tanaka
+    at: 2025-11-10
+
+  custody_chain:
+    - from: tanaka
+      to: sato
+      date: 2026-03-31
+      reason: 組織異動
+      re_derivation_confirmed: "yes"
+
+  re_derivation_basis:
+    premises:
+      - 返金・解約は金銭影響があり、誤案内が顧客離反に直結する
+    evidence_refs:
+      - jc-20251110-004
+
+  review_triggers:
+    - 応答・分類モデルの入れ替えまたはメジャーアップデート
+    - 返金・解約ポリシー自体の改定
+
+  last_reaffirmed:
+    by: sato
+    at: 2026-06-15
+    basis: review_trigger（モデル入れ替え）の評価結果

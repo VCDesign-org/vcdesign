@@ -1,0 +1,68 @@
+# Machine-readable case for custody-handover.md
+# Conforms to core/schema_case.yaml (v0.2, tenure fields included).
+# Used as a demonstration target for schemas/tenure_check.py.
+
+vcdesign_case_instance:
+  schema: core/schema_case.yaml
+  schema_version: 0.2
+
+  case_id: case-refund-escalation-001
+  chapter_id: ch-customer-support-automation
+  delta_level: observation
+  current_state: active
+
+  metrics_snapshot:
+    escalation_rate_2w_avg: 0.34
+    observed_at: 2026-06-15
+
+  owner:
+    actor: sato
+    role: 情報システム部
+
+  final_decider:
+    actor: cs_department_head
+    type: human
+
+  action_history:
+    - action: fix
+      at: 2026-06-15
+      reason: モデル入れ替えの review trigger 評価。エスカレーション必須を維持し根拠を更新。
+      trace: jc-20260615-002
+
+  # ---- tenure fields (v0.2) ----
+
+  value_intent: >
+    顧客の金銭に関わる判断で誤案内を出さない。
+    守っているのは応答の自動化率ではなく、顧客からの信頼の継続である。
+
+  original_author:
+    actor: tanaka
+    role: 情報システム部
+    at: 2025-11-10
+
+  custody_chain:
+    - from: tanaka
+      to: sato
+      date: 2026-03-31
+      reason: 組織異動（情報システム部の再編）
+      re_derivation_confirmed: "yes"
+
+  re_derivation_basis:
+    premises:
+      - 返金・解約は金銭影響があり、誤案内が顧客離反に直結する
+      - 決定時点の分類モデルは返金意図の検出精度 92% で、取りこぼしを人間側で吸収する必要があった
+    context:
+      - 2025-10 の競合他社における自動応答誤案内の炎上事案を受けた判断
+    evidence_refs:
+      - jc-20251110-004
+
+  review_triggers:
+    - 応答・分類モデルの入れ替えまたはメジャーアップデート
+    - 返金・解約ポリシー自体の改定
+    - エスカレーション率が 2 週間平均で 50% 以上変動
+    - 特定商取引法など前提規制の改定
+
+  last_reaffirmed:
+    by: sato
+    at: 2026-06-15
+    basis: review_trigger（モデル入れ替え）の評価結果。jc-20260615-002 参照。

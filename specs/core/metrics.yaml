@@ -392,6 +392,96 @@ vcdesign_metrics:
           - retire
         policy_link: policies.yaml / policy_enforcement / blocking
 
+  tenure_metrics:
+    description: >
+      承認の一点（Gate）ではなく、承認後の継続保有（Tenure）の劣化を観測する指標群。
+      owner_missing が「いま owner がいない」を検知するのに対し、
+      ここでは「owner はいるが保有が減衰している」「引き渡しが記録されずに交代した」を検知する。
+      背景は core/value-tenure-model.md、フィールド定義は schema_case.yaml (v0.2) を参照。
+      いずれも base_metrics と同じ evaluation_model に従う。
+    metrics:
+      - id: custody_gap
+        name: Custody Gap
+        description: >
+          責任保有者の交代が起きたにもかかわらず、
+          custody_chain への追記（引き渡しの責任イベント）が存在しない状態。
+          または引き受け先が re_derivation_basis を確認しないまま保有が始まった状態。
+        intent: >
+          A1（責任非消失）を、担当交代をまたいで検証可能にする。
+          「静かに無所有になる」の最頻発経路は退職・異動である。
+        typical_signals:
+          - owner_changed_without_custody_chain_entry
+          - custody_entry_without_re_derivation_confirmation
+          - departed_actor_still_recorded_as_owner
+          - no_reaffirmation_after_custody_transfer
+        meaning:
+          - responsibility_transfer_untraceable
+          - successor_cannot_re_derive_judgment
+        default_threshold:
+          type: immediate
+        candidate_actions:
+          - fix
+          - defer
+        policy_link: core/schema_case.yaml / invariants / owner_change_must_append_custody_chain_entry
+
+      - id: reaffirmation_decay
+        name: Reaffirmation Decay
+        description: >
+          active な案件・決定について、last_reaffirmed が長期間更新されていない状態。
+          Tenure は放置で減衰する。承認済みであることは、
+          現在も責任が保有されていることを意味しない。
+          ただし本 metric は設計上「弱いシグナル」である。
+          再確認の義務は事象駆動（custody 交代時・review_trigger 発火時 → custody_gap 側で検知）であり、
+          純粋な時間経過を warning 以上に扱うと、review_triggers で退けた
+          カレンダー儀式が reaffirmation に移るだけになる。
+        intent: >
+          「ゲートを通過しただけの決定」が保有中の決定として扱われ続けることへの注意喚起。
+          単独で Δ を構成しない。
+        typical_signals:
+          - last_reaffirmed_older_than_threshold
+          - value_intent_never_revisited
+        meaning:
+          - tenure_may_be_decaying
+          - attention_signal_not_review_obligation
+        default_threshold:
+          type: duration
+          example:
+            duration: "180d"
+          max_level: observation
+        candidate_actions:
+          - fix
+          - reframe
+          - retire
+        notes:
+          - weak_signal_by_design_maps_to_observation_level_only
+          - reaffirmation_obligation_is_event_driven_see_custody_gap
+          - domain_specific_threshold_required
+        policy_link: core/schema_case.yaml / field_definitions / last_reaffirmed
+
+      - id: review_trigger_missing
+        name: Review Trigger Missing
+        description: >
+          長期継続する active 案件が、事象駆動の review_triggers を持たず、
+          カレンダー駆動の next_review_at のみ（または何も）で運用されている状態。
+        intent: >
+          見直しの形骸化（儀式化した定期レビュー）を検知する。
+          見直しは「いつ」ではなく「何が変われば」で定義されるべきである。
+        typical_signals:
+          - long_lived_case_without_review_triggers
+          - periodic_review_passes_without_condition_evaluation
+          - environment_changed_but_no_trigger_fired
+        meaning:
+          - drift_detection_depends_on_luck
+          - review_is_ceremonial
+        default_threshold:
+          type: duration
+          example:
+            duration: "90d"
+        candidate_actions:
+          - fix
+          - defer
+        policy_link: core/schema_case.yaml / field_definitions / review_triggers
+
   operational_fit_metrics:
 
     - id: delta_detection_quality

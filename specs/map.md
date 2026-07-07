@@ -18,8 +18,9 @@ VCDesignの現行authorityは以下で構成される
 - **[Core Glossary](core/glossary.md)**: Canonical distinctions that affect conformance, especially Judgment Proposal, Responsibility Asset, Resolution, Delta, IDG, RCA, and RCL.
 - **[AI Adaptive Loop Model](core/ai-adaptive-loop-model.md)**: A readable guide that explains how the authority connects to real AI operating loops without becoming a new authority.
 - **[Agent Era Model](core/agent-era-model.md)**: Reading aid for 2026 agent governance. Defines the 5-layer external explanation frame and 12 principles for governable AI agents. Connects to existing 4-loop model without replacing it.
-- **[Case Schema](core/schema_case.yaml)**: Data structure for cases.
-- **[Log Schema](core/schema_log.yaml)**: Data structure for decision logs.
+- **[Value Tenure Model](core/value-tenure-model.md)**: Design principle separating gate responsibility (点の責任: "is this correct now?") from tenure (線の責任: "who holds this over time?"). Anchors VCDesign's differentiation — tracking the movement of responsibility custody, which neither ADR nor SRE records.
+- **[Case Schema](core/schema_case.yaml)**: Data structure for cases. v0.2 adds tenure fields (value_intent, custody_chain, re_derivation_basis, review_triggers, last_reaffirmed).
+- **[Log Schema](core/schema_log.yaml)**: Data structure for decision logs. v0.2 adds tenure_event (custody transfer / reaffirmation / review trigger fired).
 
 > **Note**: **[RCL (Responsibility Closure Loop)](patterns/rcl/responsibility_closure_loop.yaml)** is a cross-cutting Standard.
 > It is not part of explicit Core/Protocols/Patterns layers, but guarantees design completion
@@ -59,6 +60,7 @@ VCDesignの現行authorityは以下で構成される
 - **[Schemas](schemas/)**: Machine-readable schemas and validation tools.
 - **[Examples](examples/llm-change-approval.md)**: Concrete applications.
   - [Minimal Lifecycle Example](examples/vcdesign-minimal-lifecycle.md)
+  - [Custody Handover](examples/custody-handover.md): How a decision survives a personnel handover — custody_chain, event-driven review_triggers, and reaffirmation in action. Machine-readable case: [custody-handover-case.yaml](examples/custody-handover-case.yaml).
   - [AI Coding Agent](examples/coding-agent-boundary.md): Execution gate, Judgment Closure, and responsibility assignment for LLM-powered coding agents.
   - [Security Agent](examples/agent-governance-security.md): Governance for autonomous threat-response agents (Mythos-type). Includes commit posture under high-velocity incidents.
   - [Factory Operations Agent](examples/factory-agent-safe-loop.md): Physical Loop / Semantic Loop separation for manufacturing AI. Safety-critical halt design.

@@ -144,3 +144,48 @@ applicable pattern.
 
 RCL is a design-completion structure and does not bypass Judgment Closure or
 Resolution Handshake.
+
+---
+
+## Gate Responsibility（点の責任）
+
+Responsibility anchored to the moment of approval: "Is this correct now?"
+
+Judgment Closure, IDG, and execution gates implement gate responsibility.
+Passing a gate starts responsibility; it does not sustain it.
+
+Defined in `value-tenure-model.md`.
+
+---
+
+## Tenure（線の責任・継続責任）
+
+Responsibility as continued custody over time: "Who holds this, and how does it
+survive handovers, unattended autonomous operation, and drift?"
+
+Tenure is recorded through the tenure fields of `schema_case.yaml` (v0.2):
+`value_intent`, `custody_chain`, `re_derivation_basis`, `review_triggers`,
+`last_reaffirmed`. Tenure decays unless reaffirmed.
+
+Defined in `value-tenure-model.md`.
+
+---
+
+## Custody Chain
+
+The append-only record of responsibility handovers for a case or decision:
+who transferred to whom, when, why, and whether the successor confirmed they
+can re-derive the judgment from its recorded basis.
+
+A custody transfer is a responsibility event under `../policies/temporal-governance.md`
+and must not be overwritten or deleted.
+
+---
+
+## Reaffirmation
+
+The explicit act of confirming that a standing decision is still valid,
+recorded in `last_reaffirmed` (by whom, when, on what basis).
+
+Reaffirmation must name a human confirmer. A decision that has passed its
+gate but is never reaffirmed is not held — it is only approved.

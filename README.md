@@ -35,6 +35,7 @@ LLMs belong primarily in the Semantic Loop, while growth is defined as improved 
 - **AI Non-Responsibility Principle**: AI assists but does not hold responsibility.
 - **Δ-Driven Principle**: Systems operate based on detecting deviations (Δ) from preconditions.
 - **Capability ≠ Authority Principle**: High model capability does not grant decision authority. Every agent action requires an explicitly declared boundary and a named responsible actor.
+- **Gate / Tenure Principle**: Approval at a gate (点の責任: "is this correct now?") starts responsibility but does not sustain it. Value continuity requires tenure (線の責任): continued custody that survives handovers, unattended autonomous operation, and time. The more autonomous the operation, the more tenure matters — not less. See [specs/core/value-tenure-model.md](specs/core/value-tenure-model.md).
 
 ## Where to start?
 See the **[Specification Map](specs/map.md)** for the full overview.

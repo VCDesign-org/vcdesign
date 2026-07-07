@@ -25,5 +25,9 @@ jobs:
         run: |
           which yamllint || pip install yamllint
           yamllint -c .yamllint specs/**/*.yaml
+      - name: Tenure check (responsibility blank risk)
+        run: |
+          python3 specs/schemas/tenure_check.py --self-test
+          python3 specs/schemas/tenure_check.py specs/examples
       - name: Validate docs and legacy notices
         run: bash .github/scripts/validate_docs.sh
