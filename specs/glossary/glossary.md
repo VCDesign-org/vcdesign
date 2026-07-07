@@ -25,7 +25,8 @@ Definitions of terms used in VCDesign and UVW (Unstable Value World).
 ## Term: Continuity (Value Continuity)
 **EN:** The state of value being maintained over time through active re-verification. The primary goal of VCDesign.  
 **JA:** 能動的な再検証によって、時間の経過に関わらず価値が維持されている状態。VCDesignの主要な目的。  
-**References:** [Continuity Claim](../core/continuity-claim.yaml)  
+**Notes:** Formerly specified as a standalone "Continuity Claim" protocol; its handshake mechanics were integrated into Resolution Handshake.  
+**References:** [Resolution Handshake](../protocols/resolution-handshake.yaml)  
 
 ## Term: Haltability
 **EN:** The property that a system can be interrupted, safely halted, and brought under accountable human intervention.  

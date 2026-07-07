@@ -31,6 +31,8 @@ VCDesignの現行authorityは以下で構成される
 - core/core.yaml
 - core/policies.yaml
 - core/metrics.yaml
+- core/axioms.yaml（A1〜A5：すべての仕様の基底となる公理）
+- core/decision-posture.yaml（defer/commit/reconsider/abandon の規範的定義）
 - patterns（RCL等）は「Coreへの適用構造」
 - legacy配下は「歴史的ドキュメントであり現行仕様ではない」
 
@@ -51,17 +53,24 @@ LLMは主としてSemantic Loopに配置され、成長はモデル性能の増�
 
 以下の順序で読むことを推奨します。
 1. **[specs/core/](specs/core/)** (Authority): なぜこの設計が必要か、何を守るべきか。
-   現実のAI運用ループへの接続を読みやすく説明した補助文書として **[specs/core/ai-adaptive-loop-model.md](specs/core/ai-adaptive-loop-model.md)** も参照してください。
+   - **[ai-adaptive-loop-model.md](specs/core/ai-adaptive-loop-model.md)**: Core / Policies / Metrics が実際のAI運用ループにどうつながるかを読みやすく説明した補助文書。
+   - **[agent-era-model.md](specs/core/agent-era-model.md)**: 2026年以降のAIエージェント統治に向けた5層フレームと12原則。
 2. **[specs/protocols/](specs/protocols/)** (How / Operations): 判断をいつ閉じ、どう責任を引き渡すか。
 3. **[specs/chapters/](specs/chapters/)** (When): 時間軸の中で、どの設計がいつ必要になるか。
+4. **[specs/examples/](specs/examples/)** (Applied): 具体的な適用例 — AIコーディングエージェント、セキュリティエージェント、工場オペレーションエージェントなど。
 
 ## ディレクトリ構造 (Directory Structure)
 
-* **[specs/core/](specs/core/)**: **The Authority.** VCDesign の最小限かつ不可避な定義。思想を知りたければ各 YAML の冒頭コメントを読み、実装したければスキーマに従ってください。
+* **[specs/core/](specs/core/)**: **The Authority.** VCDesign の最小限かつ不可避な定義。
 * **[specs/protocols/](specs/protocols/)**: **The Procedures.** 判断を閉じ、責任を引き渡すための標準的な手順。
-* **[specs/patterns/](specs/patterns/)**: **The Structures.** コアを実装するための参照パターン（境界構造やRCAなど）。
+* **[specs/patterns/](specs/patterns/)**: **The Structures.** コアを実装するための参照パターン（境界構造、RCA、IDG、RCLなど）。
 * **[specs/chapters/](specs/chapters/)**: **The Narratives (The "When").** フェーズやバージョンではなく、判断や責任の時間的変化（When）を扱う設計単位。
-* **[specs/glossary/](specs/glossary/)**: 用語集。
+* **[specs/boundaries/](specs/boundaries/)**: **The Boundary Taxonomy.** 責任境界の正規レジストリ（B1〜B17）とケーススタディ。
+* **[specs/glossary/](specs/glossary/)**: 用語集（Legacy / RCL / Core の対応表を含む）。
+* **[specs/validation/](specs/validation/)**: 適合性ケース、アンチパターン、組織診断のための **[Maturity Profile](specs/validation/vcdesign-maturity-profile.md)**。
+* **[specs/examples/](specs/examples/)**: 具体的な適用例 — 最小ライフサイクル、LLM変更承認ワークフロー、3つのエージェント統治ユースケース。
+
+詳細な全体像は **[Specification Map](specs/map.md)** を正とします。上記は概要です。
 
 ## ステータス (Status)
 Core 仕様は **Stable**（安定）です。
