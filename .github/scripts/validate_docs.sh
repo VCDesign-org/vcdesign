@@ -123,35 +123,35 @@ check_contains specs/map.md "core/policies.yaml" \
 check_contains specs/map.md "core/metrics.yaml" \
   "core/metrics.yaml not referenced in specs/map.md"
 
-check_contains site/en/index.html "Authority Declaration" \
-  "Authority Declaration not found in site/en/index.html"
-check_contains site/en/index.html "core/core.yaml" \
-  "core/core.yaml not referenced in site/en/index.html"
-check_contains site/en/index.html "core/policies.yaml" \
-  "core/policies.yaml not referenced in site/en/index.html"
-check_contains site/en/index.html "core/metrics.yaml" \
-  "core/metrics.yaml not referenced in site/en/index.html"
+# Site layout: English at the root (site/index.html), Japanese under site/ja/.
+# The redesigned index pages delegate the Authority Declaration to the canonical
+# GitHub repository, so the site check verifies that each index points to the
+# authority (specs section + canonical repo + Core/Metrics/Policies mention).
+check_contains site/index.html "Refer to Specs" \
+  "Specs reference section not found in site/index.html"
+check_contains site/index.html "github.com/VCDesign-org/vcdesign" \
+  "Canonical spec repository not referenced in site/index.html"
+check_contains site/index.html "Core, Metrics, Policies" \
+  "Core/Metrics/Policies authority mention not found in site/index.html"
 
-check_contains site/ja/index.html "Authority (Declaration|宣言)" \
-  "Authority heading not found in site/ja/index.html"
-check_contains site/ja/index.html "core/core.yaml" \
-  "core/core.yaml not referenced in site/ja/index.html"
-check_contains site/ja/index.html "core/policies.yaml" \
-  "core/policies.yaml not referenced in site/ja/index.html"
-check_contains site/ja/index.html "core/metrics.yaml" \
-  "core/metrics.yaml not referenced in site/ja/index.html"
+check_contains site/ja/index.html "Specs を参照する" \
+  "Specs reference section not found in site/ja/index.html"
+check_contains site/ja/index.html "github.com/VCDesign-org/vcdesign" \
+  "Canonical spec repository not referenced in site/ja/index.html"
+check_contains site/ja/index.html "Core, Metrics, Policies" \
+  "Core/Metrics/Policies authority mention not found in site/ja/index.html"
 
-check_legacy_notice site/en/legacy "Historical Document Notice" "en" \
-  "site/en/legacy/yaml/index.html" \
-  "site/en/legacy/validation/index.html"
+check_legacy_notice site/legacy "Historical Document Notice" "en" \
+  "site/legacy/yaml/index.html" \
+  "site/legacy/validation/index.html"
 
 check_legacy_structure \
-  site/en/legacy \
+  site/legacy \
   "Historical Document Notice" \
   "This concept has been superseded by the Core \\+ Policies \\+ Metrics model" \
   "This document represents the conceptual lineage that led to the current model" \
-  "site/en/legacy/yaml/index.html" \
-  "site/en/legacy/validation/index.html"
+  "site/legacy/yaml/index.html" \
+  "site/legacy/validation/index.html"
 
 check_legacy_notice site/ja/legacy "歴史的ドキュメントのお知らせ" "ja" \
   "site/ja/legacy/yaml/index.html" \

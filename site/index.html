@@ -530,6 +530,14 @@
                         <a class="flow-link" href="./reality-fit/">→ Reality Fit / Adaptive Loop Model</a>
                     </div>
                 </div>
+                <div class="flow-step">
+                    <span class="flow-num">05</span>
+                    <div>
+                        <p class="flow-content-title">Keep decisions held over time</p>
+                        <p class="flow-content-desc">Approval is a point; custody is a line. Record who holds each decision now, what a successor needs to re-derive it, and which events force a review.</p>
+                        <a class="flow-link" href="#tenure">→ Gate / Tenure</a>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -580,6 +588,34 @@
                 </div>
             </div>
             <p style="margin-top: 24px; font-size: 13px; color: var(--text-muted);">The capabilities of lower layers must not expand without the governance structure of upper layers.<br>See <code style="font-family: var(--mono); font-size: 11px; color: var(--accent-dim);">specs/core/agent-era-model.md</code> for details.</p>
+        </section>
+
+        <!-- ── TENURE ── -->
+        <section id="tenure">
+            <p class="section-label">Gate / Tenure</p>
+            <h2>Approval is not custody</h2>
+
+            <p>The industry increasingly describes responsibility as the moment of approval: <strong>"Is this correct now?"</strong> That gate matters — but it is a point in time.</p>
+            <p>Value is lost later. The person who approved moves on. Nobody can re-derive why the judgment was made. Drift happens precisely while no one is watching. <strong>The more autonomous the operation, the sharper the question becomes: who holds this now?</strong></p>
+
+            <table class="maturity-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Gate — responsibility as a point</th>
+                        <th>Tenure — responsibility as a line</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Question</td><td>"Is this correct now?"</td><td>"Who holds this, across handovers and time?"</td></tr>
+                    <tr><td>Lives at</td><td>The moment of approval</td><td>Every day after approval</td></tr>
+                    <tr><td>Fails by</td><td>Skipped or hollow approval</td><td>Departed owners, lost rationale, reviews turned ritual</td></tr>
+                </tbody>
+            </table>
+
+            <p>What VCDesign adds is not naming an owner — RACI and change management already do that. It is whether a successor can <strong>re-derive the judgment</strong>: the value it protects, the custody chain of who has held it, the basis to reconstruct the reasoning, and the events — not the calendar — that force a review.</p>
+
+            <p style="margin-top: 24px; font-size: 13px; color: var(--text-muted);">Approval starts responsibility; holding sustains it. Autonomous operation doesn't make this unnecessary — it is exactly what makes it necessary.<br>See <code style="font-family: var(--mono); font-size: 11px; color: var(--accent-dim);">specs/core/value-tenure-model.md</code> and the worked example <code style="font-family: var(--mono); font-size: 11px; color: var(--accent-dim);">specs/examples/custody-handover.md</code>.</p>
         </section>
 
         <!-- ── MATURITY ── -->
