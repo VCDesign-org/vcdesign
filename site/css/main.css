@@ -1,15 +1,15 @@
 :root {
-    --bg-ink: #0B0E12;
-    --bg-mid: #131A23;
-    --bg-warm: #1C1B1E;
-    --paper: rgba(255, 255, 255, 0.05);
-    --paper-strong: rgba(255, 255, 255, 0.09);
-    --line: rgba(255, 255, 255, 0.12);
-    --ink: #F8FAFC;
-    --muted: #B4BDC7;
-    --accent: #F97316;
-    --accent-2: #22D3EE;
-    --shadow: rgba(7, 10, 15, 0.55);
+    --bg-ink: #0e0e0e;
+    --bg-mid: #151515;
+    --bg-warm: #1c1c1c;
+    --paper: rgba(255, 255, 255, 0.04);
+    --paper-strong: rgba(255, 255, 255, 0.07);
+    --line: rgba(255, 255, 255, 0.10);
+    --ink: #e8e4dc;
+    --muted: #a49c8c;
+    --accent: #c8a96e;
+    --accent-2: #c8a96e;
+    --shadow: rgba(0, 0, 0, 0.55);
     --transition: 0.22s ease-out;
 }
 
@@ -23,8 +23,8 @@ body {
     padding: 0;
     color: var(--ink);
     background:
-        radial-gradient(circle at 10% 10%, rgba(249, 115, 22, 0.18), transparent 45%),
-        radial-gradient(circle at 90% 10%, rgba(34, 211, 238, 0.16), transparent 50%),
+        radial-gradient(circle at 10% 10%, rgba(200, 169, 110, 0.14), transparent 45%),
+        radial-gradient(circle at 90% 10%, rgba(200, 169, 110, 0.10), transparent 50%),
         linear-gradient(160deg, var(--bg-ink), var(--bg-mid) 45%, var(--bg-warm) 100%);
     font-family: "Avenir Next", "Futura", "Gill Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
     line-height: 1.7;
@@ -82,7 +82,7 @@ header {
 .lang-link:hover {
     color: var(--ink);
     border-color: var(--accent-2);
-    background: rgba(34, 211, 238, 0.12);
+    background: rgba(200, 169, 110, 0.12);
 }
 
 .hero-title {
@@ -130,8 +130,8 @@ h2 {
     letter-spacing: 0.03em;
     padding: 8px 16px;
     border-radius: 999px;
-    background: rgba(249, 115, 22, 0.14);
-    border: 1px solid rgba(249, 115, 22, 0.35);
+    background: rgba(200, 169, 110, 0.14);
+    border: 1px solid rgba(200, 169, 110, 0.35);
     margin-bottom: 14px;
 }
 
@@ -141,7 +141,7 @@ h2 {
     height: 10px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 14px rgba(249, 115, 22, 0.8);
+    box-shadow: 0 0 14px rgba(200, 169, 110, 0.8);
 }
 
 p {
@@ -171,7 +171,7 @@ p {
 .link-anchor:hover {
     transform: translateY(-2px);
     background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(34, 211, 238, 0.40);
+    border-color: rgba(200, 169, 110, 0.40);
 }
 
 .label {
@@ -233,14 +233,14 @@ p {
     border-radius: 999px;
     border: none;
     cursor: pointer;
-    background: rgba(34, 211, 238, 0.20);
+    background: rgba(200, 169, 110, 0.20);
     color: var(--ink);
     transition: transform var(--transition), background var(--transition);
 }
 
 .btn-copy:hover {
     transform: translateY(-1px);
-    background: rgba(34, 211, 238, 0.35);
+    background: rgba(200, 169, 110, 0.35);
 }
 
 .prompt-note {
@@ -272,7 +272,7 @@ p {
 }
 
 .offline-callout a:hover {
-    color: #A5F3FC;
+    color: #e8c87e;
 }
 
 footer {
@@ -284,6 +284,26 @@ footer {
     text-align: center;
     color: var(--muted);
     font-size: 0.82rem;
+}
+
+.site-nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 18px;
+    margin-bottom: 14px;
+}
+
+.site-nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    transition: color var(--transition);
+}
+
+.site-nav-links a:hover {
+    color: var(--accent);
 }
 
 @media (max-width: 780px) {
