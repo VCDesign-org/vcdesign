@@ -61,8 +61,7 @@ postures:
     preconditions_for_validity:
       - The responsible actor must be identified and present
       - The action scope must fall within the actor's authority (B17)
-      - The decision log must record: facts observed, evidence assessed,
-        actor identity, timestamp
+      - "The decision log must record: facts observed, evidence assessed, actor identity, timestamp"
     typical_loops: [physical_loop, semantic_loop]
     example: >
       A physical control loop detects sensor drift crossing a safety threshold.
