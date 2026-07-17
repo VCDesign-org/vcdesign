@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Re-derivation Layer — 再導出層 | VCDesign</title>
+<style>
+  :root{
+    --sans: system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",
+            "Noto Sans JP",sans-serif;
+    --mono: ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
+
+    --page:#E4E9ED;
+    --card:#FBFCFD;
+    --ink:#1B2833;
+    --steel:#42586C;
+    --steel-soft:#78899A;
+    --band:#DBE3E9;
+    --band-2:#E8EDF1;
+    --line:#C2CED7;
+
+    --amber:#B47215;
+    --amber-line:#C98A2B;
+    --amber-fill:#FBF2DE;
+    --amber-ink:#7A4E0C;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{
+    background:radial-gradient(1200px 600px at 50% -8%, #EEF2F5 0%, var(--page) 60%);
+    color:var(--ink);font-family:var(--sans);line-height:1.72;
+    -webkit-font-smoothing:antialiased;padding:44px 20px 64px;
+  }
+  .wrap{max-width:720px;margin:0 auto;}
+
+  /* header */
+  .eyebrow{
+    font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--steel-soft);display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--line);}
+  .date{font-family:var(--mono);font-size:12px;color:var(--steel-soft);margin-top:16px;}
+  h1{font-size:34px;font-weight:660;letter-spacing:-.015em;margin:6px 0 2px;}
+  .jp-title{font-size:17px;color:var(--steel);font-weight:600;margin:0 0 10px;}
+  .position{
+    font-size:14.5px;color:var(--amber-ink);margin:0;padding:10px 0 0;
+    border-top:1px solid var(--line);
+  }
+
+  h2{
+    font-size:15px;font-weight:660;letter-spacing:.02em;color:var(--ink);
+    margin:38px 0 12px;padding-left:12px;border-left:3px solid var(--amber-line);
+  }
+  p{margin:0 0 15px;font-size:15.5px;}
+  .lede{font-size:16.5px;color:var(--ink);}
+  .lede em{font-style:normal;color:var(--amber-ink);font-weight:600;}
+  code{
+    font-family:var(--mono);font-size:13.5px;background:#fff;
+    border:1px solid var(--amber-line);color:var(--amber-ink);
+    padding:1px 7px;border-radius:100px;white-space:nowrap;
+  }
+  .quiet{color:var(--steel);font-size:14px;}
+
+  figure{margin:26px 0;}
+  figcaption{
+    font-family:var(--mono);font-size:11px;color:var(--steel-soft);
+    text-align:center;margin-top:10px;letter-spacing:.03em;
+  }
+
+  /* footer */
+  .foot{
+    margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:12px;color:var(--steel-soft);line-height:1.7;
+  }
+  .foot b{color:var(--steel);font-weight:600;}
+
+  /* ===== embedded diagram ===== */
+  .sheet{
+    max-width:900px;margin:0 auto;background:var(--card);
+    border:1px solid var(--line);border-radius:4px;
+    box-shadow:0 1px 0 #fff inset,0 18px 40px -28px rgba(27,40,51,.55);
+    padding:28px 28px 24px;
+  }
+  .d-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--steel-soft);
+    display:flex;align-items:center;gap:10px;}
+  .d-eyebrow::after{content:"";flex:1;height:1px;background:var(--line);}
+  .d-title{font-size:22px;font-weight:650;letter-spacing:-.01em;margin:10px 0 5px;}
+  .d-title .op{color:var(--steel-soft);font-weight:400;padding:0 .12em;}
+  .d-thesis{font-size:13.5px;color:var(--steel);margin:0;}
+  .d-thesis b{color:var(--amber-ink);font-weight:650;}
+
+  .stack{margin-top:22px;position:relative;padding-left:24px;}
+  .stack::before{content:"";position:absolute;left:8px;top:14px;bottom:14px;width:2px;background:var(--line);}
+  .band{position:relative;border:1px solid var(--line);border-radius:3px;
+    background:var(--band-2);padding:12px 15px;margin:0 0 8px;}
+  .band::before{content:"";position:absolute;left:-20px;top:20px;width:8px;height:8px;
+    border-radius:50%;background:var(--card);border:2px solid var(--steel-soft);}
+  .tier{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;}
+  .name{font-size:13.5px;font-weight:650;}
+  .sub{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px;}
+  .chip{font-family:var(--mono);font-size:10px;letter-spacing:.04em;padding:2px 8px;
+    border-radius:100px;white-space:nowrap;border:1px solid var(--line);
+    color:var(--steel);background:#fff;}
+  .chip.ok{border-color:#B7C6D0;color:#3C566A;}
+  .band.field,.band.biz{background:var(--band);}
+  .band.conv{background:#E6ECF0;}
+  .band.conv .std{font-family:var(--mono);font-size:11.5px;color:var(--ink);
+    margin-top:8px;display:grid;gap:5px;}
+  .band.conv .std span{color:var(--amber-ink);}
+  .band.conv .std em{color:var(--steel-soft);font-style:normal;}
+
+  .seam{position:relative;border:1.5px dashed var(--amber-line);background:var(--amber-fill);
+    border-radius:3px;padding:14px 15px 15px;margin:0 0 8px;}
+  .seam::before{content:"";position:absolute;left:-20.5px;top:20px;width:9px;height:9px;
+    border-radius:50%;background:var(--amber-fill);border:2px solid var(--amber-line);}
+  .seam .name{color:var(--amber-ink);}
+  .chip.gap{border-color:var(--amber-line);color:var(--amber-ink);background:#fff;font-weight:600;}
+  .pressure{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 11px;}
+  .pressure .p{font-size:11px;color:var(--steel);border:1px solid var(--line);
+    border-radius:3px;background:#fff;padding:4px 8px;display:flex;align-items:center;gap:6px;}
+  .pressure .ar{font-family:var(--mono);color:var(--amber);font-weight:700;}
+  .xform{font-family:var(--mono);font-size:11.5px;line-height:1.85;background:#fff;
+    border:1px solid var(--line);border-radius:3px;padding:9px 11px;overflow-x:auto;}
+  .xform .k{color:var(--steel);}
+  .xform .to{color:var(--amber);padding:0 .4em;}
+  .xform .m{color:var(--ink);font-weight:600;}
+  .missing{margin-top:11px;padding-top:11px;border-top:1px solid #EAD9B6;
+    font-size:13px;color:var(--amber-ink);}
+  .missing .lead{color:var(--steel);font-size:11.5px;display:block;margin-bottom:5px;}
+  .missing code{font-size:11.5px;}
+  .flow{text-align:center;color:var(--steel-soft);font-family:var(--mono);
+    font-size:10.5px;letter-spacing:.05em;margin:-2px 0 6px;}
+  .flow.into{color:var(--amber);}
+  .d-foot{margin-top:18px;padding-top:12px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:10.5px;color:var(--steel-soft);}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .swatch{width:20px;height:0;border-top:1.5px solid var(--steel);}
+  .swatch.dash{border-top:1.5px dashed var(--amber-line);}
+
+  @media (max-width:560px){
+    h1{font-size:27px;}
+    .sheet{padding:20px 16px;}
+    body{padding:32px 16px 48px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">VCDesign · Field Note</div>
+  <div class="date">2026-07-17</div>
+  <h1>Re-derivation Layer</h1>
+  <p class="jp-title">再導出層 — ロボットの動作が"責任"に触れる場所</p>
+  <p class="position">VCDesign を、物理AI／OT境界に降ろすと現れる層。新しい方法論ではなく、適用ケース。</p>
+
+  <p class="lede">
+    自律ロボットが「P-102の点検、完了」と返す。信号としては正しい。だが——
+    <em>誰の権限で</em>それを"点検"と呼べるのか。<em>どの根拠で</em>"完了"と判断したのか。
+    そして半年後、別の担当が<em>「なぜこの判断は妥当だったのか」を再構成できる</em>のか。
+    動作は記録されている。意味と、その根拠は、どこにも無い。
+  </p>
+
+  <h2>スタックのどこが空いているか</h2>
+  <p>
+    ROS2 から設備へ出る変換は、実は二枚ある。通信・情報モデルの変換（A層）は、
+    ほぼ標準化された。OPC UA の Robotics Companion Spec は状態監視からタスク制御へ上がり、
+    搬送・フリートは VDA5050／Open-RMF が受ける。だが、動作を
+    <em>"運転責任と業務意味"へ変換する層</em>（B層）には、まだ標準が無い。
+  </p>
+
+  <figure>
+    <!-- ===== embedded architecture diagram ===== -->
+    <div class="sheet">
+      <div class="d-eyebrow">OT / IT BOUNDARY · ROBOTICS INTEGRATION</div>
+      <div class="d-title">ROS2 <span class="op">↔</span> 設備 変換スタック</div>
+      <p class="d-thesis">通信の変換（A層）はほぼ標準化された。空いているのは、動作を<b>運転責任と業務意味に変換するB層</b>である。</p>
+
+      <div class="stack">
+        <div class="band biz">
+          <div class="tier">
+            <div><div class="name">業務・意味の世界</div>
+              <div class="sub">SCADA · MES · CMMS · EAM · 品質 / コンプラ記録</div></div>
+            <div class="chip">上位業務システム</div>
+          </div>
+        </div>
+
+        <div class="flow into">▼ 業務記録・現場判断が降りてくる</div>
+
+        <div class="seam">
+          <div class="tier">
+            <div class="name">B層 — 運転責任・業務意味変換 ＝ Re-derivation Layer</div>
+            <div class="chip gap">標準不在 / THE SEAM</div>
+          </div>
+          <div class="pressure">
+            <div class="p"><span class="ar">↑</span>A層が上昇（状態 → タスク制御）</div>
+            <div class="p"><span class="ar">↓</span>業務層が降下（作業記録・判断）</div>
+            <div class="p"><span class="ar">→</span>フリート標準（VDA5050 / RMF）</div>
+          </div>
+          <div class="xform">
+<span class="k">NavigateTo(x,y)</span>&nbsp;&nbsp;<span class="to">→</span><span class="m">「P-102 の点検」</span>
+<span class="k">FollowWaypoints</span>&nbsp;<span class="to">→</span><span class="m">「原料補給のための搬送」</span>
+<span class="k">CaptureImage</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="to">→</span><span class="m">「警報 A-17 の現場確認」</span>
+          </div>
+          <div class="missing">
+            <span class="lead">三者とも自分の側しかモデル化せず、中央が縫い目として残る。欠けているのは——</span>
+            <b>誰の権限で</b> ・ <b>どの根拠で</b> ・ <b>後任が"なぜ"を再構成できるか</b>
+            &nbsp;→&nbsp; <code>re_derivation_basis</code>
+          </div>
+        </div>
+
+        <div class="flow">▲ 動作プリミティブを持ち上げる</div>
+
+        <div class="band conv">
+          <div class="tier">
+            <div class="name">A層 — 通信・情報モデル変換</div>
+            <div class="chip ok">標準ほぼ確立</div>
+          </div>
+          <div class="std">
+            <div>北向き（設備 / OT）&nbsp;&nbsp;<span>OPC UA</span> <em>— Robotics Companion Spec v1.02 (2025-10, task/control 到達)</em></div>
+            <div>搬送 / フリート&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>VDA5050</span> <em>·</em> <span>Open-RMF</span></div>
+          </div>
+        </div>
+
+        <div class="flow">▲</div>
+
+        <div class="band">
+          <div class="tier">
+            <div><div class="name">ロボット内部ミドルウェア</div>
+              <div class="sub">ROS2 / DDS — topic · action · service</div></div>
+            <div class="chip">機体内</div>
+          </div>
+        </div>
+
+        <div class="flow">▲</div>
+
+        <div class="band field">
+          <div class="tier">
+            <div><div class="name">物理層</div>
+              <div class="sub">ロボット · AMR · マニピュレータ · PLC / センサ · 設備</div></div>
+            <div class="chip">フィールド</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-foot">
+        <div class="legend">
+          <span><span class="swatch"></span>標準確立</span>
+          <span><span class="swatch dash"></span>標準不在（本命の空白）</span>
+        </div>
+        <div>出典: VDMA OPC UA Robotics Companion Spec Part 1.02 (2025-10)</div>
+      </div>
+    </div>
+    <figcaption>Fig. ROS2 ↔ 設備 変換スタック。A層は標準化、B層＝Re-derivation Layer は空白。</figcaption>
+  </figure>
+
+  <h2>再導出層とは</h2>
+  <p>
+    再導出層は、<code>NavigateTo(x,y)</code> を「P-102の点検」に、<code>CaptureImage</code> を
+    「警報A-17の現場確認」に変える層だ。ただし、意味の付け替えだけでは足りない。
+    <em>誰の権限で・どの根拠で</em>、そして<em>後任が"なぜ"を再構成できるか</em>を一緒に運ぶ。
+  </p>
+  <p>
+    この最後の一点を VCDesign は <code>re_derivation_basis</code> と呼ぶ。
+    所有者名（誰の担当か）を継承するのではなく、判断の根拠（なぜ妥当だったか）を継承する。
+    RACI でも ADR でも ISO の owner-tracking でも、ここは埋まらない。
+    <span class="quiet">＝ VCDesign が RACI 等と分かれる核心が、そのまま B層 の中身になる。</span>
+  </p>
+
+  <h2>なぜ今か</h2>
+  <p>
+    フィジカルAI の基盤モデルが現場へ降りてくると、ロボットは"動く"ようになる。
+    A層 は上へ伸び、B層 の縁に触れる。三方向——下（ロボットの companion spec）、
+    横（フリート標準）、上（MES / CMMS）——がこの縫い目に迫るが、どれも自分の側しか
+    モデル化しない。中央の責任・意味は、誰のものにもならないまま残る。
+  </p>
+
+  <h2>最初に効くのはどこか</h2>
+  <p>
+    規制製造——医薬・化学・食品。自律ロボの点検・現場確認の結果がバッチ記録や
+    コンプラ判断に流れる瞬間、その判断根拠の監査可能性が<em>"法的に"</em>要求される。
+    「あれば良い」ではなく「無いと通らない」に変わる。歯があるのはここだ。
+  </p>
+
+  <div class="foot">
+    これは製品ではない。<b>標準化が及ぶ前に、この層に名前を付けて置いておく</b>ための記述。<br>
+    Re-derivation Layer（再導出層）／ VCDesign 適用ケース ／ <b>2026-07-17</b><br>
+    関連: <code>re_derivation_basis</code> — VCDesign tenure model の内部 primitive
+  </div>
+
+</div>
+</body>
+</html>
