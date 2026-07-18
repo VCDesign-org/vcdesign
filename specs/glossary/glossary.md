@@ -25,7 +25,8 @@ Definitions of terms used in VCDesign and UVW (Unstable Value World).
 ## Term: Continuity (Value Continuity)
 **EN:** The state of value being maintained over time through active re-verification. The primary goal of VCDesign.  
 **JA:** 能動的な再検証によって、時間の経過に関わらず価値が維持されている状態。VCDesignの主要な目的。  
-**References:** [Continuity Claim](../core/continuity-claim.yaml)  
+**Notes:** Formerly specified as a standalone "Continuity Claim" protocol; its handshake mechanics were integrated into Resolution Handshake.  
+**References:** [Resolution Handshake](../protocols/resolution-handshake.yaml)  
 
 ## Term: Haltability
 **EN:** The property that a system can be interrupted, safely halted, and brought under accountable human intervention.  
@@ -58,11 +59,13 @@ Definitions of terms used in VCDesign and UVW (Unstable Value World).
 **EN:** The act of explicitly signing (Accepted), denying (Denied), or declaring unknown (Unknown) on a specific Judgment Proposal.  
 **JA:** 特定の判断提案に対して、明示的に署名（承認）、拒否（否認）、または不明（判断不能）を宣言する行為。  
 **References:** [Judgment Closure Protocol](../protocols/judgment-closure.yaml)  
+**Canonical definition:** [Core Glossary](../core/glossary.md) — consult it, not this entry, for conformance-relevant wording.
 
 ## Term: RCA (Responsibility Closure Agent)
 **EN:** A structural pattern for an agent that guards a Boundary and performs Judgment Closure.  
 **JA:** 境界（Boundary）を監視し、判断の閉包（Judgment Closure）を実行するエージェントの構造パターン。  
 **References:** [RCA Pattern](../patterns/rca-pattern.yaml)  
+**Canonical definition:** [Core Glossary](../core/glossary.md) — consult it, not this entry, for conformance-relevant wording.
 
 ## Term: Physical Loop
 **EN:** The execution loop that handles continuous dynamics, stability, and real-world actuation.  
@@ -83,6 +86,7 @@ Definitions of terms used in VCDesign and UVW (Unstable Value World).
 **EN:** A Responsibility Asset promoted by Resolution Handshake into a committed Action with a specified Responsible Actor, Scope, and Expiry.  
 **JA:** Responsibility Asset が Resolution Handshake によって、責任ある主体（Responsible Actor）、適用範囲（Scope）、有効期限（Expiry）を持つコミット済みの行動（Action）へ昇格したもの。  
 **References:** [Resolution Handshake Protocol](../protocols/resolution-handshake.yaml)  
+**Canonical definition:** [Core Glossary](../core/glossary.md) — consult it, not this entry, for conformance-relevant wording.
 
 ## Term: Resolution Handshake
 **EN:** A protocol that defines how a Closed Judgment is promoted to a Resolution (Responsibility Commitment).  
@@ -93,7 +97,8 @@ Definitions of terms used in VCDesign and UVW (Unstable Value World).
 ## Term: Responsibility Asset
 **EN:** A responsibility-bearing judgment effectively created by `Judgment Closure = ACCEPTED`. It is distinct from Resolution because it is not yet necessarily an executable committed action.  
 **JA:** `Judgment Closure = ACCEPTED` によって実質的に生成される責任付き判断。まだ必ずしも実行可能なコミット済み Action ではないため、Resolution とは区別される。  
-**References:** [Judgment Closure Protocol](../protocols/judgment-closure.yaml), [Core Glossary](../core/glossary.md)
+**References:** [Judgment Closure Protocol](../protocols/judgment-closure.yaml)  
+**Canonical definition:** [Core Glossary](../core/glossary.md) — consult it, not this entry, for conformance-relevant wording.
 
 ## Term: Responsibility
 **EN:** The state of being answerable for the consequences of a Judgment. In UVW, this is a scarce resource.  

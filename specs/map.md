@@ -5,6 +5,8 @@ VCDesignの現行authorityは以下で構成される
 - core/core.yaml
 - core/policies.yaml
 - core/metrics.yaml
+- core/axioms.yaml（A1〜A5：すべての仕様の基底となる公理）
+- core/decision-posture.yaml（defer/commit/reconsider/abandon の規範的定義）
 - patterns（RCL等）は「Coreへの適用構造」
 - legacy配下は「歴史的ドキュメントであり現行仕様ではない」
 

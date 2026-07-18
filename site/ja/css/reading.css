@@ -154,6 +154,27 @@ footer {
     opacity: 0.6;
 }
 
+.site-nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 18px;
+    margin-bottom: 14px;
+    opacity: 1;
+}
+
+.site-nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    transition: color var(--transition-fast, 0.18s ease-out);
+}
+
+.site-nav-links a:hover {
+    color: var(--accent);
+}
+
 @media (max-width: 600px) {
     h1 {
         font-size: 1.6rem;
