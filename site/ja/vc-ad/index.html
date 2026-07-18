@@ -45,6 +45,11 @@
                 <li><strong>Component：</strong> それらがどこに適用されるか（適用範囲）</li>
             </ul>
             <p>
+                現行のリファレンス実装（v0.2）では、Boundary と Closure は単一の <strong>Contract</strong>
+                ファイル（<code>vcad.contract.yaml</code>）に統合されています。リソース・副作用に関する
+                must/must-not ポリシーと、失敗時の閉じ方を定める observability / IO 契約として記述されます。
+            </p>
+            <p>
                 これらを構造化することで、「実装はAIによって高速に使い捨てられ、価値ある設計だけが連続する」 開発を実現します。
             </p>
         </section>
@@ -122,16 +127,15 @@
             <div class="prompt-wrapper">
                 <textarea id="vc-ad-prompt" class="prompt-box" readonly>以下のVC-ADプロトコル（YAML）を読み込んでください：
 
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/decisions/decisions.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/boundaries/boundaries.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/connections/connections.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/closures/closures.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/components/components.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/19af05f73c3a62b17aae8ce4ddd7f828cfa9e521/decisions/decisions.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/19af05f73c3a62b17aae8ce4ddd7f828cfa9e521/contracts/vcad.contract.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/19af05f73c3a62b17aae8ce4ddd7f828cfa9e521/connections/connections.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/19af05f73c3a62b17aae8ce4ddd7f828cfa9e521/components/components.yaml
 
 対象: <component_id>（例: comp-payment-01）
 このコンポーネントの paths 配下を実装してください。
-適用される Boundaries / Connections / Closures に必ず従い、
-失敗時は Closure の定義に従って責務を閉じてください。</textarea>
+適用される Contracts（must/must-not ポリシー）と Connections に必ず従い、
+失敗時は vcad.contract.yaml に定義された observability / IO 契約に従って責務を閉じてください。</textarea>
 
                 <div class="prompt-actions">
                     <button type="button" class="btn-copy" id="copy-btn">コピー</button>
@@ -151,7 +155,8 @@
             <ul>
                 <li><strong>目的：</strong> 永続化データや外部連携など、取り返しのつかない箇所を保護する</li>
                 <li>永続化・運用・責任が発生する地点を見つける</li>
-                <li>そこに「壊してはいけない条件（must/must-not）」をBoundaryとして定義する</li>
+                <li>そこに「壊してはいけない条件（must/must-not）」をBoundaryとして定義する
+                    （v0.2 では <code>vcad.contract.yaml</code> のリソース／副作用ポリシーとして記述）</li>
                 <li>例：PIIを外へ出さない／監査ログ必須／OT制御系へ直接書き込まない</li>
             </ul>
 
@@ -165,7 +170,8 @@
             <h3>Step 3: Closureの実装（失敗しても安全に終わらせる）</h3>
             <ul>
                 <li><strong>目的：</strong> 異常が発生しても、システム全体を壊さずに安全に停止させる</li>
-                <li>各Connectionに対して、失敗時の終わらせ方をClosureとして定義する</li>
+                <li>各Connectionに対して、失敗時の終わらせ方をClosureとして定義する
+                    （v0.2 では <code>vcad.contract.yaml</code> の observability / IO 契約として記述）</li>
                 <li>リトライ／タイムアウト／サーキットブレーカー／冪等性／補償／人へのエスカレーション</li>
                 <li>目標は「失敗しても責務が閉じる」状態を作ること</li>
             </ul>
@@ -182,20 +188,28 @@
         <section>
             <h2 class="usage-title">YAML プロトコルによる実装</h2>
             <p>
-                VC-AD は、<code>decisions.yaml</code>, <code>boundaries.yaml</code> などのプロトコルとして具体化されています。<br>
+                VC-AD は、<code>decisions.yaml</code>, <code>vcad.contract.yaml</code> などのプロトコルとして具体化されています。<br>
+                （v0.2 で、従来の <code>boundaries.yaml</code> / <code>closures.yaml</code> は Contract に統合されました。）
             </p>
 
-            <h3>例：boundaries.yaml (Snippet)</h3>
-            <pre class="code-block"><code>boundaries:
-  # PII（個人情報）をマスクせずに記録してはならない
-  - id: "b-logging-04"
-    name: "pii-privacy-protection"
-    description: "PII（個人情報）をマスクせずに記録してはならない"
-    type: "invariant"
-    derived_from_decisions: ["d-logging-04"]</code></pre>
+            <h3>例：vcad.contract.yaml (Snippet)</h3>
+            <pre class="code-block"><code>policies:
+  side_effect_policy:
+    # 運用ログにスタックトレースや生のPIIを含めてはならない
+    - category: "logging_content"
+      description: "Operational logs must not contain stack traces or raw PII."
+      level: "restricted"
+      tags: ["log", "pii"]
+
+contracts:
+  observability_contract:
+    - event: "RetryAttempted"
+      description: "Must emit RetryAttempted event on transient failures."
+      required_fields: ["event", "attempt", "error"]</code></pre>
 
             <p>
-                これらは次のリポジトリで「参照実装 (Reference Protocol Set)」として公開されています。
+                これらは次のリポジトリで「参照実装 (Reference Protocol Set)」として公開されており、
+                契約を強制する Gatekeeper ツール群（Lint / Runtime / Process）も含まれています。
             </p>
             <ul class="link-list">
                 <li>
@@ -209,6 +223,7 @@
 
         <section>
             <h2 class="usage-title">リサーチ</h2>
+            <p>以下のレポートは、著者の依頼により AI の Deep Research（LLMによる調査）を用いて作成したものです。</p>
             <ul class="link-list">
                 <li>
                     <a class="link-anchor" href="2026-01-deepresearch.pdf">

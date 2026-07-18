@@ -50,6 +50,11 @@
                     <li><strong>Component:</strong> Where do these apply (Scope of application)</li>
                 </ul>
                 <p>
+                    In the current reference implementation (v0.2), Boundary and Closure are written together in a
+                    single <strong>Contract</strong> file (<code>vcad.contract.yaml</code>): must/must-not policies for
+                    resources and side effects, plus observability / IO contracts for how failure must close.
+                </p>
+                <p>
                     By structuring these, we realize development where "implementations are disposable by AI at high
                     speed, but only valuable designs are continuous."
                 </p>
@@ -136,16 +141,16 @@
                 <div class="prompt-wrapper">
                     <textarea id="vc-ad-prompt" class="prompt-box" readonly>Please read the following VC-AD protocols (YAML):
 
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/decisions/decisions.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/boundaries/boundaries.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/connections/connections.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/closures/closures.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/components/components.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/19af05f73c3a62b17aae8ce4ddd7f828cfa9e521/decisions/decisions.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/19af05f73c3a62b17aae8ce4ddd7f828cfa9e521/contracts/vcad.contract.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/19af05f73c3a62b17aae8ce4ddd7f828cfa9e521/connections/connections.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/19af05f73c3a62b17aae8ce4ddd7f828cfa9e521/components/components.yaml
 
 Target: <component_id> (e.g., comp-payment-01)
 Implement the paths under this component.
-You must follow the applied Boundaries / Connections / Closures.
-In case of failure, close the responsibility according to the Closure definition.</textarea>
+You must follow the applied Contracts (must/must-not policies) and Connections.
+In case of failure, close the responsibility according to the observability and IO
+contracts defined in vcad.contract.yaml.</textarea>
 
                     <div class="prompt-actions">
                         <button type="button" class="btn-copy" id="copy-btn">Copy</button>
@@ -167,7 +172,8 @@ In case of failure, close the responsibility according to the Closure definition
                     <li><strong>Purpose:</strong> Protect irreversible areas such as persistent data and external
                         integration</li>
                     <li>Find points where persistence/operation/responsibility occur</li>
-                    <li>Define "Conditions that must not be broken (must/must-not)" as Boundary there</li>
+                    <li>Define "Conditions that must not be broken (must/must-not)" as Boundary there
+                        (recorded as resource / side-effect policies in <code>vcad.contract.yaml</code>)</li>
                     <li>Ex: Do not output PII / Audit log required / Do not write directly to OT control system</li>
                 </ul>
 
@@ -182,7 +188,8 @@ In case of failure, close the responsibility according to the Closure definition
                 <ul>
                     <li><strong>Purpose:</strong> Safely stop the system without breaking the whole even if an
                         abnormality occurs</li>
-                    <li>Define how to end upon failure for each Connection as Closure</li>
+                    <li>Define how to end upon failure for each Connection as Closure
+                        (recorded as observability / IO contracts in <code>vcad.contract.yaml</code>)</li>
                     <li>Retry/Timeout/Circuit Breaker/Idempotency/Compensation/Escalation to human</li>
                     <li>Goal is to create a state where "responsibility closes even if it fails"</li>
                 </ul>
@@ -199,21 +206,30 @@ In case of failure, close the responsibility according to the Closure definition
             <section>
                 <h2 class="usage-title">Implementation via YAML Protocol</h2>
                 <p>
-                    VC-AD is concretized as protocols like <code>decisions.yaml</code>,
-                    <code>boundaries.yaml</code>.<br>
+                    VC-AD is concretized as protocols like <code>decisions.yaml</code> and
+                    <code>vcad.contract.yaml</code>.<br>
+                    (Since v0.2, the former <code>boundaries.yaml</code> and <code>closures.yaml</code> are
+                    consolidated into the Contract.)
                 </p>
 
-                <h3>Example: boundaries.yaml (Snippet)</h3>
-                <pre class="code-block"><code>boundaries:
-  # Do not log PII (Personally Identifiable Information) without masking
-  - id: "b-logging-04"
-    name: "pii-privacy-protection"
-    description: "Do not log PII (Personally Identifiable Information) without masking"
-    type: "invariant"
-    derived_from_decisions: ["d-logging-04"]</code></pre>
+                <h3>Example: vcad.contract.yaml (Snippet)</h3>
+                <pre class="code-block"><code>policies:
+  side_effect_policy:
+    # Operational logs must not contain stack traces or raw PII
+    - category: "logging_content"
+      description: "Operational logs must not contain stack traces or raw PII."
+      level: "restricted"
+      tags: ["log", "pii"]
+
+contracts:
+  observability_contract:
+    - event: "RetryAttempted"
+      description: "Must emit RetryAttempted event on transient failures."
+      required_fields: ["event", "attempt", "error"]</code></pre>
 
                 <p>
-                    These are published as "Reference Protocol Set" in the following repository.
+                    These are published as "Reference Protocol Set" in the following repository, together with
+                    Gatekeeper tools (Lint / Runtime / Process) that enforce the contracts.
                 </p>
                 <ul class="link-list">
                     <li>
@@ -227,6 +243,7 @@ In case of failure, close the responsibility according to the Closure definition
 
             <section>
                 <h2 class="usage-title">Research</h2>
+                <p>The following report was produced with an AI deep-research tool at the author's request.</p>
                 <ul class="link-list">
                     <li>
                         <a class="link-anchor" href="2026-01-deepresearch.pdf">
