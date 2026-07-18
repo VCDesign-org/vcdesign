@@ -6,6 +6,10 @@
     <title>VC-AD — Value-Continuous AI Development</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="canonical" href="https://vcdesign.org/ja/vc-ad/">
+    <link rel="alternate" hreflang="en" href="https://vcdesign.org/vc-ad/">
+    <link rel="alternate" hreflang="ja" href="https://vcdesign.org/ja/vc-ad/">
+    <link rel="alternate" hreflang="x-default" href="https://vcdesign.org/vc-ad/">
 </head>
 
 <body>
@@ -14,6 +18,7 @@
         <header>
             <nav class="lang-nav">
                 <a href="../index.html" class="lang-link">← Home</a>
+                <a href="/vc-ad/" class="lang-link">English</a>
             </nav>
 
             <h1 class="hero-title">VC-AD</h1>
@@ -117,11 +122,11 @@
             <div class="prompt-wrapper">
                 <textarea id="vc-ad-prompt" class="prompt-box" readonly>以下のVC-ADプロトコル（YAML）を読み込んでください：
 
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/decisions/decisions.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/boundaries/boundaries.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/connections/connections.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/closures/closures.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/components/components.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/decisions/decisions.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/boundaries/boundaries.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/connections/connections.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/closures/closures.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/components/components.yaml
 
 対象: <component_id>（例: comp-payment-01）
 このコンポーネントの paths 配下を実装してください。
@@ -131,7 +136,7 @@
                 <div class="prompt-actions">
                     <button type="button" class="btn-copy" id="copy-btn">コピー</button>
                 </div>
-                <div class="prompt-note">※ ボタンを押すとプロンプト全体がコピーされます。</div>
+                <div class="prompt-note">※ ボタンを押すとプロンプト全体がコピーされます。<br>※ プロトコルURLは特定リビジョンに固定してあり、将来も再現可能です。</div>
             </div>
 
             <h3>Step 0: 無境界生成（まずはAIに暴れさせる）</h3>
@@ -206,7 +211,7 @@
             <h2 class="usage-title">リサーチ</h2>
             <ul class="link-list">
                 <li>
-                    <a class="link-anchor" href="2026-01deepreserch.pdf">
+                    <a class="link-anchor" href="2026-01-deepresearch.pdf">
                         <span class="label">2026-01 Deep Research</span>
                         <span class="desc">生成AI自動コーディング時代における価値継
                             続設計（VCDesign）と境界指向アーキテク

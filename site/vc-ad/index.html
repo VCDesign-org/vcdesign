@@ -6,6 +6,10 @@
     <title>VC-AD — Value-Continuous AI Development</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="canonical" href="https://vcdesign.org/vc-ad/">
+    <link rel="alternate" hreflang="en" href="https://vcdesign.org/vc-ad/">
+    <link rel="alternate" hreflang="ja" href="https://vcdesign.org/ja/vc-ad/">
+    <link rel="alternate" hreflang="x-default" href="https://vcdesign.org/vc-ad/">
 </head>
 
 <body>
@@ -14,6 +18,7 @@
         <header>
             <nav class="lang-nav">
                 <a href="../index.html" class="lang-link">← Home</a>
+                <a href="/ja/vc-ad/" class="lang-link">日本語</a>
             </nav>
 
             <h1 class="hero-title">VC-AD</h1>
@@ -131,11 +136,11 @@
                 <div class="prompt-wrapper">
                     <textarea id="vc-ad-prompt" class="prompt-box" readonly>Please read the following VC-AD protocols (YAML):
 
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/decisions/decisions.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/boundaries/boundaries.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/connections/connections.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/closures/closures.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/components/components.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/decisions/decisions.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/boundaries/boundaries.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/connections/connections.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/closures/closures.yaml
+- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/39f2ef508f1fa23c7192aebc559af7a84819a0ae/components/components.yaml
 
 Target: <component_id> (e.g., comp-payment-01)
 Implement the paths under this component.
@@ -145,7 +150,7 @@ In case of failure, close the responsibility according to the Closure definition
                     <div class="prompt-actions">
                         <button type="button" class="btn-copy" id="copy-btn">Copy</button>
                     </div>
-                    <div class="prompt-note">* Pressing the button copies the entire prompt.</div>
+                    <div class="prompt-note">* Pressing the button copies the entire prompt.<br>* Protocol URLs are pinned to a fixed revision so this prompt stays reproducible.</div>
                 </div>
 
                 <h3>Step 0: Unbounded Generation (Let AI run wild first)</h3>
@@ -224,7 +229,7 @@ In case of failure, close the responsibility according to the Closure definition
                 <h2 class="usage-title">Research</h2>
                 <ul class="link-list">
                     <li>
-                        <a class="link-anchor" href="2026-01deepreserch.pdf">
+                        <a class="link-anchor" href="2026-01-deepresearch.pdf">
                             <span class="label">2026-01 Deep Research</span>
                             <span class="desc">Academic consideration of Value Continuous Design (VCDesign) and Boundary
                                 Oriented Architecture (VC-AD/BOA) in the era of generative AI automated coding</span>
