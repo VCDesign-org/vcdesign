@@ -21,6 +21,7 @@ VCDesignの現行authorityは以下で構成される
 - **[Value Tenure Model](core/value-tenure-model.md)**: Design principle separating gate responsibility (点の責任: "is this correct now?") from tenure (線の責任: "who holds this over time?"). Anchors VCDesign's differentiation — tracking the movement of responsibility custody, which neither ADR nor SRE records.
 - **[Case Schema](core/schema_case.yaml)**: Data structure for cases. v0.2 adds tenure fields (value_intent, custody_chain, re_derivation_basis, review_triggers, last_reaffirmed).
 - **[Log Schema](core/schema_log.yaml)**: Data structure for decision logs. v0.2 adds tenure_event (custody transfer / reaffirmation / review trigger fired).
+- **[Non-Decision Record](core/non-decision-record.md)**: Records a boundary someone deliberately chose not to formalize, at the same granularity as a decision. Concept and required fields only — where it integrates into `schema_log.yaml` / `decision-posture.yaml` is an open question, not yet decided.
 
 > **Note**: **[RCL (Responsibility Closure Loop)](patterns/rcl/responsibility_closure_loop.yaml)** is a cross-cutting Standard.
 > It is not part of explicit Core/Protocols/Patterns layers, but guarantees design completion
@@ -70,3 +71,5 @@ VCDesignの現行authorityは以下で構成される
   - [Conformance Cases](validation/vcdesign-conformance-cases.md)
   - [Anti-Patterns](validation/vcdesign-anti-patterns.md)
 - **[Temporal Governance](policies/temporal-governance.md)**: Boundary between technical rollback and append-only responsibility trace.
+- **[Operational Policy Set](policies/operational-policy-set.md)**: Structure charter for a growing policy collection — every article requires a rule, a real failure precedent, and a stated stop point. Fixes the shape before Article 3+ are added.
+  - [Adjacent Boundary Observation & Non-Chain Coupling](policies/adjacent-boundary-observation.yaml): Article 1 (verification must include one boundary out, paired with confirming the neighbor does the same) and Article 2 (common-cause couplings — shared utilities, lot, operator, network/clock — must be handled by enumeration, since distance-based observation cannot reach them).
