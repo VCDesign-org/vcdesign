@@ -4,6 +4,22 @@ VCDesign (Value Continuity Design) is a set of specifications not for "how to bu
 
 > VCDesign is law; VC-AD is its implementation at the current technical level.
 
+### Positioning: an operational discipline, not just a notation (revised 2026-09)
+
+The notation layer — VC-AD / TDDD — is likely to be absorbed as loop-design
+for AI-driven development standardizes around a common language. VCDesign's
+center of gravity is not the notation itself, but the **operational
+discipline that stays attached to whoever holds responsibility**: recording
+"what we decided not to decide" at the same granularity as a decision,
+including one boundary out in every verification, and similar rules that
+depend on a verifier standardization cannot yet automate.
+
+Discipline does not travel as easily as notation — it requires shared
+context, not just a file anyone can drop in and try. So the notation layer
+is not being retired; it stays as **the entry point into the discipline**.
+Start by working through VC-AD / TDDD, then connect from there into the
+operational discipline.
+
 ## What is VCDesign?
 VCDesign is a design specification to prevent the loss of continuity in **Judgment**, **Responsibility**, and **Time / Operations** in highly automated systems.
 Core term: **Implementation Boundary Predefinition** (boundaries must be intentionally defined before implementation starts).

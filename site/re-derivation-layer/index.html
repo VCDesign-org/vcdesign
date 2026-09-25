@@ -123,14 +123,14 @@
 
   <h2>Where the stack is missing</h2>
   <p>
-    The transformation from ROS2 to equipment actually has two layers. The communication and information-model conversion (Layer A) is mostly standardized. OPC UA’s Robotics Companion Specification carries state monitoring upward toward task control, while fleet standards such as VDA5050 and Open-RMF handle transport and coordination. But the layer that transforms action into <em>operational responsibility and business meaning</em> (Layer B) still has no standard.
+    The transformation from ROS2 to equipment actually has two layers. The communication and information-model conversion (Layer A) is mostly standardized. OPC UA’s Robotics Companion Specification carries state monitoring upward toward task control, while fleet standards such as VDA5050 and Open-RMF handle transport and coordination. But the layer that transforms action into <em>operational responsibility and business meaning</em> (Layer B) is not merely unstandardized yet — it is <em>deliberately left unformalized</em>. Any criterion written down becomes a target for optimization; once an autonomous loop is aimed at a fixed criterion, the field converges on satisfying it rather than on what the criterion was meant to protect. Layer B stays open not because it is unfinished, but because keeping it open is the design decision.
   </p>
 
   <figure>
     <div class="sheet">
       <div class="d-eyebrow">OT / IT BOUNDARY · ROBOTICS INTEGRATION</div>
       <div class="d-title">ROS2 <span class="op">↔</span> Equipment Transformation Stack</div>
-      <p class="d-thesis">Communication conversion (Layer A) is largely standardized. What remains empty is the B layer, where action is translated into <b>ownership, responsibility, and business meaning</b>.</p>
+      <p class="d-thesis">Communication conversion (Layer A) is largely standardized. What remains open is the B layer, where action is translated into <b>ownership, responsibility, and business meaning</b> — a boundary left unformalized by design.</p>
 
       <div class="stack">
         <div class="band biz">
@@ -146,7 +146,7 @@
         <div class="seam">
           <div class="tier">
             <div class="name">B layer — Operational responsibility and business meaning conversion = Re-derivation Layer</div>
-            <div class="chip gap">Standard absent / THE SEAM</div>
+            <div class="chip gap">Deliberately unformalized / THE SEAM</div>
           </div>
           <div class="pressure">
             <div class="p"><span class="ar">↑</span>Layer A rises (status → task control)</div>
@@ -202,12 +202,12 @@
       <div class="d-foot">
         <div class="legend">
           <span><span class="swatch"></span>Standardized</span>
-          <span><span class="swatch dash"></span>Standard absent (the actual blank space)</span>
+          <span><span class="swatch dash"></span>Deliberately unformalized (the boundary itself)</span>
         </div>
         <div>Source: VDMA OPC UA Robotics Companion Spec Part 1.02 (2025-10)</div>
       </div>
     </div>
-    <figcaption>Fig. ROS2 ↔ equipment transformation stack. Layer A is standardized; Layer B = Re-derivation Layer remains the gap.</figcaption>
+    <figcaption>Fig. ROS2 ↔ equipment transformation stack. Layer A is standardized; Layer B = Re-derivation Layer remains deliberately unformalized.</figcaption>
   </figure>
 
   <h2>What the re-derivation layer is</h2>
@@ -223,7 +223,7 @@
 
   <h2>Why now</h2>
   <p>
-    As physical AI foundations descend into the field, robots become capable of moving. Layer A rises upward and touches the edge of Layer B. Three directions — below (robot companion specs), sideways (fleet standards), and above (MES / CMMS) — all press on this seam, but each models only its own side. The central issue of responsibility and meaning remains unowned by anyone.
+    As physical AI foundations descend into the field, robots become capable of moving. Layer A rises upward and touches the edge of Layer B. Three directions — below (robot companion specs), sideways (fleet standards), and above (MES / CMMS) — all press on this seam, but each models only its own side. The central issue of responsibility and meaning stays unowned unless someone explicitly decides to leave it unformalized — and keeps a record of having decided that.
   </p>
 
   <h2>Where it starts to help</h2>
@@ -232,8 +232,8 @@
   </p>
 
   <div class="foot">
-    This is not a product. It is a note written to <b>name this layer before standards reach it</b>.<br>
-    Re-derivation Layer / VCDesign application case / <b>2026-07-17</b><br>
+    This is not a product. It is a note written to <b>name this layer as a deliberately unformalized responsibility boundary, not a gap standards will eventually fill</b>.<br>
+    Re-derivation Layer / VCDesign application case / <b>2026-07-17</b> (revised 2026-09-14: reframed from "not yet formalized" to "deliberately unformalized")<br>
     Related: <code>re_derivation_basis</code> — an internal primitive of the VCDesign tenure model
   </div>
 

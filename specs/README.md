@@ -10,9 +10,9 @@ See the **[Specification Map](map.md)** for the full overview.
 *   **[core/](core/)**: **The Authority.** The minimal, unavoidable definitions of VCDesign.
     *   Start here to understand *why* and *what*.
     *   Key files: `core.yaml`, `policies.yaml`, `metrics.yaml`, `axioms.yaml`, `decision-posture.yaml`
-    *   Reading aids: `ai-adaptive-loop-model.md`, `agent-era-model.md`
+    *   Reading aids: `ai-adaptive-loop-model.md`, `agent-era-model.md`, `non-decision-record.md` (concept only — placement not yet decided)
 *   **[protocols/](protocols/)**: **The Procedures.** Standardized ways to close judgments and hand off responsibility.
-*   **[policies/](policies/)**: **Policy Clarifications.** Operational boundaries such as temporal governance and rollback traceability.
+*   **[policies/](policies/)**: **Policy Clarifications.** Operational boundaries such as temporal governance, rollback traceability, adjacent boundary observation, and non-chain coupling.
 *   **[patterns/](patterns/)**: **The Structures.** Reference patterns (Boundary, RCA, IDG, RCL) to implement the core.
 *   **[boundaries/](boundaries/)**: **The Boundary Taxonomy.** Canonical B-number registry and case studies of responsibility boundaries (B1–B17).
 *   **[chapters/](chapters/)**: **The Narratives (The "When").**  
