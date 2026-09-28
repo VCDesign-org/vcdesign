@@ -160,9 +160,13 @@ VCDesign には、根拠を次の判断へ渡す経路が三つある。いず�
 | Proceed | なし / fix | commit | small_go | keep_small の側 |
 | Expand | なし | なし | scale_go | tail_signal_observed |
 | Reframe | reframe | reconsider（再検討の段階） | なし | no_success_with_tail_signal |
-| Limit | なし / fix | commit（狭めた範囲で） | small_go | keep_small の側 |
+| Limit | なし / fix | commit（狭めた範囲で） | small_go（blast_radius を狭める宣言更新を伴うもの） | keep_small の側 |
 | Defer | defer | defer | defer | なし |
 | Retire | retire | abandon | no_go（未着手の場合） | neither |
+
+Limit は blast_radius を狭める宣言更新を伴う判断である。宣言更新を伴わない small_go は Proceed として記録する。
+長期判断の姿勢 `defer_or_experiment` は、狭めた blast_radius の宣言があれば Limit、なければ Defer として記録する
+（`core.yaml decision_vocabulary.long_term_posture_resolution`）。
 
 action は章のライフサイクル上の遷移であり、Decision とは別の軸である。
 Decision は `schema_log.decision` に、遷移の理由は `why_action` に記録する。

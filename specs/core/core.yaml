@@ -463,20 +463,23 @@ vcdesign_core:
         scale_gate_outcome: no_success_with_tail_signal
         blast_radius: 新しい章の前提に合わせて宣言し直す
       limit:
+        definition: >
+          blast_radius を狭める宣言更新を伴う判断。
+          宣言更新を伴わない small_go は Limit ではなく Proceed として記録する。
         action: none_or_fix
         decision_posture: commit       # 狭めた範囲での commit
-        decision_size: small_go        # 賭けの大きさを小さく取る場合
-        long_term_posture: medium_score  # defer_or_experiment の experiment の側
+        decision_size: small_go        # blast_radius を狭める宣言更新を伴う small_go
+        long_term_posture: medium_score  # defer_or_experiment のうち、狭めた blast_radius の宣言があるもの
         scale_gate_outcome: average_success_without_tail_signal  # keep_small の側
         blast_radius: >
-          scope（対象・権限）または max_loss（規模）を縮めて再宣言する。
+          scope（対象・権限）または max_loss（規模）を縮めて再宣言する（必須）。
           期間の限定は reversibility.reversal_window または resolution の expiry で表す。
           権限の限定は B17（Impact ↔ Accountability）の宣言と一致させる。
       defer:
         action: defer
         decision_posture: defer
         decision_size: defer
-        long_term_posture: medium_score  # defer_or_experiment の defer の側
+        long_term_posture: medium_score  # defer_or_experiment のうち、狭めた blast_radius の宣言がないもの
         scale_gate_outcome: none
         blast_radius: 保留中は現在の宣言を維持する
       retire:
@@ -492,7 +495,16 @@ vcdesign_core:
       - expand_requires_scale_gate_and_observed_positive_delta
       - average_outcome_alone_does_not_justify_expand
       - limit_is_a_scope_decision_not_a_halt
+      - limit_requires_a_narrowing_update_of_blast_radius
+      - small_go_without_narrowing_update_is_recorded_as_proceed
+      - defer_or_experiment_is_recorded_as_limit_if_a_narrowed_blast_radius_is_declared_otherwise_as_defer
       - decision_is_closed_by_human_final_decider
+    long_term_posture_resolution:
+      defer_or_experiment: >
+        長期判断の姿勢 defer_or_experiment は、一つの Decision に確定させて記録する。
+        狭めた blast_radius の宣言（scope または max_loss を縮めた再宣言と approved_by）があれば limit、
+        なければ defer として schema_log.yaml decision に記録する。
+        宣言のない「実験」は、上限のない試行になるため limit として扱わない。
     note: >
       Expand と Limit には対応する action がない。いずれも章を替えずに、
       blast_radius の宣言（どこまで広げてよいか・どこまでに留めるか）を更新する判断として定義する。
