@@ -2,7 +2,9 @@
 """Checks for the static site under site/.
 
 1. Internal links: every relative or root-absolute href/src points to an
-   existing file, and every #fragment exists in the target page.
+   existing file, and every #fragment exists in the target page. Links to
+   this repository on GitHub (blob/main/..., tree/main/...) point to an
+   existing file or directory with the matching route.
 2. Language parity: Japanese pages live at the root and English pages under
    en/, with the same structure. site/ja/ holds redirect pages only.
 3. v1 vocabulary: v1 decision words are used only in the archive, the
@@ -77,6 +79,26 @@ def parse(path):
     return c
 
 
+REPO_URL = re.compile(r"^https://github\.com/VCDesign-org/vcdesign/(blob|tree)/main/([^#?]*)")
+
+
+def check_repo_link(url):
+    """Links into this repository must use blob/ for files and tree/ for
+    directories, and the path must exist in this checkout."""
+    m = REPO_URL.match(url)
+    if not m:
+        return None
+    kind, path = m.group(1), unquote(m.group(2)).rstrip("/")
+    target = Path(path)
+    if not target.exists():
+        return f"repository path does not exist: {path}"
+    if kind == "blob" and target.is_dir():
+        return f"directory linked with blob/ (use tree/): {path}"
+    if kind == "tree" and target.is_file():
+        return f"file linked with tree/ (use blob/): {path}"
+    return None
+
+
 def resolve(page, url):
     parts = urlsplit(url)
     if parts.scheme or parts.netloc or url.startswith(("mailto:", "tel:", "javascript:")):
@@ -105,6 +127,10 @@ def main():
     # 1. links and fragments
     for page, c in parsed.items():
         for url in c.links:
+            problem = check_repo_link(url)
+            if problem:
+                errors.append(f"{page}: {problem} ({url})")
+                continue
             target, frag = resolve(page, url)
             if target is None:
                 continue
