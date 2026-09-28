@@ -69,8 +69,8 @@ chapter:
     - "Who is authorized to stop learning or optimization?"
     - "Does responsibility still match the current impact scope?"
 
-  recommended_posture:
-    decision_posture: defer
+  recommended_decision:
+    decision: defer
     rationale: >
       When reality reference cannot be explicitly justified,
       continued operation risks amplifying undetected divergence.
@@ -85,10 +85,6 @@ chapter:
 
   relevant_specs:
     core:
-      - ../core/decision-posture.yaml
-    protocols:
-      - ../protocols/judgment-closure.yaml
-      - ../protocols/resolution-handshake.yaml
+      - ../../core/core.yaml
     patterns:
-      - ../patterns/boundary-pattern.yaml
-      - ../patterns/rca-pattern.yaml
+      - ../../patterns/boundary-pattern.yaml

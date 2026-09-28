@@ -71,18 +71,18 @@ AI は Physical Loop（制御系）を直接操作しない。
 [Semantic Loop]
   センサーデータ → AI 解釈 → 異常候補 → 対応提案
                                          ↓
-                              オペレーター判断（Judgment Closure）
+                              オペレーターが判断を閉じる（decision）
                                          ↓
-                              制御系への指示（Resolution Handshake）
+                              制御系への指示（境界の guard: pass）
 ```
 
 `core.yaml / adaptive_loop_model` の `physical_loop.forbidden_components: llm_as_direct_controller` の実装。
 
 ---
 
-### 2. 異常の深刻度による判断分岐（Decision Posture の実装）
+### 2. 異常の深刻度による判断分岐（判断6語の事前設計）
 
-すべての異常を同じフローで処理しない。深刻度と時間緊急性で posture を事前設計する。
+すべての異常を同じフローで処理しない。深刻度と時間緊急性で、どの判断で閉じるかを事前設計する。
 
 ```yaml
 anomaly_response_design:
@@ -92,13 +92,13 @@ anomaly_response_design:
       - "Temperature exceeds safety threshold"
       - "Pressure beyond design limit"
       - "Vibration indicates imminent bearing failure"
-    posture: commit
+    decision: limit   # 対象設備を止め、影響範囲を狭める（policies.yaml haltability）
     owner: on_site_operator
     rationale: >
       Physical loop の安全を守るため、現場オペレーターが
-      証拠確認後に即時 commit する。停止の遅延は物理損傷・
+      証拠確認後に即時に停止して範囲を限定する。停止の遅延は物理損傷・
       人身事故リスクを高める。
-    required_before_commit:
+    required_before_decision:
       - sensor_reading_verified_not_faulty
       - operator_physically_present_or_reachable
       - action_within_operator_authority
@@ -108,7 +108,7 @@ anomaly_response_design:
     examples:
       - "Efficiency dropping but within safe range"
       - "Wear pattern suggests maintenance in 2 weeks"
-    posture: defer
+    decision: defer
     owner: maintenance_engineer
     rationale: >
       安全上のリスクはないため、次の保全サイクルまで
@@ -119,7 +119,7 @@ anomaly_response_design:
     examples:
       - "Anomaly score elevated but cause unclear"
       - "Multiple competing hypotheses"
-    posture: reconsider
+    decision: defer   # 境界の判定を unknown とし、証拠が揃うまで保留する
     owner: senior_engineer
     rationale: >
       追加情報収集と専門家による再評価が必要。
@@ -145,7 +145,7 @@ sensor_validity_check:
   failure_handling:
     sensor_fault_detected:
       action: halt_ai_interpretation
-      posture: defer
+      decision: defer
       reason: >
         B3 違反の可能性。センサー値の信頼性が確認されるまで
         AI 解釈を停止し、現場確認に切り替える。
@@ -197,7 +197,7 @@ temporal_separation:
     timescale: "minutes to hours"
     role: "異常解釈・原因仮説・対応提案"
     ai_role: "ログ解析・パターン検出・提案生成"
-    human_required: "Judgment Closure before action"
+    human_required: "a human decision before action"
 
   value_loop:
     timescale: "weeks to months"
@@ -218,7 +218,7 @@ halt_design:
 
   halt_triggers:
     - "Operator manual trigger (physical button or SCADA interface)"
-    - "AI interpretation halted by IDG (indeterminate signal)"
+    - "AI interpretation halted by the boundary guard (verdict: unknown)"
     - "Sensor validity check failed"
     - "Scope boundary crossed by AI recommendation"
 
@@ -251,7 +251,7 @@ operator_load_check:
 
   metric: operator_overload
   threshold: >
-    オペレーター1名あたりの Judgment Closure 要求が
+    オペレーター1名あたりの判断要求が
     シフトあたり X 件を超えた場合、AI の自律範囲を拡大するのではなく
     フィルタリング精度を改善する。
 ```
@@ -265,7 +265,7 @@ profile:
   context: Factory Operations Agent — Process Manufacturing
 
   layers:
-    model:            Defined      # AI は提案のみ、但し IDG 未実装
+    model:            Defined      # AI は提案のみ、但し unknown の判定は未実装
     agent:            Unstructured # AI から制御系への直接パスが存在する
     responsibility:   Defined      # 現場責任者は定義済み、承認トレースなし
     time:             Partial      # 即時異常と長期劣化の分離が不完全
@@ -278,7 +278,7 @@ profile:
 
   recommended_action: >
     CRITICAL: Remove direct AI-to-PLC path immediately.
-    All AI outputs must pass through operator Judgment Closure before physical actuation.
+    All AI outputs must pass through an operator decision before physical actuation.
     Name halt_owner for AI system (separate from physical safety officer).
 ```
 
@@ -287,7 +287,7 @@ profile:
 ## 「Governed」に到達した状態
 
 - AI と Physical Loop の間に Discrete-to-Continuous Boundary が実装されており、直接パスが存在しない
-- すべての設備制御提案に Judgment Closure 記録があり、オペレーター名・証拠・リスク承認が含まれる
+- すべての設備制御提案に判断ログがあり、オペレーター名・証拠・リスク承認が含まれる
 - `operator_overload` メトリクスがシフトごとに観測され、AI のアラート粒度が調整されている
 - センサー較正履歴と AI 解釈の妥当性が月次でレビューされている
 - Halt drill（AI 停止・Physical Loop 継続）が定期的に実施されている
@@ -298,8 +298,7 @@ profile:
 ## 関連仕様
 
 - `core/core.yaml` — adaptive_loop_model（Physical/Semantic/Value/Responsibility の分離）
-- `core/decision-posture.yaml` — commit（即時安全対応）/ defer（計画的保全）/ reconsider（曖昧信号）
-- `patterns/idg-pattern.yaml` — 曖昧センサーシグナルのゲート
+- `core/core.yaml` decision — limit（即時の停止と範囲限定）/ defer（計画的保全・曖昧信号）
+- `patterns/boundary-pattern.yaml` — guard の determinability（曖昧なセンサー信号は unknown）
 - `policies.yaml` — boundary_safety.discrete_to_continuous_boundary
-- `boundaries/taxonomy.md` — B2, B3, B6, B9, B10, B15
-- `validation/vcdesign-maturity-profile.md` — 診断フレームワーク
+- `catalog/boundaries/taxonomy.md` — B2, B3, B6, B9, B10, B15

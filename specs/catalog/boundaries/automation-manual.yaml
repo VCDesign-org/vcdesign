@@ -27,15 +27,12 @@ boundary:
     - No closure point for "should we proceed with this AI input scheme".
 
   recommended_handling:
-    decision_posture: defer
+    decision: defer
     rationale: >
       Automation without explicit workload integration
       creates hidden human cost and responsibility leakage.
-    protocols:
-      - judgment-closure
     patterns:
       - boundary-pattern
-      - rca-pattern
 
   expiry_and_revisit:
     required: true

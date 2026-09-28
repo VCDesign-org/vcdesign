@@ -1,68 +1,91 @@
-# VCDesign Pattern: Boundary Structure
-# Purpose: Define the generic structure of an "Explicit Verification Point" (Boundary).
+# VCDesign Pattern: Boundary
+# The single structural pattern of VCDesign v2. A boundary is a point where a crossing
+# is checked, losses are stopped, basis is passed on, and upstream conclusions are
+# re-checked. It absorbs the former RCA pattern, IDG pattern, Judgment Closure protocol
+# and Resolution Handshake protocol.
 
 id: "vcdesign-pattern-boundary"
-title: "Boundary Structure Pattern"
+title: "Boundary Pattern"
 layer: "pattern"
 status: "stable"
-version: "1.1.0"
+version: "2.0.0"
 
 meta:
-  concept: "A structural choke point where implicit values are blocked and explicit judgments are required."
-  implements: "vcdesign-core-decision-posture"
+  implements: "core.yaml boundary, decision"
+  note: >
+    境界での判定（guard verdict: pass / deny / unknown）は、個々の越境に対する検査である。
+    案件の Δ を閉じる判断（decision の6語）とは別物であり、判断の語彙を増やさない。
+    deny や unknown が繰り返される、または責任に影響する場合は Δ として観測し、判断6語で閉じる。
 
-# -------------------------------------------------------------------
-# Structure
-# -------------------------------------------------------------------
 boundary:
-  role: "The interface between Unverified Space (Outside) and Verified Space (Inside)."
 
-  components:
-    guard:
-      description: "The agent or logic responsible for the check."
-      reference: "vcdesign-pattern-rca"
+  guard:
+    description: 越境を検査する主体（人、ルール、または AI）。旧 RCA
+    verdicts:
+      pass: 越境を認める。宣言（scope・期限・証跡）の範囲内に限る
+      deny: 越境を止める。理由を必須とし、containment に従って閉じ込める
+      unknown: 判定できない。止めて露出させ、上位へ上げる。pass として扱わない（旧 IDG）
+    prohibitions:
+      - guard_does_not_optimize  # 最適化は判断ではない
+      - guard_does_not_define_value
+      - ai_guard_verdict_is_a_proposal_when_it_acts_on_a_case  # 案件に作用する場合は人間の判断で閉じる（axioms A3）
+    determinability:
+      description: 入力が判定に足りるかを先に確かめる。足りなければ unknown
+      rules:
+        - unknown_fails_safe_it_never_guesses
+        - unknown_is_exposed_not_hidden
+        - upside_with_unknown_cause_does_not_justify_expand
+    record: deny と unknown も pass と同じく記録する（責任の履歴）
 
-    handshake:
-      description: "The mechanism for promotion if accepted."
-      reference: "vcdesign-protocol-resolution-handshake"
+  tenure:
+    description: 境界そのものを誰が持ち続けるか（点の責任に対する線の責任）
+    fields:
+      owner: 境界の定義を保有し、見直しに責任を持つ主体（guard とは別）
+      accountability_on_cross: 無人の自律運用中に越境が起きた場合の責任帰属。事前に宣言する
+      drift_signals: 越境・逸脱・境界定義の陳腐化に気づく観点
 
-    tenure:
-      description: >
-        The continuity attribution of the boundary itself (v1.1.0).
-        A guard answers "is this crossing correct now?" (gate);
-        tenure answers "who holds this boundary over time?" (line).
-        See core/value-tenure-model.md.
-      fields:
-        owner:
-          description: >
-            この境界の現在の責任保有者。guard（チェックの実行主体）とは別に、
-            境界の定義そのものを保有し、見直しに責任を持つ主体。
-        accountability_on_cross:
-          description: >
-            越境が「誰も見ていない自律運用中」に起きた場合の責任帰属。
-            事後に押し付け先を探すのではなく、無人時間帯の帰属を事前に宣言する。
-            未宣言の場合、その境界は tenure 不在（gate のみ）とみなす。
-        drift_signals:
-          description: >
-            越境・逸脱・境界定義の陳腐化にどう気づくかの観点。
-            metrics.yaml の boundary_violation_rate / tenure_metrics と接続する。
+  containment:
+    description: 失敗を区画の外へ伝播させない（閉じる）。失敗と指令だけが対象
+    fields:
+      failure_domain: 閉じ込める障害区画（schema_case.yaml failure_domain）
+      propagation: deny（既定）/ attested_only / allow
+      max_loss: 区画内で許容する損失の上限（blast_radius.max_loss と同じ単位）
+      on_breach: quarantine / halt / deny
+      shared_dependencies: 区画をまたいで共有される依存先（隔壁の穴。metrics concentration の対象）
 
-# -------------------------------------------------------------------
-# Flow
-# -------------------------------------------------------------------
+  basis_flow:
+    description: >
+      根拠と残るものを通す（伝える）。containment の既定（deny）と逆向きの既定であり、
+      これが境界の非対称である。
+    fields:
+      passes: basis / evidence / residual_assets / positive_delta（結論そのものは含めない）
+      default: allow（既定）/ attested_only
+      restricted: 根拠そのものが損失を運ぶ場合（機密・権限を越える情報など）に限り、対象と理由を明示して止める
+      on_deny: deny の理由も根拠として流す（失敗は止め、学びは流す）
+
+  revalidation:
+    description: 上流の結論を引き継がず、前提・根拠・権限を境界で確かめ直す
+    fields:
+      upstream_trust: none（既定）/ attested
+      re_check: [precondition, evidence_freshness, authority]
+      on_mismatch: unknown
+
+  external_crossing:
+    description: >
+      検査する側と受け取る側が別の組織・エージェントの場合は、
+      識別・境界・権限を宣言してから越境する（Continuity Claim Protocol）。
+    required: [identity, declared_boundary, authority, signature]
+
 flow:
-  1. **Intercept**: All inputs must pause at the boundary.
-  2. **Assess**: The Guard (RCA) evaluates the input.
-  3. **Close**: The Guard issues ACCEPTED, DENIED, or UNKNOWN.
-  4. **Act**: 
-     - If ACCEPTED -> Handshake (Resolution).
-     - If DENIED -> Block.
-     - If UNKNOWN -> Escalate.
+  - intercept: すべての入力は境界で一度止まる
+  - determine: 判定に足りる入力か確かめる。足りなければ unknown
+  - revalidate: 上流の結論を確かめ直す
+  - verdict: pass / deny / unknown
+  - contain: deny は containment に従って閉じ込める
+  - pass_basis: 判定にかかわらず、根拠と残るものは basis_flow に従って流す
 
-# -------------------------------------------------------------------
-# Application
-# -------------------------------------------------------------------
 application:
-  - "Use at system ingress (API Gateways)."
-  - "Use at critical value transitions (e.g. LLM output to User)."
-  - "Use between untrusted components."
+  - システムの入口（API ゲートウェイなど）
+  - AI の出力が現実の実行や利用者に届く手前
+  - 信頼できない構成要素の間
+  - 組織・エージェントをまたぐ受け渡し

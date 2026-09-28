@@ -1,342 +1,174 @@
 vcdesign_core:
-  version: 0.1
+  version: 2.0
 
   concept:
     description: >
-      VCDesignは、価値継続を目的とし、
-      章と責任の遷移によってシステムを構成する開発OSである。
-      現実運用においては、これは物理・意味・価値・責任の
-      ループを分離しつつ接続する適応構造として読まれる。
+      VCDesign は、Value Continuity（https://github.com/value-continuity/value-continuity）を
+      「判断と責任」の面から実装する方法論である。
+      Value Continuity の定義、Value Asymmetry Principle、5原則、Decision は正本に従い、
+      VCDesign では再定義しない。
+      VCDesign はそれらを実装するために、Δ・Chapter・Responsibility・Boundary・Declaration を定義する。
+      Δ は正本の一般的な意味（期待との差）を受けたうえで、その基準線・向き・扱いを
+      VCDesign の実装概念として定める。
+    skeleton: [残す, 見つける, 閉じる, 試す, 伝える]   # 正本の5原則。policies / metrics もこの順に並べる
 
+  # ---------------------------------------------------------------
+  # 1. primitives
+  # ---------------------------------------------------------------
   primitives:
-
     chapter:
-      description: >
-        価値を継続させるための責任配置単位
-
+      description: 価値を継続させるための責任配置単位。案件（case）は章の中で扱われる
     responsibility:
-      description: >
-        章を成立させる主体およびその配置
-
+      description: 章と案件を成立させる主体とその配置（owner / final_decider / custody）
     delta:
-      description: >
-        章の成立条件または責任配置の維持可能性が崩れた兆候
+      description: 期待（前提と価値）と実際との差。向き（polarity）を持つ。VCDesign の実装概念（正本の一般的な意味を受ける）
+    decision:
+      description: Δ を受けて人間が閉じる判断。値は正本の Decision の6語だけを用いる
 
-    action:
-      types:
-        - fix
-        - reframe
-        - defer
-        - retire
-
-    supervisor:
-      description: >
-        責任の消失を防ぎ、最終収束を行う章。
-        最終収束点として、すべての deferred 案件をクローズする義務がある。
-
+  # ---------------------------------------------------------------
+  # 2. flow
+  # ---------------------------------------------------------------
   flow:
-    name: PDΔA
-
-    # 継承エッセンス: narrative-model.yaml より
-    # 運用の物語: PDΔAサイクルは、システムが「漂流（Drift）」から「回復（Reframe）」するまでのナラティブを構造化したものである。
-
-    steps:
-      - precondition
-      - do
-      - delta
-      - action
-
+    name: PDΔD
+    steps: [precondition, do, delta, decision]
     definition:
-      precondition: 成立条件
+      precondition: 期待の宣言（前提＝成立条件と責任配置、価値＝value_intent、案件ごとの宣言）
       do: 実行・判断・表示
-      delta: ズレの観測
-      action: 遷移の選択
+      delta: 期待との差の観測（向きを付ける）
+      decision: 6語のいずれかで閉じ、宣言と状態を更新する
 
-  reality_fit_definition:
-    description: >
-      VCDesignが扱う価値継続は、
-      現実の運用系においては単一の制御ループではなく、
-      異なる時間スケールと責任を持つ複数のループの協調として現れる。
-
-  adaptive_loop_model:
-    description: >
-      現実適用におけるVCDesign Coreの上位説明。
-      PDΔAは各ループで観測・判断・遷移を起こす最小構造であり、
-      その統治は責任モデルの下に置かれる。
-      4ループ構造は独立した制御モデルではなく、
-      PDΔAサイクルを時間スケールと責任配置に沿って分解した表現である。
-
-    loop_layers:
-      - id: physical_loop
-        name: Physical Loop
-        role:
-          - stability
-          - execution
-          - continuous_dynamics
-        typical_timescale: ms_to_hours
-        relation_to_continuity: preserves_continuous_real_world_stability_and_execution
-        relation_to_responsibility: operates_within_constraints_defined_by_higher_responsibility
-        allowed_components:
-          - sensors
-          - actuators
-          - transactional_services
-          - deterministic_control
-        forbidden_components:
-          - llm_as_direct_controller
-          - autonomous_goal_redefinition
-          - final_authority_assignment
-        failure_mode: unstable_execution_or_real_world_harm
-        relation_to_delta: delta_emerges_as_continuous_deviation_or_operational_instability
-
-      - id: semantic_loop
-        name: Semantic Loop
-        role:
-          - interpretation
-          - delta_to_meaning
-          - discontinuous_inference
-        typical_timescale: seconds_to_days
-        relation_to_continuity: translates_continuous_change_into_discrete_meaning
-        relation_to_responsibility: supports_human_judgment_but_does_not_own_final_responsibility
-        allowed_components:
-          - llm
-          - classifiers
-          - analyzers
-          - human_review_tools
-        forbidden_components:
-          - direct_physical_actuation
-          - autonomous_final_decision
-          - autonomous_responsibility_assignment
-        failure_mode: misinterpretation_or_false_delta_reading
-        relation_to_delta: delta_is_interpreted_and_translated_into_candidate_meaning
-
-      - id: value_loop
-        name: Value Loop
-        role:
-          - objective
-          - constraints
-          - direction_of_optimization
-        typical_timescale: days_to_quarters
-        relation_to_continuity: defines_what_kind_of_continuity_is_worth_preserving
-        relation_to_responsibility: value_revision_requires_explicit_human_review_and_ownership
-        allowed_components:
-          - policy_models
-          - review_boards
-          - explicit_goal_definitions
-          - human_value_review
-        forbidden_components:
-          - llm_owned_objective_setting
-          - hidden_goal_shift
-          - unreviewed_policy_rewrite
-        failure_mode: optimization_drift_or_goal_corruption
-        relation_to_delta: delta_is_judged_against_stated_value_and_constraints
-
-      - id: responsibility_loop
-        name: Responsibility Loop
-        role:
-          - final_decision
-          - halt
-          - accountability
-        typical_timescale: immediate_to_cross_lifecycle
-        relation_to_continuity: preserves_governable_continuity_by_allowing_intervention_and_halt
-        relation_to_responsibility: holds_final_human_accountability_for_all_loop_coordination
-        governance_note: not_a_computational_loop_but_a_governance_structure_that_can_intervene_in_all_loops
-        allowed_components:
-          - human_final_decider
-          - supervisors
-          - audit_logs
-          - escalation_paths
-        forbidden_components:
-          - ai_final_authority
-          - untraceable_decision
-          - irreversible_action_without_halt_path
-        failure_mode: responsibility_loss_or_unstoppable_operation
-        relation_to_delta: delta_forces_accountable_judgment_and_action_selection
-
-    temporal_separation:
-      principle:
-        description: >
-          ループごとの時間定数を分離しない限り、
-          速い実行系と遅い価値判断系が相互に汚染し、
-          誤制御と責任喪失を招く。
-      rules:
-        - fast_loops_must_not_autonomously_rewrite_slow_loop_constraints
-        - semantic_updates_must_not_bypass_value_review
-        - value_revision_must_not_bypass_responsibility_judgment
-        - responsibility_loop_must_be_able_to_interrupt_all_lower_loops
-
-  long_term_judgment_model:
-    description: >
-      長期ループにおける判断は、未来予測ではなく、
-      予測不可能な世界でも価値継続を壊しにくい判断基準を
-      明示することで成立する。
-
-    applies_to:
-      - value_loop
-      - responsibility_loop
-      - structural_reframe
-      - irreversible_action
-      - long_term_business_or_system_direction
-
-    criteria:
-      survive_downside:
-        description: 下振れしても致命傷にならないか
-        hard_stop_if: false
-
-      within_circle:
-        description: 判断主体の能力の輪の内側か
-        hard_stop_if: false
-
-      lindy_aspect:
-        description: 時間を超えて残った原理・需要・知恵に接続しているか
-        hard_stop_if: false_when_reversible
-        hard_stop_if_irreversible: true
-
-      compounding_possible:
-        description: 時間とともに価値・信頼・知識が積み上がるか
-
-      trust_counterparty:
-        description: 相手が信頼可能で、責任を共有できるか
-        hard_stop_if: low
-
-      learn_asset:
-        description: 失敗しても学習資産・判断資産が残るか
-
-      reversible:
-        description: 小さく試し、撤退・縮小・修正できるか
-
-      energy_fit:
-        description: 判断主体の生活・気力・継続力に合うか
-
-    decision_posture:
-      high_score: small_go
-      medium_score: defer_or_experiment
-      low_score: deny_or_reframe
-
-    principle:
-      - long_term_decision_must_not_be_treated_as_prediction
-      - long_term_decision_must_define_bet_size
-      - irreversible_action_requires_human_final_decider
-      - ai_may_score_but_must_not_close_long_term_judgment
-
-    note: >
-      ここで重要なのは、Go / No-Go ではなく、Go の大きさを決めることです。
-
-  boundary_mediation:
-    description: >
-      AI適用は、非連続な知能出力を連続系へ安全に接続する境界設計問題として扱う。
-      Boundaryは変換層であるだけでなく、
-      責任の再確認または再配置を明示しなければならない切断点である。
-    continuous_to_discrete_boundary:
-      description: >
-        連続的な現象を意味解釈可能なΔ候補へ変換する境界。
-    discrete_to_continuous_boundary:
-      description: >
-        離散的な判断結果を現実の実行へ反映する前に安全制約へ通す境界。
-    requirements:
-      - safe_translation_required
-      - policy_check_required
-      - responsibility_trace_required
-      - halt_path_required
-
-  delta_definition:
-
-    levels:
-      - observation
-      - candidate
-      - confirmed
-
+  # ---------------------------------------------------------------
+  # 3. delta
+  # ---------------------------------------------------------------
+  delta:
+    levels: [observation, candidate, confirmed]
     rules:
       - transient_noise_is_not_delta
       - sustained_deviation_required
-      - responsibility_impact_required
+      - responsibility_impact_required   # negative: どの責任配置が崩れるか / positive: 誰が保有するか
+    baseline: >
+      前提は precondition（章の成立条件と責任配置を含む）、価値は value_intent として宣言する。
+      上振れの側の期待は schema_case.spread_signals.expected として追加で宣言できる。
+      両方の向きを同じ基準線で観測する。
+    polarity:
+      negative:
+        propagation: 伝播させない
+        handling: [localize, mitigate, close_if_needed]
+        route: 境界の guard（unknown は止めて上げる）→ containment → decision
+      positive:
+        observation: never_blocked      # 観測は止めない
+        preservation: never_blocked     # 保有者を付けて residual_assets に記録することは止めない
+        propagation:
+          requires: decision_expand     # 伝播可能にする＝伝播は Expand 判断で制御する（自動では広げない）
+          may_be_blocked: true          # Expand の前提が欠ければ Expand を止める
+        handling: [observe, interpret, make_reusable]
+        route: 観測 → value_intent に照らした意味づけ → 保有者付きで記録。広げるときは decision expand
+    asymmetry_rules:
+      - observing_and_holding_a_positive_delta_are_never_halted_quarantined_or_blocked
+      - propagating_a_positive_delta_requires_decision_expand_which_may_be_blocked
+      - mixed_observation_is_split_into_separate_positive_and_negative_deltas
+    unrecorded_polarity: negative
 
-  action_definition:
+  # ---------------------------------------------------------------
+  # 4. decision（正本 Decision の実装）
+  # ---------------------------------------------------------------
+  decision:
+    values:
+      proceed:
+        meaning: 現在の構造・現在の宣言のまま進める。章を替えない修正（旧 fix）はここに含む
+        next_state: active
+      expand:
+        meaning: 観測された Positive Δ に基づき、対象・規模・接続を広げる
+        requires: [observed_positive_delta, recovery_capability_confirmed, declaration_update]
+        next_state: active
+      limit:
+        meaning: 価値はあるが伝播範囲が広すぎるため、対象・権限・規模・期間を狭める
+        requires: [declaration_update]
+        next_state: active
+      reframe:
+        meaning: 価値・対象・境界・前提を再定義し、新しい章として責任を再配置する
+        requires: [new_precondition, new_owner, new_declaration]
+        next_state: reframed
+      defer:
+        meaning: 判断材料が揃うまで、責任付きで保留する
+        requires: [temporary_owner, next_review_at, defer_reason]
+        next_state: deferred
+      retire:
+        meaning: 次の価値生成につながらないため終了する（開始前の案件では、開始しない判断を含む）
+        requires: [release_responsibility, notify_dependents, residual_assets_handover]
+        next_state: retired
+    rules:
+      - decision_is_closed_by_a_human_final_decider
+      - a_closed_decision_authorizes_an_execution_scope_through_its_declaration
+      - execution_within_the_authorized_scope_needs_no_further_decision
+      - a_change_that_would_exceed_the_authorized_scope_is_a_delta_and_is_re_decided
+      - expand_and_limit_are_declaration_updates_recorded_as_before_and_after
+      - expand_widens_the_declaration_and_limit_narrows_it
+      - average_outcome_alone_never_justifies_expand
+      - a_trial_without_a_narrowed_declaration_is_not_limit
+      - no_other_decision_vocabulary_is_used
 
-    fix:
-      description: >
-        現在の章を維持したまま修正する
+  closure_loop:   # Responsibility Closure Loop（v1 RCL の核）
+    principle: >
+      Confirmed Δ must not remain ownerless or unresolved.
+      It remains under responsibility until closed by a decision.
+    scope:
+      - operation   # 運用中に観測された Δ
+      - design      # 設計時の未定義（Definition Gap）。実装開始前に判断で閉じる（実装境界事前定義）
+    rules:
+      - holding_does_not_lapse_between_confirmation_and_decision
+      - defer_is_a_closure_path_with_owner_and_review_not_an_escape
+      - a_definition_gap_left_open_at_implementation_start_is_a_confirmed_delta
 
-    reframe:
-      description: >
-        新しい章を生成し責任を再配置する
+  # ---------------------------------------------------------------
+  # 5. lifecycle
+  # ---------------------------------------------------------------
+  lifecycle:
+    states: [draft, active, drifting, deferred, reframed, retired]
+    rules:
+      - a_confirmed_negative_delta_moves_active_to_drifting
+      - drifting_must_be_closed_by_a_decision
+      - deferred_must_return_by_next_review_at
+      - retired_is_recorded_not_hidden
 
-    defer:
-      description: >
-        責任を上位章へ移送し保留する
+  # ---------------------------------------------------------------
+  # 6. declaration（案件ごとの宣言。フィールド定義は schema_case.yaml）
+  # ---------------------------------------------------------------
+  declaration:
+    upside: [value_intent, residual_assets, spread_signals]       # 残す・見つける
+    downside: [blast_radius, reversibility, failure_domain, depends_on]  # 閉じる・試す
+    continuity: [owner, custody_chain, re_derivation_basis, review_triggers]  # 残す・伝える
+    rules:
+      - residual_assets_without_a_holder_do_not_remain
+      - irreversible_case_must_declare_blast_radius_max_loss
+      - undeclared_blast_radius_is_treated_as_high_impact
 
-    retire:
-      description: >
-        価値継続を意図的に終了する
-
-  responsibility_model:
-
-    required_fields:
-      - owner
-      - supporters
-      - final_decider
-
+  # ---------------------------------------------------------------
+  # 7. responsibility
+  # ---------------------------------------------------------------
+  responsibility:
+    required: [owner, final_decider]
     constraints:
       - owner_must_exist
       - final_decider_must_be_human
-      - ai_cannot_be_final_decider
+      - owner_change_is_recorded_in_custody_chain
+      - responsibility_is_a_scarce_resource   # axioms A5
 
-  lifecycle:
+  # ---------------------------------------------------------------
+  # 8. boundary（詳細は patterns/boundary-pattern.yaml）
+  # ---------------------------------------------------------------
+  boundary:
+    rules:
+      - losses_are_stopped_by_containment
+      - basis_passes_by_basis_flow
+      - conclusions_are_revalidated_not_inherited
 
-    states:
-      - draft
-      - active
-      - drifting
-      - deferred
-      - fixed
-      - reframed
-      - retired
-
-    transitions:
-      drifting:
-        - fix
-        - reframe
-        - defer
-        - retire
-
-  responsibility_metrics:
-
-    base_metrics:
-      - owner_missing
-      - owner_conflict
-      - ai_overreach
-      - unresolved_duration_exceeded
-      - promise_broken
-
-    description: >
-      責任状態の異常を検出する指標群
-
-  constraints:
-
-    ai_usage:
-      allowed:
-        - analysis
-        - suggestion
-        - pattern_detection
-
-      forbidden:
-        - final_decision
-        - responsibility_assignment
-        - direct_physical_control
-        - autonomous_value_redefinition
-
+  # ---------------------------------------------------------------
+  # 9. invariants
+  # ---------------------------------------------------------------
   invariants:
-
     - responsibility_must_not_disappear
-    - every_defer_must_have_owner
-    - every_chapter_must_be_explainable
-    - delta_must_trigger_evaluation
-    - adaptive_loops_must_remain_under_responsibility_governance
-    - boundary_mediation_must_exist_between_discontinuous_inference_and_continuous_control
-    - capability_must_not_be_confused_with_authority
-    - high_speed_loops_must_not_rewrite_governance_without_explicit_review
-
-  final_definition:
-    description: >
-      AIとは、非連続な知能を連続系へ安全接続するための境界設計問題である。
-      自律的成長とは、異なる時間スケールのループ群が
-      責任統治の下で協調し、運用整合を改善し続ける適応構造である。
+    - every_confirmed_delta_is_closed_by_a_decision
+    - positive_delta_is_not_treated_as_an_anomaly
+    - every_decision_has_a_recorded_basis
+    - ai_does_not_hold_final_decision   # 拡張：AI 統制（policies.yaml ai_extension）

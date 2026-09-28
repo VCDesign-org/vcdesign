@@ -22,18 +22,15 @@ boundary:
     - Internal consistency increases while real-world validity decreases.
     - Divergence remains undetected due to stable internal metrics.
 
-  default_posture:
-    decision_posture: defer
+  default_decision:
+    decision: defer
     rationale: >
       Without explicit verification of real-world grounding,
       continued learning or optimization cannot be responsibly assumed valid.
 
   recommended_handling:
-    protocols:
-      - judgment-closure
     patterns:
       - boundary-pattern
-      - rca-pattern
 
   monitoring_signals:
     - Ratio of generated data in training inputs.

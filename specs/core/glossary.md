@@ -1,191 +1,157 @@
-# VCDesign Core Glossary
+# VCDesign Glossary
 
 ## Status
 
-Core terminology reference.
+Terminology reference for VCDesign v2.
 
-This file defines terms whose distinction affects VCDesign conformance.
-It complements the broader glossary in `../glossary/glossary.md`.
-
----
-
-## Judgment Proposal
-
-A proposed judgment that may be reviewed but is not yet closed.
-
-AI may produce or assist with a Judgment Proposal.
-AI must not convert its own proposal into final responsibility.
+Value Continuity, the Value Asymmetry Principle, the five principles and
+Decision are defined in the canonical repository
+[value-continuity/value-continuity](https://github.com/value-continuity/value-continuity).
+This glossary does not redefine them. It defines the terms VCDesign uses
+to implement them on the side of judgment and responsibility.
 
 ---
 
-## Judgment Closure
+## Structure
 
-The explicit act of closing a Judgment Proposal as:
+**Chapter** — A unit of responsibility placement that keeps a value alive.
+Cases are handled inside a chapter.
 
-- `ACCEPTED`
-- `DENIED`
-- `UNKNOWN`
+**Case** — A responsibility-bearing item observed and decided within a chapter
+(`schema_case.yaml`).
 
-Judgment Closure is defined by `../protocols/judgment-closure.yaml`.
-
----
-
-## Closed Judgment
-
-A Judgment Proposal after Judgment Closure.
-
-A Closed Judgment has an explicit closure state.
-Only `ACCEPTED` is promotable to Resolution Handshake.
+**PDΔD** — The minimal flow: precondition (declare the expectation) → do →
+delta (observe the gap, with polarity) → decision (close it with one of the six
+words).
 
 ---
 
-## Responsibility Asset
+## Delta and decision
 
-A responsibility-bearing judgment effectively created by:
+**Delta (Δ)** — A VCDesign implementation concept. It takes the general
+meaning given canonically (the gap between the declared expectation and what
+happened) and fixes its baseline, polarity and handling: the expectation is
+declared as `precondition` (including responsibility placement) and
+`value_intent`.
 
-```text
-Judgment Closure = ACCEPTED
-```
+**Negative Δ / Positive Δ** — The two polarities of a Delta. A Negative Δ is not
+propagated: localize, mitigate, close if needed. A Positive Δ is made
+propagable: observe, interpret, make reusable with a holder.
+Observing and holding a Positive Δ are never halted, quarantined or
+blocked. Propagating it is not automatic: it requires the decision Expand,
+which may be blocked when its preconditions are missing. "Propagable" means
+able to spread by decision, not spreading by itself. A Delta without a
+recorded polarity is treated as negative.
 
-A Responsibility Asset contains or refers to:
+**Decision** — The six canonical words: Proceed, Expand, Limit, Reframe, Defer,
+Retire (`core.yaml decision`). No other decision vocabulary is used. Expand and
+Limit are recorded as updates of `blast_radius` (before / after).
 
-- accepted judgment content
-- owner or responsible actor
-- evidence
-- timestamp
-- trace
-- scope or applicability
+**Closure Loop** — The core of v1's Responsibility Closure Loop, kept in
+`core.yaml closure_loop`: a confirmed Δ must not remain ownerless or
+unresolved; it remains under responsibility until closed by a decision. It
+applies both in operation and at design time, where an undefined point (a
+definition gap) is a Δ to be closed before implementation starts.
 
-A Responsibility Asset is not the same as a Resolution.
-It is an accepted responsibility-bearing judgment, not yet necessarily an
-executable committed action.
-
----
-
-## Resolution
-
-A Responsibility Asset promoted by Resolution Handshake into an executable
-commitment.
-
-```text
-Responsibility Asset
-  -> Resolution Handshake
-  -> Resolution
-```
-
-A Resolution must include:
-
-- responsible actor
-- scope
-- expiry or review condition
-- trace reference
-- committed Action when execution is required
-
-Resolution is defined by `../protocols/resolution-handshake.yaml`.
+**Judgment Gate** — The single gate through which every decision is closed by a
+human (`policies.yaml judgment_gate`). Its review follows the five principles.
 
 ---
 
-## Action
+## Boundary checks
 
-The executable response to a Delta.
+**Guard verdict** — The check on each crossing at a boundary: `pass`, `deny`
+(with a reason, contained), or `unknown` (stop, expose, escalate; never treated
+as pass). A verdict is not a decision. Repeated deny or unknown, or any verdict
+that affects responsibility, is observed as a Δ and closed with one of the six
+decisions (`patterns/boundary-pattern.yaml`).
 
-Canonical Action types are:
+**Determinability** — Whether the input is sufficient for a verdict. If not, the
+verdict is unknown. An upside whose cause is unknown does not justify Expand.
 
-- Fix
-- Reframe
-- Defer
-- Retire
-
-Action terms are defined in `core.yaml` and clarified by
-`../glossary/action-mapping.md`.
-
----
-
-## Delta
-
-A sign that a chapter's validity condition or responsibility placement may no
-longer hold.
-
-Delta is not only numerical deviation.
-For VCDesign conformance, Delta must be evaluated for responsibility impact.
+**Proposal** — Whatever an AI produces about a case is a proposal until a human
+closes the decision (axioms A3).
 
 ---
 
-## IDG
+## Responsibility（残す・伝える）
 
-Interface Determinability Gate.
+**Owner / Final decider / Supervisor** — The current holder of a case; the human
+who closes decisions; the final convergence point that prevents responsibility
+from disappearing.
 
-IDG determines whether an interface is determinate enough for judgment to
-continue.
+**Gate and Tenure（点の責任・線の責任）** — Approval at a gate ("is this correct
+now?") starts responsibility but does not sustain it. Tenure ("who holds this
+over time?") is continued custody that survives handovers, unattended
+operation and time.
 
-IDG is not a decision maker.
-If indeterminacy remains, the flow must halt, pause, or escalate rather than
-continue as implicit acceptance.
+**Custody Chain** — The append-only record of owner handovers, including whether
+the successor confirmed they can re-derive the judgment.
 
----
+**Reaffirmation** — The recorded confirmation, by a named human, that a standing
+decision is still valid. Required on custody transfer and when a review trigger
+fires; not on a calendar.
 
-## RCA
-
-Responsibility Closure Agent.
-
-An RCA guards a boundary and performs or supports Judgment Closure.
-It must not replace human final responsibility where VCDesign requires a human
-final decider.
-
----
-
-## RCL
-
-Responsibility Closure Loop.
-
-RCL ensures that every open Delta is assigned to an explicit Resolution path,
-including closure, deferral to a pool, or abort/termination according to the
-applicable pattern.
-
-RCL is a design-completion structure and does not bypass Judgment Closure or
-Resolution Handshake.
+**Re-derivation** — Three related terms, all implementing "pass on" (伝える):
+`re_derivation_basis` (across handovers, in time), `revalidation` (across
+boundaries, in space), and the Re-derivation Layer (translating a machine's
+action into business meaning, authority and basis in physical AI / OT
+integration).
 
 ---
 
-## Gate Responsibility（点の責任）
+## Declarations
 
-Responsibility anchored to the moment of approval: "Is this correct now?"
+**Residual Assets** — What remains when work, owner or technology changes:
+record, standard, basis, connection, capability. Each has a holder; without one
+it does not remain. A case with none is a point improvement.
 
-Judgment Closure, IDG, and execution gates implement gate responsibility.
-Passing a gate starts responsibility; it does not sustain it.
+**Spread Signals（広がりの兆候）** — Signs of wide spread through reuse and
+connection: cheaper second use, unsolicited pull, output used as input, more
+value per connection. Declared as `expected`, recorded as `observed` or
+`unexpected`, and evaluated separately from average outcome.
 
-Defined in `value-tenure-model.md`.
+**Blast Radius** — The pre-declared ceiling of failure: `scope` (range) and
+`max_loss` (size). Undeclared means high impact.
 
----
+**Reversibility** — Whether a decision can be withdrawn, reduced or corrected.
+System state may be reverted; responsibility records remain append-only.
 
-## Tenure（線の責任・継続責任）
-
-Responsibility as continued custody over time: "Who holds this, and how does it
-survive handovers, unattended autonomous operation, and drift?"
-
-Tenure is recorded through the tenure fields of `schema_case.yaml` (v0.2):
-`value_intent`, `custody_chain`, `re_derivation_basis`, `review_triggers`,
-`last_reaffirmed`. Tenure decays unless reaffirmed.
-
-Defined in `value-tenure-model.md`.
+**Failure Domain** — The compartment outside which a failure must not
+propagate.
 
 ---
 
-## Custody Chain
+## Boundary（曖昧さ回避）
 
-The append-only record of responsibility handovers for a case or decision:
-who transferred to whom, when, why, and whether the successor confirmed they
-can re-derive the judgment from its recorded basis.
+"Boundary" has several meanings. State which one is meant.
 
-A custody transfer is a responsibility event under `../policies/temporal-governance.md`
-and must not be overwritten or deleted.
+- **Responsibility boundary (B1–B17)** — A type of point where responsibility
+  must be made explicit (`catalog/boundaries/taxonomy.md`).
+- **Boundary structure** — The pattern that implements a responsibility
+  boundary: guard, tenure, containment, basis_flow, revalidation
+  (`patterns/boundary-pattern.yaml`). Failures are stopped by default
+  (containment), basis and residual assets pass by default (basis_flow), and
+  upstream conclusions are revalidated, not inherited.
+- **Failure domain** — See above. Its edge need not coincide with a
+  responsibility boundary.
+- **Continuous ↔ discrete boundary** — Where AI inference meets real-world
+  execution (`policies.yaml ai_extension`).
 
 ---
 
-## Reaffirmation
+## AI extension（VCDesign 固有）
 
-The explicit act of confirming that a standing decision is still valid,
-recorded in `last_reaffirmed` (by whom, when, on what basis).
+**Loops** — Physical (execution, continuous dynamics), Semantic (interpretation
+of deltas), Value (objectives and constraints), Responsibility (final decision,
+halt, accountability). Explained in `docs/ai-extension.md`.
 
-Reaffirmation must name a human confirmer. A decision that has passed its
-gate but is never reaffirmed is not held — it is only approved.
+**Temporal Separation** — Fast loops must not rewrite constraints set by slower
+loops without explicit re-judgment (axioms A4).
+
+**Haltability** — A system can be interrupted, safely halted and brought under
+accountable human intervention (`policies.yaml haltability`).
+
+**Operational Fit** — AI growth measured as improvement of fit under
+responsibility constraints, not as model capability (`metrics.yaml
+ai_extension`).

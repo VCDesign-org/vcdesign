@@ -18,8 +18,8 @@ tenure_check_fixture_clean:
     actor: dept_head
     type: human
 
-  action_history:
-    - action: fix
+  decision_history:
+    - decision: proceed
       at: 2026-06-15
       reason: review trigger 評価により決定を維持
 

@@ -27,15 +27,12 @@ boundary:
     - No closure point for "is this judgment explainable enough to proceed".
 
   recommended_handling:
-    decision_posture: defer
+    decision: defer
     rationale: >
       Judgments without shared meaning
       cannot be responsibly owned by humans.
-    protocols:
-      - judgment-closure
     patterns:
       - boundary-pattern
-      - rca-pattern
 
   expiry_and_revisit:
     required: true

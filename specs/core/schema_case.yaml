@@ -1,163 +1,144 @@
 vcdesign_case:
-  version: 0.2
+  version: 1.0
 
   concept:
     description: >
-      case は、章の中で生成・観測・処理され、
-      必要に応じて章間を移送される責任付き案件である。
-      version 0.2 で、承認の一点（Gate）だけでなく
-      承認後の継続保有（Tenure）を記録する optional フィールド群を追加した。
-      背景は core/value-tenure-model.md を参照。
+      case は、章の中で観測・判断され、必要に応じて章間を移送される責任付き案件である。
+      フィールドは core.yaml の declaration に沿って、Δ・責任・Upside・Downside・Continuity に分ける。
 
   required_fields:
     - case_id
     - chapter_id
-    - delta_level
-    - metrics_snapshot
     - current_state
     - owner
     - final_decider
-    - action_history
-
-  optional_fields:
-    - temporary_owner
-    - next_review_at
-    - deadline
-    - related_case_ids
-    - tags
-    # tenure fields (v0.2): 承認後の継続責任を記録する。value-tenure-model.md 参照
-    - value_intent
-    - original_author
-    - custody_chain
-    - re_derivation_basis
-    - review_triggers
-    - last_reaffirmed
+    - decision_history
 
   field_definitions:
 
-    case_id:
-      type: string
-      description: 一意な案件ID
-
-    chapter_id:
-      type: string
-      description: 現在この案件を扱っている章ID
-
-    delta_level:
-      type: enum
-      values:
-        - observation
-        - candidate
-        - confirmed
-      description: Δの確度レベル
-
-    metrics_snapshot:
-      type: object
-      description: >
-        観測時点の responsibility_metrics と evidence のスナップショット
-
+    # ---- 案件と状態 ----
+    case_id: {type: string, description: 一意な案件ID}
+    chapter_id: {type: string, description: 現在この案件を扱っている章ID}
     current_state:
       type: enum
-      values:
-        - draft
-        - active
-        - drifting
-        - deferred
-        - fixed
-        - reframed
-        - retired
-      description: 案件の現在状態
-
-    owner:
-      type: object
-      description: 現在の実行責任主体
-
-    temporary_owner:
-      type: object
-      description: Defer時などの暫定責任主体
-
-    final_decider:
-      type: object
-      description: 最終判断責任主体
-
-    next_review_at:
-      type: datetime
-      description: 次回レビュー時刻
-
-    deadline:
-      type: datetime
-      description: この案件の許容最終期限
-
-    action_history:
+      values: [draft, active, drifting, deferred, reframed, retired]
+    decision_history:
       type: array
-      description: >
-        Fix / Reframe / Defer / Retire を含む遷移履歴
+      description: 判断6語による遷移の履歴（追記のみ）
+      item_fields:
+        decision: proceed / expand / limit / reframe / defer / retire
+        at: 判断時刻
+        log_ref: schema_log の log_id
+    related_case_ids: {type: array, description: 関連する案件。混在した観測を分けた案件どうしの相互参照にも使う}
+    tags: {type: array}
 
-    value_intent:
-      type: string
+    # ---- Δ ----
+    delta_level:
+      type: enum
+      values: [observation, candidate, confirmed]
+    delta_polarity:
+      type: enum
+      values: [negative, positive]
+      default: negative
       description: >
-        この案件（またはその根拠となった決定）が生かし続けようとしている価値。
-        ドリフト（価値からのズレ）判定の基準線。
-        これが無い場合、Δ評価は前提条件のズレしか観測できない。
+        Δ の向き（core.yaml delta.polarity）。positive の案件は停止・隔離の流れに入れない。
+        一つの観測に両方の向きが含まれる場合は、別の案件に分けて related_case_ids で相互参照する。
+    metrics_snapshot: {type: object, description: 観測時点の指標と根拠}
 
-    original_author:
-      type: object
-      description: >
-        原起案者と起案時点。履歴として固定され、以後変更しない。
-        現在の責任保有者は owner が表す（owner は交代しうる）。
-
+    # ---- 責任（残す・伝える） ----
+    owner: {type: object, description: 現在の責任保有者}
+    temporary_owner: {type: object, description: Defer 中の暫定責任主体}
+    final_decider: {type: object, description: 判断を閉じる人間}
+    next_review_at: {type: datetime}
+    original_author: {type: object, description: 原起案者と起案時点。以後変更しない}
     custody_chain:
       type: array
       description: >
-        責任の継承履歴。owner の交代が起きるたびに追記する（append-only）。
-        temporal-governance.md の責任イベントとして扱い、削除・上書きしない。
+        責任の継承履歴。owner の交代ごとに追記する（追記のみ、policies.yaml temporal_governance）。
       item_fields:
-        from: 引き渡し元の責任主体
-        to: 引き受け先の責任主体
+        from: 引き渡し元
+        to: 引き受け先
         date: 引き渡し日時
-        reason: 交代理由（異動・退職・再編・過負荷再配分 等）
-        re_derivation_confirmed: >
-          引き受け先が re_derivation_basis から判断を
-          再導出できることを確認したか（yes / no / partial）
-
+        reason: 交代理由
+        re_derivation_confirmed: 引き受け先が re_derivation_basis から判断を再導出できると確認したか（yes / no / partial）
     re_derivation_basis:
       type: object
       description: >
-        後任がこの判断を再導出するために必要な前提・文脈・根拠。
-        「何を決めたか」ではなく「なぜそう判断できたか」を、
-        原決定者がいなくても辿れる形で残す。
-
+        後任や下流が判断を再導出するための前提・文脈・根拠。結論ではなく「なぜそう判断できたか」を残す。
     review_triggers:
       type: array
-      description: >
-        見直しが必要になる「条件」。時間経過ではなく事象で書く。
-        next_review_at が「いつ見るか」であるのに対し、
-        review_triggers は「何が変われば見るべきか」を定義する。
-        例: 依存ベンダーの変更、前提としていた規制の改定、
-        利用者構成の閾値超過、モデル・基盤の入れ替え。
-
+      description: 見直しが必要になる事象（時間ではなく、何が変われば見直すか）
     last_reaffirmed:
       type: object
+      description: 「今も有効」と確認した記録。custody 交代時と review_trigger 発火時に必須
+      fields: {by: 確認者, at: 時刻, basis: 根拠}
+
+    # ---- Upside（残す・見つける） ----
+    value_intent:
+      type: string
+      description: この案件が生かし続けようとしている価値。Δ の基準線
+    residual_assets:
+      type: array
       description: >
-        最後に「この判断は今も有効」と確認された記録。
-        Tenure は放置で減衰するため、by（確認者）と at（時刻）を持つ。
-        再確認の義務は事象駆動である（custody 交代時・review_trigger 発火時に必須）。
-        時間経過のみによる減衰は弱いシグナル（observation）として扱い、
-        定期打刻を強制しない。カレンダー駆動の再確認義務は、
-        review_triggers で退けた儀式化を reaffirmation に移すだけだからである。
+        業務・担当・技術が変わっても残るもの。空の案件は点の改善として扱う。
+      item_fields:
+        kind: record / standard / basis / connection / capability
+        description: 残るものの内容
+        survives: work_change / owner_change / technology_change
+        holder: 保有し続ける責任主体（保有者のいないものは残らない）
+    spread_signals:
+      type: object
+      description: >
+        広がりの兆候（再利用・接続によって大きく広がる兆候）の宣言と観測。
+        observed と unexpected は Positive Δ の記録であり、平均的な効果とは別に評価する。
       fields:
-        by: 確認した責任主体
-        at: 確認時刻
-        basis: 確認の根拠（review_trigger の評価結果 等）
+        expected: 広げる根拠として見る兆候（reuse_cost_decline / unsolicited_pull / output_as_input / value_per_connection / other）
+        observed: 宣言していた兆候の観測（signal / evidence / observed_at）
+        unexpected: 宣言していなかった兆候の観測。宣言外であることを理由に捨てない
+        average_outcome: 平均的な効果（met / partial / not_met）
+
+    # ---- Downside（閉じる・試す） ----
+    blast_radius:
+      type: object
+      description: >
+        失敗した場合に最大でどこまで壊れてよいかの事前宣言。scope は範囲、max_loss は大きさの上限。
+        expand / limit の判断はこの宣言の更新として記録する。未宣言は high_impact として扱う。
+      fields:
+        scope: 影響が及んでよい範囲
+        max_loss: {unit: 損失の単位（章で定義）, value: 上限値}
+        declared_by: 宣言した責任主体
+        approved_by: 承認した責任主体
+        on_exceed: halt / quarantine / escalate
+    reversibility:
+      type: object
+      description: 撤回・縮小・修正できるかの宣言。状態は戻せるが、責任記録は追記のみ
+      fields:
+        class: reversible / costly / irreversible
+        reversal_path: 撤回の手段
+        reversal_window: いつまで撤回できるか
+        reversal_owner: 撤回を判断・実行する責任主体
+    failure_domain:
+      type: string
+      description: この案件が属する障害区画。patterns/boundary-pattern.yaml containment と対応
+    depends_on:
+      type: array
+      description: 依存する共通資源・外部主体・判断経路。metrics concentration の観測対象
+    upstream_basis_refs:
+      type: array
+      description: 前提として受け取った上流の判断と、境界での再検証結果
+      item_fields:
+        case_id: 上流の案件ID
+        revalidated_at_boundary: 再検証した境界
+        result: yes / no / partial
 
   invariants:
-    - every_case_must_have_owner_or_temporary_owner
-    - deferred_case_must_have_next_review_at
-    - every_case_must_be_traceable
-    - action_history_must_not_be_empty_once_delta_confirmed
-    # tenure invariants (v0.2)
-    - owner_change_must_append_custody_chain_entry
-    - custody_chain_must_be_append_only
-    - review_triggers_must_be_event_based_not_calendar_based
-    - case_with_custody_chain_must_have_re_derivation_basis
-    - reaffirmation_is_required_on_custody_transfer_and_trigger_fire_not_on_calendar
+    - every_case_has_owner_or_temporary_owner
+    - deferred_case_has_next_review_at
+    - confirmed_delta_is_closed_by_a_decision_in_decision_history
+    - owner_change_appends_custody_chain
+    - custody_chain_and_decision_history_are_append_only
+    - review_triggers_are_event_based
+    - case_with_custody_chain_has_re_derivation_basis
+    - irreversible_case_declares_blast_radius_max_loss
+    - positive_delta_case_is_not_halted_or_quarantined
+    - upstream_acceptance_is_revalidated_not_inherited
