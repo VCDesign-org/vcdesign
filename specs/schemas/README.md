@@ -17,8 +17,8 @@ These schemas act as "guardrails" to ensure the specs maintain a consistent stru
   - `WARN` — event-driven obligations missed: no reaffirmation after a custody transfer,
     unconfirmed re-derivation, missing `review_triggers`.
   - `INFO` — weak signal only: pure time decay of `last_reaffirmed` (`--max-age-days`,
-    default 180). Deliberately not WARN — see the decay note in
-    `../core/value-tenure-model.md` §5.
+    default 180). Deliberately not WARN — see 減衰の扱い under
+    "Tenure を構成する 5 フィールド" in `../core/value-tenure-model.md`.
 
   ```bash
   python3 specs/schemas/tenure_check.py specs/examples [--max-age-days 180]

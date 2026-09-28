@@ -29,7 +29,7 @@ The authoritative terms are defined in `core/core.yaml` and are as follows:
 | Legacy Term | RCL Term | Core Term | Meaning Difference | Canonical? |
 |-------------|----------|-----------|-------------------|------------|
 | Resolve     | Close    | Action(A) | Legacy/RCL focus on closure; Core emphasizes action type | No (use Action) |
-| Reject      | Abort    | Action(A) | Legacy/RCL imply rejection; Core specifies action as Abort | No (use Action) |
+| Reject      | Abort    | Action(A) | Legacy/RCL imply rejection or stopping. Abort is not a Core action: stopping itself is governed by `policies.yaml` haltability, and the Action recorded afterwards is Retire (the value is ended) or Defer (stopped pending re-judgment) | No (use Action) |
 | Return      | Defer    | Action(A) | Legacy/RCL focus on deferral; Core specifies action as Defer | No (use Action) |
 
 ## Meaning Differences
