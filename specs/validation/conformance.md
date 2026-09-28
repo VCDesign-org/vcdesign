@@ -6,7 +6,7 @@
 It adds no new rules. A check that fails here is a failure of the rule it cites.
 
 判定は Value Continuity の Review Output と同じく `ok` / `warning` / `blocking` で示し、必ず根拠を付ける。
-blocking は Negative Δ に対してのみ用いる。
+blocking は Negative Δ の伝播と、前提を欠いた Expand 判断に対して用いる。Positive Δ の観測と保有には用いない。
 
 ---
 
