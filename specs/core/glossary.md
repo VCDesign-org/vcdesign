@@ -109,6 +109,11 @@ longer hold.
 Delta is not only numerical deviation.
 For VCDesign conformance, Delta must be evaluated for responsibility impact.
 
+Delta has a polarity (`core.yaml delta_definition.polarity`). A Negative Δ is
+a deviation in the direction of breaking; a Positive Δ is a deviation that
+exceeds the declared expectation. A Delta without a recorded polarity is
+treated as negative. See "Positive Δ / Negative Δ".
+
 ---
 
 ## IDG
@@ -194,12 +199,15 @@ gate but is never reaffirmed is not held — it is only approved.
 
 ## Downside Containment（下振れの封じ込め）
 
-Design for cutting the tail of downside outcomes, not for predicting them.
-Fat tails arise from multiplicative amplification and propagation; containment
-turns them back into additive, independent failures through four mechanisms:
-isolate (failure domains), cap (declared max loss), revalidate (no inherited
-upstream acceptance), and deconcentrate (detect single points of dependency
-or judgment).
+Design for cutting the amplification of downside outcomes, not for predicting
+them. Extreme downside arises when one failure produces the next through
+chaining, reuse, concentration, and feedback; containment cuts that
+amplification through four mechanisms: isolate (failure domains), cap
+(declared max loss), revalidate (no inherited upstream acceptance), and
+deconcentrate (detect single points of dependency or judgment).
+
+This is VCDesign's implementation of "close" (閉じる) among the five
+principles of Value Continuity, and the handling of Negative Δ.
 
 Terms on the same axis at different layers: `survive_downside` (criterion),
 `downside_review` (gate step), `fatal_downside` (hard stop, regardless of owner),
@@ -239,14 +247,14 @@ responsibility records remain append-only.
 
 ## Value Asymmetry（価値の非対称）
 
-Value continuity defined as two things handled on the same judgment record:
-keeping value from breaking (closed downside, `downside_containment`) and
-letting it generate further value through reuse and connection (open upside,
-`value_accumulation`). Coupled by the
-principle that the number of changes one can bet on is bounded by recovery
-capability.
+The Value Asymmetry Principle — make upside propagable; do not let downside
+propagate — is defined in the Value Continuity canonical repository
+(https://github.com/value-continuity/value-continuity), not here. VCDesign
+implements it by handling `value_accumulation` (upside) and
+`downside_containment` (downside) on the same judgment record, and by treating
+Positive Δ and Negative Δ asymmetrically (`delta_definition.polarity`).
 
-Defined in `value-asymmetry-model.md`.
+See `value-continuity-implementation.md`.
 
 ---
 
@@ -258,15 +266,88 @@ residual assets (record, standard, basis, connection, capability) that survive
 changes of work, owner, or technology and are reused. The test question:
 "When the work changes, what of this improvement remains?"
 
-An improvement invalidated by a work change is treated as a Δ
+An improvement invalidated by a work change is treated as a Negative Δ
 (`one_shot_improvement`).
 
 ---
 
-## Tail Signal（裾の兆候）
+## Tail Signal（広がりの兆候）
 
-Observable business facts suggesting that an improvement can spread with
-compounding returns: `reuse_cost_decline`, `unsolicited_pull`,
-`output_as_input`, `value_per_connection`. Recorded separately from average
-outcome. Scaling (`scale_gate`) requires an observed tail signal, not average
-success alone.
+Observable business facts suggesting that an improvement can spread through
+reuse and connection: `reuse_cost_decline`, `unsolicited_pull`,
+`output_as_input`, `value_per_connection`, and `other` (the list is not
+exhaustive). Signals declared in advance are recorded in
+`tail_signals.observed`; undeclared ones in `tail_signals.unexpected`. Both
+are Positive Δ. Recorded separately from average outcome. Scaling
+(`scale_gate`) requires an observed tail signal, not average success alone.
+
+---
+
+## Positive Δ / Negative Δ
+
+A Negative Δ breaks a chapter's validity condition, responsibility placement,
+or value; it is localized, mitigated, and closed if needed (RCA / IDG →
+containment → action). A Positive Δ exceeds the declared expectation; it is
+observed, interpreted, and made reusable (recorded in `residual_assets` with a
+holder), and is expanded only through `scale_gate`.
+
+The two are asymmetric: a Positive Δ never triggers halt, quarantine, or
+blocking, and an observation containing both is split into two Deltas.
+Defined in `core.yaml delta_definition.polarity`.
+
+---
+
+## Decision（判断の選択肢）
+
+The decision options Proceed / Expand / Reframe / Limit / Defer / Retire,
+defined in the Value Continuity canonical repository. Recorded in
+`schema_log.yaml decision`, separately from Action (a lifecycle transition).
+The mapping to Action, decision posture, `decision_size`, and `scale_gate`
+outcomes is normative in `core.yaml decision_vocabulary`. Expand and Limit
+have no Action counterpart; both are defined as updates of the
+`blast_radius` declaration.
+
+---
+
+## Re-derivation Layer
+
+The layer, in physical AI / OT integration, that translates a machine's action
+(e.g. a navigation or capture command) into business meaning, authority, and
+basis — so that a successor can later reconstruct why the result was valid.
+It is an application of `re_derivation_basis`, not a separate primitive.
+
+Three terms share the word "re-derive / re-validate" and must not be
+confused:
+
+- `re_derivation_basis` (tenure): temporal — across handovers
+- `revalidation` (boundary-pattern): spatial — across boundaries
+- Re-derivation Layer: translation from machine action to business meaning
+
+All three implement "pass on" (伝える): pass basis, not conclusions, and let
+the receiver re-judge in its own context.
+
+---
+
+## Boundary（曖昧さ回避）
+
+"Boundary" has several meanings in VCDesign. State which one is meant.
+
+- **Responsibility boundary (B1–B17)**: a type of point where responsibility
+  must be made explicit. Defined in `../boundaries/taxonomy.md`.
+- **Boundary structure (Explicit Verification Point)**: the pattern that
+  implements a responsibility boundary with a guard (RCA), handshake,
+  tenure, containment, revalidation, and basis_flow. Defined in
+  `../patterns/boundary-pattern.yaml`.
+- **Boundary mediation**: the continuous ↔ discrete connection between AI
+  inference and real-world execution. Defined in `core.yaml
+  boundary_mediation` and `policies.yaml boundary_safety`.
+- **Failure domain**: the compartment outside which a failure must not
+  propagate (`failure_domain`). Its edge need not coincide with a
+  responsibility boundary.
+- **VC-AD boundary**: code-level constraints in the architecture-yaml-protocols
+  repository. Outside this repository's scope.
+
+At a boundary structure, failures are stopped by default
+(`containment.propagation: deny`), conclusions are not inherited
+(`revalidation`), and basis and residual assets pass by default
+(`basis_flow`).

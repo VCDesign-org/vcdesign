@@ -12,7 +12,8 @@ vcdesign_case:
       （blast_radius / reversibility / failure_domain / upstream_basis_refs / depends_on）を
       optional として追加した。背景は core/downside-containment-model.md を参照。
       同じく v0.3 で、上振れ（業務が変わっても残るもの）を宣言・観測するフィールド
-      （residual_assets / tail_signals）を追加した。背景は core/value-asymmetry-model.md を参照。
+      （residual_assets / tail_signals）と、Δ の向き（delta_polarity）を追加した。
+      背景は core/value-continuity-implementation.md を参照。
 
   required_fields:
     - case_id
@@ -43,9 +44,10 @@ vcdesign_case:
     - failure_domain
     - upstream_basis_refs
     - depends_on
-    # accumulation fields (v0.3): 上振れの宣言と観測。value-asymmetry-model.md 参照
+    # accumulation fields (v0.3): 上振れの宣言と観測。value-continuity-implementation.md 参照
     - residual_assets
     - tail_signals
+    - delta_polarity
 
   field_definitions:
 
@@ -64,6 +66,17 @@ vcdesign_case:
         - candidate
         - confirmed
       description: Δの確度レベル
+
+    delta_polarity:
+      type: enum
+      values:
+        - negative
+        - positive
+      default: negative
+      description: >
+        Δ の向き（core.yaml delta_definition.polarity）。未記載の場合は negative。
+        positive の案件は停止・隔離の流れに入れず、観測・意味づけ・再利用可能化の流れで扱う。
+        一つの観測に両方の向きが含まれる場合は、別の案件に分けて related_case_ids で相互参照する。
 
     metrics_snapshot:
       type: object
@@ -243,15 +256,20 @@ vcdesign_case:
     tail_signals:
       type: object
       description: >
-        大きく広がりうる兆候の宣言と観測。
+        広がりの兆候（再利用・接続によって大きく広がる兆候）の宣言と観測。
         開始時に「どの兆候が出れば広げるか」を宣言し、レビュー時に観測結果を記録する。
+        observed と unexpected は Positive Δ の記録である（core.yaml delta_definition.polarity.positive）。
         平均的な成功（効果が出た）とは別に評価する。
-        兆候の種類は core.yaml value_accumulation.tail_signals に従う。
+        兆候の種類は core.yaml value_accumulation.tail_signals に従う（網羅ではなく、該当しないものは other）。
       fields:
         expected:
-          description: 拡大の根拠として見る兆候（reuse_cost_decline / unsolicited_pull / output_as_input / value_per_connection）
+          description: 拡大の根拠として見る兆候（reuse_cost_decline / unsolicited_pull / output_as_input / value_per_connection / other）
         observed:
-          description: レビュー時点で観測された兆候と根拠（signal / evidence / observed_at）
+          description: レビュー時点で観測された、expected に宣言していた兆候と根拠（signal / evidence / observed_at）
+        unexpected:
+          description: >
+            expected に宣言していなかったが観測された兆候と根拠（signal / evidence / observed_at）。
+            期待を上回るズレとして Positive Δ に含める。宣言外であることを理由に捨てない。
         average_outcome:
           description: 平均的な効果の評価（met / partial / not_met）。tail_signals とは独立に記録する
 
@@ -272,4 +290,5 @@ vcdesign_case:
     - upstream_acceptance_must_not_be_inherited_without_revalidation
     # accumulation invariants (v0.3)
     - scale_go_requires_observed_tail_signal
+    - positive_delta_case_must_not_be_halted_or_quarantined
     - case_without_residual_assets_is_treated_as_point_improvement

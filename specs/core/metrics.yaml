@@ -14,6 +14,7 @@ vcdesign_metrics:
       責任制約下での運用整合の改善として評価される。
 
   growth_definition:
+    implementation_specific: AI の成長の定義。正本の5原則には対応しない VCDesign 固有の定義
     description: >
       Growth is not mere model capability increase.
       Growth means improvement of operational fit under responsibility constraints.
@@ -37,6 +38,27 @@ vcdesign_metrics:
       - sustained_or_repeated_condition_required
       - responsibility_impact_must_be_considered
       - domain_chapter_may_extend_metrics
+
+    polarity:
+      description: >
+        各 metric は、観測する Δ の向き（core.yaml delta_definition.polarity）を polarity で示す。
+        polarity を持たない metric は negative として扱う。
+        positive の metric は上振れの観測であり、停止・隔離・blocking の根拠にしない。
+        none は Δ ではなく、判断ゲート（scale_gate 等）への入力であることを示す。
+      values:
+        - negative
+        - positive
+        - none
+      default: negative
+      positive_levels:
+        # positive は warning（異常）の段階を持たない。levels のうち observation / delta_candidate / delta_confirmed のみを用いる
+        - observation
+        - delta_candidate
+        - delta_confirmed
+      positive_max_level: warning
+      positive_max_level_note: >
+        policy_enforcement（advisory / warning / blocking）に写すとき、positive の metric は warning を上限とする。
+        warning は「広げる判断の入力が揃った／保有者を決める必要がある」ことの通知であり、異常ではない。
 
   base_metrics:
 
@@ -603,13 +625,15 @@ vcdesign_metrics:
 
   accumulation_metrics:
     description: >
-      上振れ側、すなわち「業務が変わっても残るもの」が実際に残り、積み上がっているかを観測する指標群。
-      平均的な効果ではなく、大きく広がりうる兆候（裾の形）を見る。
-      背景は core/value-asymmetry-model.md、フィールド定義は schema_case.yaml (v0.3) を参照。
+      上振れ側、すなわち業務が変わっても残るものが実際に残り、再利用・接続によって次の価値を生んでいるかを観測する指標群。
+      平均的な効果ではなく、再利用によって大きく広がる兆候（広がりの兆候）を見る。
+      各 metric の polarity に従い、positive の metric は停止・隔離の根拠にしない。
+      背景は core/value-continuity-implementation.md、フィールド定義は schema_case.yaml (v0.3) を参照。
       いずれも base_metrics と同じ evaluation_model に従う。
     metrics:
       - id: one_shot_improvement
         name: One-shot Improvement
+        polarity: negative   # 「残す」の失敗。停止系には流さず、reframe / retire で扱う
         description: >
           業務・担当・技術の変化によって改善が無効化され、何も残らなかった状態。
           または residual_assets を宣言しないまま改善が完了扱いになった状態。
@@ -632,6 +656,7 @@ vcdesign_metrics:
 
       - id: tail_signal_absent_on_success
         name: Tail Signal Absent on Success
+        polarity: none       # Δ ではなく scale_gate への入力
         description: >
           平均的な効果は出た（average_outcome が met）が、宣言した tail_signals が一つも観測されない状態。
         intent: >
@@ -652,6 +677,7 @@ vcdesign_metrics:
 
       - id: reuse_cost_trend
         name: Reuse Cost Trend
+        polarity: positive
         description: >
           同じ residual_asset を別の章・場所に適用するコスト（工数・期間・例外対応）の推移。
           下がっていれば複利が効いている。下がらない、または上がっている場合は、残ったものが再利用に耐えていない。
@@ -670,12 +696,19 @@ vcdesign_metrics:
         candidate_actions:
           - fix
           - reframe
+        max_level: warning
+        candidate_decisions:
+          - expand     # 下がっていれば Positive Δ。scale_gate を通して広げる
+          - proceed
         notes:
           - domain_specific_cost_unit_required
+          - not_decreasing_is_not_a_negative_delta_but_a_reason_not_to_expand
+          - candidate_actions_apply_only_when_the_residual_asset_is_redesigned_for_reuse
         policy_link: core/core.yaml / value_accumulation / tail_signals / reuse_cost_decline
 
       - id: scale_beyond_recovery
         name: Scale Beyond Recovery
+        polarity: negative   # Expand を Downside の上限と復旧能力の範囲に留める歯止め
         description: >
           適用範囲の拡大に、復旧・撤回できる能力（reversibility / 復旧手順 / 技能）が追いついていない状態。
         intent: >
@@ -694,7 +727,53 @@ vcdesign_metrics:
           - defer
         policy_link: core/core.yaml / value_asymmetry / coupling_principles / change_is_bounded_by_recovery_capability
 
+      - id: upside_signal_observed
+        name: Upside Signal Observed
+        polarity: positive
+        description: >
+          宣言した tail_signals.expected、または宣言していなかった兆候（tail_signals.unexpected）が観測された状態。
+          Positive Δ の検知である。
+        intent: >
+          上振れを単発の成功として消費せず、意味づけと再利用可能化（residual_assets への記録）の流れに乗せる。
+        typical_signals:
+          - expected_tail_signal_observed
+          - unexpected_reuse_or_pull_observed
+          - output_used_as_input_by_other_chapter
+        meaning:
+          - upside_available_for_reuse
+          - expand_candidate
+        default_threshold:
+          type: event
+        max_level: warning
+        candidate_decisions:
+          - expand
+          - proceed
+        notes:
+          - must_not_trigger_halt_or_quarantine
+          - unknown_cause_goes_to_idg_as_unknown_and_does_not_justify_expand
+        policy_link: core/core.yaml / delta_definition / polarity / positive
+
+      - id: positive_delta_without_holder
+        name: Positive Delta Without Holder
+        polarity: negative   # 上振れが残らなくなる崩れ（「残す」の失敗）を検知する
+        description: >
+          Positive Δ が観測されたが、それを residual_assets として保有する主体（holder）が決まっていない状態。
+        intent: >
+          保有者のいない上振れは残らない。観測された上振れが、次の価値を生む前に散逸することを検知する。
+        typical_signals:
+          - observed_tail_signal_without_residual_asset
+          - residual_asset_without_holder_after_positive_delta
+        meaning:
+          - upside_will_not_remain
+        default_threshold:
+          type: at_review
+        candidate_actions:
+          - fix
+          - defer
+        policy_link: core/core.yaml / delta_definition / polarity / asymmetry_rules / positive_delta_requires_a_holder_or_it_does_not_remain
+
   operational_fit_metrics:
+    # implementation_specific: AI の運用整合の指標。正本の5原則には対応しない VCDesign 固有の指標群
 
     - id: delta_detection_quality
       name: Delta Detection Quality
@@ -826,7 +905,7 @@ vcdesign_metrics:
 
       - metric_id: compounding_value_potential
         description: >
-          時間経過により、知識・信頼・資産・関係性が蓄積するか。
+          知識・信頼・資産・関係性が残り、再利用・接続によって次の価値を生むか。
 
   interpretation_rules:
     - multiple_warnings_may_form_delta_candidate
@@ -834,6 +913,8 @@ vcdesign_metrics:
     - no_metric_alone_forces_reframe_except_policy_defined_cases
     - metrics_are_inputs_to_rca_not_replacements_for_rca
     - growth_metrics_must_be_read_with_responsibility_constraints
+    - positive_polarity_metric_never_forces_halt_or_blocking
+    - positive_polarity_metric_is_input_to_scale_gate_not_to_containment
 
   composition_rules:
     chapter_minimum:
@@ -867,6 +948,8 @@ vcdesign_metrics:
       - tail_signal_absent_on_success
       - reuse_cost_trend
       - scale_beyond_recovery
+      - upside_signal_observed
+      - positive_delta_without_holder
     boundary_crossing:
       - boundary_violation_rate
       - transitive_trust

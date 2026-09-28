@@ -1,11 +1,12 @@
-# VCDesign Downside Containment Model: 上に開き、下を閉じる
+# VCDesign Downside Containment Model: 増幅を切る
 
 ## Status
 
 **Design principle / Reading aid — not authority.**
 
-このドキュメントは、VCDesign が扱う「下振れ」を
-**裾を切る（打ち切る）設計**として定義し、その 4 機構と既存仕様の対応を固定する設計原則である。
+このドキュメントは、Value Continuity 正本の5原則のうち「閉じる」を VCDesign がどう実装しているかを、
+**増幅を切る設計**の 4 機構と既存仕様の対応として固定する設計原則である。
+Negative Δ（`core.yaml delta_definition.polarity.negative`）の扱い（局所化 → 緩和 → 必要なら閉じる）の詳細にあたる。
 
 仕様上の権威は `core.yaml`（`downside_containment`）/ `policies.yaml` / `metrics.yaml` にある。
 本文書で導入する概念の規範的な実体は
@@ -15,40 +16,39 @@
 
 既存文書との役割分担:
 
-- `value-tenure-model.md` — 責任の**時間軸上の性質**（点か線か）を定義する文書
-- `value-asymmetry-model.md` — 上に開き下を閉じる、価値の非対称を定義する親文書
-- `downside-containment-model.md`（本文書）— 親文書の下側。失敗の**広がり方**（増幅されるか、その場に留まるか）を定義する文書
+- `value-continuity-implementation.md` — 正本の5原則と VCDesign の要素の対応をまとめる親文書
+- `value-tenure-model.md` — 「残す」「伝える」のうち時間方向（点の責任と線の責任）
+- `downside-containment-model.md`（本文書）— 親文書のうち「閉じる」。失敗の**広がり方**（増幅されるか、その場に留まるか）を扱う文書
 
 ---
 
 ## 1. なぜこの区別が必要か
 
-独立した小さな要因が足し合わされる世界では、極端な結果は起きにくい。
-一方、連鎖・再利用・集中・フィードバックが存在する世界では、一つの結果が次の結果を生み、
-極端な結果が無視できなくなる。
+連鎖・再利用・集中・フィードバックがあると、一つの結果が次の結果を生む。
+一つの失敗が次の失敗を生む経路があるとき、極端な下振れは無視できなくなる。
 
-システムがつながり、AI が判断を連鎖させるほど、世界は後者に寄る。
+システムがつながり、AI が判断を連鎖させるほど、そうした経路は増える。
 一つの誤判断が下流で増幅され、共通の依存先を通って複数の区画に同時に波及する。
 
-本文書は分布の数学的な形を主張しない。重要なのは分布を当てることではなく、
-**増幅機構を設計すること**である。
+本文書は結果の出方を予測しない。扱うのは**増幅機構の設計**である。
 
 VCDesign の根にある問い ——「その初動しか取れない設計だったのではないか」—— は、
-裾の事象そのものではなく、**裾の事象が内部で増幅される構造**を設計の責任として扱う問いである。
+極端な事象そのものではなく、**極端な事象が内部で増幅される構造**を設計の責任として扱う問いである。
 
 ---
 
-## 2. 上に開き、下を閉じる
+## 2. 本文書が扱う範囲
 
-価値の複利や接続による正のフィードバック（上振れ）は、開いたままにしておきたい。
-下振れの裾だけを切りたい。この非対称を一つの設計判断として扱う。
-
-上下を同時に扱う全体像は親文書 `value-asymmetry-model.md` に定義する。
-本文書はその**下を閉じる側**の詳細である。上振れ（業務が変わっても残るもの、裾の兆候）は
+上に開き下を閉じるという非対称そのものは正本の Value Asymmetry Principle であり、
+VCDesign での実装の全体像は親文書 `value-continuity-implementation.md` にある。
+本文書は**下を閉じる側**だけを扱う。上振れ（残るもの、広がりの兆候、Positive Δ）は
 親文書と `core.yaml value_accumulation` を参照。
 
-目標は分布を当てることではなく「**増幅を切ること**」である。
-外から来る裾（自然災害・突発故障）は消せない。
+封じ込めは失敗の伝播だけを対象とし、根拠や残るものの流れは止めない
+（`boundary-pattern.yaml` の `containment` と `basis_flow` の区別）。
+
+目標は「**増幅を切ること**」である。
+外から来る事象（自然災害・突発故障）は消せない。
 制御できるのは、それが内部でどこまで増幅・伝播するかだけである。
 
 ---
@@ -93,6 +93,9 @@ VCDesign の根にある問い ——「その初動しか取れない設計だ�
   `re_derivation_basis`（tenure）は担当交代をまたぐ**時間方向**の再導出、
   `revalidation`（boundary）は境界をまたぐ**空間方向**の再検証。
   Re-derivation Layer（動作を業務上の意味・権限・根拠に翻訳する層）とも別概念である。
+  三つとも「伝える」の実装である（`glossary.md`「Re-derivation Layer」）。
+- **境界の意味**: 本文書の境界は、判断の受け渡し点（boundary-pattern）と障害区画（failure_domain）を指す。
+  責任境界（B1–B17）や `boundary_mediation` との区別は `glossary.md`「Boundary（曖昧さ回避）」を参照。
 - **single owner と single point**: owner が 1 人であること（A5）は義務。
   判断経路や依存先が一点に集まることは検知の対象。両者は矛盾しない。
 
@@ -100,8 +103,8 @@ VCDesign の根にある問い ——「その初動しか取れない設計だ�
 
 ## 5. 未整備の事項
 
-- 判断の選択肢の語彙（decision posture / 長期判断の姿勢 / decision_size / action / VMS）が複数系統あり、
-  上限の宣言をどれに紐づけるかは未統一。本版では schema_case（案件）単位で宣言する。
+- 上限の宣言は schema_case（案件）単位で行う。宣言の更新（Expand / Limit）は
+  `core.yaml decision_vocabulary` と `schema_log.decision.blast_radius_update` で記録する。
 - `schemas/tenure_check.py` に相当する containment の検査ツールは未実装。
   宣言項目（本版）を先に固め、検査は後から追加する。
 - VC-AD（architecture-yaml-protocols リポジトリ）側の境界定義ファイル構成との対応は本リポジトリの範囲外。

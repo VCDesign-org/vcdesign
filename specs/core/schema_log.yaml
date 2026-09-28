@@ -1,5 +1,5 @@
 vcdesign_decision_log:
-  version: 0.2
+  version: 0.3
 
   concept:
     description: >
@@ -7,6 +7,8 @@ vcdesign_decision_log:
       説明可能性の監査証跡である。
       version 0.2 で、責任の継承・再確認を責任イベントとして
       記録する tenure_event を追加した（core/value-tenure-model.md 参照）。
+      version 0.3 で、判断の選択肢を Value Continuity の Decision で記録する decision を追加した
+      （core.yaml decision_vocabulary、core/value-continuity-implementation.md 参照）。
 
   required_fields:
     - log_id
@@ -23,6 +25,7 @@ vcdesign_decision_log:
     - confidence
     - long_term_judgment
     - tenure_event
+    - decision
     - notes
 
   field_definitions:
@@ -128,6 +131,39 @@ vcdesign_decision_log:
         next_review_at:
           type: datetime
 
+    decision:
+      type: object
+      description: >
+        判断の選択肢（v0.3）。値は Value Continuity 正本の Decision。
+        why_action（遷移の理由）とは別に記録する。各値と既存語彙の対応は core.yaml decision_vocabulary に従う。
+      fields:
+        value:
+          type: enum
+          values:
+            - proceed
+            - expand
+            - reframe
+            - limit
+            - defer
+            - retire
+        rationale:
+          type: string
+          description: その選択の根拠（Upside / Downside / Continuity / Asymmetry の観点）
+        positive_delta_refs:
+          type: array
+          description: expand の根拠とした Positive Δ（tail_signals.observed / unexpected の項目）
+        blast_radius_update:
+          type: object
+          description: >
+            expand / limit の場合は必須。宣言の更新を before / after で記録する
+            （scope / max_loss / approved_by）。case 側の blast_radius は after に更新する。
+          fields:
+            before: 更新前の blast_radius
+            after: 更新後の blast_radius
+        decided_by:
+          type: object
+          description: 判断を閉じた人間の最終判断者
+
     tenure_event:
       type: object
       description: >
@@ -159,3 +195,7 @@ vcdesign_decision_log:
     # tenure invariants (v0.2)
     - every_custody_transfer_should_have_decision_log
     - reaffirmation_must_name_a_human_confirmer
+    # decision invariants (v0.3)
+    - expand_or_limit_decision_must_record_blast_radius_update
+    - expand_decision_must_reference_observed_positive_delta
+    - decision_must_be_closed_by_human

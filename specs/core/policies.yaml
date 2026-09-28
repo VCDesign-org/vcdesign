@@ -13,6 +13,8 @@ vcdesign_policies:
 
   ai_governance:
 
+    implementation_specific: AI の非責任。正本の5原則には対応しない VCDesign 固有の手段
+
     principle:
       description: >
         AIは判断を支援するが、責任を持たない。
@@ -52,6 +54,8 @@ vcdesign_policies:
         すべての実行境界に対して boundary_safety の制御が適用される。
 
   llm_placement:
+
+    implementation_specific: LLM の配置制約。正本の5原則には対応しない VCDesign 固有の手段
 
     principle:
       description: >
@@ -104,7 +108,7 @@ vcdesign_policies:
         反映する前に、policy 適合チェックと責任者承認が必要。
         「計画が合理的である」ことと「実行が許可されている」ことは別問題である。
       required_checks:
-        - action_within_declared_boundary
+        - action_within_declared_boundary   # 権限の境界（B17 Impact ↔ Accountability）。glossary.md「Boundary（曖昧さ回避）」
         - responsible_actor_identified
         - reversibility_assessed       # schema_case.yaml reversibility ブロックが埋まっていることで満たす
         - blast_radius_declared_if_irreversible
@@ -172,20 +176,24 @@ vcdesign_policies:
         小さく始めた判断（small_go）を広げる（scale_go）ときの門。
         広げる根拠は平均的な成功ではなく、大きく広がりうる兆候（tail_signals）の観測である。
         平均的に成功しても兆候のない改善は、点の改善として縮小または終了を検討する。
-        背景は core/value-asymmetry-model.md。
+        scale_gate は core.yaml decision_vocabulary の expand の門であり、
+        Positive Δ（delta_definition.polarity.positive）を広げる唯一の経路である。
+        Positive Δ は停止・隔離の流れには入れず、この門で Downside の上限と復旧能力の範囲に留める。
+        背景は core/value-continuity-implementation.md。
 
     required_before_scale:
-      - observed_tail_signal           # schema_case.yaml tail_signals.observed が 1 つ以上
+      - observed_tail_signal           # schema_case.yaml tail_signals.observed または unexpected が 1 つ以上（Positive Δ）
       - declared_residual_assets       # schema_case.yaml residual_assets が空でない
       - declared_max_loss_for_scale   # 拡大後の blast_radius.max_loss
       - recovery_capability_confirmed  # 拡大後も復旧・撤回できること（reversibility）
       - human_final_decider
 
     outcomes:
-      tail_signal_observed: scale_go_within_declared_max_loss
-      average_success_without_tail_signal: keep_small_or_retire
-      no_success_with_tail_signal: reframe_and_retry_small
-      neither: retire
+      # 各 outcome と正本 Decision の対応は core.yaml decision_vocabulary を参照
+      tail_signal_observed: scale_go_within_declared_max_loss       # expand
+      average_success_without_tail_signal: keep_small_or_retire     # proceed / limit、または retire
+      no_success_with_tail_signal: reframe_and_retry_small          # reframe
+      neither: retire                                               # retire
 
     anti_patterns:
       - scale_on_average_success_only
@@ -369,6 +377,8 @@ vcdesign_policies:
 
   supervisor_role:
 
+    implementation_specific: 責任の最終収束点。正本の5原則には対応しない VCDesign 固有の手段
+
     principle:
       description: >
         Supervisorは責任の最終収束点であり、
@@ -413,6 +423,11 @@ vcdesign_policies:
         halt_owner は Agent 起動前に named かつ operational でなければならない。
 
   policy_enforcement:
+
+    asymmetry_note: >
+      blocking は Negative Δ に対してのみ用いる。Positive Δ は blocking の対象にしない
+      （core.yaml delta_definition.polarity.asymmetry_rules）。
+      Positive Δ を広げる判断の不備（scale_gate の前提欠落）は、広げる判断を止めるが、観測と保有は止めない。
 
     levels:
       - advisory

@@ -8,8 +8,8 @@ Example (workshop-ready). 登場する工場・組織・人物・数値はすべ
 **点の改善**と**線の改善**の違い、そして上に開き下を閉じる判断（value asymmetry）が
 どう記録されるかを示す実例である。
 
-背景の設計原則は `../core/value-asymmetry-model.md`、
-フィールド定義は `../core/schema_case.yaml` (v0.3) を参照。
+背景の設計原則は `../core/value-continuity-implementation.md`、
+フィールド定義は `../core/schema_case.yaml` (v0.3) と `../core/schema_log.yaml` (v0.3) を参照。
 
 ---
 
@@ -77,7 +77,7 @@ blast_radius:
   max_loss: {unit: hours_rework, value: 4}
 ```
 
-様式変更の時点で `one_shot_improvement` が Δ として検知される。
+様式変更の時点で `one_shot_improvement` が Negative Δ として検知される。
 これは「改善が失敗した」ことではなく、「価値が継続しなかった」ことの検知である。
 
 ### 改善 B（線の改善）
@@ -130,23 +130,52 @@ failure_domain: line-local-data-collection
 
 ## scale_gate の判断
 
-| | 平均的な効果 | 裾の兆候 | residual_assets | 復旧能力 | 判断 |
-|---|---|---|---|---|---|
-| 改善 A | あり（30 分） | なし | なし | 手作業に戻せるだけ | keep_small_or_retire |
-| 改善 B | あり（20 分） | reuse_cost_decline, unsolicited_pull | 4 件、保有者あり | 予備機切替・再構築を訓練済み | scale_go（4 号ライン・品質管理連携） |
+| | 平均的な効果 | 広がりの兆候 | residual_assets | 復旧能力 | scale_gate | Decision |
+|---|---|---|---|---|---|---|
+| 改善 A | あり（30 分） | なし | なし | 手作業に戻せるだけ | keep_small_or_retire | Proceed（小さく留める）、様式変更時に Retire |
+| 改善 B | あり（20 分） | reuse_cost_decline, unsolicited_pull | 4 件、保有者あり | 予備機切替・再構築を訓練済み | scale_go | Expand（4 号ライン・品質管理連携） |
 
 平均的な効果だけで順位をつけると、改善 A が上になる。
-裾の兆候と残るものを見ると、広げるべきは改善 B である。
+広がりの兆候と残るものを見ると、広げるべきは改善 B である。
 
 改善 A のような「成功したが広がらない」改善は、`tail_signal_absent_on_success` として
 拡大の前に識別される。改善 A を悪い改善として扱う必要はない。
 小さく留めるか、次に様式が変わるときに終了すると、先に決めておけばよい。
 
+### Positive Δ としての記録
+
+改善 B の `tail_signals.observed` は Positive Δ である。停止・隔離の流れには入れず、
+観測 → 意味づけ → 再利用可能にする（`residual_assets` に保有者付きで記録する）の順で扱う。
+品質管理課からの引き合いは宣言していた兆候（`unsolicited_pull`）だったが、
+宣言していない兆候が出た場合も `tail_signals.unexpected` として記録し、捨てない。
+
+Expand は、章を替えずに `blast_radius` の宣言を更新する判断として記録する。
+
+```yaml
+log_id: kitahara-log-2026-061
+case_id: kitahara-2025-021
+decision:
+  value: expand
+  rationale: >
+    平均的な効果に加え、reuse_cost_decline と unsolicited_pull を観測。
+    予備機切替・再構築は訓練済みで、拡大後も復旧できる。
+  positive_delta_refs: [reuse_cost_decline, unsolicited_pull]
+  blast_radius_update:
+    before:
+      scope: 1〜3 号ラインのデータ収集のみ（制御系には書き込まない）
+      max_loss: {unit: hours_data_gap, value: 8}
+    after:
+      scope: 1〜4 号ラインのデータ収集と品質管理課への読み取り連携（制御系には書き込まない）
+      max_loss: {unit: hours_data_gap, value: 8}
+      approved_by: {role: plant_manager}
+  decided_by: {role: plant_manager}
+```
+
 ---
 
 ## 上と下のつながり
 
-改善 B で拡大を正当化したのは、裾の兆候だけではない。
+改善 B で拡大を正当化したのは、広がりの兆候だけではない。
 **拡大しても戻せる**ことが確認されていたことが、拡大の前提になっている
 （`scale_gate.required_before_scale.recovery_capability_confirmed`）。
 
