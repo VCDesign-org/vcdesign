@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -64,14 +64,15 @@
     <main class="frame">
         <header>
             <nav class="lang-nav">
-                <a href="../index.html" class="lang-link">← Home</a>
+                <a href="../index.html" class="lang-link">Home</a>
+                <a href="../ja/vms/" class="lang-link">日本語</a>
             </nav>
 
             <h1 class="hero-title">VMS</h1>
             <p class="hero-subtitle">VCDesign Management Strategy</p>
             <p class="hero-tagline">
-                VMS は、経営上の悩みを VCDesign の Loop、Boundary、Decision に変換し、
-                判断の責任と価値継続を設計するための運用プロトコルです。
+                VMS is an operating protocol for translating management concerns into VCDesign
+                Loops, Boundaries, and Decisions, so responsibility and value continuity can be designed explicitly.
             </p>
             <div class="pill-row">
                 <span class="pill">Loop Mapping</span>
@@ -86,25 +87,25 @@
                 <li>
                     <a class="link-anchor" href="#purpose">
                         <span class="label">Purpose</span>
-                        <span class="desc">VMS が扱うものと、経営判断への接続</span>
+                        <span class="desc">What VMS handles and how it connects to management decisions</span>
                     </a>
                 </li>
                 <li>
                     <a class="link-anchor" href="#symptoms">
                         <span class="label">Symptom Mapping</span>
-                        <span class="desc">症状を 4 つの Loop に分類する</span>
+                        <span class="desc">Classify symptoms into four Loops</span>
                     </a>
                 </li>
                 <li>
                     <a class="link-anchor" href="#operation">
                         <span class="label">Operation</span>
-                        <span class="desc">初回導入、モード選択、出力形式</span>
+                        <span class="desc">Onboarding, mode selection, and output structure</span>
                     </a>
                 </li>
                 <li>
                     <a class="link-anchor" href="#resources">
                         <span class="label">Resources</span>
-                        <span class="desc">AI に渡す最小読込セットと原資料</span>
+                        <span class="desc">Minimum reading set for AI and the source repository</span>
                     </a>
                 </li>
             </ul>
@@ -113,27 +114,27 @@
         <section id="purpose">
             <h2 class="usage-title">Purpose</h2>
             <p>
-                VMS の目的は、経営者の意思決定における「責任の所在」を明確にし、
-                事業の価値継続を最大化することです。
+                VMS exists to clarify where responsibility lives in management decisions and to maximize
+                the continuity of business value.
             </p>
             <p>
-                AI は代替案を提示できます。しかし、最終的な決定権は常に経営者に残ります。
-                VMS はその前提を崩さず、相談内容を <strong>Boundary</strong>、
-                <strong>Metrics</strong>、<strong>Decision</strong> の形に閉じます。
+                AI may present alternatives, but final closure always remains with the manager.
+                VMS preserves that premise and closes each consultation as <strong>Boundary</strong>,
+                <strong>Metrics</strong>, and <strong>Decision</strong>.
             </p>
 
             <div class="value-grid">
                 <div class="spec-card">
                     <h3>Monetary</h3>
-                    <p>資本循環と事業継続性。お金が残るか、事業として続くかを扱う。</p>
+                    <p>Capital circulation and business continuity. Whether money remains and the business can continue.</p>
                 </div>
                 <div class="spec-card">
                     <h3>Cultural</h3>
-                    <p>ドメインの歴史、美学、守るべき文化的価値を扱う。</p>
+                    <p>The history, aesthetics, and cultural value of the domain that must be protected.</p>
                 </div>
                 <div class="spec-card">
                     <h3>Generative</h3>
-                    <p>後進へ技術・精神・判断ロジックを継承できるかを扱う。</p>
+                    <p>Whether skills, spirit, and decision logic can be handed to the next generation.</p>
                 </div>
             </div>
         </section>
@@ -141,38 +142,38 @@
         <section id="symptoms">
             <h2 class="usage-title">Symptom Mapping</h2>
             <p>
-                最初に、相談を「どの Loop の課題か」に分類します。
-                分類は答えではなく、どの責任境界から見直すかを決める入口です。
+                The first step is to classify a concern by Loop. This classification is not the answer;
+                it is the entry point for deciding which responsibility boundary to inspect.
             </p>
 
             <div class="loop-grid">
                 <div class="spec-card">
                     <h3>Physical Loop</h3>
-                    <p><strong>症状:</strong> お金が残らない / 資金繰りが苦しい</p>
-                    <p class="small-note">Unit Economics、Throughput Accounting などを接続する。</p>
+                    <p><strong>Symptoms:</strong> no money left / cash flow is tight</p>
+                    <p class="small-note">Connects to Unit Economics, Throughput Accounting, and related frames.</p>
                 </div>
                 <div class="spec-card">
                     <h3>Semantic Loop</h3>
-                    <p><strong>症状:</strong> 商品が売れない / 競合に負ける</p>
-                    <p class="small-note">JTBD、Value Proposition Canvas などを接続する。</p>
+                    <p><strong>Symptoms:</strong> products do not sell / competitors are winning</p>
+                    <p class="small-note">Connects to JTBD, Value Proposition Canvas, and related frames.</p>
                 </div>
                 <div class="spec-card">
                     <h3>Value Loop</h3>
-                    <p><strong>症状:</strong> 情熱が湧かない / 何のためにやっているか不明</p>
-                    <p class="small-note">Ikigai、Purpose-Driven Management などを接続する。</p>
+                    <p><strong>Symptoms:</strong> no passion / unclear reason for continuing</p>
+                    <p class="small-note">Connects to Ikigai, Purpose-Driven Management, and related frames.</p>
                 </div>
                 <div class="spec-card">
                     <h3>Responsibility Loop</h3>
-                    <p><strong>症状:</strong> 自分がいないと回らない / 後継者が育たない</p>
-                    <p class="small-note">Generativity、DACI などを接続する。</p>
+                    <p><strong>Symptoms:</strong> nothing runs without me / successors are not growing</p>
+                    <p class="small-note">Connects to Generativity, DACI, and related frames.</p>
                 </div>
             </div>
 
-            <h3>最初に聞く 3 つのこと</h3>
+            <h3>The first three questions</h3>
             <ul>
-                <li><strong>current_pain:</strong> 今、一番しんどいことは何か</li>
-                <li><strong>desire:</strong> どうなれば「成功」か</li>
-                <li><strong>constraints:</strong> 時間・金・精神の限界値はどこか</li>
+                <li><strong>current_pain:</strong> What is the hardest thing right now?</li>
+                <li><strong>desire:</strong> What would count as success?</li>
+                <li><strong>constraints:</strong> Where are the limits of time, money, and mental energy?</li>
             </ul>
         </section>
 
@@ -182,59 +183,59 @@
             <h3>Mode Selection</h3>
             <div class="mode-grid">
                 <div class="spec-card">
-                    <h3>守る</h3>
-                    <p>Closure Mode。境界の死守と責任の閉鎖を目的にする。</p>
+                    <h3>Maintain</h3>
+                    <p>Closure Mode. Protect boundaries and close responsibility.</p>
                 </div>
                 <div class="spec-card">
-                    <h3>攻める</h3>
-                    <p>Exploration Mode。構造の再発見と新しい仮説の検証を目的にする。</p>
+                    <h3>Expand</h3>
+                    <p>Exploration Mode. Rediscover structure and test new hypotheses.</p>
                 </div>
                 <div class="spec-card">
-                    <h3>わからない</h3>
-                    <p>Diagnostic Exploration。違和感を構造化し、Closure へ橋渡しする。</p>
+                    <h3>Ambiguous</h3>
+                    <p>Diagnostic Exploration. Structure discomfort and bridge it toward Closure.</p>
                 </div>
             </div>
 
-            <h3>初回セッション</h3>
+            <h3>First Session</h3>
             <ol>
-                <li>現在の症状を入力し、どの Loop に近いかを判定する</li>
-                <li>生存境界として、金・心・美学の限界値を置く</li>
-                <li>直近の悩みに対する初回 Decision を生成する</li>
-                <li>次回レビューのために、監視する Metrics を 1 つ選ぶ</li>
+                <li>Enter the current symptom and identify the closest Loop</li>
+                <li>Set survival boundaries for cash, mind, and aesthetics</li>
+                <li>Generate the first Decision for the immediate concern</li>
+                <li>Select one Metric to monitor at the next review</li>
             </ol>
 
-            <h3>出力の最低要件</h3>
+            <h3>Minimum Output</h3>
             <div class="decision-block">
                 <pre class="code-block">Do:
-  - 具体的に実行すること
+  - Concrete actions to take
 Don't:
-  - 今すぐ止めること
+  - Things to stop immediately
 Outcome:
-  - 改善を期待するズレ
+  - The drift expected to improve
 
 boundary_definition:
-  - 今回設定・更新された境界線
+  - Boundaries created or updated in this decision
 metrics_to_watch:
-  - 監視する Value Drift / Boundary Invasion / Responsibility Deadlock
+  - Value Drift / Boundary Invasion / Responsibility Deadlock
 decision_log:
-  owner: 最終決定者
+  owner: final decision owner
   status: Instant / Pending / Discard
-  closure_check: この決断で閉じたループ</pre>
+  closure_check: which Loop this decision closes</pre>
             </div>
         </section>
 
         <section id="extensions">
             <h2 class="usage-title">Domain Extensions</h2>
             <p>
-                VMS は経営判断全般の入口です。特定領域の相談は、VMS の責任原則を保ったまま、
-                領域別の知識拡張として扱います。
+                VMS is the entry point for management judgment. Domain-specific consultations are handled
+                as knowledge extensions while preserving VMS responsibility principles.
             </p>
 
             <ul class="link-list">
                 <li>
                     <a class="link-anchor" href="./marketing/">
                         <span class="label">VMS Marketing</span>
-                        <span class="desc">マーケティング相談を構造化し、比較案・不明点・回答根拠を残すためのサブセット。</span>
+                        <span class="desc">A subset for structuring marketing consultations while preserving options, unknowns, and answer rationale.</span>
                     </a>
                 </li>
             </ul>
@@ -243,25 +244,25 @@ decision_log:
         <section id="resources">
             <h2 class="usage-title">Resources</h2>
             <p>
-                VMS は、読み物ではなく AI に渡して使う仕様です。
-                最小読込セットを渡したうえで、相談内容を症状として入力します。
+                VMS is not just reading material. It is a specification to pass to AI.
+                Provide the minimum reading set, then enter the management concern as a symptom.
             </p>
 
-            <h3>生成 AI 向けの最小読込セット</h3>
+            <h3>Minimum Reading Set for AI</h3>
             <ul>
-                <li><code>specs/VMS.yaml</code> 判断原則、価値定義、責任の置き方</li>
-                <li><code>specs/prompt.txt</code> AI への基本指示</li>
-                <li><code>specs/Input_Interface.yaml</code> 症状の分類と不足情報の確認</li>
-                <li><code>specs/Mode_Switcher.yaml</code> モード選択</li>
-                <li><code>specs/Output_Structure.yaml</code> 出力フォーマット</li>
-                <li><code>specs/User_Role_Definition.yaml</code> 利用者レベルごとの粒度調整</li>
+                <li><code>specs/VMS.yaml</code> decision principles, value definitions, responsibility placement</li>
+                <li><code>specs/prompt.txt</code> base instruction for AI</li>
+                <li><code>specs/Input_Interface.yaml</code> symptom classification and missing context</li>
+                <li><code>specs/Mode_Switcher.yaml</code> mode selection</li>
+                <li><code>specs/Output_Structure.yaml</code> output format</li>
+                <li><code>specs/User_Role_Definition.yaml</code> output granularity by user level</li>
             </ul>
 
             <ul class="link-list">
                 <li>
                     <a class="link-anchor" href="https://github.com/VCDesign-org/vms">
                         <span class="label">VMS GitHub Repository</span>
-                        <span class="desc">VMS の仕様リポジトリ。YAML とプロンプトの正本はこちらを参照してください。</span>
+                        <span class="desc">The source repository for the VMS YAML specs and prompt.</span>
                     </a>
                 </li>
             </ul>

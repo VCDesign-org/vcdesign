@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>VCDesign YAML Index</title>
@@ -124,10 +124,10 @@
     <main>
         <header>
             <h1>VCDesign YAML Index</h1>
-            <p>生成AIが確実に取得できるよう、GitHub raw への直リンクを列挙しています。</p>
+            <p>Direct links to GitHub raw so AI can access every YAML spec.</p>
             <div class="copy-row">
-                <button class="copy-btn" id="copy-links">リンク一覧をコピー</button>
-                <span class="copy-note" id="copy-status">一括貼り付け用にrawリンクを改行でコピーします。</span>
+                <button class="copy-btn" id="copy-links">Copy all raw links</button>
+                <span class="copy-note" id="copy-status">Copies newline-separated raw links for paste.</span>
             </div>
 
 
@@ -219,12 +219,12 @@
                 try {
                     await navigator.clipboard.writeText(rawLinks.join('\n'));
                     const original = status.textContent;
-                    status.textContent = 'コピーしました。';
+                    status.textContent = 'Copied.';
                     setTimeout(() => {
                         status.textContent = original;
                     }, 1600);
                 } catch (e) {
-                    status.textContent = 'コピーに失敗しました。手動で選択してください。';
+                    status.textContent = 'Copy failed. Please select manually.';
                 }
             });
         })();

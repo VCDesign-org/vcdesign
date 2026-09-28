@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>VCDesign Value Review</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <main class="frame">
+
+        <header>
+            <nav class="lang-nav">
+                <a href="../index.html" class="lang-link">Home</a>
+            </nav>
+
+            <h1 class="hero-title">Value Review</h1>
+            <p class="hero-subtitle">(VCDesign Value Review)</p>
+            <p class="hero-tagline">
+                A decision record and review sheet to hand off implementation without value loss.
+            </p>
+        </header>
+
+        <section id="toc">
+            <h2 class="usage-title">Contents</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="#overview">
+                        <span class="label">README</span>
+                        <span class="desc">Positioning of the value-design repository</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#sheet">
+                        <span class="label">Value Review Sheet</span>
+                        <span class="desc">L1–L4 review template</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#resources">
+                        <span class="label">Resources</span>
+                        <span class="desc">Related repository</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="overview">
+            <h2 class="usage-title">README</h2>
+
+            <h3>vcdesign-value-review</h3>
+            <p>
+                <code>vcdesign-value-review</code> is a <strong>value-design repository</strong>
+                to determine, before implementation, <strong>which value is protected inside which boundary</strong>.
+            </p>
+            <p>
+                This repository is neither a design manifesto nor an implementation guide.
+                It exists to preserve <strong>traces of judgment</strong> and hand them to implementation without value loss.
+            </p>
+
+            <h3>What this is</h3>
+            <ul>
+                <li>Centered on the <strong>VCDesign Value Review Sheet</strong> (L1–L4)</li>
+                <li>Defines Δ (deltas)</li>
+                <li>Draws the line between allowable and disallowed Δ</li>
+                <li>Fixes gate conditions to graduate to RCL</li>
+            </ul>
+
+            <h3>What this is not</h3>
+            <ul>
+                <li>Not an extension of VC-AD</li>
+                <li>Not an implementation manual (TODO/YAML steps are on TDDD)</li>
+                <li>Not RCL itself (RCL is produced after L4 Pass)</li>
+                <li>Not a collection of AI constitutions or norms</li>
+            </ul>
+
+            <h3>Where this is effective (scope)</h3>
+            <p>Suitable for projects that meet these conditions:</p>
+            <ul>
+                <li>Value cannot be fixed upfront (it is known only after operation)</li>
+                <li>Failures are irreversible or high-cost (trust / downtime / data loss / hard to redo)</li>
+                <li>Humans retain final responsibility (cannot or should not fully automate)</li>
+                <li>Typical: infrastructure, enterprise systems, data integration, analytics/monitoring, ops automation, OT/IT boundaries</li>
+            </ul>
+            <p>
+                Note: For areas like games, ad landing pages, and entertainment where rapid iteration and disposal are expected,
+                this can be too heavy.
+            </p>
+
+            <h3>Deliverables</h3>
+            <ul>
+                <li><code>value-review-sheet.md</code>: value-design template (L1–L4)</li>
+                <li><code>delta-definition.md</code>: minimum definition of Δ</li>
+                <li><code>allowed-disallowed-delta.md</code>: allowable / disallowed Δ line</li>
+                <li><code>rcl-gate.md</code>: conditions to graduate to RCL (a gate, not an entrance)</li>
+                <li><code>scope-by-responsibility.md</code>: optional helper for sizing by "responsibility volume"</li>
+                <li><code>idk-lamp.md</code>: optional stop lamp to visualize indecision</li>
+            </ul>
+
+            <h3>Minimum glossary</h3>
+            <ul>
+                <li><strong>Δ (delta)</strong>: observable difference between design premise (P) and actual fact (D)</li>
+                <li><strong>Allowable Δ</strong>: recoverable while keeping human accountability</li>
+                <li><strong>Disallowed Δ</strong>: if left, irreversibly harms value/trust/responsibility</li>
+                <li><strong>RCL</strong>: a "responsibility meter" taken on by a fully maximized design (not stored in this repo)</li>
+            </ul>
+
+            <h3>Principle</h3>
+            <blockquote>
+                Writing RCL before seeing the whole picture becomes blame shifting, not design.<br>
+                RCL is not the entrance; it is the <strong>line of resolve</strong> taken on by a fully maximized design.
+            </blockquote>
+        </section>
+
+        <section id="sheet">
+            <h2 class="usage-title">Value Review Sheet</h2>
+
+            <h3>VCDesign Value Review Sheet (v0.1)</h3>
+            <blockquote>
+                <strong>Purpose</strong>: A review sheet to confirm value is not damaged before writing RCL.<br>
+                <strong>Positioning</strong>: This sheet is a "review document". <strong>Only L4 Pass</strong> graduates to RCL.
+            </blockquote>
+
+            <h3>How to use (minimum)</h3>
+            <ol>
+                <li>L1: List business flows (Do). Start with action rows.</li>
+                <li>L2: Expand PDΔA behind each Do (Man / Machine / Material)</li>
+                <li>L3: Select system intervention (Detect / Notify / Block / Ignore)</li>
+                <li>L4: Review if the whole flow maximizes value; if Pass, graduate to RCL</li>
+            </ol>
+
+            <h3>L1. Business flow (Do listing)</h3>
+
+            <h3>L1-1. Flow (Do) list</h3>
+            <ul>
+                <li>Do-01:</li>
+                <li>Do-02:</li>
+                <li>Do-03:</li>
+                <li>Do-04:</li>
+            </ul>
+
+            <h3>L1-2. Minimum boundaries</h3>
+            <blockquote>Do not use all 11 boundaries. Minimum is "People / System / Data / External".</blockquote>
+            <ul>
+                <li>People (roles):</li>
+                <li>System (target / external):</li>
+                <li>Data (master / ledger / logs):</li>
+                <li>External (other orgs, partners, law, physical):</li>
+            </ul>
+
+            <h3>L2. PDΔA per Do (Man / Machine / Material)</h3>
+            <blockquote>
+                <strong>Do is the entrance, not the end of responsibility.</strong><br>
+                Move away from cultural PDCA and toward <strong>observable deltas</strong>.
+            </blockquote>
+
+            <h3>L2 template (one block per Do)</h3>
+            <p><strong>Do-XX: &lt;Do name&gt;</strong></p>
+
+            <h3>Man (people)</h3>
+            <ul>
+                <li>P (premise):</li>
+                <li>D (execution):</li>
+                <li>Δ (delta: what mismatch becomes a problem):</li>
+                <li>A (response to Δ: who does what):</li>
+                <li>Evidence (for explanation):</li>
+            </ul>
+
+            <h3>Machine (system)</h3>
+            <ul>
+                <li>P:</li>
+                <li>D:</li>
+                <li>Δ:</li>
+                <li>A:</li>
+                <li>Evidence:</li>
+            </ul>
+
+            <h3>Material (data / information)</h3>
+            <ul>
+                <li>P:</li>
+                <li>D:</li>
+                <li>Δ:</li>
+                <li>A:</li>
+                <li>Evidence:</li>
+            </ul>
+
+            <h3>L3. Intervention policy (what to do and how)</h3>
+            <blockquote>
+                Decide which deltas from L2 the system will intervene on.<br>
+                "Do everything" is basically NG. <strong>Not doing (Ignore) is also design</strong>.
+            </blockquote>
+
+            <h3>L3-1. Intervention levels (4 choices)</h3>
+            <ul>
+                <li>Detect: detect (make it noticeable)</li>
+                <li>Notify: present (make it easy to execute)</li>
+                <li>Block: stop (cannot proceed without conditions)</li>
+                <li>Ignore: do nothing (leave to human responsibility)</li>
+            </ul>
+
+            <h3>L3-2. Intervention policy per Do</h3>
+            <ul>
+                <li>Do-01:
+                    Target Δ (which in L2?):
+                    Intervention (Detect/Notify/Block/Ignore):
+                    Rationale (why there?):
+                    <strong>Never do (boundary)</strong>:</li>
+                <li>Do-02:</li>
+                <li>Do-03:</li>
+            </ul>
+
+            <h3>L3-3. Only if you choose Block</h3>
+            <ul>
+                <li>Block condition (what must be satisfied to proceed):</li>
+                <li>Exception (emergency): who, on what basis, and how to override:</li>
+                <li>Evidence for override (approval log / ticket / signature):</li>
+            </ul>
+
+            <h3>L4. Max-value review (gate)</h3>
+            <blockquote>Judge whether the shape can keep responsibility, not feature count.</blockquote>
+
+            <h3>L4-1. Max-value checklist (Yes/No)</h3>
+            <ul>
+                <li>[ ] Do is not just an action list (each Do has Δ)</li>
+                <li>[ ] Disallowed Δ is clear (not left ambiguous as "normal")</li>
+                <li>[ ] Intervention is not excessive (Ignore is intentionally left)</li>
+                <li>[ ] Automation does not steal judgment (accountability remains human)</li>
+                <li>[ ] It can explain who looked at what in failure (Evidence exists)</li>
+                <li>[ ] Boundaries are not crossed (decisions not to be made were not made)</li>
+            </ul>
+
+            <h3>L4-2. Conclusion (short)</h3>
+            <ul>
+                <li>Value maximized by this design:</li>
+                <li>Value intentionally dropped:</li>
+                <li>Top 3 risks that damage max value:</li>
+            </ul>
+
+            <h3>L4-3. Judgment</h3>
+            <ul>
+                <li>Decision: Pass / Revise / Fail</li>
+                <li>Pass conditions (to graduate to RCL):</li>
+                <li>Revise points (which of L1/L2/L3 to redo):</li>
+            </ul>
+
+            <h3>Graduate to RCL (outside this sheet)</h3>
+            <blockquote>
+                <strong>Only L4 Pass</strong> creates an RCL sheet.<br>
+                RCL is not a tool to build, but a <strong>meter to protect design value</strong>.
+            </blockquote>
+        </section>
+
+        <section id="resources">
+            <h2 class="usage-title">Resources</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="https://github.com/VCDesign-org/vcdesign-value-review/tree/main">
+                        <span class="label">vcdesign-value-review (GitHub)</span>
+                        <span class="desc">Value Review repository</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+
+    </main>
+</body>
+
+</html>

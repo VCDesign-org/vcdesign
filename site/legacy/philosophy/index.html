@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <title>Philosophy - VCDesign</title>
-    <meta name="description"
-        content="VCDesign Philosophy: The conditions for value to be passed forward without loss. Theoretical background designing the locus of judgment and responsibility.">
+    <meta name="description" content="VCDesign Philosophy: 価値が失われずに次へ渡され続けるための条件。判断と責任の所在を設計する論理的背景。">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/page-shell.css">
     <link rel="stylesheet" href="../css/reading.css">
@@ -15,6 +14,7 @@
             --bg-base: #0F172A;
             --accent: #818CF8;
             --text-main: #E2E8F0;
+            /* Slate 200 */
             --text-muted: #9CA3AF;
             --divider: rgba(255, 255, 255, 0.1);
             --link-hover-bg: rgba(129, 140, 248, 0.08);
@@ -29,264 +29,267 @@
     <main class="page-main">
         <div class="page-content">
             <div class="warning-box">
-                <strong>⚠️ Historical Document Notice</strong><br>
-                This page contains historical documentation from the BOA/RCA/RP era. It is not the current authoritative specification of VCDesign. Please refer to the current Core specifications (core/core.yaml, core/policies.yaml, core/metrics.yaml) for authoritative guidance.
+                <strong>⚠️ 歴史的ドキュメントのお知らせ</strong><br>
+                このページはBOA/RCA/RP時代の歴史的ドキュメントを含みます。VCDesignの現行の権威ある仕様ではありません。現在のCore仕様（core/core.yaml, core/policies.yaml, core/metrics.yaml）を参照してください。
             </div>
-            <p><em>This concept has been superseded by the Core + Policies + Metrics model. Refer to specs/core/ for current definitions.</em></p>
-            <p><em>This document represents the conceptual lineage that led to the current model.</em></p>
+            <p><em>本概念は現在、Core + Policies + Metrics モデルに統合されています。現行仕様は specs/core/ を参照してください。</em></p>
+            <p><em>このドキュメントは現在のモデルに至る概念的系譜を表しています。</em></p>
 
 <article>
             <h1>PHILOSOPHY</h1>
-            <p class="subtitle">— Reason for VCDesign's Existence —</p>
+            <p class="subtitle">— VCDesign が存在する理由 —</p>
 
-            <h2>Prelude — The Premise of Time</h2>
+            <h2>Prelude — 時間の前提</h2>
 
-            <p>There are two timeframes in the lifecycle of software:<br>
-                "Production Time" and "Usage Time".</p>
+            <p>ソフトウェアのライフサイクルには、二つの時間がある。<br>
+                「制作期間」と「利用期間」である。</p>
 
-            <p>Until now, the core of engineering has been focused on<br>
-                how efficiently "Production Time" can be shortened.</p>
+            <p>これまでエンジニアリングの主体は、<br>
+                制作期間をいかに効率よく短縮するかに置かれてきた。</p>
 
-            <p>To increase production efficiency,<br>
-                various methodologies and architectures have been trialed.<br>
-                And now, "production" itself is being automated by AI.</p>
+            <p>制作効率を高めるため、<br>
+                様々な制作手法やアーキテクチャが試行されてきた。<br>
+                そして今、AI によって「制作」そのものが自動化されつつある。</p>
 
-            <p>In AI-driven production,<br>
-                structures need not be understandable by humans.<br>
-                Mathematically optimal solutions are simply generated.</p>
+            <p>AI による制作では、<br>
+                人間が理解できる構造である必要はない。<br>
+                ただ数理的に最適な解が生成されていく。</p>
 
-            <p>Even if production is automated, the human role does not disappear.<br>
-                What to make, how far to take it, when to stop.<br>
-                Judgment, coordination, and the placement of responsibility remain.</p>
+            <p>制作が自動化されても、人が関わる部分は消えない。<br>
+                何を作るか、どこまで作るか、いつ止めるか。<br>
+                判断と調整、そして責任の配置は残り続ける。</p>
 
-            <p>Furthermore, systems continue to be used after they are made.<br>
-                "Usage Time" is overwhelmingly longer than "Production Time".</p>
+            <p>また、システムは作られた後も使われ続ける。<br>
+                「利用期間」は、制作期間よりも圧倒的に長い。</p>
 
-            <p>When automated production becomes the premise,<br>
-                the cost of "Production Time" drops,<br>
-                allowing us to face the true reason for the system's existence.</p>
+            <p>制作の自動化が前提になると、<br>
+                制作期間へのコストは下がり、<br>
+                本来のシステムの存在理由に向き合えるようになる。</p>
 
-            <p>That is the question of<br>
-                <strong>how to maintain "Usage Time" for as long as possible.</strong>
+            <p>それは、<br>
+                <strong>利用期間をいかに長く保つか</strong>という問いである。
             </p>
 
-            <p>Keep the system or discard it?<br>
-                The criterion for judgment is simple.</p>
+            <p>システムを残すか、捨てるか。<br>
+                その判断基準はシンプルだ。</p>
 
-            <p>Does it still demonstrate value?</p>
+            <p>まだ、価値を発揮しているかどうか。</p>
 
-            <p>The lifespan of a system is not<br>
-                its uptime or years of maintenance,<br>
-                but <strong>the time during which it continues to demonstrate value.</strong></p>
-
-            <p>Value Continuity Design (VCDesign) is<br>
-                a design to incorporate the prolongation of the state of demonstrating value<br>
-                into the design from the very beginning.</p>
-
-            <hr>
-
-            <p>VCDesign (Value Continuity Design) is not<br>
-                a philosophy dealing with how to "create" value.</p>
-
-            <p>What VCDesign deals with is<br>
-                <strong>the condition for the time during which value continues to be demonstrated not to be severed
-                    midway.</strong>
+            <p>システムの寿命とは、<br>
+                稼働時間や保守年数ではなく、<br>
+                <strong>価値が発揮され続けている時間</strong>である。
             </p>
 
-            <p>This is not a philosophy born from ideals.<br>
-                It was born from observations that could not be avoided.</p>
+            <p>Value Continuity Design（VCDesign）とは、<br>
+                価値を発揮している状態を長期化することを、<br>
+                最初から設計に織り込むためのデザインである。</p>
 
             <hr>
 
-            <h2>About this Document</h2>
+            <p>VCDesign（Value Continuity Design）は、<br>
+                価値を「生み出す」方法を扱う思想ではない。</p>
 
-            <p>This document records<br>
-                "why VCDesign had to exist."</p>
+            <p>VCDesign が扱うのは、<br>
+                <strong>価値が発揮され続ける時間が、途中で断絶しないための条件</strong>である。
+            </p>
+
+            <p>これは理想から生まれた思想ではない。<br>
+                避けることのできなかった観測から、生まれた。</p>
+
+            <hr>
+
+            <h2>この文書について</h2>
+
+            <p>この文書は、<br>
+                VCDesign が「なぜ存在せざるを得なかったか」を記録するものである。</p>
 
             <ul>
-                <li>It does not explain how to use it</li>
-                <li>It does not justify implementation</li>
-                <li>It does not try to persuade the reader</li>
+                <li>使用方法を説明しない</li>
+                <li>実装を正当化しない</li>
+                <li>読者を説得しようとしない</li>
             </ul>
 
-            <p>What is written here is only<br>
-                <strong>the preconditions and their consequences</strong><br>
-                observed repeatedly in the field of design and operation.
+            <p>ここに書かれているのは、<br>
+                設計と運用の現場で繰り返し観測された<br>
+                <strong>前提条件と、その帰結</strong>だけである。
             </p>
 
             <hr>
 
-            <h2>Observed Severance</h2>
+            <h2>観測された断絶</h2>
 
-            <p>In systems where operation continues,<br>
-                regardless of domain or technology, the same phenomenon appeared repeatedly.</p>
+            <p>運用が続くシステムでは、<br>
+                ドメインや技術を問わず、同じ現象が繰り返し現れた。</p>
 
-            <p>Judgments are made.<br>
-                However, as time passes, no one can answer anymore.</p>
+            <p>判断は行われる。<br>
+                しかし、時間が経つと誰も答えられなくなる。</p>
 
             <ul>
-                <li>Why was that judgment made?</li>
-                <li>Under what premises was it valid?</li>
-                <li>Who was taking responsibility for it?</li>
+                <li>なぜ、その判断がなされたのか</li>
+                <li>どの前提のもとで成立していたのか</li>
+                <li>その責任は、誰が引き受けていたのか</li>
             </ul>
 
-            <p>This was not caused by a lack of effort or ability.</p>
+            <p>これは、努力や能力の不足が原因ではなかった。</p>
 
-            <p>It was caused by the fact that<br>
-                <strong>judgment itself was not treated<br>
-                    as a design object to be inherited across time.</strong>
+            <p><strong>判断そのものが、<br>
+                    時間を超えて引き継がれる設計対象として<br>
+                    扱われていなかった</strong>ことが原因だった。</p>
+
+            <p>判断は、<br>
+                会議、チャット、暗黙の了解の中に溶け、<br>
+                やがて誰のものでもなくなっていく。</p>
+
+            <p>システムは動き続けている。<br>
+                しかし、価値は静かに失われていった。</p>
+
+            <hr>
+
+            <h2>常時更新という前提</h2>
+
+            <p>自動化と生成技術の進展により、<br>
+                システムは次の前提から逃れられなくなった。</p>
+
+            <ul>
+                <li>実装は更新され続ける</li>
+                <li>改善の限界費用は限りなく下がる</li>
+                <li>試行錯誤は即座に現実へ反映される</li>
+            </ul>
+
+            <p>完成は終点ではなく、<br>
+                運用の開始点になった。</p>
+
+            <p>この環境では、<br>
+                <strong>「作れるか」ではなく「更新してよいか」</strong>が<br>
+                判断の中心になる。
             </p>
 
-            <p>Judgment dissolves into<br>
-                meetings, chats, and tacit understandings,<br>
-                and eventually becomes no one's.</p>
-
-            <p>The system keeps moving.<br>
-                However, value was quietly lost.</p>
+            <p>最適化は、止まらない。<br>
+                止めなければ、進み続ける。</p>
 
             <hr>
 
-            <h2>The Premise of Constant Updates</h2>
+            <h2>境界が設計されていないという事実</h2>
 
-            <p>With the progress of automation and generative technology,<br>
-                systems can no longer escape the following premises:</p>
+            <p>更新が前提となった環境では、<br>
+                境界が設計されていないシステムは、<br>
+                必ず同じ状態に陥る。</p>
 
             <ul>
-                <li>Implementations continue to be updated</li>
-                <li>The marginal cost of improvement drops indefinitely</li>
-                <li>Trial and error is immediately reflected in reality</li>
+                <li>誰も止める責任を持たない</li>
+                <li>短期的な合理性が、長期的な信用を侵食する</li>
+                <li>正しさの根拠が、結果や数値に吸収される</li>
             </ul>
 
-            <p>Completion is not the end point,<br>
-                but became the starting point of operation.</p>
+            <p>このとき壊れているのは、<br>
+                コードでも、機能でもない。</p>
 
-            <p>In this environment,<br>
-                <strong>"Is it okay to update?" rather than "Can we build it?"</strong><br>
-                becomes the center of judgment.
+            <p><strong>判断が成立してよい条件</strong>である。</p>
+
+            <hr>
+
+            <h2>VCDesign の立場</h2>
+
+            <p>VCDesign は、</p>
+
+            <ul>
+                <li>正しい判断を定義しない</li>
+                <li>責任を自動化しない</li>
+                <li>最適化の方向を与えない</li>
+            </ul>
+
+            <p>その代わり、<br>
+                <strong>判断が最終的なものとして成立してよい場所</strong>を設計する。
             </p>
 
-            <p>Optimization does not stop.<br>
-                If not stopped, it keeps advancing.</p>
+            <p>それ以上のことはしない。<br>
+                それ以下のこともしない。</p>
 
             <hr>
 
-            <h2>The Fact that Boundaries are Not Designed</h2>
+            <h2>設計対象の転換</h2>
 
-            <p>In an environment where updates are the premise,<br>
-                systems where boundaries are not designed<br>
-                inevitably fall into the same state.</p>
+            <p>VCDesign が設計対象とするのは、</p>
 
             <ul>
-                <li>No one has the responsibility to stop</li>
-                <li>Short-term rationality erodes long-term trust</li>
-                <li>The basis of correctness is absorbed by results and numbers</li>
+                <li>機能ではない</li>
+                <li>フローでもない</li>
+                <li>最適化アルゴリズムでもない</li>
             </ul>
 
-            <p>What is broken at this time is<br>
-                neither code nor function.</p>
+            <p><strong>判断と責任が、どこで引き受けられるか</strong>である。</p>
 
-            <p>It is <strong>the condition under which judgment is allowed to be valid.</strong></p>
+            <p>判断は、<br>
+                後から簡単に修正できない場所に現れる。</p>
+
+            <p>だからこそ、<br>
+                判断は「結果」ではなく<br>
+                <strong>時間をまたぐ設計</strong>として扱われなければならない。
+            </p>
 
             <hr>
 
-            <h2>VCDesign's Stance</h2>
+            <h2>機械可読である理由</h2>
 
-            <p>VCDesign:</p>
+            <p>人間は、<br>
+                合意形成や議論には優れている。</p>
+
+            <p>しかし、<br>
+                時間を超えて境界を維持することは苦手である。</p>
+
+            <p>VCDesign Core が機械可読で表現されるのは、<br>
+                実装のためではない。</p>
 
             <ul>
-                <li>Does not define correct judgment</li>
-                <li>Does not automate responsibility</li>
-                <li>Does not give directions for optimization</li>
+                <li>判断条件を固定するため</li>
+                <li>境界を変質させないため</li>
+                <li>人間とシステムが同じ前提を参照するため</li>
             </ul>
 
-            <p>Instead,<br>
-                it designs <strong>the place where judgment is allowed to validly stand as final.</strong></p>
-
-            <p>It does nothing more.<br>
-                It does nothing less.</p>
+            <p>これは、設計上の選択である。</p>
 
             <hr>
 
-            <h2>Shift of Design Object</h2>
+            <h2>AI との関係</h2>
 
-            <p>What VCDesign takes as its design object is:</p>
+            <p>AI は解釈を生成することができる。<br>
+                しかし、結果に責任を持つことはできない。</p>
+
+            <p>VCDesign は、<br>
+                AI を制御することで安全にしようとはしない。</p>
+
+            <p><strong>AI に、責任が始まる場所を決めさせない</strong>ことで安全にする。</p>
+
+            <p>AI は、判断の代行者ではない。<br>
+                判断が成立する前提を照らす存在である。</p>
+
+            <hr>
+
+            <h2>最後に</h2>
+
+            <p>この哲学が厳格に見えるなら、<br>
+                それは緩さが生き残れなかった場所から生まれたからである。</p>
+
+            <p>VCDesign は、<br>
+                変化を止めるための思想ではない。</p>
+
+            <p>変化の中で、<br>
+                <strong>価値が断絶しない条件を守るための思想</strong>である。
+            </p>
+
+            <hr>
+
+            <h2>位置づけ</h2>
 
             <ul>
-                <li>Not functions</li>
-                <li>Not flows</li>
-                <li>Not optimization algorithms</li>
+                <li>上位：VCDesign 憲法</li>
+                <li>本文書：存在理由（Why）</li>
+                <li>下位：マニフェスト／ナラティブ／ツール群</li>
             </ul>
 
-            <p>It is <strong>where judgment and responsibility are taken.</strong></p>
-
-            <p>Judgment appears in places<br>
-                that cannot be easily corrected later.</p>
-
-            <p>That is why<br>
-                judgment must be treated not as a "result"<br>
-                but as a <strong>design that spans across time.</strong></p>
-
-            <hr>
-
-            <h2>Reason for Being Machine-Readable</h2>
-
-            <p>Humans are<br>
-                excellent at consensus building and discussion.</p>
-
-            <p>However,<br>
-                they are poor at maintaining boundaries across time.</p>
-
-            <p>VCDesign Core is expressed in machine-readable form<br>
-                not for implementation.</p>
-
-            <ul>
-                <li>To fix judgment conditions</li>
-                <li>To prevent boundaries from deteriorating</li>
-                <li>So that humans and systems refer to the same premises</li>
-            </ul>
-
-            <p>This is a design choice.</p>
-
-            <hr>
-
-            <h2>Relationship with AI</h2>
-
-            <p>AI can generate interpretations.<br>
-                However, it cannot take responsibility for results.</p>
-
-            <p>VCDesign does not<br>
-                try to make AI safe by controlling it.</p>
-
-            <p>It makes it safe by <strong>not letting AI decide where responsibility begins.</strong></p>
-
-            <p>AI is not an agent of judgment.<br>
-                It is an existence that illuminates the premises under which judgment stands.</p>
-
-            <hr>
-
-            <h2>Finally</h2>
-
-            <p>If this philosophy looks strict,<br>
-                it is because it was born from a place where looseness could not survive.</p>
-
-            <p>VCDesign is not<br>
-                a philosophy to stop change.</p>
-
-            <p>It is <strong>a philosophy to protect the conditions under which value is not severed</strong><br>
-                amidst change.</p>
-
-            <hr>
-
-            <h2>Positioning</h2>
-
-            <ul>
-                <li>Upper: VCDesign Constitution</li>
-                <li>This Document: Reason for Existence (Why)</li>
-                <li>Lower: Manifesto / Narrative / Tools</li>
-            </ul>
-
-            <p>This document records<br>
-                <strong>why VCDesign was placed here.</strong>
+            <p>この文書は、<br>
+                VCDesign が<br>
+                <strong>なぜここに置かれたか</strong>を記録している。
             </p>
         </article>
 

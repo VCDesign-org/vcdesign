@@ -1,0 +1,563 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>TDDD (TODO Driven Development)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <main class="frame">
+
+        <header>
+            <nav class="lang-nav">
+                <a href="../index.html" class="lang-link">Home</a>
+            </nav>
+
+            <h1 class="hero-title">TDDD</h1>
+            <p class="hero-subtitle">(TODO Driven Development)</p>
+            <p class="hero-tagline">
+                A practical operating record of development in a specific era of generative AI.
+            </p>
+        </header>
+
+        <section id="toc">
+            <h2 class="usage-title">Contents</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="#why">
+                        <span class="label">Why TDDD</span>
+                        <span class="desc">Why it is needed and what it records</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#advanced">
+                        <span class="label">TDDD Advanced (2026)</span>
+                        <span class="desc">Practical loop and boundary handling</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="link-anchor" href="#resources">
+                        <span class="label">Resources</span>
+                        <span class="desc">Related documents</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section id="why">
+            <h2 class="usage-title">Why TDDD</h2>
+
+            <h3>Why TDDD is needed</h3>
+            <p>
+                TDDD (TODO Driven Development) was not born to invent a new development method.
+            </p>
+            <p>
+                It was born to <strong>catch up the development process to changes that have already happened</strong>.
+            </p>
+
+            <h3>The death of implementation</h3>
+            <p>
+                With the rise of generative AI,
+                "writing implementation" is no longer the core of development.
+            </p>
+            <ul>
+                <li>Code is generated at high speed</li>
+                <li>Quality is reasonably consistent</li>
+                <li>The cost of rewriting has dropped drastically</li>
+            </ul>
+            <p>
+                As a result, code became a <strong>consumable</strong>.
+                Code written today exists on the premise that AI will delete and rewrite it tomorrow.
+            </p>
+            <p>And yet, systems must keep running.</p>
+
+            <h3>What changed is not "How"</h3>
+            <p>
+                This change is not about "how" we write.
+                The real change is <strong>where we stop</strong>.
+            </p>
+
+            <h3>Mechanics step off the plane</h3>
+            <p>Engineers used to be:</p>
+            <ul>
+                <li>Designers</li>
+                <li>Implementers</li>
+                <li>Mechanics during incidents</li>
+            </ul>
+            <p>
+                In other words, they were on board even during flight.
+                But as implementation becomes automated, engineers are pushed off the plane.
+            </p>
+            <p>
+                Decisions are made before takeoff,
+                and after takeoff, the premise is "do not touch".
+            </p>
+            <p>
+                This is not a choice.
+                It is a structural change.
+            </p>
+
+            <h3>The problem is not who is flying</h3>
+            <p>Common debates ask:</p>
+            <ul>
+                <li>Is AI flying?</li>
+                <li>Is the human flying?</li>
+            </ul>
+            <p>But that is not the real question.</p>
+            <p>
+                <strong>Where is the control stick?</strong><br>
+                And <strong>where are the pilot's decisions recorded?</strong>
+            </p>
+
+            <h3>Code cannot preserve decisions</h3>
+            <p>
+                Code preserves implementation, but <strong>does not preserve decisions</strong>.
+            </p>
+            <ul>
+                <li>Why this specification?</li>
+                <li>Why stop at this boundary?</li>
+                <li>Why allow this exception?</li>
+            </ul>
+            <p>
+                Those decisions may remain as comments or docs,
+                but the code itself is not the medium of judgment.
+            </p>
+            <p>
+                In the era of generative AI,
+                entrusting decisions to code is dangerous.
+            </p>
+
+            <h3>TODO can preserve decisions</h3>
+            <p>
+                TODO is a <strong>message of judgment</strong> for future implementation.
+            </p>
+            <ul>
+                <li>Do this up to here</li>
+                <li>Do not go beyond this point</li>
+                <li>Must satisfy these conditions</li>
+                <li>This needs confirmation</li>
+            </ul>
+            <p>
+                TODO remains even if implementation disappears.
+                Even if code is rewritten, the decisions in TODO pass to the next implementation.
+            </p>
+
+            <h3>What TDDD does</h3>
+            <p>TDDD is simple.</p>
+            <ul>
+                <li>Concentrate decisions into TODO</li>
+                <li>Make implementation only execute TODO</li>
+                <li>When problems occur, fix TODO rather than code</li>
+            </ul>
+            <p>That is all.</p>
+
+            <h3>Why it is a loop</h3>
+            <p>Generative AI does not reach the right answer in one shot. Humans are the same.</p>
+            <p>
+                TDDD does not aim for one-shot completion.
+            </p>
+            <ul>
+                <li>Create TODO</li>
+                <li>Implement</li>
+                <li>Verify</li>
+                <li>Update TODO</li>
+            </ul>
+            <p><strong>It is a loop of continuously updating judgment.</strong></p>
+
+            <h3>Why boundaries matter</h3>
+            <p>
+                Generative AI always goes wild where boundaries are vague.
+            </p>
+            <ul>
+                <li>What you may do</li>
+                <li>What you must not do</li>
+                <li>What is out of scope this time</li>
+            </ul>
+            <p>
+                If these are not explicit, AI crosses boundaries in good faith.
+            </p>
+            <p>
+                In TDDD, boundaries are written as TODO.
+                They are not design docs, but <strong>pre-execution judgments</strong>.
+            </p>
+
+            <h3>Why yearly editions</h3>
+            <p>TDDD depends on the current tool stack.</p>
+            <ul>
+                <li>Conversational generative AI</li>
+                <li>Automatic code generation AI</li>
+                <li>IDE-integrated AI support</li>
+            </ul>
+            <p>
+                If these become unified, TODO generation and implementation will merge.
+                Then TDDD will change.
+            </p>
+            <p>
+                It is not a timeless theory.
+                It is an <strong>operating method for that year's reality</strong>.
+            </p>
+
+            <h3>What TDDD keeps out</h3>
+            <p>TDDD keeps ideology minimal.</p>
+            <ul>
+                <li>AI governance</li>
+                <li>Design philosophy</li>
+                <li>Organization theory</li>
+                <li>Responsibility design</li>
+            </ul>
+            <p>
+                These are <strong>outside TDDD</strong>.
+                They can be placed on Loop A, but TDDD does not enforce them.
+            </p>
+
+            <h3>Summary</h3>
+            <p>Implementation is no longer the main actor.</p>
+            <p>What remains is:</p>
+            <ul>
+                <li>Judgment</li>
+                <li>Boundaries</li>
+                <li>Expectations</li>
+            </ul>
+            <p>
+                TDDD is the <strong>smallest development loop</strong>
+                to hand those forward as TODO.
+            </p>
+            <p>
+                Even if code disappears,
+                development can continue as long as TODO remains.
+            </p>
+        </section>
+
+        <section id="advanced">
+            <h2 class="usage-title">TDDD Advanced (2026)</h2>
+
+            <h3>What this is</h3>
+            <p>
+                This document shows concrete steps to run TDDD stably in practice.
+                It minimizes design theory and focuses on "how to avoid accidents".
+            </p>
+
+            <h3>Two premises</h3>
+            <p><strong>Design premise</strong>: Re-creation as a default leads to value continuity.</p>
+            <p><strong>Means premise</strong>: Conversational AI and automatic code generation AI still have distinct roles.</p>
+            <p>TDDD Advanced is built only on these two points.</p>
+
+            <h3>The overall cycle</h3>
+            <ol>
+                <li>Create TODO with conversational AI</li>
+                <li>Let automatic code generation AI execute TODO</li>
+                <li>Review and return to TODO</li>
+            </ol>
+            <p>Repeat this loop.</p>
+
+            <h3>1. Create TODO with conversational AI</h3>
+            <p>This is the <strong>most important step</strong>.</p>
+
+            <h3>1-1. Align the specification</h3>
+            <ul>
+                <li>Explain in conversation</li>
+                <li>Paste existing documents</li>
+                <li>Ambiguity is acceptable</li>
+            </ul>
+            <p>The goal is not "the correct answer" but <strong>shared assumptions</strong>.</p>
+
+            <h3>1-2. Define the boundary where AI may act</h3>
+            <p>Always make these explicit:</p>
+            <ul>
+                <li>What to do this time</li>
+                <li>What not to do this time</li>
+                <li>The range that must not affect the outside</li>
+            </ul>
+            <p>Example:</p>
+            <pre class="code-block"><code>- Do not touch external APIs
+- Do not change DB schema
+- Do not perform file I/O
+</code></pre>
+
+            <h3>1-3. Ask for TODO inside the boundary</h3>
+            <p>
+                Ask the conversational AI:
+                "Within this boundary, create implementation TODOs.
+                Explicitly include what not to do." 
+            </p>
+
+            <h3>1-4. Output YAML if needed</h3>
+            <ul>
+                <li>Inputs / outputs</li>
+                <li>State</li>
+                <li>Configuration</li>
+            </ul>
+            <p>Write only the structure in YAML before code.</p>
+            <p>Artifacts:</p>
+            <pre class="code-block"><code>todo/
+  ├─ TODO.md
+  └─ schema.yaml (if needed)
+</code></pre>
+
+            <h3>2. Let automatic code generation AI execute TODO</h3>
+            <p>Here, <strong>do not let it decide</strong>.</p>
+
+            <h3>2-1. Large systems are "one boundary, one project"</h3>
+            <ul>
+                <li>Split repositories or folders by boundary</li>
+                <li>Keep a size the AI does not get lost in</li>
+            </ul>
+            <p>This is not design ideology but a countermeasure to AI's cognitive limits.</p>
+
+            <h3>2-2. Make the TODO folder the single source of truth</h3>
+            <p>
+                Instruct the automatic AI:
+                "Implement in xx language using only the contents of the todo folder.
+                Do not implement anything not written in TODO." 
+            </p>
+
+            <h3>2-3. If behavior is odd, make a test into TODO</h3>
+            <ul>
+                <li>Do not fix the code</li>
+                <li>Ask: "Create a test to confirm this behavior"</li>
+            </ul>
+            <p>Example:</p>
+            <ul>
+                <li>[ ] Add a test to confirm no exception is raised when input is None</li>
+            </ul>
+            <p>Procedure:</p>
+            <ol>
+                <li>Manual check</li>
+                <li>Execute</li>
+                <li>Confirm differences from expectation</li>
+                <li>Fix in the next cycle</li>
+            </ol>
+
+            <h3>3. Review and re-TODO</h3>
+
+            <h3>3-1. Refactor with another automatic AI if possible</h3>
+            <ul>
+                <li>Organize code</li>
+                <li>Remove duplication</li>
+                <li>Improve readability</li>
+            </ul>
+            <p>Adding tests from a different viewpoint is not very meaningful.</p>
+
+            <h3>3-2. Review with the conversational AI that created TODO</h3>
+            <ul>
+                <li>Does the implementation satisfy TODO?</li>
+                <li>Does it cross boundaries?</li>
+                <li>Where is judgment missing?</li>
+            </ul>
+
+            <h3>3-3. Return all feedback to TODO</h3>
+            <ul>
+                <li>Fix TODO before fixing code</li>
+                <li>Freeze judgment</li>
+                <li>Repeat the cycle</li>
+            </ul>
+            <ol>
+                <li>Create TODO</li>
+                <li>Implement</li>
+                <li>Verify</li>
+                <li>Fix TODO</li>
+            </ol>
+            <p>TDDD does not aim for one-shot completion.</p>
+
+            <h3>Techniques to connect boundaries (at scale)</h3>
+            <p>
+                A single boundary is small, but you can scale by loose coupling.
+            </p>
+            <p>Examples:</p>
+            <ul>
+                <li>Connect boundaries via data structures only</li>
+                <li>Prefer JSON / YAML / DTO to function calls</li>
+                <li>Avoid direct references (use Adapter / Facade)</li>
+                <li>Design boundary communication assuming failure</li>
+            </ul>
+            <p>This allows:</p>
+            <ul>
+                <li>Discarding one side</li>
+                <li>Re-creating components</li>
+                <li>Switching AI</li>
+            </ul>
+
+            <h3>Limits</h3>
+            <ul>
+                <li>Life/safety systems</li>
+                <li>Physical control</li>
+                <li>High legal liability domains</li>
+            </ul>
+            <p>These require different design.</p>
+
+            <h3>Summary</h3>
+            <ul>
+                <li>Judgment is made by conversational AI</li>
+                <li>Implementation is delegated to automatic AI</li>
+                <li>Cut by boundaries, connect by loose coupling</li>
+                <li>Do not erase TODO</li>
+            </ul>
+            <p>
+                TDDD Advanced is a practical loop
+                premised on continuous re-creation.
+            </p>
+
+            <h3>Supplement: The 11 boundaries as an invisible map</h3>
+            <p>
+                The most important point in TDDD Advanced is not to mistake where to cut.
+            </p>
+            <p>
+                VCDesign / VC-AD organize "constraints outside code" as <strong>11 boundaries</strong>
+                to help with that judgment.
+            </p>
+            <p>
+                These are hard to express as code and are where AI is most likely to go wild.
+            </p>
+
+            <h3>Overview of the 11 boundaries</h3>
+            <p>The 11 boundaries are grouped into four sets by nature.</p>
+
+            <h3>Group 1: Unchangeable Context</h3>
+            <p><strong>Boundaries you must not try to solve by design</strong></p>
+            <ol>
+                <li>Physical / field constraints</li>
+                <li>Organization / boundary</li>
+                <li>Governance</li>
+            </ol>
+            <p>Examples:</p>
+            <ul>
+                <li>Physical separation</li>
+                <li>Different organizations or responsibility owners</li>
+                <li>Fixed by law or policy</li>
+            </ul>
+            <p><strong>TDDD handling</strong></p>
+            <ul>
+                <li>Write as preconditions in TODO</li>
+                <li>Do not solve in implementation</li>
+                <li>Fix as assumptions for AI</li>
+            </ul>
+
+            <h3>Group 2: Select-only Resources</h3>
+            <p><strong>Boundaries determined by choice, not design</strong></p>
+            <ol>
+                <li>Execution platform</li>
+                <li>Network</li>
+                <li>Platform</li>
+            </ol>
+            <p>Examples:</p>
+            <ul>
+                <li>Cloud / on-prem</li>
+                <li>Latency / bandwidth</li>
+                <li>Managed / self-hosted</li>
+            </ul>
+            <p><strong>TDDD handling</strong></p>
+            <ul>
+                <li>Split projects by boundary</li>
+                <li>Write the choice as preconditions in TODO</li>
+                <li>Do not change during implementation</li>
+            </ul>
+
+            <h3>Group 3: Standards to Protect</h3>
+            <p><strong>Boundaries AI must not break</strong></p>
+            <ol>
+                <li>Reliability (SRE)</li>
+                <li>Security</li>
+                <li>Observability</li>
+            </ol>
+            <p>Examples:</p>
+            <ul>
+                <li>Retry policies</li>
+                <li>Access control</li>
+                <li>Log / metrics formats</li>
+            </ul>
+            <p><strong>TDDD handling</strong></p>
+            <ul>
+                <li>Write as constraints in TODO</li>
+                <li>Do not let automatic AI decide</li>
+                <li>Turn checks into TODO tests if needed</li>
+            </ul>
+
+            <h3>Group 4: VC-AD Core Domain</h3>
+            <p><strong>No correct answer, only decisions</strong></p>
+            <ol>
+                <li>Essence of distribution</li>
+                <li>Data semantics</li>
+            </ol>
+            <p>Examples:</p>
+            <ul>
+                <li>Consistency vs availability</li>
+                <li>Allow duplicate processing or not</li>
+                <li>Meaning of money and quantities</li>
+            </ul>
+            <p><strong>TDDD handling</strong></p>
+            <ul>
+                <li>Always decide with conversational AI + humans</li>
+                <li>Record decisions in TODO</li>
+                <li>Implementation only executes those decisions</li>
+            </ul>
+            <p>
+                This is the <strong>hardest area for AI</strong>,
+                and must be handled most carefully.
+            </p>
+
+            <h3>Practical usage in Advanced</h3>
+
+            <h3>Boundary split check</h3>
+            <p>Before splitting a project / TODO by a boundary, check:</p>
+            <ul>
+                <li>Which of the 11 boundaries are included</li>
+                <li>Whether multiple groups are mixed</li>
+                <li>Especially whether Group 4 is mixed in</li>
+            </ul>
+            <p>If mixed, <strong>split</strong>.</p>
+
+            <h3>Principles for connecting boundaries (loose coupling)</h3>
+            <ul>
+                <li>Connect boundaries via data structures</li>
+                <li>Avoid direct references</li>
+                <li>Assume failure</li>
+                <li>Keep the ability to discard one side</li>
+            </ul>
+            <p>
+                This makes TDDD applicable to <strong>large-scale systems</strong>.
+            </p>
+
+            <h3>Relationship between TDDD and the 11 boundaries</h3>
+            <ul>
+                <li>TDDD is about "how to run"</li>
+                <li>The 11 boundaries are the map of "where to cut"</li>
+                <li>VCDesign / VC-AD explains "why to cut that way"</li>
+            </ul>
+            <p>Advanced covers driving while looking at the map.</p>
+
+            <h3>Summary</h3>
+            <ul>
+                <li>AI does not know boundaries</li>
+                <li>Humans must teach boundaries</li>
+                <li>Decisions are left in TODO</li>
+                <li>Implementation stays inside boundaries</li>
+            </ul>
+            <p>
+                With this, TDDD scales beyond small systems
+                to <strong>real large systems</strong>.
+            </p>
+        </section>
+
+        <section id="resources">
+            <h2 class="usage-title">Resources</h2>
+            <ul class="link-list">
+                <li>
+                    <a class="link-anchor" href="https://github.com/VCDesign-org/tddd-playbook">
+                        <span class="label">tddd-playbook (GitHub)</span>
+                        <span class="desc">TDDD related documents and operating records</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+
+    </main>
+</body>
+
+</html>

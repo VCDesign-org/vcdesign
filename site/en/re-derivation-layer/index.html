@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Re-derivation Layer — Make robotic judgment explainable afterward | VCDesign</title>
+<style>
+  :root{
+    --sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono: ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
+
+    --page:#E4E9ED;
+    --card:#FBFCFD;
+    --ink:#1B2833;
+    --steel:#42586C;
+    --steel-soft:#78899A;
+    --band:#DBE3E9;
+    --band-2:#E8EDF1;
+    --line:#C2CED7;
+
+    --amber:#B47215;
+    --amber-line:#C98A2B;
+    --amber-fill:#FBF2DE;
+    --amber-ink:#7A4E0C;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{
+    background:radial-gradient(1200px 600px at 50% -8%, #EEF2F5 0%, var(--page) 60%);
+    color:var(--ink);font-family:var(--sans);line-height:1.72;
+    -webkit-font-smoothing:antialiased;padding:44px 20px 64px;
+  }
+  .wrap{max-width:720px;margin:0 auto;}
+
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--steel-soft);display:flex;align-items:center;gap:10px;}
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--line);}
+  .date{font-family:var(--mono);font-size:12px;color:var(--steel-soft);margin-top:16px;}
+  h1{font-size:34px;font-weight:660;letter-spacing:-.015em;margin:6px 0 2px;}
+  .jp-title{font-size:17px;color:var(--steel);font-weight:600;margin:0 0 10px;}
+  .position{font-size:14.5px;color:var(--amber-ink);margin:0;padding:10px 0 0;border-top:1px solid var(--line);}
+
+  h2{font-size:15px;font-weight:660;letter-spacing:.02em;color:var(--ink);margin:38px 0 12px;padding-left:12px;border-left:3px solid var(--amber-line);}
+  p{margin:0 0 15px;font-size:15.5px;}
+  .lede{font-size:16.5px;color:var(--ink);}
+  .lede em{font-style:normal;color:var(--amber-ink);font-weight:600;}
+  code{font-family:var(--mono);font-size:13.5px;background:#fff;border:1px solid var(--amber-line);color:var(--amber-ink);padding:1px 7px;border-radius:100px;white-space:nowrap;}
+  .quiet{color:var(--steel);font-size:14px;}
+
+  figure{margin:26px 0;}
+  figcaption{font-family:var(--mono);font-size:11px;color:var(--steel-soft);text-align:center;margin-top:10px;letter-spacing:.03em;}
+
+  .foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--steel-soft);line-height:1.7;}
+  .foot b{color:var(--steel);font-weight:600;}
+
+  .sheet{max-width:900px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:4px;box-shadow:0 1px 0 #fff inset,0 18px 40px -28px rgba(27,40,51,.55);padding:28px 28px 24px;}
+  .d-eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--steel-soft);display:flex;align-items:center;gap:10px;}
+  .d-eyebrow::after{content:"";flex:1;height:1px;background:var(--line);}
+  .d-title{font-size:22px;font-weight:650;letter-spacing:-.01em;margin:10px 0 5px;}
+  .d-title .op{color:var(--steel-soft);font-weight:400;padding:0 .12em;}
+  .d-thesis{font-size:13.5px;color:var(--steel);margin:0;}
+  .d-thesis b{color:var(--amber-ink);font-weight:650;}
+
+  .stack{margin-top:22px;position:relative;padding-left:24px;}
+  .stack::before{content:"";position:absolute;left:8px;top:14px;bottom:14px;width:2px;background:var(--line);}
+  .band{position:relative;border:1px solid var(--line);border-radius:3px;background:var(--band-2);padding:12px 15px;margin:0 0 8px;}
+  .band::before{content:"";position:absolute;left:-20px;top:20px;width:8px;height:8px;border-radius:50%;background:var(--card);border:2px solid var(--steel-soft);}
+  .tier{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;}
+  .name{font-size:13.5px;font-weight:650;}
+  .sub{font-family:var(--mono);font-size:11.5px;color:var(--steel);margin-top:3px;}
+  .chip{font-family:var(--mono);font-size:10px;letter-spacing:.04em;padding:2px 8px;border-radius:100px;white-space:nowrap;border:1px solid var(--line);color:var(--steel);background:#fff;}
+  .chip.ok{border-color:#B7C6D0;color:#3C566A;}
+  .band.field,.band.biz{background:var(--band);}
+  .band.conv{background:#E6ECF0;}
+  .band.conv .std{font-family:var(--mono);font-size:11.5px;color:var(--ink);margin-top:8px;display:grid;gap:5px;}
+  .band.conv .std span{color:var(--amber-ink);}
+  .band.conv .std em{color:var(--steel-soft);font-style:normal;}
+
+  .seam{position:relative;border:1.5px dashed var(--amber-line);background:var(--amber-fill);border-radius:3px;padding:14px 15px 15px;margin:0 0 8px;}
+  .seam::before{content:"";position:absolute;left:-20.5px;top:20px;width:9px;height:9px;border-radius:50%;background:var(--amber-fill);border:2px solid var(--amber-line);}
+  .seam .name{color:var(--amber-ink);}
+  .chip.gap{border-color:var(--amber-line);color:var(--amber-ink);background:#fff;font-weight:600;}
+  .pressure{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 11px;}
+  .pressure .p{font-size:11px;color:var(--steel);border:1px solid var(--line);border-radius:3px;background:#fff;padding:4px 8px;display:flex;align-items:center;gap:6px;}
+  .pressure .ar{font-family:var(--mono);color:var(--amber);font-weight:700;}
+  .xform{font-family:var(--mono);font-size:11.5px;line-height:1.85;background:#fff;border:1px solid var(--line);border-radius:3px;padding:9px 11px;overflow-x:auto;}
+  .xform .k{color:var(--steel);}
+  .xform .to{color:var(--amber);padding:0 .4em;}
+  .xform .m{color:var(--ink);font-weight:600;}
+  .missing{margin-top:11px;padding-top:11px;border-top:1px solid #EAD9B6;font-size:13px;color:var(--amber-ink);}
+  .missing .lead{color:var(--steel);font-size:11.5px;display:block;margin-bottom:5px;}
+  .missing code{font-size:11.5px;}
+  .flow{text-align:center;color:var(--steel-soft);font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;margin:-2px 0 6px;}
+  .flow.into{color:var(--amber);}
+  .d-foot{margin-top:18px;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;color:var(--steel-soft);}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .swatch{width:20px;height:0;border-top:1.5px solid var(--steel);}
+  .swatch.dash{border-top:1.5px dashed var(--amber-line);}
+
+  @media (max-width:560px){
+    h1{font-size:27px;}
+    .sheet{padding:20px 16px;}
+    body{padding:32px 16px 48px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">VCDesign · Field Note</div>
+  <div class="date">2026-07-17</div>
+  <h1>Re-derivation Layer</h1>
+  <p class="jp-title">The layer where a robot's action can be explained later as responsibility and meaning</p>
+  <p class="position">When VCDesign is lowered into the physical AI / OT boundary, a visible gap appears: a layer for application, not a new methodology.</p>
+
+  <p class="lede">
+    An autonomous robot replies, “P-102 inspection complete.” That signal is correct.
+    But the real question is: <em>under whose authority</em> can that be called an inspection?
+    <em>On what basis</em> was “complete” judged? And six months later, can another person
+    <em>reconstruct why that decision was valid</em>?
+    The action is recorded. The meaning and its reasoning are not.
+  </p>
+
+  <h2>Where the stack is missing</h2>
+  <p>
+    The transformation from ROS2 to equipment actually has two layers. The communication and information-model conversion (Layer A) is mostly standardized. OPC UA’s Robotics Companion Specification carries state monitoring upward toward task control, while fleet standards such as VDA5050 and Open-RMF handle transport and coordination. But the layer that transforms action into <em>operational responsibility and business meaning</em> (Layer B) still has no standard.
+  </p>
+
+  <figure>
+    <div class="sheet">
+      <div class="d-eyebrow">OT / IT BOUNDARY · ROBOTICS INTEGRATION</div>
+      <div class="d-title">ROS2 <span class="op">↔</span> Equipment Transformation Stack</div>
+      <p class="d-thesis">Communication conversion (Layer A) is largely standardized. What remains empty is the B layer, where action is translated into <b>ownership, responsibility, and business meaning</b>.</p>
+
+      <div class="stack">
+        <div class="band biz">
+          <div class="tier">
+            <div><div class="name">Business / Meaning World</div>
+              <div class="sub">SCADA · MES · CMMS · EAM · quality / batch records</div></div>
+            <div class="chip">Upper business systems</div>
+          </div>
+        </div>
+
+        <div class="flow into">▼ Business records and field judgment flow down</div>
+
+        <div class="seam">
+          <div class="tier">
+            <div class="name">B layer — Operational responsibility and business meaning conversion = Re-derivation Layer</div>
+            <div class="chip gap">Standard absent / THE SEAM</div>
+          </div>
+          <div class="pressure">
+            <div class="p"><span class="ar">↑</span>Layer A rises (status → task control)</div>
+            <div class="p"><span class="ar">↓</span>Business layer descends (work records · judgment)</div>
+            <div class="p"><span class="ar">→</span>Fleet standards (VDA5050 / RMF)</div>
+          </div>
+          <div class="xform">
+<span class="k">NavigateTo(x,y)</span>&nbsp;&nbsp;<span class="to">→</span><span class="m">“P-102 inspection”</span>
+<span class="k">FollowWaypoints</span>&nbsp;<span class="to">→</span><span class="m">“material replenishment transport”</span>
+<span class="k">CaptureImage</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="to">→</span><span class="m">“field verification for alarm A-17”</span>
+          </div>
+          <div class="missing">
+            <span class="lead">Each side models only its own boundary, leaving the seam unresolved in the center. What is missing is——</span>
+            <b>whose authority</b> ・ <b>which basis</b> ・ <b>whether a successor can later reconstruct why</b>
+            &nbsp;→&nbsp; <code>re_derivation_basis</code>
+          </div>
+        </div>
+
+        <div class="flow">▲ Motion primitives rise upward</div>
+
+        <div class="band conv">
+          <div class="tier">
+            <div class="name">A layer — communication and information-model conversion</div>
+            <div class="chip ok">Standards largely established</div>
+          </div>
+          <div class="std">
+            <div>Northbound (equipment / OT)&nbsp;&nbsp;<span>OPC UA</span> <em>— Robotics Companion Spec v1.02 (2025-10, reaching task/control)</em></div>
+            <div>Transport / fleet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>VDA5050</span> <em>·</em> <span>Open-RMF</span></div>
+          </div>
+        </div>
+
+        <div class="flow">▲</div>
+
+        <div class="band">
+          <div class="tier">
+            <div><div class="name">Robot Internal Middleware</div>
+              <div class="sub">ROS2 / DDS — topic · action · service</div></div>
+            <div class="chip">Inside the machine</div>
+          </div>
+        </div>
+
+        <div class="flow">▲</div>
+
+        <div class="band field">
+          <div class="tier">
+            <div><div class="name">Physical Layer</div>
+              <div class="sub">robot · AMR · manipulator · PLC / sensors · equipment</div></div>
+            <div class="chip">Field</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-foot">
+        <div class="legend">
+          <span><span class="swatch"></span>Standardized</span>
+          <span><span class="swatch dash"></span>Standard absent (the actual blank space)</span>
+        </div>
+        <div>Source: VDMA OPC UA Robotics Companion Spec Part 1.02 (2025-10)</div>
+      </div>
+    </div>
+    <figcaption>Fig. ROS2 ↔ equipment transformation stack. Layer A is standardized; Layer B = Re-derivation Layer remains the gap.</figcaption>
+  </figure>
+
+  <h2>What the re-derivation layer is</h2>
+  <p>
+    The re-derivation layer is the layer that converts <code>NavigateTo(x,y)</code> into “P-102 inspection,” and <code>CaptureImage</code> into “field verification for alarm A-17.” But that naming alone is not enough.
+    It must carry <em>whose authority</em>, <em>on what basis</em>, and whether a successor can later reconstruct <em>why</em>.
+  </p>
+  <p>
+    VCDesign names this last piece <code>re_derivation_basis</code>. It is not the name of an owner to inherit, but the basis of judgment to inherit: why something was valid, not merely who approved it.
+    RACI, ADRs, and ISO owner-tracking do not close this gap. This is the core of where VCDesign diverges from them and where Layer B becomes concrete.
+    <span class="quiet">= VCDesign’s distinguishing point relative to RACI and related methods is exactly what sits inside this B layer.</span>
+  </p>
+
+  <h2>Why now</h2>
+  <p>
+    As physical AI foundations descend into the field, robots become capable of moving. Layer A rises upward and touches the edge of Layer B. Three directions — below (robot companion specs), sideways (fleet standards), and above (MES / CMMS) — all press on this seam, but each models only its own side. The central issue of responsibility and meaning remains unowned by anyone.
+  </p>
+
+  <h2>Where it starts to help</h2>
+  <p>
+    In regulated manufacturing — pharmaceuticals, chemicals, food — the moment an autonomous robot’s inspection or field verification result flows into batch records or compliance decisions, the auditability of the reasoning becomes <em>legally</em> required. It stops being “nice to have” and becomes “must have.” This is where the gap bites hardest.
+  </p>
+
+  <div class="foot">
+    This is not a product. It is a note written to <b>name this layer before standards reach it</b>.<br>
+    Re-derivation Layer / VCDesign application case / <b>2026-07-17</b><br>
+    Related: <code>re_derivation_basis</code> — an internal primitive of the VCDesign tenure model
+  </div>
+
+</div>
+</body>
+</html>
