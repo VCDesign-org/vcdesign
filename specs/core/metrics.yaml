@@ -485,7 +485,7 @@ vcdesign_metrics:
   containment_metrics:
     description: >
       下振れの裾が内部で増幅・伝播しうる構造を観測する指標群。
-      失敗そのものではなく「失敗が掛け算で広がる条件」が揃っているかを見る。
+      失敗そのものではなく「一つの失敗が次の失敗を生む条件」が揃っているかを見る。
       背景は core/downside-containment-model.md、フィールド定義は schema_case.yaml (v0.3) と
       patterns/boundary-pattern.yaml (v1.2.0) を参照。
       いずれも base_metrics と同じ evaluation_model に従う。
@@ -536,7 +536,7 @@ vcdesign_metrics:
         description: >
           上流で ACCEPTED だった判断が、境界で再検証されないまま下流でも ACCEPTED として扱われている状態。
         intent: >
-          連鎖のリセットが行われず、上流の誤りが掛け算で下流に渡る経路を検知する。
+          連鎖のリセットが行われず、上流の誤りが増幅されて下流に渡る経路を検知する。
         typical_signals:
           - upstream_basis_refs_without_revalidation_result
           - boundary_upstream_trust_undeclared
@@ -604,7 +604,7 @@ vcdesign_metrics:
   accumulation_metrics:
     description: >
       上振れ側、すなわち「業務が変わっても残るもの」が実際に残り、積み上がっているかを観測する指標群。
-      平均的な効果ではなく、べき乗的に広がりうる兆候（裾の形）を見る。
+      平均的な効果ではなく、大きく広がりうる兆候（裾の形）を見る。
       背景は core/value-asymmetry-model.md、フィールド定義は schema_case.yaml (v0.3) を参照。
       いずれも base_metrics と同じ evaluation_model に従う。
     metrics:

@@ -170,7 +170,7 @@ vcdesign_policies:
     principle:
       description: >
         小さく始めた判断（small_go）を広げる（scale_go）ときの門。
-        広げる根拠は平均的な成功ではなく、べき乗的に広がりうる兆候（tail_signals）の観測である。
+        広げる根拠は平均的な成功ではなく、大きく広がりうる兆候（tail_signals）の観測である。
         平均的に成功しても兆候のない改善は、点の改善として縮小または終了を検討する。
         背景は core/value-asymmetry-model.md。
 

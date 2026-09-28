@@ -243,7 +243,7 @@ vcdesign_case:
     tail_signals:
       type: object
       description: >
-        べき乗的に広がりうる兆候の宣言と観測。
+        大きく広がりうる兆候の宣言と観測。
         開始時に「どの兆候が出れば広げるか」を宣言し、レビュー時に観測結果を記録する。
         平均的な成功（効果が出た）とは別に評価する。
         兆候の種類は core.yaml value_accumulation.tail_signals に従う。

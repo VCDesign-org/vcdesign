@@ -17,21 +17,21 @@
 
 - `value-tenure-model.md` — 責任の**時間軸上の性質**（点か線か）を定義する文書
 - `value-asymmetry-model.md` — 上に開き下を閉じる、価値の非対称を定義する親文書
-- `downside-containment-model.md`（本文書）— 親文書の下側。失敗の**広がり方**（足し算か掛け算か）を定義する文書
+- `downside-containment-model.md`（本文書）— 親文書の下側。失敗の**広がり方**（増幅されるか、その場に留まるか）を定義する文書
 
 ---
 
 ## 1. なぜこの区別が必要か
 
-成果や損失の分布は、生成の仕組みで形が決まる。
+独立した小さな要因が足し合わされる世界では、極端な結果は起きにくい。
+一方、連鎖・再利用・集中・フィードバックが存在する世界では、一つの結果が次の結果を生み、
+極端な結果が無視できなくなる。
 
-| 生成の仕組み | 分布の形 | 裾 |
-|---|---|---|
-| 独立した要因が**足し算**で効く | 正規分布に近い | 薄い（極端な事象はほぼ起きない） |
-| 要因が**掛け算**で効く、失敗が**連鎖・伝播**する、依存が**一点に集まる** | 対数正規・べき乗に近い | 厚い（極端な事象が現実的な頻度で起きる） |
-
-システムがつながり、AI が判断を連鎖させるほど、下振れは後者の形になる。
+システムがつながり、AI が判断を連鎖させるほど、世界は後者に寄る。
 一つの誤判断が下流で増幅され、共通の依存先を通って複数の区画に同時に波及する。
+
+本文書は分布の数学的な形を主張しない。重要なのは分布を当てることではなく、
+**増幅機構を設計すること**である。
 
 VCDesign の根にある問い ——「その初動しか取れない設計だったのではないか」—— は、
 裾の事象そのものではなく、**裾の事象が内部で増幅される構造**を設計の責任として扱う問いである。
@@ -47,7 +47,7 @@ VCDesign の根にある問い ——「その初動しか取れない設計だ�
 本文書はその**下を閉じる側**の詳細である。上振れ（業務が変わっても残るもの、裾の兆候）は
 親文書と `core.yaml value_accumulation` を参照。
 
-目標は「正規分布にすること」ではなく「**裾を切ること**」である。
+目標は分布を当てることではなく「**増幅を切ること**」である。
 外から来る裾（自然災害・突発故障）は消せない。
 制御できるのは、それが内部でどこまで増幅・伝播するかだけである。
 
@@ -55,13 +55,13 @@ VCDesign の根にある問い ——「その初動しか取れない設計だ�
 
 ## 3. 4 つの機構
 
-べき乗的な裾は「掛け算」と「連鎖」から生まれるので、封じ込めはそれを足し算に戻す操作になる。
+極端な下振れは、一つの失敗が次の失敗を生む仕組みから起きるので、封じ込めはその増幅を切る操作になる。
 
 | 機構 | 何を切るか | 宣言する場所 | 観測する metric |
 |---|---|---|---|
 | **isolate** 結合を切る | 区画をまたぐ伝播 | `schema_case.failure_domain` / `boundary-pattern.containment` | `blast_radius_exceeded`（区画外伝播） |
 | **cap** 上限の宣言 | 損失の大きさ | `schema_case.blast_radius` / `resolution_object.blast_radius` | `blast_radius_undeclared` / `blast_radius_exceeded` |
-| **revalidate** 連鎖のリセット | 上流の誤りの掛け算 | `schema_case.upstream_basis_refs` / `boundary-pattern.revalidation` | `transitive_trust` |
+| **revalidate** 連鎖のリセット | 上流の誤りの増幅 | `schema_case.upstream_basis_refs` / `boundary-pattern.revalidation` | `transitive_trust` |
 | **deconcentrate** 集中を避ける | 共通原因による同時故障 | `schema_case.depends_on` / `containment.shared_dependencies` | `dependency_concentration` / `judgment_concentration` |
 
 加えて、全機構の前提として**可逆性**を記録する（`schema_case.reversibility`）。

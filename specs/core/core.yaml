@@ -228,8 +228,9 @@ vcdesign_core:
   downside_containment:
     description: >
       上振れ（価値の複利・接続による正のフィードバック）は開いたままにし、
-      下振れの裾は境界で切る。べき乗的な裾は掛け算的増幅と連鎖・伝播から生じるため、
-      封じ込めはそれを足し算に戻す 4 機構として定義する。
+      下振れの裾は境界で切る。極端な下振れは、連鎖・再利用・集中・フィードバックによって
+      一つの失敗が次の失敗を生むことで起きる。封じ込めは、その増幅を切る 4 機構として定義する。
+      分布の数学的な形は主張しない。扱うのは増幅機構の設計である。
       規範的な実体は schema_case.yaml（containment 系フィールド）、
       patterns/boundary-pattern.yaml（containment / revalidation）、
       metrics.yaml（containment_metrics）にある。背景は core/downside-containment-model.md。
@@ -240,7 +241,7 @@ vcdesign_core:
       cap:
         description: 判断・境界ごとに最大損失（blast radius）を事前に宣言する（上限の宣言）
       revalidate:
-        description: 境界で上流の根拠を再検証し、上流の誤りを下流に掛け算で渡さない（連鎖のリセット）
+        description: 境界で上流の根拠を再検証し、上流の誤りを増幅したまま下流に渡さない（連鎖のリセット）
       deconcentrate:
         description: 判断経路・依存先の一点集中を構造的に検知する（集中を避ける）
     rules:
@@ -264,11 +265,11 @@ vcdesign_core:
       point_improvement:
         description: >
           その時点の業務に紐づく改善。業務が変われば無効化され、何も残らない。
-          成果は足し算で散らばり、継続投資・継続運用の根拠にならない。
+          成果はその場に散らばって消え、継続投資・継続運用の根拠にならない。
       line_improvement:
         description: >
           業務・担当・技術の変化をまたいで残るものに紐づく改善。
-          残ったものが再利用されるたびに次の適用が安くなり、成果は掛け算で積み上がる。
+          残ったものが再利用されるたびに次の適用が安くなり、成果が次の成果を生む。
     residual_asset_kinds:
       - record          # 記録（履歴・構成・判断ログ）
       - standard        # 標準（手順・受入条件・構成の型）
@@ -291,6 +292,7 @@ vcdesign_core:
       - improvement_invalidated_by_work_change_is_a_delta
 
   value_asymmetry:
+    principle: "upside は伝播可能にする。downside は伝播させない。"  # Value Asymmetry Principle
     description: >
       上に開き、下を閉じる。value_accumulation（上）と downside_containment（下）を
       同じ判断記録の上で同時に扱うことを、価値の継続の定義とする。
