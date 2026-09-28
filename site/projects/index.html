@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>関連プロジェクト | VCDesign</title>
+<meta name="description" content="VC-AD、TDDD、VMS、Value Review、Re-derivation Layer、Continuity Claim Protocol、idk-lamp.org と VCDesign v2 の関係。">
+<link rel="canonical" href="https://vcdesign.org/projects/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/projects/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/projects/">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../en/projects/" hreflang="en" lang="en">English</a>
+  </div>
+  <nav class="site-nav" aria-label="サイト内">
+    <ul>
+      <li><a href="../">トップ</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/">芯</a></li>
+      <li><a href="../decision/">判断</a></li>
+      <li><a href="../examples/">事例</a></li>
+      <li><a href="../ai/">AI 拡張</a></li>
+      <li><a href="../migration/">v1 からの移行</a></li>
+      <li><a href="../projects/" aria-current="page">関連プロジェクト</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main" class="wide">
+<p class="eyebrow">周辺</p>
+<h1>関連プロジェクト</h1>
+<p class="lead">VCDesign の周りにある実践や道具です。それぞれの規範は各リポジトリにあり、VCDesign の仕様ではありません。</p>
+
+<div class="note">
+  <p>状態の表示：<strong>v2 と整合</strong>は v2 の語彙と矛盾しないもの、<strong>v1 の語彙</strong>は v1 の語彙で書かれたままのものです。v1 の語彙の読み替えは<a href="../migration/">移行表</a>を参照してください。</p>
+</div>
+
+<ul class="cards">
+  <li class="card">
+    <h2><a href="../vc-ad/">VC-AD</a></h2>
+    <p><span class="status">別リポジトリで更新中</span></p>
+    <p>AI による開発で、判断・契約・接続・適用範囲を YAML として渡し、人間が設計と責任の芯を持つための開発プロトコル。</p>
+    <p>「VCDesign は法則であり、VC-AD はその現在技術水準における具体化である」（VCDesign README）。</p>
+  </li>
+  <li class="card">
+    <h2><a href="../tddd/">TDDD</a></h2>
+    <p><span class="status">独立した実践記録</span></p>
+    <p>TODO Driven Development。生成 AI の時代に、コードではなく判断を残すための開発の運用記録。</p>
+    <p><a href="https://github.com/VCDesign-org/tddd-playbook">tddd-playbook</a></p>
+  </li>
+  <li class="card">
+    <h2><a href="../value-review/">Value Review</a></h2>
+    <p><span class="status warn">v1 の語彙</span></p>
+    <p>実装の前に、どの価値をどの境界の内側で守るかを決めるレビューシート（L1〜L4）。v2 では、判断ゲートと正本の Review Output が同じ役割を担います。</p>
+    <p><a href="https://github.com/VCDesign-org/vcdesign-value-review">vcdesign-value-review</a></p>
+  </li>
+  <li class="card">
+    <h2><a href="../vms/">VMS</a> / <a href="../vms/marketing/">VMS Marketing</a></h2>
+    <p><span class="status warn">v1 の語彙</span></p>
+    <p>経営やマーケティングの悩みを、ループ・境界・判断に翻訳して、責任と価値の継続を設計する運用プロトコル。</p>
+    <p><a href="https://github.com/VCDesign-org/vms">vms</a> · <a href="https://github.com/VCDesign-org/vms-marketing">vms-marketing</a></p>
+  </li>
+  <li class="card">
+    <h2><a href="../re-derivation-layer/">Re-derivation Layer</a></h2>
+    <p><span class="status ok">v2 と整合</span></p>
+    <p>ロボットや設備の動作を、後から責任と業務上の意味として説明できるようにする層（物理 AI と OT の境界）。v2 の「伝える」の一つとして用語集にも位置づけられています。</p>
+  </li>
+  <li class="card">
+    <h2><a href="https://github.com/VCDesign-org/continuity-claim-protocol">Continuity Claim Protocol</a></h2>
+    <p><span class="status ok">v2 と整合</span></p>
+    <p>別の組織やエージェントをまたいで越境するとき、識別・境界・権限・署名を先に宣言するためのプロトコル。境界パターンの <code>external_crossing</code> が参照しています。</p>
+  </li>
+  <li class="card">
+    <h2><a href="https://idk-lamp.org/ja/">idk-lamp.org</a></h2>
+    <p><span class="status ok">v2 と整合</span></p>
+    <p>AI に「分からない」ランプを持たせる、日常の場面からの入口。境界の判定で、判定できないときは unknown として止めて上げる、という考え方を身近な話で説明しています。</p>
+  </li>
+</ul>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">仕様（GitHub）</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity 正本（GitHub）</a></li>
+      <li><a href="../legacy/">過去の資料</a></li>
+    </ul>
+    <p>このサイトは説明です。規範は GitHub の <code>specs/</code> にあり、食い違う場合は仕様が優先します。</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

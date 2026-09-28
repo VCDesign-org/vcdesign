@@ -121,6 +121,12 @@ h2 {
     letter-spacing: 0.07em;
 }
 
+h3 {
+    margin: 20px 0 10px;
+    font-size: 1.05rem;
+    color: var(--accent-2);
+}
+
 .usage-title {
     display: inline-flex;
     align-items: center;
@@ -147,6 +153,26 @@ h2 {
 p {
     margin: 0 0 12px;
     color: #E2E8F0;
+}
+
+ul,
+ol {
+    margin: 0 0 16px;
+    padding-left: 1.6em;
+    color: #E2E8F0;
+}
+
+li {
+    margin-bottom: 6px;
+}
+
+blockquote {
+    margin: 16px 0;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 4px solid var(--accent);
+    color: var(--muted);
+    font-style: italic;
 }
 
 .link-list {
@@ -220,6 +246,21 @@ p {
     resize: vertical;
 }
 
+.code-block {
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(3, 7, 18, 0.85);
+    color: #E2E8F0;
+    font-family: "IBM Plex Mono", "SFMono-Regular", "Menlo", monospace;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    overflow-x: auto;
+    margin: 10px 0;
+}
+
 .prompt-actions {
     margin-top: 10px;
     display: flex;
@@ -284,6 +325,10 @@ footer {
     text-align: center;
     color: var(--muted);
     font-size: 0.82rem;
+}
+
+.copyright {
+    margin-top: 8px;
 }
 
 @media (max-width: 780px) {

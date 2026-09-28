@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>事例 | VCDesign</title>
+<meta name="description" content="点の改善と線の改善、担当交代をまたぐ保有、製造現場の AI エージェント。VCDesign の宣言と判断がどう記録されるかを、架空の現場で示す3つの事例です。">
+<link rel="canonical" href="https://vcdesign.org/examples/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/examples/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/examples/">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../en/examples/" hreflang="en" lang="en">English</a>
+  </div>
+  <nav class="site-nav" aria-label="サイト内">
+    <ul>
+      <li><a href="../">トップ</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/">芯</a></li>
+      <li><a href="../decision/">判断</a></li>
+      <li><a href="../examples/" aria-current="page">事例</a></li>
+      <li><a href="../ai/">AI 拡張</a></li>
+      <li><a href="../migration/">v1 からの移行</a></li>
+      <li><a href="../projects/">関連プロジェクト</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">適用例</p>
+<h1>事例</h1>
+<p class="lead">宣言と判断がどう記録されるかを、3つの事例で示します。登場する工場・組織・人物・数値はすべて架空です。</p>
+<p class="source">このページは要約です。記録の全文と YAML は <a href="https://github.com/VCDesign-org/vcdesign/tree/main/specs/examples/">specs/examples/</a> にあります。</p>
+
+<nav class="toc" aria-labelledby="toc-title">
+  <h2 id="toc-title">このページの内容</h2>
+  <ol>
+    <li><a href="#point-line">点の改善と線の改善 — 業務が変わったら何が残るか</a></li>
+    <li><a href="#custody">担当交代をまたぐ保有 — 承認の後を誰が持つか</a></li>
+    <li><a href="#factory">製造現場の AI エージェント — 物理と意味のループを分ける</a></li>
+  </ol>
+</nav>
+
+<h2 id="point-line">1. 点の改善と線の改善</h2>
+<p class="source">残す・見つける・試す／<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/examples/point-vs-line-improvement.md">point-vs-line-improvement.md</a></p>
+
+<h3>状況</h3>
+<p>架空の部品工場「北原工場」で、二つの改善が同時に始まりました。改善 A は日報作成を表計算マクロで自動化し、改善 B は設備の稼働データを小型の産業用 PC で集めて停止要因を見える化します。3か月後、どちらも「効果あり」と判定され、平均的な効果は A（1日30分）の方が B（1日20分）より大きく見えました。</p>
+<p>1年後、全社で日報の様式が変わり、A のマクロは動かなくなりました。作った担当者は異動していて、日報は手作業に戻りました。<strong>業務が変わったとき、何も残りませんでした。</strong>B は2号ラインへの展開が1号ラインの約半分の工数で終わり、頼んでいない品質管理課から引き合いが来ました。PC の OS がサポート終了を迎えても、止めずに更新できました。</p>
+
+<h3>宣言したこと</h3>
+<ul>
+  <li>A：<code>residual_assets</code> が空。広がりの兆候も宣言していない → 点の改善として扱う</li>
+  <li>B：標準 OS イメージ、工場共通の停止要因コード、予備機への切替技能、機器構成の記録を、それぞれ保有者付きで <code>residual_assets</code> に宣言。<code>spread_signals.expected</code> に「二回目が安くなる」「頼んでいない所から引き合いが来る」。制御系には書き込まないことを <code>blast_radius</code> に宣言</li>
+</ul>
+
+<h3>判断</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col"></th><th scope="col">平均的な効果</th><th scope="col">広がりの兆候</th><th scope="col">残るもの</th><th scope="col">判断</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">改善 A</th><td>あり</td><td>なし</td><td>なし</td><td>Proceed（小さく留める）。様式が変わるときに Retire</td></tr>
+    <tr><th scope="row">改善 B</th><td>あり</td><td>2つ観測</td><td>4件、保有者あり</td><td>Expand（4号ラインと品質管理課への読み取り連携）</td></tr>
+  </tbody>
+</table>
+</div>
+<p>B の Expand は、章を替えずに <code>blast_radius</code> の宣言を before / after で更新する判断として記録されました。拡大を支えたのは兆候だけではありません。切替訓練によって「拡大しても戻せる」ことが確認されていたことが前提です。A を悪い改善として扱う必要はありません。小さく留めるか、次に様式が変わるときに終わらせるかを、先に決めておけばよいのです。</p>
+
+<h2 id="custody">2. 担当交代をまたぐ保有</h2>
+<p class="source">残す・伝える／<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/examples/custody-handover.md">custody-handover.md</a>（<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/examples/custody-handover-case.yaml">機械可読の案件</a>）</p>
+
+<h3>状況</h3>
+<p>ある企業が、顧客からの問い合わせの一次対応を LLM の自動応答に任せています。自動応答は夜間や休日も、誰も見ていない状態で動きます。情報システム部の担当者は「返金・解約の問い合わせは自動応答で完結させず、必ず人間へ上げる」という判断を閉じました（Proceed）。モデルが替われば分類の挙動が変わり、担当者が異動すれば根拠を知る人がいなくなります。</p>
+
+<h3>宣言したこと</h3>
+<ul>
+  <li><code>value_intent</code>：守っているのは自動化率ではなく、顧客からの信頼の継続</li>
+  <li><code>re_derivation_basis</code>：当時の分類モデルの取りこぼしを人間側で吸収する必要があった、などの前提と証拠</li>
+  <li><code>review_triggers</code>：モデルの入れ替え、返金・解約ポリシーの改定、エスカレーション率の大きな変動、前提となる規制の改定。カレンダーではなく事象で書く</li>
+</ul>
+
+<h3>判断</h3>
+<ol>
+  <li>担当者の異動を、再導出できることの確認付きで <code>custody_chain</code> に追記する</li>
+  <li>ベンダーがモデルを入れ替え、見直しの条件が成立する。新しいモデルは精度が上がっていたが、守っているのは精度ではなく信頼なので、後任は「精度が上がったから自動化してよい」という短絡を退け、根拠を更新して Proceed</li>
+  <li>見直しの結果を <code>last_reaffirmed</code> として記録し、保有を更新する</li>
+</ol>
+<p>承認の一点は責任の開始であって、維持ではありません。交代の記録がなければ、責任が消えていないこと（公理 A1）を交代をまたいで確かめられません。</p>
+
+<h2 id="factory">3. 製造現場の AI エージェント</h2>
+<p class="source">閉じる・試す、AI 拡張／<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/examples/factory-agent-safe-loop.md">factory-agent-safe-loop.md</a></p>
+
+<h3>状況</h3>
+<p>センサーデータ（温度・振動・電流など）を解釈し、異常の検知、設備制御の提案、保全の計画を行う AI エージェントを工場に入れる想定です。判断が遅れれば物理的な被害や生産損失が出て、誤った判断による不要な停止も生産コストに直結します。</p>
+
+<h3>設計の決定</h3>
+<ul>
+  <li><strong>物理のループと意味のループを分ける</strong> — AI は制御系を直接操作しない。AI の提案が現実に作用する手前に境界を置き、オペレーターが判断を閉じてから制御系へ指示する</li>
+  <li><strong>異常の深刻度ごとに、どの判断で閉じるかを先に決める</strong> — 安全上の差し迫ったリスクは、現場オペレーターが証拠を確かめて対象設備を止め、範囲を狭める（Limit）。安全な範囲の性能低下は、保全担当者を責任者にして次の保全サイクルまで保留する（Defer）。原因がはっきりしない信号は、境界の判定を unknown とし、証拠が揃うまで保留する（Defer）</li>
+  <li><strong>センサーが現実を映しているか</strong>を AI の解釈の前提として確かめる。故障の疑いがあれば AI の解釈を止め、現場確認に切り替える</li>
+  <li><strong>現場の知識を残す</strong> — AI は候補の仮説と証拠を示し、経験のある技術者が文脈と機器の履歴を加えて判断する。判断ログには、AI の仮説と人間の評価を分けて残す</li>
+  <li><strong>停止を設計する</strong> — 停止責任者を現場に必ずいる役割に置く。物理系の安全インターロックは、AI の停止とは独立して動く</li>
+  <li><strong>現場の負荷を増やさない</strong> — アラートが増えるなら、AI の自律範囲を広げるのではなく、絞り込みの精度を上げる</li>
+</ul>
+<p>ループの考え方は <a href="../ai/">AI 拡張</a>、関係する責任境界（B2、B3、B6、B9、B10、B15）は <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/catalog/boundaries/taxonomy.md">taxonomy.md</a> を参照してください。</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">仕様（GitHub）</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity 正本（GitHub）</a></li>
+      <li><a href="../legacy/">過去の資料</a></li>
+    </ul>
+    <p>このサイトは説明です。規範は GitHub の <code>specs/</code> にあり、食い違う場合は仕様が優先します。</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

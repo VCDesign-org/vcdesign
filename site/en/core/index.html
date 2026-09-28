@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The VCDesign core | VCDesign</title>
+<meta name="description" content="Δ, responsibility, boundary, decision, declaration and metrics: the six core parts of VCDesign, and which mechanism implements each of the five principles, on one page.">
+<link rel="canonical" href="https://vcdesign.org/en/core/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/core/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/core/">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../../core/" hreflang="ja" lang="ja">日本語</a>
+  </div>
+  <nav class="site-nav" aria-label="Site">
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/" aria-current="page">Core</a></li>
+      <li><a href="../decision/">Decisions</a></li>
+      <li><a href="../examples/">Examples</a></li>
+      <li><a href="../ai/">AI extension</a></li>
+      <li><a href="../migration/">From v1</a></li>
+      <li><a href="../projects/">Related projects</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">The VCDesign core</p>
+<h1>The core in six parts</h1>
+<p class="lead">To implement Value Continuity on the side of judgment and responsibility, VCDesign specifies six things: Δ, responsibility, boundary, decision, declaration and metrics.</p>
+<p class="source">Norms: <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/core.yaml">core.yaml</a>, <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/policies.yaml">policies.yaml</a>, <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/metrics.yaml">metrics.yaml</a>, <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/axioms.yaml">axioms.yaml</a>. Reading aids: <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/implementation.md">implementation.md</a>, <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/glossary.md">glossary.md</a>.</p>
+
+<nav class="toc" aria-labelledby="toc-title">
+  <h2 id="toc-title">On this page</h2>
+  <ol>
+    <li><a href="#six">The six parts</a></li>
+    <li><a href="#flow">The basic flow (PDΔD)</a></li>
+    <li><a href="#delta">Δ</a></li>
+    <li><a href="#responsibility">Responsibility</a></li>
+    <li><a href="#boundary">Boundary</a></li>
+    <li><a href="#decision">Decision</a></li>
+    <li><a href="#declaration">Declaration</a></li>
+    <li><a href="#metrics">Metrics</a></li>
+    <li><a href="#implementation">Implementation by principle</a></li>
+    <li><a href="#axioms">Axioms A1–A5</a></li>
+  </ol>
+</nav>
+
+<h2 id="six">1. The six parts</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Part</th><th scope="col">What VCDesign specifies</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Δ</th><td>The gap from the declared expectation (premises and value), with polarity: Negative Δ is not propagated; Positive Δ is made propagable</td></tr>
+    <tr><th scope="row">Responsibility</th><td>Owner, human final decider, custody across handovers (gate starts responsibility; tenure sustains it)</td></tr>
+    <tr><th scope="row">Boundary</th><td>Losses are stopped (containment), basis passes (basis_flow), conclusions are revalidated</td></tr>
+    <tr><th scope="row">Decision</th><td>Only the six words — Proceed, Expand, Limit, Reframe, Defer, Retire — through one judgment gate</td></tr>
+    <tr><th scope="row">Declaration</th><td>Per case: what remains (with a holder), spread signals, max loss, reversibility, dependencies</td></tr>
+    <tr><th scope="row">Metrics</th><td>Seventeen core metrics ordered by the five principles: keep, find, close, try, pass on</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="flow">2. The basic flow (PDΔD)</h2>
+<p>A <strong>chapter</strong> is a unit of responsibility placement that keeps a value alive; a <strong>case</strong> is a responsibility-bearing item handled inside a chapter. A case moves in this order (<code>core.yaml flow</code>).</p>
+<figure class="diagram">
+  <svg viewBox="0 0 640 110" role="img" aria-labelledby="pddd-t pddd-d">
+    <title id="pddd-t">The PDΔD flow</title>
+    <desc id="pddd-d">Four steps: precondition (declare the expectation), do, delta (observe the gap), decision. The decision returns to the precondition as an update of the declaration.</desc>
+    <g font-size="14">
+      <rect class="svg-box" x="4" y="14" width="140" height="52" rx="8"/>
+      <text class="svg-text" x="74" y="37" text-anchor="middle" font-weight="700">precondition</text>
+      <text class="svg-text svg-muted" x="74" y="56" text-anchor="middle" font-size="12">declare expectation</text>
+      <rect class="svg-box" x="168" y="14" width="140" height="52" rx="8"/>
+      <text class="svg-text" x="238" y="37" text-anchor="middle" font-weight="700">do</text>
+      <text class="svg-text svg-muted" x="238" y="56" text-anchor="middle" font-size="12">execute · judge · show</text>
+      <rect class="svg-box" x="332" y="14" width="140" height="52" rx="8"/>
+      <text class="svg-text" x="402" y="37" text-anchor="middle" font-weight="700">delta</text>
+      <text class="svg-text svg-muted" x="402" y="56" text-anchor="middle" font-size="12">observe with polarity</text>
+      <rect class="svg-box" x="496" y="14" width="140" height="52" rx="8"/>
+      <text class="svg-text" x="566" y="37" text-anchor="middle" font-weight="700">decision</text>
+      <text class="svg-text svg-muted" x="566" y="56" text-anchor="middle" font-size="12">close with six words</text>
+      <path class="svg-line" d="M144 40 H168 M308 40 H332 M472 40 H496" stroke-width="2"/>
+      <path class="svg-line" d="M566 66 V92 H74 V66" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text class="svg-text svg-muted" x="320" y="106" text-anchor="middle" font-size="12">update declaration and state</text>
+    </g>
+  </svg>
+  <figcaption>precondition → do → delta → decision. A decision closes by updating the declaration and state.</figcaption>
+</figure>
+
+<h2 id="delta">3. Δ</h2>
+<p>Δ is an implementation concept. VCDesign takes the general meaning given canonically (the gap between the declared expectation and what happened) and fixes its baseline, polarity and handling. The expectation is declared as <code>precondition</code> (including the conditions of the chapter and responsibility placement) and <code>value_intent</code>, and both directions are observed against the same baseline.</p>
+
+<h3>When a gap is a Δ</h3>
+<ul>
+  <li>Observation proceeds in three levels: <code>observation</code> → <code>candidate</code> → <code>confirmed</code></li>
+  <li>Transient noise is not a Δ; the deviation must be sustained</li>
+  <li>It must affect responsibility (for a Negative Δ, which responsibility placement breaks; for a Positive Δ, who holds it)</li>
+</ul>
+
+<h3>Polarity</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col"></th><th scope="col">Negative Δ</th><th scope="col">Positive Δ</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Propagation</th><td>Not propagated</td><td>Made propagable. Spreading it is the decision Expand; it never spreads by itself</td></tr>
+    <tr><th scope="row">Handling</th><td>Localize, mitigate, close if needed</td><td>Observe, interpret, make reusable</td></tr>
+    <tr><th scope="row">Route</th><td>Boundary guard (unknown stops and escalates) → containment → decision</td><td>Observation → interpretation against value_intent → recorded with a holder. Expand to spread it</td></tr>
+    <tr><th scope="row">Stopped?</th><td>Subject to stopping</td><td>Observing and holding are never stopped. If Expand lacks its preconditions, it is the Expand that is stopped</td></tr>
+  </tbody>
+</table>
+</div>
+<ul>
+  <li>A mixed observation is split into separate Positive and Negative Deltas</li>
+  <li>A Δ without a recorded polarity is treated as negative</li>
+</ul>
+
+<h3>A confirmed Δ stays under responsibility until a decision closes it</h3>
+<p>A confirmed Δ must not remain ownerless or unresolved; holding does not lapse between confirmation and decision. An undefined point at design time (a definition gap) is also a Δ, closed by a decision before implementation starts (<code>core.yaml closure_loop</code>).</p>
+
+<h2 id="responsibility">4. Responsibility</h2>
+<p>Every chapter and case has an <strong>owner</strong> (the current holder) and a <strong>final decider</strong> (the human who closes decisions). The final decider is always human. The <strong>supervisor</strong> is the final convergence point that prevents responsibility from disappearing.</p>
+
+<h3>Gate and tenure</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col"></th><th scope="col">Gate — responsibility as a point</th><th scope="col">Tenure — responsibility as a line</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Question</th><td>Is this correct now?</td><td>Who keeps holding this?</td></tr>
+    <tr><th scope="row">Where</th><td>The moment of approval</td><td>Every day after approval: handovers, unattended operation, time</td></tr>
+    <tr><th scope="row">Role</th><td>Starts responsibility</td><td>Sustains responsibility</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Tenure is recorded with four fields:</p>
+<ul>
+  <li><code>custody_chain</code> — the append-only record of handovers, including whether the successor confirmed they can re-derive the judgment</li>
+  <li><code>re_derivation_basis</code> — the basis from which a successor can re-derive the judgment</li>
+  <li><code>review_triggers</code> — what change forces a review (events, not the calendar)</li>
+  <li><code>last_reaffirmed</code> — the record that a named human confirmed the decision is still valid</li>
+</ul>
+<p>The more autonomous the operation, the further people step out of the loop, so the need for tenure grows rather than shrinks. The capacity to hold responsibility is finite: overloading one actor degrades every judgment they hold (axiom A5).</p>
+
+<h2 id="boundary">5. Boundary</h2>
+<p>A boundary is a point where a crossing is checked, losses are stopped, basis is passed on, and upstream conclusions are re-checked (<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/patterns/boundary-pattern.yaml">boundary-pattern.yaml</a>).</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Function</th><th scope="col">Applies to</th><th scope="col">Default</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">guard</th><td>The crossing itself</td><td>Verdict pass / deny / unknown. Unknown stops and escalates; it is never treated as pass</td></tr>
+    <tr><th scope="row">containment</th><td>Failures and commands</td><td>Do not pass (deny)</td></tr>
+    <tr><th scope="row">basis_flow</th><td>Basis and what remains</td><td>Pass (allow)</td></tr>
+    <tr><th scope="row">revalidation</th><td>Upstream conclusions</td><td>Not inherited; re-checked</td></tr>
+  </tbody>
+</table>
+</div>
+<figure class="diagram">
+  <svg viewBox="0 0 640 182" role="img" aria-labelledby="bd-t bd-d">
+    <title id="bd-t">The asymmetry of a boundary</title>
+    <desc id="bd-d">From the upstream compartment to the receiving one. Failures and commands stop at the boundary (containment); basis and what remains pass (basis_flow); upstream conclusions are re-checked at the receiving boundary (revalidation).</desc>
+    <g font-size="13">
+      <rect class="svg-box" x="4" y="10" width="190" height="150" rx="10"/>
+      <text class="svg-text" x="99" y="32" text-anchor="middle" font-weight="700">Upstream</text>
+      <rect class="svg-box" x="446" y="10" width="190" height="150" rx="10"/>
+      <text class="svg-text" x="541" y="32" text-anchor="middle" font-weight="700">Receiver</text>
+      <line class="svg-line" x1="320" y1="6" x2="320" y2="164" stroke-width="3" stroke-dasharray="6 5"/>
+      <text class="svg-text svg-muted" x="320" y="178" text-anchor="middle" font-size="12">boundary</text>
+      <rect class="svg-down" x="24" y="48" width="150" height="28" rx="6"/>
+      <text class="svg-text" x="99" y="67" text-anchor="middle">failures, commands</text>
+      <path class="svg-line" d="M174 62 H304" stroke-width="2"/>
+      <text class="svg-text" x="312" y="67" text-anchor="end" font-weight="700">×</text>
+      <text class="svg-text svg-muted" x="240" y="55" text-anchor="middle" font-size="11">containment</text>
+      <rect class="svg-up" x="24" y="88" width="150" height="28" rx="6"/>
+      <text class="svg-text" x="99" y="107" text-anchor="middle">basis, what remains</text>
+      <path class="svg-line" d="M174 102 H440" stroke-width="2"/>
+      <path class="svg-line" d="M432 96 L442 102 L432 108" stroke-width="2"/>
+      <text class="svg-text svg-muted" x="240" y="95" text-anchor="middle" font-size="11">basis_flow</text>
+      <rect class="svg-box" x="24" y="124" width="150" height="28" rx="6"/>
+      <text class="svg-text" x="99" y="143" text-anchor="middle">upstream conclusions</text>
+      <path class="svg-line" d="M174 138 H440" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <text class="svg-text svg-muted" x="388" y="132" text-anchor="middle" font-size="11">revalidation</text>
+      <text class="svg-text" x="541" y="107" text-anchor="middle">received and used</text>
+      <text class="svg-text" x="541" y="143" text-anchor="middle">re-checked before use</text>
+    </g>
+  </svg>
+  <figcaption>Stop losses, pass the basis. This is the asymmetry of a boundary.</figcaption>
+</figure>
+<p>The boundary pattern also covers who keeps holding the boundary definition itself (<code>tenure</code>), and declaring identity, boundary and authority before crossing into another organization or agent (<code>external_crossing</code>, the Continuity Claim Protocol).</p>
+<p>A guard verdict (pass / deny / unknown) checks each crossing; it is not the decision that closes a case's Δ. Repeated deny or unknown, or any verdict that affects responsibility, is observed as a Δ and closed with one of the six decisions.</p>
+
+<h3>Which "boundary"?</h3>
+<ul>
+  <li><strong>Responsibility boundary (B1–B17)</strong> — a type of point where responsibility must be made explicit (<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/catalog/boundaries/taxonomy.md">taxonomy.md</a>)</li>
+  <li><strong>Boundary structure</strong> — the pattern that implements it: guard, tenure, containment, basis_flow, revalidation</li>
+  <li><strong>Failure domain</strong> — the compartment outside which a failure must not propagate; its edge need not coincide with a responsibility boundary</li>
+  <li><strong>Continuous ↔ discrete boundary</strong> — where AI inference meets real-world execution (<a href="../ai/">AI extension</a>)</li>
+</ul>
+
+<h2 id="decision">6. Decision</h2>
+<p>A human closes each Δ with one of Proceed / Expand / Limit / Reframe / Defer / Retire. No other decision vocabulary is used. Every decision passes one judgment gate, and Expand and Limit are recorded as updates of the declaration. See <a href="../decision/">Decisions</a>.</p>
+
+<h2 id="declaration">7. Declaration</h2>
+<p>Each case declares the following at its start (fields are defined in <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/schema_case.yaml">schema_case.yaml</a>).</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Side</th><th scope="col">Field</th><th scope="col">Meaning</th></tr></thead>
+  <tbody>
+    <tr><th scope="row" rowspan="3">Upside<br>(keep, find)</th><td><code>value_intent</code></td><td>The value the case aims to create</td></tr>
+    <tr><td><code>residual_assets</code></td><td>What remains when work, owner or technology changes (records, standards, basis, connections, capabilities). Each needs a holder; without one it does not remain. A case with none is a point improvement</td></tr>
+    <tr><td><code>spread_signals</code></td><td>Signs of wide spread (cheaper second use, unsolicited pull, output used as input, more value per connection). Declared as <code>expected</code>, recorded as <code>observed</code> or <code>unexpected</code>, and evaluated separately from <code>average_outcome</code></td></tr>
+    <tr><th scope="row" rowspan="4">Downside<br>(close, try)</th><td><code>blast_radius</code></td><td>The pre-declared ceiling of failure: scope (range) and max_loss (size). Undeclared means high impact</td></tr>
+    <tr><td><code>reversibility</code></td><td>Whether the decision can be withdrawn, reduced or corrected. An irreversible case must declare max_loss</td></tr>
+    <tr><td><code>failure_domain</code></td><td>The compartment outside which a failure must not propagate</td></tr>
+    <tr><td><code>depends_on</code></td><td>Dependencies, used to see concentration on the same dependency</td></tr>
+    <tr><th scope="row" rowspan="4">Continuity<br>(keep, pass on)</th><td><code>owner</code></td><td>The current holder</td></tr>
+    <tr><td><code>custody_chain</code></td><td>The append-only record of handovers</td></tr>
+    <tr><td><code>re_derivation_basis</code></td><td>The basis from which a successor can re-derive the judgment</td></tr>
+    <tr><td><code>review_triggers</code></td><td>What change forces a review</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="metrics">8. Metrics</h2>
+<p>Metrics are instruments for observing Δ and inputs to decisions; they never replace decisions. The core metrics are ordered by the five principles (<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/metrics.yaml">metrics.yaml</a>).</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Principle</th><th scope="col">Metric</th><th scope="col">Detects</th></tr></thead>
+  <tbody>
+    <tr><th scope="row" rowspan="4">Keep</th><td><code>owner_missing</code></td><td>A chapter's owner is absent, unassigned or not acting</td></tr>
+    <tr><td><code>custody_gap</code></td><td>The owner changed without a handover record, or holding began without confirming re-derivation</td></tr>
+    <tr><td><code>one_shot_improvement</code></td><td>An improvement was voided by a change of work, owner or technology and nothing remained</td></tr>
+    <tr><td><code>positive_delta_without_holder</code></td><td>A Positive Δ was observed but nobody holds it</td></tr>
+    <tr><th scope="row" rowspan="3">Find</th><td><code>spread_signal_observed</code></td><td>A declared or undeclared spread signal was observed (detection of a Positive Δ)</td></tr>
+    <tr><td><code>success_without_spread_signal</code></td><td>The average outcome was met but none of the declared signals appeared</td></tr>
+    <tr><td><code>reuse_cost_trend</code></td><td>The trend of the cost of applying what remained somewhere else</td></tr>
+    <tr><th scope="row" rowspan="5">Close</th><td><code>precondition_broken</code></td><td>A declared condition, prohibition or acceptance condition was broken</td></tr>
+    <tr><td><code>blast_radius_undeclared</code></td><td>An irreversible or costly decision was executed or approved without a declared max loss</td></tr>
+    <tr><td><code>blast_radius_exceeded</code></td><td>The actual loss or impact exceeded the declared ceiling</td></tr>
+    <tr><td><code>transitive_trust</code></td><td>An upstream conclusion became a downstream premise without being re-checked at the boundary</td></tr>
+    <tr><td><code>concentration</code></td><td>Many cases or boundaries share the same dependency or the same judgment path</td></tr>
+    <tr><th scope="row" rowspan="2">Try</th><td><code>expand_beyond_recovery</code></td><td>Widening outpaces the capability to recover or withdraw</td></tr>
+    <tr><td><code>halt_readiness</code></td><td>Whether halt orders, human override and safe retreat can actually be triggered</td></tr>
+    <tr><th scope="row" rowspan="2">Pass on</th><td><code>decision_without_basis</code></td><td>A decision has no recorded basis, or only the conclusion was handed on</td></tr>
+    <tr><td><code>review_trigger_missing</code></td><td>A long-lived case has no event-driven review triggers</td></tr>
+    <tr><th scope="row">Operations</th><td><code>stagnation</code></td><td>Cases that should be closed are stuck (unresolved Δ, overdue Defer, unfinished Retire)</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Metrics that detect a Positive Δ never force a halt or blocking; their highest level is warning.</p>
+
+<h2 id="implementation">9. Implementation by principle</h2>
+<p>How VCDesign implements each canonical principle (from <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/implementation.md">implementation.md</a> §2).</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Principle</th><th scope="col">VCDesign mechanism</th><th scope="col">Metrics</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Keep</th><td><code>residual_assets</code> with holders. Gate and tenure: <code>custody_chain</code>, <code>re_derivation_basis</code>, <code>review_triggers</code>, <code>last_reaffirmed</code></td><td>owner_missing, custody_gap, one_shot_improvement, positive_delta_without_holder</td></tr>
+    <tr><th scope="row">Find</th><td>A Positive Δ is not an anomaly: observe → interpret → make reusable with a holder. <code>spread_signals</code> are declared at the start and evaluated apart from the average outcome. An upside whose cause is unknown is marked unknown by the guard and never justifies widening</td><td>spread_signal_observed, success_without_spread_signal, reuse_cost_trend</td></tr>
+    <tr><th scope="row">Close</th><td>Without predicting the distribution, cut amplification with the four mechanisms below. A fatal downside halts regardless of whether an owner exists (<code>judgment_gate.hard_stops</code>)</td><td>precondition_broken, blast_radius_undeclared, blast_radius_exceeded, transitive_trust, concentration</td></tr>
+    <tr><th scope="row">Try</th><td>Declare <code>reversibility</code>. State can be reverted; responsibility records are append-only. Expand requires that the widened scope is still recoverable. Every operational path has a halt owner (<code>haltability</code>)</td><td>expand_beyond_recovery, halt_readiness</td></tr>
+    <tr><th scope="row">Pass on</th><td>Boundaries stop losses but pass the basis (<code>basis_flow</code>); conclusions are re-checked at the receiving boundary (<code>revalidation</code>). Each decision records its basis from the Upside / Downside / Continuity / Asymmetry viewpoints (<code>decision.basis</code>)</td><td>decision_without_basis, review_trigger_missing</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Close: four mechanisms that cut amplification</h3>
+<p>Extreme downside happens when one failure produces the next, through chaining, reuse, concentration and feedback. VCDesign cuts that amplification with four mechanisms.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Mechanism</th><th scope="col">What it cuts</th><th scope="col">Declaration / mechanism</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Compartmentalize</th><td>Spread across compartments</td><td><code>failure_domain</code>, boundary containment</td></tr>
+    <tr><th scope="row">Declare a ceiling</th><td>The size of the loss</td><td><code>blast_radius</code> (scope and max_loss)</td></tr>
+    <tr><th scope="row">Re-check at boundaries</th><td>Amplification of upstream errors</td><td>Boundary revalidation, <code>upstream_basis_refs</code></td></tr>
+    <tr><th scope="row">Avoid concentration</th><td>Simultaneous failure from a common cause</td><td><code>depends_on</code>, the concentration metric</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Extreme events from outside cannot be removed. What can be handled is how far they spread inside.</p>
+
+<h2 id="axioms">10. Axioms A1–A5</h2>
+<p>The axioms are where conformance starts. An implementation that violates any of them is non-conforming however well it satisfies the rest (<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/axioms.yaml">axioms.yaml</a>).</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Axiom</th><th scope="col">Statement (summary)</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">A1 Responsibility must not disappear</th><td>Every Δ, negative or positive, is assigned to an explicit owner. For a Negative Δ the owner closes it; for a Positive Δ the owner holds what it produced. Responsibility may be transferred or released, but it may not silently become unowned</td></tr>
+    <tr><th scope="row">A2 Execution stays within a scope authorized by a human decision</th><td>No execution may exceed the scope authorized by a decision closed by a human. Within that scope, loops may act autonomously as often as needed; a change that would exceed it is observed as a Δ and re-decided. Every boundary crossing has a guard verdict; unknown stops and escalates</td></tr>
+    <tr><th scope="row">A3 AI does not hold final responsibility</th><td>AI may propose, analyze and detect; it may not hold, accept or assign final responsibility. The final decider of every decision is human</td></tr>
+    <tr><th scope="row">A4 Temporal separation is inviolable</th><td>Fast loops (physical, semantic) must not autonomously rewrite constraints defined by slow loops (value, responsibility) without explicit re-judgment at the appropriate level</td></tr>
+    <tr><th scope="row">A5 Responsibility is a scarce resource</th><td>An actor's capacity to hold and honor responsibility is finite; overloading a responsible actor degrades every judgment they hold</td></tr>
+  </tbody>
+</table>
+</div>
+<p>When axioms appear to conflict, the order is A2 &gt; A3 &gt; A1 &gt; A4 &gt; A5. Conflicts are resolved by the supervisor or final decider, never by silently overriding either axiom. The conformance checklist is in <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/validation/conformance.md">conformance.md</a>.</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">Specifications (GitHub)</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity, canonical (GitHub)</a></li>
+      <li><a href="../legacy/">Archive</a></li>
+    </ul>
+    <p>This site explains; it does not define. The norms live in <code>specs/</code> on GitHub, and the specs prevail where they differ.</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8" />
@@ -49,6 +49,11 @@
             margin-bottom: 0;
         }
 
+        .small-note {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
         .decision-block {
             margin: 16px 0 0;
         }
@@ -57,18 +62,19 @@
 
 <body>
     <main class="frame">
+        <div role="note" style="background:#f8e7df;color:#1c1d1f;padding:10px 16px;border-radius:8px;margin:0 0 16px;font:14px/1.6 system-ui,-apple-system,&quot;Segoe UI&quot;,&quot;Hiragino Sans&quot;,&quot;Yu Gothic UI&quot;,&quot;Noto Sans JP&quot;,sans-serif">このページは VCDesign v1 の語彙（Resolution Handshake など）で書かれています。読み替えは <a href="../../migration/" style="color:#1f5f8b">v1 からの移行</a>を参照してください。</div>
         <header>
             <nav class="lang-nav">
-                <a href="../../index.html" class="lang-link">Home</a>
+                <a href="../../index.html" class="lang-link">← Home</a>
                 <a href="../" class="lang-link">VMS</a>
-                <a href="../../ja/vms/marketing/" class="lang-link">日本語</a>
+                <a href="../../en/vms/marketing/" class="lang-link" lang="en">English</a>
             </nav>
 
             <h1 class="hero-title">VMS Marketing</h1>
             <p class="hero-subtitle">Marketing Judgment Support Extension</p>
             <p class="hero-tagline">
-                VMS Marketing is a knowledge extension layer that translates marketing consultations
-                into structure, comparable options, explicit unknowns, and explainable reasoning while preserving VCDesign decision principles.
+                VMS Marketing は、VCDesign の意思決定原則を保ったまま、
+                マーケティング相談を構造化・比較・留保・説明可能性の形に変換する知識拡張レイヤです。
             </p>
             <div class="pill-row">
                 <span class="pill">Routing</span>
@@ -83,25 +89,25 @@
                 <li>
                     <a class="link-anchor" href="#position">
                         <span class="label">Position</span>
-                        <span class="desc">How this extension relates to VMS and what it covers</span>
+                        <span class="desc">VMS 本体との関係と、この拡張が扱う範囲</span>
                     </a>
                 </li>
                 <li>
                     <a class="link-anchor" href="#domains">
                         <span class="label">Marketing Domains</span>
-                        <span class="desc">Where a consultation is routed before answers are drafted</span>
+                        <span class="desc">相談をどの知識ドメインへ振り分けるか</span>
                     </a>
                 </li>
                 <li>
                     <a class="link-anchor" href="#flow">
                         <span class="label">Processing Flow</span>
-                        <span class="desc">From question normalization to loggable answers</span>
+                        <span class="desc">問いの正規化からログ可能な回答まで</span>
                     </a>
                 </li>
                 <li>
                     <a class="link-anchor" href="#resources">
                         <span class="label">Resources</span>
-                        <span class="desc">Specs and source materials to pass to AI</span>
+                        <span class="desc">AI に渡す仕様と原資料</span>
                     </a>
                 </li>
             </ul>
@@ -110,26 +116,26 @@
         <section id="position">
             <h2 class="usage-title">Position</h2>
             <p>
-                VMS Marketing is not VCDesign itself. It is a marketing-focused subset that follows
-                VMS constraints while defining how AI should support marketing consultations.
+                VMS Marketing は VCDesign 本体ではありません。
+                VMS の制約に従いながら、マーケティング領域に特化した相談支援を定義するサブセットです。
             </p>
             <p>
-                Its purpose is not to automate marketing judgment. Its purpose is to give human decision makers
-                better questions, structures, comparison axes, visible uncertainty, and explainability.
+                目的は、AI にマーケティング判断を自動化させることではありません。
+                人間の判断を支えるための問い、構造、比較軸、不確実性、説明可能性を与えることです。
             </p>
 
             <div class="spec-grid">
                 <div class="spec-card">
                     <h3>Interpretation</h3>
-                    <p>Normalize what the consultation is asking and which stage of judgment it belongs to.</p>
+                    <p>相談が何を求めているか、どの段階の問いかを正規化する。</p>
                 </div>
                 <div class="spec-card">
                     <h3>Proposal</h3>
-                    <p>Keep multiple candidate proposals and tradeoffs so judgment remains comparable.</p>
+                    <p>複数の候補案とトレードオフを残し、比較可能な判断材料にする。</p>
                 </div>
                 <div class="spec-card">
                     <h3>Traceability</h3>
-                    <p>Record what was considered, what structure was used, and what remains uncertain.</p>
+                    <p>何を見て、どの構造で考え、どこが未確定だったかを記録する。</p>
                 </div>
             </div>
         </section>
@@ -137,34 +143,34 @@
         <section id="domains">
             <h2 class="usage-title">Marketing Domains</h2>
             <p>
-                A consultation is routed into one to four primary domains with weights.
-                Domains are not answers; they are shelves of perspectives and questions to consult.
+                相談は単一の正解へ急がず、1〜4 個の主要ドメインへ重み付きで振り分けます。
+                ドメインは回答そのものではなく、参照する観点と問いの棚です。
             </p>
 
             <div class="domain-grid">
                 <div class="spec-card">
                     <h3>Boundary</h3>
-                    <p>Which market, customer, use case, or price range should this compete in?</p>
+                    <p>どの市場、顧客、用途、価格帯で戦うのか。</p>
                 </div>
                 <div class="spec-card">
                     <h3>Meaning</h3>
-                    <p>What should the brand be recognized as?</p>
+                    <p>ブランドは何者として認識されるべきか。</p>
                 </div>
                 <div class="spec-card">
                     <h3>Interaction</h3>
-                    <p>Where do understanding, drop-off, and continuity happen in the customer experience?</p>
+                    <p>顧客体験のどこで理解・離脱・継続が起きているか。</p>
                 </div>
                 <div class="spec-card">
                     <h3>Transmission</h3>
-                    <p>How can the message be understood, spread, and protected from misunderstanding?</p>
+                    <p>どう伝えると理解され、広がり、誤解されにくいか。</p>
                 </div>
                 <div class="spec-card">
                     <h3>Execution</h3>
-                    <p>How should sales, channels, retention, and operating load be designed?</p>
+                    <p>売り方、販路、継続率、運用負荷をどう設計するか。</p>
                 </div>
                 <div class="spec-card">
                     <h3>Validation</h3>
-                    <p>Which assumptions, uncertainties, and real-world reactions need to be tested?</p>
+                    <p>仮説の思い込み、不確実性、検証すべき現実反応は何か。</p>
                 </div>
             </div>
         </section>
@@ -174,96 +180,96 @@
 
             <div class="flow-grid">
                 <div class="spec-card">
-                    <h3>1. Normalize the Question</h3>
-                    <p>Identify what is being asked, the stage of the consultation, and the expected output format.</p>
+                    <h3>1. 問いの正規化</h3>
+                    <p>何を求めているか、どの段階の相談か、期待する出力形式は何かを把握する。</p>
                 </div>
                 <div class="spec-card">
-                    <h3>2. Route</h3>
-                    <p>Use <code>router.yaml</code> to select related domains with weights.</p>
+                    <h3>2. ルーティング</h3>
+                    <p><code>router.yaml</code> に従い、関連ドメインを重み付きで選ぶ。</p>
                 </div>
                 <div class="spec-card">
                     <h3>3. Judgment Proposal</h3>
-                    <p>Generate facts, assumptions, candidate proposals, unknowns, and routing trace.</p>
+                    <p>facts、assumptions、candidate proposals、unknowns、routing trace を生成する。</p>
                 </div>
                 <div class="spec-card">
-                    <h3>4. Consult Knowledge</h3>
-                    <p>Do not summarize theory directly; convert it into questions, comparison axes, and perspectives.</p>
+                    <h3>4. 知識参照</h3>
+                    <p>理論を要約するのではなく、問い・比較軸・観点へ変換して使う。</p>
                 </div>
                 <div class="spec-card">
-                    <h3>5. Draft Answer</h3>
-                    <p>Return structure, options, tradeoffs, recommended direction, unknowns, and next questions.</p>
+                    <h3>5. 回答生成</h3>
+                    <p>構造、選択肢、トレードオフ、推奨方向、不明点、次の問いを出す。</p>
                 </div>
                 <div class="spec-card">
-                    <h3>6. Make It Loggable</h3>
-                    <p>Keep reasons and uncertainty compatible with <code>answer_log.yaml</code>.</p>
+                    <h3>6. ログ化</h3>
+                    <p><code>answer_log.yaml</code> と整合する形で、理由と不確実性を残す。</p>
                 </div>
             </div>
 
-            <h3>Additional Handling</h3>
+            <h3>この拡張で追加される扱い</h3>
             <ul>
-                <li><strong>Expiry:</strong> add validity windows to medium-term decisions such as strategy, market, brand, and channel choices</li>
-                <li><strong>Reality Drift:</strong> treat post-execution signals as drift between meaning hypotheses and reality</li>
-                <li><strong>Resolution Handshake:</strong> organize the materials for adoption while leaving final closure with the human</li>
+                <li><strong>Expiry:</strong> 戦略・市場・ブランド・販路などの中期判断に有効期限を持たせる</li>
+                <li><strong>Reality Drift:</strong> 実行後の現実反応を、意味仮説との乖離として扱う</li>
+                <li><strong>Resolution Handshake:</strong> 採用判断の材料を整え、最終決定は人間に残す</li>
             </ul>
 
-            <h3>Answer Template</h3>
+            <h3>回答テンプレート</h3>
             <div class="decision-block">
-                <pre class="code-block">Summary:
-  - What this consultation is about
-Structure:
-  - Which domains are involved
-  - What the main issues are
-Options:
+                <pre class="code-block">要約:
+  - この相談は何についての問いか
+構造の見立て:
+  - どのドメインの問題か
+  - 主要な論点は何か
+選択肢:
   - Option A
   - Option B
-  - Option C if needed
-Recommended direction:
-  - Which option to prioritize now
-  - Why it looks preferable
-Unknowns:
-  - What has not been confirmed yet
-Next questions:
-  - What should be checked next to move the decision forward</pre>
+  - 必要なら Option C
+推奨方向:
+  - 現時点ではどれを優先するか
+  - なぜそう考えるか
+不明点:
+  - まだ確認できていない点
+次の問い:
+  - 次に何を確認すれば判断が進むか</pre>
             </div>
         </section>
 
         <section id="guardrails">
             <h2 class="usage-title">Guardrails</h2>
             <p>
-                A good answer is not a flashy idea. It makes the problem structure visible,
-                clarifies how options differ, keeps unknowns visible, and makes the next judgment easier.
+                良い回答とは、派手なアイデアではなく、問題の構造が見え、
+                選択肢の差が分かり、unknown が可視化され、次の判断がしやすい回答です。
             </p>
             <ul>
-                <li>AI belongs in the semantic loop and must not make the final judgment</li>
-                <li>Separate facts from assumptions</li>
-                <li>Do not fill unknowns by force</li>
-                <li>Do not lock onto one proposal without comparable alternatives</li>
-                <li>Keep answer reasons and reference structure traceable</li>
+                <li>AI は semantic loop に位置し、最終判断を下さない</li>
+                <li>事実と推定を分離する</li>
+                <li>不明点を無理に埋めない</li>
+                <li>比較案なしに 1 案へロックインしない</li>
+                <li>回答理由と参照構造を追跡可能にする</li>
             </ul>
         </section>
 
         <section id="resources">
             <h2 class="usage-title">Resources</h2>
             <p>
-                VMS Marketing is a specification set for marketing consultation support AI.
-                Use it together with the main VMS as a marketing-domain knowledge extension.
+                VMS Marketing は、マーケティング相談支援 AI に読み込ませる仕様群です。
+                本体 VMS と併用し、マーケティング領域の知識拡張として扱います。
             </p>
 
-            <h3>Minimum Reading Set for AI</h3>
+            <h3>生成 AI 向けの最小読込セット</h3>
             <ul>
-                <li><code>specs/engine_config.yaml</code> overall configuration and processing pipeline</li>
-                <li><code>specs/router.yaml</code> router for marketing knowledge domains</li>
-                <li><code>specs/marketing_knowledge_protocol.yaml</code> domain-specific theories, perspectives, and questions</li>
-                <li><code>specs/judgment_proposal.yaml</code> decomposition into judgment-ready units</li>
-                <li><code>specs/answer_log.yaml</code> answer rationale, unknowns, and confidence log schema</li>
-                <li><code>system_prompt.md</code> base instruction for marketing consultation support AI</li>
+                <li><code>specs/engine_config.yaml</code> 全体構成と処理パイプライン</li>
+                <li><code>specs/router.yaml</code> 質問をマーケ知識ドメインへ振り分けるルータ</li>
+                <li><code>specs/marketing_knowledge_protocol.yaml</code> ドメイン別の理論・観点・問い</li>
+                <li><code>specs/judgment_proposal.yaml</code> 判断可能な単位への分解</li>
+                <li><code>specs/answer_log.yaml</code> 回答根拠、不明点、信頼度のログ形式</li>
+                <li><code>system_prompt.md</code> マーケティング相談支援 AI の基本指示</li>
             </ul>
 
             <ul class="link-list">
                 <li>
                     <a class="link-anchor" href="https://github.com/VCDesign-org/vms-marketing">
                         <span class="label">VMS Marketing GitHub Repository</span>
-                        <span class="desc">The source repository for the VMS Marketing YAML specs and system prompt.</span>
+                        <span class="desc">VMS Marketing の仕様リポジトリ。YAML と system prompt の正本はこちらを参照してください。</span>
                     </a>
                 </li>
             </ul>

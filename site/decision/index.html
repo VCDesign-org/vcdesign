@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>判断 | VCDesign</title>
+<meta name="description" content="Proceed / Expand / Limit / Reframe / Defer / Retire の6語と、すべての判断が通る一つの判断ゲート。Expand と Limit は宣言の更新として記録します。">
+<link rel="canonical" href="https://vcdesign.org/decision/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/decision/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/decision/">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../en/decision/" hreflang="en" lang="en">English</a>
+  </div>
+  <nav class="site-nav" aria-label="サイト内">
+    <ul>
+      <li><a href="../">トップ</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/">芯</a></li>
+      <li><a href="../decision/" aria-current="page">判断</a></li>
+      <li><a href="../examples/">事例</a></li>
+      <li><a href="../ai/">AI 拡張</a></li>
+      <li><a href="../migration/">v1 からの移行</a></li>
+      <li><a href="../projects/">関連プロジェクト</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">VCDesign の芯</p>
+<h1>判断</h1>
+<p class="lead">Δ を受けて、人間が6語のいずれかで閉じます。ほかの語彙は使いません。すべての判断は一つの判断ゲートを通ります。</p>
+<p class="source">規範：<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/core.yaml">core.yaml</a> の <code>decision</code> と <code>closure_loop</code>、<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/policies.yaml">policies.yaml</a> の <code>judgment_gate</code>、<code>enforcement</code>、<code>temporal_governance</code>。記録の形：<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/schema_log.yaml">schema_log.yaml</a>。</p>
+
+<nav class="toc" aria-labelledby="toc-title">
+  <h2 id="toc-title">このページの内容</h2>
+  <ol>
+    <li><a href="#human">判断は人間が閉じる</a></li>
+    <li><a href="#six">6語</a></li>
+    <li><a href="#gate">判断ゲート</a></li>
+    <li><a href="#per-decision">判断ごとに必要なもの</a></li>
+    <li><a href="#declaration">Expand と Limit は宣言の更新</a></li>
+    <li><a href="#positive">Positive Δ と Expand</a></li>
+    <li><a href="#stops">止める条件</a></li>
+    <li><a href="#record">判断の記録</a></li>
+    <li><a href="#anti">避けるパターン</a></li>
+  </ol>
+</nav>
+
+<h2 id="human">1. 判断は人間が閉じる</h2>
+<ul>
+  <li>すべての判断の最終判断者（final_decider）は人間です。AI が案件について出したものは、人間が判断を閉じるまで提案です（公理 A3）。</li>
+  <li>閉じた判断は、その宣言を通じて実行してよい範囲を許可します。<strong>人間が閉じた判断で許可された範囲を越える実行は行いません。</strong>範囲の内側での実行には、改めての判断は要りません。範囲を越える変化は Δ として観測し、判断し直します（公理 A2）。</li>
+  <li>境界での判定（pass / deny / unknown）は、一回ごとの越境の検査で、判断ではありません。unknown は止めて上げ、pass として扱いません。</li>
+</ul>
+
+<h2 id="six">2. 6語</h2>
+<p>6語は正本の Decision をそのまま使います。VCDesign では、それぞれを宣言の扱いと次の状態に対応させます（<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/implementation.md">implementation.md</a> §3）。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">判断</th><th scope="col">意味</th><th scope="col">宣言の扱い</th><th scope="col">次の状態</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Proceed</th><td>現在の構造・現在の宣言のまま進める</td><td>現在の宣言を維持する。章を替えない修正を含む</td><td>active</td></tr>
+    <tr><th scope="row">Expand</th><td>観測された Positive Δ に基づき、対象・規模・接続を広げる</td><td><code>blast_radius</code> を広げる（before / after）。Positive Δ の観測と復旧能力の確認が必須</td><td>active</td></tr>
+    <tr><th scope="row">Limit</th><td>価値はあるが伝播範囲が広すぎるため、対象・権限・規模・期間を狭める</td><td><code>blast_radius</code> を狭める（before / after）</td><td>active</td></tr>
+    <tr><th scope="row">Reframe</th><td>価値・対象・境界・前提を再定義する</td><td>新しい章として前提・境界・責任者・宣言を定め直す</td><td>reframed</td></tr>
+    <tr><th scope="row">Defer</th><td>判断材料が揃うまで、責任付きで保留する</td><td>暫定責任者と次回判断時刻を置く</td><td>deferred</td></tr>
+    <tr><th scope="row">Retire</th><td>次の価値生成につながらないため終了する</td><td>責任を解放し、残すものの保有者を移す。開始前の案件では開始しない判断を含む</td><td>retired</td></tr>
+  </tbody>
+</table>
+</div>
+<p>確定した Δ は、判断で閉じるまで責任の下にあります。Defer は、責任者と見直しの時刻を付けて閉じる経路であり、逃げ道ではありません。</p>
+
+<h2 id="gate">3. 判断ゲート</h2>
+<p>すべての判断は、この一つのゲートを通って人間が閉じます。確認項目は正本の Review Output（Upside / Downside / Continuity / Asymmetry / Decision）に従い、5原則の順に並びます。長期の判断か短期の判断かは確認の深さの違いで、別のゲートは設けません。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">原則</th><th scope="col">確認すること</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">残す</th><td>value_intent が宣言されている。residual_assets が保有者付きで宣言されている</td></tr>
+    <tr><th scope="row">見つける</th><td>spread_signals.expected が宣言されている。Positive Δ が平均的な効果と分けて記録されている</td></tr>
+    <tr><th scope="row">閉じる</th><td>blast_radius が宣言されている。共有される区画があれば failure_domain が宣言されている。上流の結論が確かめ直されている</td></tr>
+    <tr><th scope="row">試す</th><td>reversibility が宣言されている。停止の経路が確認されている</td></tr>
+    <tr><th scope="row">伝える</th><td>判断の根拠が記録されている。長く続く案件では再導出の根拠が記録されている</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="per-decision">4. 判断ごとに必要なもの</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">判断</th><th scope="col">必要なもの（<code>judgment_gate.per_decision</code>）</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Proceed</th><td>追加の項目なし（判断ゲートの確認は通る）</td></tr>
+    <tr><th scope="row">Expand</th><td>観測された Positive Δ（spread_signals の observed または unexpected）／拡大後の範囲でも復旧できることの確認／blast_radius の before と after</td></tr>
+    <tr><th scope="row">Limit</th><td>blast_radius を狭めた before と after</td></tr>
+    <tr><th scope="row">Reframe</th><td>今の章が続けられないこと／新しい前提と境界／新しい責任者／構造に関わる場合は supervisor の承認</td></tr>
+    <tr><th scope="row">Defer</th><td>保留の理由／暫定責任者／次回判断時刻（既定の上限は7日。超えたら supervisor が閉じさせる）</td></tr>
+    <tr><th scope="row">Retire</th><td>隠れた依存がないこと／責任の解放／関連する章への通知／残すものの保有者の移転</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="declaration">5. Expand と Limit は宣言の更新</h2>
+<p>Expand と Limit は、章を替えずに <code>blast_radius</code> の宣言を更新する判断として、before と after を記録します。Expand は宣言を広げ、Limit は宣言を狭めます。</p>
+<ul>
+  <li>宣言の更新を伴わない「小さな試行」は Limit ではありません。上限のない試行として判断ゲートで止めます。</li>
+  <li>平均的な効果が出ただけでは、Expand の根拠になりません。</li>
+</ul>
+<p>架空の部品工場での Expand の記録例です（<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/examples/point-vs-line-improvement.md">point-vs-line-improvement.md</a> より抜粋）。</p>
+<pre><code>decision:
+  value: expand
+  positive_delta_refs: [reuse_cost_decline, unsolicited_pull]
+  declaration_update:
+    before:
+      scope: 1〜3 号ラインのデータ収集のみ（制御系には書き込まない）
+      max_loss: {unit: hours_data_gap, value: 8}
+    after:
+      scope: 1〜4 号ラインのデータ収集と品質管理課への読み取り連携（制御系には書き込まない）
+      max_loss: {unit: hours_data_gap, value: 8}
+      approved_by: {role: plant_manager}
+  decided_by: {role: plant_manager}</code></pre>
+
+<h2 id="positive">6. Positive Δ と Expand</h2>
+<p>「伝播可能にする」は、自動で広げることではありません。</p>
+<ul>
+  <li>Positive Δ の<strong>観測</strong>と、保有者を付けた<strong>保有</strong>は止めません。停止・隔離・blocking の流れにも入れません。</li>
+  <li>実際に<strong>広げる</strong>のは Expand 判断です。Expand には、観測された Positive Δ と、拡大後も復旧できることの確認が要ります。</li>
+  <li>前提が欠けているとき止まるのは Expand 判断の方で、観測や保有ではありません。</li>
+  <li>原因が特定できない上振れは、境界の guard で unknown とし、拡大の根拠にしません。</li>
+</ul>
+
+<h2 id="stops">7. 止める条件</h2>
+<p>判断ゲートは、Negative Δ の伝播と、前提を欠いた Expand 判断を止めます（<code>judgment_gate.hard_stops</code>）。Positive Δ の観測と保有は止めません。</p>
+<ul>
+  <li>致命的な下振れ（責任者の有無によらない）</li>
+  <li>責任者がいない</li>
+  <li>人間の最終判断者がいない</li>
+  <li>不可逆なのに最大損失が宣言されていない</li>
+  <li>観測された Positive Δ のない Expand</li>
+  <li>復旧能力を超える Expand</li>
+</ul>
+<p>blocking は Negative Δ と Expand 判断にだけ使います。Positive Δ の観測や保有に関する指摘は、最大でも warning です（<code>policies.yaml enforcement</code>）。</p>
+
+<h2 id="record">8. 判断の記録</h2>
+<ul>
+  <li>判断ごとに、Upside / Downside / Continuity / Asymmetry の観点で根拠を残します（<code>decision.basis</code>）。根拠のない判断は、指標 decision_without_basis で捉えます。</li>
+  <li>システムの状態は巻き戻せますが、責任の記録は追記のみです。提案、判断と根拠、owner、当時の証拠、境界の判定、巻き戻しの理由は消しません。訂正は新しい記録を足して行い、前の記録を消しません（<code>temporal_governance</code>）。</li>
+</ul>
+
+<h2 id="anti">9. 避けるパターン</h2>
+<ul>
+  <li>平均的な成功だけを理由にした Expand</li>
+  <li>宣言のない試行（上限のない「実験」）</li>
+  <li>責任者や見直しの時刻がない Defer</li>
+  <li>生きている依存を隠したままの Retire</li>
+</ul>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">仕様（GitHub）</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity 正本（GitHub）</a></li>
+      <li><a href="../legacy/">過去の資料</a></li>
+    </ul>
+    <p>このサイトは説明です。規範は GitHub の <code>specs/</code> にあり、食い違う場合は仕様が優先します。</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

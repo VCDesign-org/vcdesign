@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI extension | VCDesign</title>
+<meta name="description" content="AI supports judgment but never holds responsibility. Four loops and time scales, LLM placement, agent execution gates, and twelve principles for governable AI agents.">
+<link rel="canonical" href="https://vcdesign.org/en/ai/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/ai/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/ai/">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../../ai/" hreflang="ja" lang="ja">日本語</a>
+  </div>
+  <nav class="site-nav" aria-label="Site">
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/">Core</a></li>
+      <li><a href="../decision/">Decisions</a></li>
+      <li><a href="../examples/">Examples</a></li>
+      <li><a href="../ai/" aria-current="page">AI extension</a></li>
+      <li><a href="../migration/">From v1</a></li>
+      <li><a href="../projects/">Related projects</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">A VCDesign-specific extension</p>
+<h1>AI extension</h1>
+<p class="lead">AI supports judgment but never holds responsibility. Capability does not imply authority.</p>
+
+<div class="note">
+  <p>AI governance is a VCDesign-specific extension kept outside the six core parts (Δ, responsibility, boundary, decision, declaration, metrics). The norms are in <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/policies.yaml">policies.yaml</a> (<code>ai_extension</code>, <code>haltability</code>), <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/metrics.yaml">metrics.yaml</a> (<code>ai_extension</code>) and <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/axioms.yaml">axioms.yaml</a> (A3, A4). This page follows the explanatory frame in <a href="https://github.com/VCDesign-org/vcdesign/blob/main/docs/ai-extension.md">docs/ai-extension.md</a>.</p>
+</div>
+
+<nav class="toc" aria-labelledby="toc-title">
+  <h2 id="toc-title">On this page</h2>
+  <ol>
+    <li><a href="#premise">Premise: adopting AI is a boundary design problem</a></li>
+    <li><a href="#loops">Four loops and time scales</a></li>
+    <li><a href="#llm">Where LLMs belong</a></li>
+    <li><a href="#agent">Models, agents and the execution gate</a></li>
+    <li><a href="#halt">Haltability</a></li>
+    <li><a href="#layers">Five layers for external explanation</a></li>
+    <li><a href="#twelve">Twelve principles for governable AI agents</a></li>
+    <li><a href="#boundaries">Responsibility boundaries involved</a></li>
+    <li><a href="#growth">What growth means</a></li>
+  </ol>
+</nav>
+
+<h2 id="premise">1. Premise: adopting AI is a boundary design problem</h2>
+<p>When discontinuous inference (AI) is connected to real systems that run continuously, explainability, haltability and responsibility must not be lost. That is the central question of AI governance.</p>
+<p>AI may analyze, detect patterns, recommend, detect anomalies and collect evidence of spread signals; it may classify automatically and prioritize subject to review. It never makes final decisions, assigns responsibility, or executes Reframe, Retire or Expand.</p>
+
+<h2 id="loops">2. Four loops and time scales</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Loop</th><th scope="col">Role</th><th scope="col">Time scale</th><th scope="col">Main risk</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Physical</th><td>Execution, stability, continuous dynamics</td><td>Milliseconds to hours</td><td>Destabilizing reality, irreversible damage</td></tr>
+    <tr><th scope="row">Semantic</th><td>Interpretation, giving meaning to Δ, discontinuous inference</td><td>Seconds to days</td><td>Reading noise as Δ, missing meaningful change</td></tr>
+    <tr><th scope="row">Value</th><td>Objectives, constraints, direction of optimization</td><td>Days to quarters</td><td>Hidden rewriting of objectives</td></tr>
+    <tr><th scope="row">Responsibility</th><td>Final decision, halt, accountability</td><td>Immediate to the whole lifecycle</td><td>Operations that cannot be stopped, disappearing responsibility</td></tr>
+  </tbody>
+</table>
+</div>
+<ul>
+  <li>The loops are not collapsed onto one clock. <strong>Fast loops do not rewrite constraints set by slow loops</strong> (axiom A4). Semantic updates do not bypass value review.</li>
+  <li>The slow governing loop can always stop the fast executing loops.</li>
+  <li>The components allowed and forbidden in each loop are in <code>policies.yaml ai_extension.loops</code>.</li>
+</ul>
+
+<h2 id="llm">3. Where LLMs belong</h2>
+<p>LLMs belong mainly in the Semantic loop. They may interpret and recommend, but they do not control the physical world, set objectives or hold final authority. An explicit gate is required before an LLM output has any real-world effect (<code>ai_extension.llm_placement</code>).</p>
+
+<h2 id="agent">4. Models, agents and the execution gate</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Aspect</th><th scope="col">Model</th><th scope="col">Agent</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Reach</th><td>Output text, classification, inference</td><td>Tool execution, writes to external systems, chained operations</td></tr>
+    <tr><th scope="row">Time</th><td>A single inference</td><td>Multiple steps, long-running</td></tr>
+    <tr><th scope="row">Boundaries</th><td>Two faces: input and output</td><td>A boundary at every operation</td></tr>
+    <tr><th scope="row">Responsibility path</th><td>The final decider is one layer up</td><td>Deciders are scattered across steps</td></tr>
+    <tr><th scope="row">Difficulty of halting</th><td>Low</td><td>High (needs safe interruption mid-execution)</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>A plan being reasonable is not the same as execution being authorized.</strong> An agent passes a gate that checks the following before it acts (<code>ai_extension.agent_execution_gate</code>):</p>
+<ul>
+  <li>The action is within declared authority (responsibility boundary B17 Impact ↔ Accountability)</li>
+  <li>The responsible actor is identified</li>
+  <li>Reversibility is declared; if irreversible, the max loss is declared</li>
+  <li>A halt owner is named before start</li>
+</ul>
+<p>Three things are avoided: a direct path from an LLM to an actuator, silent rewriting of goals, and treating an agent's plan as approval to execute. The supervisor is the final convergence point of responsibility and never delegates the final decision to AI.</p>
+
+<h2 id="halt">5. Haltability</h2>
+<p>Haltability is a precondition of responsibility governance (<code>policies.yaml haltability</code>).</p>
+<ul>
+  <li>Every operational path has a named halt owner</li>
+  <li>Emergency stop bypasses non-essential automation</li>
+  <li>Human override works under degraded conditions</li>
+  <li>A rollback or safe state is defined</li>
+  <li>After a halt, the reason and responsibility are reviewed and recorded</li>
+</ul>
+
+<h2 id="layers">6. Five layers for external explanation</h2>
+<p>The four loops rearranged into five layers for explaining to others. The norms stay with the four loops.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Layer</th><th scope="col">Content</th><th scope="col">Corresponds to</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">5. Human Sovereignty</th><td>Humans can ultimately intervene, halt and explain</td><td>Responsibility loop, haltability</td></tr>
+    <tr><th scope="row">4. Time</th><td>Separation of time scales and protection of slow loops</td><td>temporal_separation</td></tr>
+    <tr><th scope="row">3. Responsibility</th><td>Who holds and explains what</td><td>Responsibility, handover records</td></tr>
+    <tr><th scope="row">2. Agent</th><td>Execution boundaries, tool control, multi-agent coordination</td><td>Boundary pattern, agent_execution_gate</td></tr>
+    <tr><th scope="row">1. Model</th><td>Inference, interpretation, proposal (output only, no execution)</td><td>Semantic loop</td></tr>
+  </tbody>
+</table>
+</div>
+<p>The capabilities of a lower layer are not widened without the governance of the layers above.</p>
+
+<h2 id="twelve">7. Twelve principles for governable AI agents</h2>
+<ol>
+  <li><strong>Capability is not authority</strong> — the ability to infer or act is separate from the authority to approve.</li>
+  <li><strong>Actions need boundaries</strong> — define in advance how far an agent may act on the outside world.</li>
+  <li><strong>Every action has a responsible owner</strong> — autonomy without an owner cannot be adopted by an organization.</li>
+  <li><strong>Leave the final decision to humans</strong> — AI goes as far as proposing, analyzing and prioritizing.</li>
+  <li><strong>Logs are structural memory</strong> — carry forward why a judgment was made.</li>
+  <li><strong>Value continuity over local optimum</strong> — AI that can be reused, maintained and handed over, and that accumulates trust, is worth more.</li>
+  <li><strong>Do not hide uncertainty</strong> — when unsure, say that it cannot be determined (guard verdict: unknown).</li>
+  <li><strong>Time is a first-class constraint</strong> — the best answer changes between now, this week, next month and next year.</li>
+  <li><strong>Escalation is a feature</strong> — returning to humans is a designed safety mechanism, not a lack of ability.</li>
+  <li><strong>Multiple agents need a constitution</strong> — priorities, conflict resolution, separation of authority, common prohibitions.</li>
+  <li><strong>Replaceability protects sovereignty</strong> — avoid excessive dependence on one vendor or model (the concentration metric).</li>
+  <li><strong>Explanation and responsibility</strong> — internal reasoning may be opaque; the reason for adoption, execution history, responsibility path and halt conditions must be explainable.</li>
+</ol>
+
+<h2 id="boundaries">8. Responsibility boundaries involved</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">B#</th><th scope="col">Boundary</th><th scope="col">Where it matters for agents</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">B1</th><td>Human ↔ AI Judgment</td><td>An agent closes decisions autonomously</td></tr>
+    <tr><th scope="row">B5</th><td>Decision ↔ Action</td><td>The gate between decision and execution disappears</td></tr>
+    <tr><th scope="row">B6</th><td>Responsibility Assignment</td><td>Responsibility diffuses across multiple agents</td></tr>
+    <tr><th scope="row">B10</th><td>Temporal</td><td>A "decision for now" persists through long-running operation</td></tr>
+    <tr><th scope="row">B16</th><td>Model ↔ Reality</td><td>An agent's actions contaminate its training data</td></tr>
+    <tr><th scope="row">B17</th><td>Impact ↔ Accountability</td><td>Impact exceeds authority</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Definitions are in <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/catalog/boundaries/taxonomy.md">taxonomy.md</a> and the list in <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/catalog/boundaries/registry.md">registry.md</a>.</p>
+
+<h2 id="growth">9. What growth means</h2>
+<p>The growth of AI is measured not as increased model capability but as improved operational fit under responsibility constraints (<code>metrics.yaml ai_extension</code>).</p>
+<p>For an application in manufacturing, see <a href="../examples/#factory">Examples: a factory AI agent</a>.</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">Specifications (GitHub)</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity, canonical (GitHub)</a></li>
+      <li><a href="../legacy/">Archive</a></li>
+    </ul>
+    <p>This site explains; it does not define. The norms live in <code>specs/</code> on GitHub, and the specs prevail where they differ.</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

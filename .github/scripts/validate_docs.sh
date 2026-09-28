@@ -123,44 +123,52 @@ check_contains specs/map.md "core/policies.yaml" \
 check_contains specs/map.md "core/metrics.yaml" \
   "core/metrics.yaml not referenced in specs/map.md"
 
-# Site layout: English at the root (site/index.html), Japanese under site/ja/.
-# The redesigned index pages delegate the Authority Declaration to the canonical
-# GitHub repository, so the site check verifies that each index points to the
-# authority (specs section + canonical repo + Core/Metrics/Policies mention).
-check_contains site/index.html "Refer to Specs" \
+# Site layout: Japanese at the root (site/index.html), English under site/en/.
+# site/ja/ holds redirect pages for the previous layout only.
+# Each top page points to the canonical repository and names the three
+# authority files in a "Specs" section.
+for top in site/index.html site/en/index.html; do
+  check_contains "$top" "github.com/VCDesign-org/vcdesign" \
+    "Canonical spec repository not referenced in $top"
+  for authority in core/core.yaml core/policies.yaml core/metrics.yaml; do
+    check_contains "$top" "$authority" \
+      "$authority not referenced in $top"
+  done
+done
+check_contains site/index.html "Specs を参照する" \
   "Specs reference section not found in site/index.html"
-check_contains site/index.html "github.com/VCDesign-org/vcdesign" \
-  "Canonical spec repository not referenced in site/index.html"
-check_contains site/index.html "Core, Metrics, Policies" \
-  "Core/Metrics/Policies authority mention not found in site/index.html"
+check_contains site/en/index.html "Refer to Specs" \
+  "Specs reference section not found in site/en/index.html"
 
-check_contains site/ja/index.html "Specs を参照する" \
-  "Specs reference section not found in site/ja/index.html"
-check_contains site/ja/index.html "github.com/VCDesign-org/vcdesign" \
-  "Canonical spec repository not referenced in site/ja/index.html"
-check_contains site/ja/index.html "Core, Metrics, Policies" \
-  "Core/Metrics/Policies authority mention not found in site/ja/index.html"
-
-check_legacy_notice site/legacy "Historical Document Notice" "en" \
+# Archive pages: every index.html under legacy/ (except the hub, the YAML index
+# and the validation report page) carries the historical notice.
+check_legacy_notice site/legacy "歴史的ドキュメントのお知らせ" "ja" \
+  "site/legacy/index.html" \
   "site/legacy/yaml/index.html" \
   "site/legacy/validation/index.html"
 
 check_legacy_structure \
   site/legacy \
-  "Historical Document Notice" \
-  "This concept has been superseded by the Core \\+ Policies \\+ Metrics model" \
-  "This document represents the conceptual lineage that led to the current model" \
+  "歴史的ドキュメントのお知らせ" \
+  "(本概念は現在、Core \\+ Policies \\+ Metrics モデルに統合されています|本ページの内容は VCDesign v2)" \
+  "このドキュメントは現在のモデルに至る概念的系譜を表しています" \
+  "site/legacy/index.html" \
   "site/legacy/yaml/index.html" \
   "site/legacy/validation/index.html"
 
-check_legacy_notice site/ja/legacy "歴史的ドキュメントのお知らせ" "ja" \
-  "site/ja/legacy/yaml/index.html" \
-  "site/ja/legacy/validation/index.html"
+check_legacy_notice site/en/legacy "Historical Document Notice" "en" \
+  "site/en/legacy/index.html" \
+  "site/en/legacy/yaml/index.html" \
+  "site/en/legacy/validation/index.html"
 
 check_legacy_structure \
-  site/ja/legacy \
-  "歴史的ドキュメントのお知らせ" \
-  "本概念は現在、Core \\+ Policies \\+ Metrics モデルに統合されています" \
-  "このドキュメントは現在のモデルに至る概念的系譜を表しています" \
-  "site/ja/legacy/yaml/index.html" \
-  "site/ja/legacy/validation/index.html"
+  site/en/legacy \
+  "Historical Document Notice" \
+  "(This concept has been superseded by the Core \\+ Policies \\+ Metrics model|This page has been superseded by VCDesign v2)" \
+  "This document represents the conceptual lineage that led to the current model" \
+  "site/en/legacy/index.html" \
+  "site/en/legacy/yaml/index.html" \
+  "site/en/legacy/validation/index.html"
+
+# Internal links, ja/en parity, and v1 vocabulary outside the archive.
+python3 .github/scripts/check_site.py

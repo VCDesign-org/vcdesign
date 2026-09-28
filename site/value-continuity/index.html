@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Value Continuity | VCDesign</title>
+<meta name="description" content="Value Continuity の定義、Value Asymmetry Principle、Δ、5原則、判断の6語、Review Output を、正本の文言で紹介します。">
+<link rel="canonical" href="https://vcdesign.org/value-continuity/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/value-continuity/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/value-continuity/">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../en/value-continuity/" hreflang="en" lang="en">English</a>
+  </div>
+  <nav class="site-nav" aria-label="サイト内">
+    <ul>
+      <li><a href="../">トップ</a></li>
+      <li><a href="../value-continuity/" aria-current="page">Value Continuity</a></li>
+      <li><a href="../core/">芯</a></li>
+      <li><a href="../decision/">判断</a></li>
+      <li><a href="../examples/">事例</a></li>
+      <li><a href="../ai/">AI 拡張</a></li>
+      <li><a href="../migration/">v1 からの移行</a></li>
+      <li><a href="../projects/">関連プロジェクト</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">思想</p>
+<h1>Value Continuity</h1>
+<p class="lead">VCDesign の上位にある思想です。特定の方法論に依存しない原則として、<a href="https://github.com/value-continuity/value-continuity">value-continuity/value-continuity</a> で公開されています。</p>
+
+<div class="note">
+  <p>正本には独自のサイトがないため、このページを入口として置いています。定義と原則は<strong>正本の文言をそのまま引用</strong>し、このページで書き換えたり、足したりしません。表現が食い違う場合は正本が優先します。正本は日本語で書かれ、MIT License で公開されています。</p>
+</div>
+
+<nav class="toc" aria-labelledby="toc-title">
+  <h2 id="toc-title">このページの内容</h2>
+  <ol>
+    <li><a href="#definition">Value Continuity</a></li>
+    <li><a href="#asymmetry">Value Asymmetry Principle</a></li>
+    <li><a href="#delta">Δ（期待との差）</a></li>
+    <li><a href="#principles">5つの原則</a></li>
+    <li><a href="#decision">Decision</a></li>
+    <li><a href="#review">Review Output</a></li>
+    <li><a href="#documents">正本と適用文書</a></li>
+    <li><a href="#implementation">VCDesign との関係</a></li>
+  </ol>
+</nav>
+
+<h2 id="definition">1. Value Continuity</h2>
+<blockquote class="canon">
+  <p><strong>Value Continuity（価値の継続）</strong>とは、現在の価値をそのまま保存することではない。</p>
+  <p class="big">変化や失敗があっても、次の価値を生み出せる状態を継続すること。</p>
+  <p>現在の業務、担当者、技術、製品が変わっても、次の価値生成に使えるものが残るなら、価値は継続している。</p>
+  <cite>正本 README §1</cite>
+</blockquote>
+<p>正本が企画の段階で問うのは、次の一つです。</p>
+<blockquote class="canon">
+  <p class="big">この取り組みは、良い結果を次の価値へつなげながら、悪い結果の連鎖を止められるか。</p>
+  <cite>正本 README「Purpose」</cite>
+</blockquote>
+
+<h2 id="asymmetry">2. Value Asymmetry Principle</h2>
+<blockquote class="canon">
+  <p class="big">Upside は伝播可能にする。Downside は伝播させない。</p>
+  <p>良い結果と悪い結果を同じように扱わない。</p>
+  <ul>
+    <li>良い結果は、再利用・接続・学習によって次の価値へつながる道を開く。</li>
+    <li>悪い結果は、境界・上限・復旧によって、それ以上広がらないようにする。</li>
+  </ul>
+  <p>「伝播可能にする」とは、良い結果が次へ広がれる道を開いておくことであり、自動的に広げることではない。実際に広げるかどうかは、判断（Expand）で決める。</p>
+  <p><strong>下を閉じる能力は、上に賭け続けるための原資である。</strong></p>
+  <cite>正本 README §2</cite>
+</blockquote>
+
+<h2 id="delta">3. Δ（期待との差）</h2>
+<blockquote class="canon">
+  <p><strong>Δ</strong> とは、取り組みの開始時に宣言した期待と、実際に起きたこととの差である。ここでいう期待は、前提としていた条件と、生み出そうとしていた価値の両方を含む。</p>
+  <ul>
+    <li>期待を下回る方向の差を <strong>Negative Δ</strong> と呼ぶ。伝播させない。</li>
+    <li>期待を上回る方向の差を <strong>Positive Δ</strong> と呼ぶ。伝播可能にする。観測と保有は止めず、広げるかどうかは判断で決める。</li>
+  </ul>
+  <cite>正本 README §2「Δ（期待との差）」</cite>
+</blockquote>
+<p>VCDesign は、この一般的な意味を受けたうえで、Δ の基準線・向き・扱いを実装概念として定めています（<a href="../core/#delta">芯：Δ</a>）。</p>
+
+<h2 id="principles">4. 5つの原則</h2>
+<p>Value Asymmetry Principle は、次の5つの原則として実践されます（正本 README §3 より引用）。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">原則</th><th scope="col">正本の言葉</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">1. 残す</th><td>業務・担当・技術が変わっても残るものを、先に決める。標準、判断根拠、データ、接続、技能。保有し続ける人のいないものは残らない。</td></tr>
+    <tr><th scope="row">2. 見つける</th><td>平均的な改善量ではなく、再利用によって大きく広がる兆候を見る。二回目が安くなる。頼んでいない所から引き合いが来る。別の判断の材料になる。接続するほど一件あたりの価値が上がる。</td></tr>
+    <tr><th scope="row">3. 閉じる</th><td>悪い広がりは予測せず、境界で止める。損失の上限を先に決め、失敗を局所化し、前提を境界で確かめ直し、単一点への依存を避ける。</td></tr>
+    <tr><th scope="row">4. 試す</th><td>戻せる範囲で変更する。復旧・切替・撤退できる能力が、試せる回数を決める。</td></tr>
+    <tr><th scope="row">5. 伝える</th><td>結論ではなく、根拠を次の判断へ渡す。受け取った側は、それを自分の文脈で再判断する。</td></tr>
+  </tbody>
+</table>
+</div>
+<blockquote class="canon">
+  <p>この順番には意味がある。何を残すかを決めていなければ、広がる兆候は見つけられない。悪い広がりを止められなければ、再び試すことはできない。そして伝えた根拠は、次の取り組みで「残す」ものの起点になる。</p>
+  <cite>正本 README §3</cite>
+</blockquote>
+
+<h2 id="decision">5. Decision</h2>
+<p>レビューの結果は点数ではなく、次の判断につなげます。判断は次の6語です（正本 README §8 より引用）。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">判断</th><th scope="col">正本の言葉</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Proceed</th><td>Value Continuityを満たしており、現在の構造・現在の規模で進められる。</td></tr>
+    <tr><th scope="row">Expand</th><td>Upsideの兆候が観測されており、Downsideの上限と復旧能力の範囲で、対象・規模・接続を広げる。平均的な効果が出ただけでは Expand の根拠にしない。</td></tr>
+    <tr><th scope="row">Limit</th><td>価値はあるがDownsideの伝播範囲が広すぎるため、対象・権限・規模・期間などを限定する。</td></tr>
+    <tr><th scope="row">Reframe</th><td>価値、対象、境界、前提のいずれかを再定義する必要がある。</td></tr>
+    <tr><th scope="row">Defer</th><td>外部条件や判断材料が不足しており、現時点では確定しない。</td></tr>
+    <tr><th scope="row">Retire</th><td>継続しても次の価値生成につながらず、終了する方がValue Continuityに適う。開始前の取り組みについては、開始しない判断を含む。</td></tr>
+  </tbody>
+</table>
+</div>
+<p>VCDesign での扱い（宣言の更新と次の状態）は<a href="../decision/">判断</a>のページにあります。</p>
+
+<h2 id="review">6. Review Output</h2>
+<p>正本を使って企画をレビューするときは、少なくとも次の5項目を出力します。各項目は <code>ok</code> / <code>warning</code> / <code>blocking</code> で示し、判定には必ず根拠を付けます（正本 README §9）。</p>
+<ol>
+  <li><strong>Upside</strong> — 何が次の価値へつながるか、何が再利用可能か、上振れの兆候は何か</li>
+  <li><strong>Downside</strong> — 最大損失は何か、どこまで伝播するか、どこで止められるか、復旧・撤退できるか</li>
+  <li><strong>Continuity</strong> — 業務・人・技術・製品が変わった後に何が残るか</li>
+  <li><strong>Asymmetry</strong> — Upside propagation と Downside containment が両立しているか</li>
+  <li><strong>Decision</strong> — 6語のいずれか</li>
+</ol>
+<p>正本は、人間の企画判断だけでなく、AI による企画レビューの判定軸として使うことを意図しています。AI に渡すときの指示の例も正本にあります。</p>
+
+<h2 id="documents">7. 正本と適用文書</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">文書</th><th scope="col">内容</th></tr></thead>
+  <tbody>
+    <tr><td><a href="https://github.com/value-continuity/value-continuity/blob/main/README.md">README.md</a></td><td>定義、中心原則、5原則、判定構造。定義と原則の正本</td></tr>
+    <tr><td><a href="https://github.com/value-continuity/value-continuity/blob/main/value-continuity-business-planning.md">value-continuity-business-planning.md</a></td><td>業務企画・投資判断への適用</td></tr>
+    <tr><td><a href="https://github.com/value-continuity/value-continuity/blob/main/value-continuity-system-design.md">value-continuity-system-design.md</a></td><td>システム設計への適用</td></tr>
+  </tbody>
+</table>
+</div>
+<p>適用文書は、正本の定義と原則を各領域の言葉に読み替えたもので、5原則を同じ順番・同じ数のまま骨格として持ちます。</p>
+
+<h2 id="implementation">8. VCDesign との関係</h2>
+<blockquote class="canon">
+  <p>Value Continuityは、経営判断、企画、組織設計、システム設計、運用設計など、それぞれの層で異なる方法によって実装される。個別の方法論は、この原則を満たすための手段であり、Value Continuityそのものではない。</p>
+  <p>VCDesign（Value Continuity Design）は、そのうち特に <strong>判断と責任</strong> の面からValue Continuityを実装する方法論として位置づける。</p>
+  <cite>正本 README §10「Implementation Boundary」</cite>
+</blockquote>
+<p>VCDesign がどの仕組みで各原則を実装しているかは、<a href="../core/#implementation">芯：5原則ごとの実装</a>にまとめています。</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">仕様（GitHub）</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity 正本（GitHub）</a></li>
+      <li><a href="../legacy/">過去の資料</a></li>
+    </ul>
+    <p>このサイトは説明です。規範は GitHub の <code>specs/</code> にあり、食い違う場合は仕様が優先します。</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

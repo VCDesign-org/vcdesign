@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- English pages -->
+  <!-- Japanese (root) -->
   <url><loc>https://vcdesign.org/</loc></url>
-  <url><loc>https://vcdesign.org/constitution/</loc></url>
+  <url><loc>https://vcdesign.org/value-continuity/</loc></url>
+  <url><loc>https://vcdesign.org/core/</loc></url>
+  <url><loc>https://vcdesign.org/decision/</loc></url>
+  <url><loc>https://vcdesign.org/examples/</loc></url>
+  <url><loc>https://vcdesign.org/ai/</loc></url>
+  <url><loc>https://vcdesign.org/migration/</loc></url>
+  <url><loc>https://vcdesign.org/projects/</loc></url>
+  <url><loc>https://vcdesign.org/vc-ad/</loc></url>
   <url><loc>https://vcdesign.org/tddd/</loc></url>
   <url><loc>https://vcdesign.org/value-review/</loc></url>
   <url><loc>https://vcdesign.org/vms/</loc></url>
   <url><loc>https://vcdesign.org/vms/marketing/</loc></url>
-  <url><loc>https://vcdesign.org/vc-ad/</loc></url>
-  <url><loc>https://vcdesign.org/vc-ad/why.html</loc></url>
-  <url><loc>https://vcdesign.org/research/deepresearch-2026-01.pdf</loc></url>
+  <url><loc>https://vcdesign.org/re-derivation-layer/</loc></url>
+  <url><loc>https://vcdesign.org/legacy/</loc></url>
 
-  <!-- Japanese pages -->
-  <url><loc>https://vcdesign.org/ja/</loc></url>
-  <url><loc>https://vcdesign.org/ja/constitution/</loc></url>
-  <url><loc>https://vcdesign.org/ja/tddd/</loc></url>
-  <url><loc>https://vcdesign.org/ja/value-review/</loc></url>
-  <url><loc>https://vcdesign.org/ja/vms/</loc></url>
-  <url><loc>https://vcdesign.org/ja/vms/marketing/</loc></url>
-  <url><loc>https://vcdesign.org/ja/vc-ad/</loc></url>
-  <url><loc>https://vcdesign.org/ja/vc-ad/why.html</loc></url>
-  <url><loc>https://vcdesign.org/ja/research/deepresearch-2026-01.pdf</loc></url>
+  <!-- English -->
+  <url><loc>https://vcdesign.org/en/</loc></url>
+  <url><loc>https://vcdesign.org/en/value-continuity/</loc></url>
+  <url><loc>https://vcdesign.org/en/core/</loc></url>
+  <url><loc>https://vcdesign.org/en/decision/</loc></url>
+  <url><loc>https://vcdesign.org/en/examples/</loc></url>
+  <url><loc>https://vcdesign.org/en/ai/</loc></url>
+  <url><loc>https://vcdesign.org/en/migration/</loc></url>
+  <url><loc>https://vcdesign.org/en/projects/</loc></url>
+  <url><loc>https://vcdesign.org/en/vc-ad/</loc></url>
+  <url><loc>https://vcdesign.org/en/tddd/</loc></url>
+  <url><loc>https://vcdesign.org/en/value-review/</loc></url>
+  <url><loc>https://vcdesign.org/en/vms/</loc></url>
+  <url><loc>https://vcdesign.org/en/vms/marketing/</loc></url>
+  <url><loc>https://vcdesign.org/en/re-derivation-layer/</loc></url>
+  <url><loc>https://vcdesign.org/en/legacy/</loc></url>
 </urlset>

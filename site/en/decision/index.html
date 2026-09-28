@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decisions | VCDesign</title>
+<meta name="description" content="The six words Proceed / Expand / Limit / Reframe / Defer / Retire and the one judgment gate every decision passes. Expand and Limit are recorded as updates of the declaration.">
+<link rel="canonical" href="https://vcdesign.org/en/decision/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/decision/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/decision/">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../../decision/" hreflang="ja" lang="ja">日本語</a>
+  </div>
+  <nav class="site-nav" aria-label="Site">
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/">Core</a></li>
+      <li><a href="../decision/" aria-current="page">Decisions</a></li>
+      <li><a href="../examples/">Examples</a></li>
+      <li><a href="../ai/">AI extension</a></li>
+      <li><a href="../migration/">From v1</a></li>
+      <li><a href="../projects/">Related projects</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">The VCDesign core</p>
+<h1>Decisions</h1>
+<p class="lead">A human closes each Δ with one of six words. No other vocabulary is used. Every decision passes one judgment gate.</p>
+<p class="source">Norms: <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/core.yaml">core.yaml</a> <code>decision</code> and <code>closure_loop</code>; <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/policies.yaml">policies.yaml</a> <code>judgment_gate</code>, <code>enforcement</code>, <code>temporal_governance</code>. Record format: <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/schema_log.yaml">schema_log.yaml</a>.</p>
+
+<nav class="toc" aria-labelledby="toc-title">
+  <h2 id="toc-title">On this page</h2>
+  <ol>
+    <li><a href="#human">A human closes the decision</a></li>
+    <li><a href="#six">The six words</a></li>
+    <li><a href="#gate">The judgment gate</a></li>
+    <li><a href="#per-decision">What each decision requires</a></li>
+    <li><a href="#declaration">Expand and Limit update the declaration</a></li>
+    <li><a href="#positive">Positive Δ and Expand</a></li>
+    <li><a href="#stops">Hard stops</a></li>
+    <li><a href="#record">Recording decisions</a></li>
+    <li><a href="#anti">Anti-patterns</a></li>
+  </ol>
+</nav>
+
+<h2 id="human">1. A human closes the decision</h2>
+<ul>
+  <li>The final decider of every decision is human. Whatever an AI produces about a case is a proposal until a human closes the decision (axiom A3).</li>
+  <li>A closed decision authorizes a scope of execution through its declaration. <strong>No execution may exceed the scope authorized by a decision closed by a human.</strong> Execution within that scope needs no further decision; a change that would exceed it is observed as a Δ and re-decided (axiom A2).</li>
+  <li>A guard verdict at a boundary (pass / deny / unknown) checks one crossing; it is not a decision. Unknown stops and escalates and is never treated as pass.</li>
+</ul>
+
+<h2 id="six">2. The six words</h2>
+<p>The six words are the canonical Decision. VCDesign maps each to a handling of the declaration and a next state (<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/implementation.md">implementation.md</a> §3).</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Decision</th><th scope="col">Meaning</th><th scope="col">Declaration</th><th scope="col">Next state</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Proceed</th><td>Continue with the current structure and declaration</td><td>Kept as is, including corrections that do not change the chapter</td><td>active</td></tr>
+    <tr><th scope="row">Expand</th><td>Widen target, scale or connections based on an observed Positive Δ</td><td>Widen <code>blast_radius</code> (before / after). Requires an observed Positive Δ and confirmed recovery capability</td><td>active</td></tr>
+    <tr><th scope="row">Limit</th><td>There is value but the spread is too wide; narrow target, authority, scale or period</td><td>Narrow <code>blast_radius</code> (before / after)</td><td>active</td></tr>
+    <tr><th scope="row">Reframe</th><td>Redefine value, target, boundary or premises</td><td>Define a new chapter: premises, boundary, owner and declaration</td><td>reframed</td></tr>
+    <tr><th scope="row">Defer</th><td>Hold with responsibility until the material for judgment is ready</td><td>Set a temporary owner and the next review time</td><td>deferred</td></tr>
+    <tr><th scope="row">Retire</th><td>End it because it does not lead to the next value</td><td>Release responsibility and hand over what remains to a new holder. Includes deciding not to start</td><td>retired</td></tr>
+  </tbody>
+</table>
+</div>
+<p>A confirmed Δ stays under responsibility until a decision closes it. Defer is a closure path with an owner and a review time, not an escape.</p>
+
+<h2 id="gate">3. The judgment gate</h2>
+<p>Every decision is closed by a human through this single gate. Its checks follow the canonical Review Output (Upside / Downside / Continuity / Asymmetry / Decision) in the order of the five principles. Long-term and short-term decisions differ only in the depth of the check; there is no separate gate.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Principle</th><th scope="col">What is checked</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Keep</th><td>value_intent is declared; residual_assets are declared with holders</td></tr>
+    <tr><th scope="row">Find</th><td>spread_signals.expected is declared; a Positive Δ is recorded separately from the average outcome</td></tr>
+    <tr><th scope="row">Close</th><td>blast_radius is declared; failure_domain is declared if shared; upstream conclusions are revalidated</td></tr>
+    <tr><th scope="row">Try</th><td>reversibility is declared; the halt path is confirmed</td></tr>
+    <tr><th scope="row">Pass on</th><td>the decision basis is recorded; the re-derivation basis is recorded for long-lived cases</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="per-decision">4. What each decision requires</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Decision</th><th scope="col">Requires (<code>judgment_gate.per_decision</code>)</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Proceed</th><td>Nothing beyond the gate's checks</td></tr>
+    <tr><th scope="row">Expand</th><td>An observed Positive Δ (spread_signals observed or unexpected) / recovery capability confirmed for the widened scope / blast_radius before and after</td></tr>
+    <tr><th scope="row">Limit</th><td>blast_radius narrowed, before and after</td></tr>
+    <tr><th scope="row">Reframe</th><td>The existing chapter is not sustainable / new premises and boundary / a new owner / supervisor approval if structural</td></tr>
+    <tr><th scope="row">Defer</th><td>A reason / a temporary owner / the next review time (default ceiling 7 days, after which the supervisor forces closure)</td></tr>
+    <tr><th scope="row">Retire</th><td>No hidden dependency / responsibility released / related chapters notified / what remains handed over</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="declaration">5. Expand and Limit update the declaration</h2>
+<p>Expand and Limit are decisions that update the <code>blast_radius</code> declaration without changing the chapter, recorded as before and after. Expand widens the declaration; Limit narrows it.</p>
+<ul>
+  <li>A "small trial" without a narrowed declaration is not Limit. It is a trial without a ceiling and is stopped at the judgment gate.</li>
+  <li>An average effect alone never justifies Expand.</li>
+</ul>
+<p>An Expand record from a fictional parts factory (excerpt from <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/examples/point-vs-line-improvement.md">point-vs-line-improvement.md</a>; values translated):</p>
+<pre><code>decision:
+  value: expand
+  positive_delta_refs: [reuse_cost_decline, unsolicited_pull]
+  declaration_update:
+    before:
+      scope: data collection on lines 1–3 only (never writes to control systems)
+      max_loss: {unit: hours_data_gap, value: 8}
+    after:
+      scope: data collection on lines 1–4 and read-only feed to quality control (never writes to control systems)
+      max_loss: {unit: hours_data_gap, value: 8}
+      approved_by: {role: plant_manager}
+  decided_by: {role: plant_manager}</code></pre>
+
+<h2 id="positive">6. Positive Δ and Expand</h2>
+<p>"Propagable" does not mean "spread automatically".</p>
+<ul>
+  <li><strong>Observing</strong> a Positive Δ and <strong>holding</strong> it with a named holder are never stopped, quarantined or blocked.</li>
+  <li><strong>Spreading</strong> it is the decision Expand, which requires an observed Positive Δ and confirmation that the widened scope can still be recovered.</li>
+  <li>When preconditions are missing, what is stopped is the Expand decision, not the observation or holding.</li>
+  <li>An upside whose cause is unknown is marked unknown by the boundary guard and never justifies widening.</li>
+</ul>
+
+<h2 id="stops">7. Hard stops</h2>
+<p>The judgment gate stops the propagation of a Negative Δ and an Expand decision that lacks its preconditions (<code>judgment_gate.hard_stops</code>). It never stops observing or holding a Positive Δ.</p>
+<ul>
+  <li>A fatal downside (regardless of whether an owner exists)</li>
+  <li>No owner</li>
+  <li>No human final decider</li>
+  <li>Irreversible without a declared max loss</li>
+  <li>Expand without an observed Positive Δ</li>
+  <li>Expand beyond recovery capability</li>
+</ul>
+<p>Blocking applies only to a Negative Δ and to the decision Expand. Findings about observing or holding a Positive Δ are at most a warning (<code>policies.yaml enforcement</code>).</p>
+
+<h2 id="record">8. Recording decisions</h2>
+<ul>
+  <li>Each decision records its basis from the Upside / Downside / Continuity / Asymmetry viewpoints (<code>decision.basis</code>). A decision without a basis is detected by the metric decision_without_basis.</li>
+  <li>System state can be rolled back; responsibility records are append-only. The proposal, the decision and its basis, the owner, the evidence at the time, the guard verdict and the reason for a rollback are never deleted. A correction adds a new record; it never erases one (<code>temporal_governance</code>).</li>
+</ul>
+
+<h2 id="anti">9. Anti-patterns</h2>
+<ul>
+  <li>Expand on average success only</li>
+  <li>A trial without a declaration (an "experiment" without a ceiling)</li>
+  <li>Defer without an owner or a review time</li>
+  <li>Retire that hides active dependencies</li>
+</ul>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">Specifications (GitHub)</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity, canonical (GitHub)</a></li>
+      <li><a href="../legacy/">Archive</a></li>
+    </ul>
+    <p>This site explains; it does not define. The norms live in <code>specs/</code> on GitHub, and the specs prevail where they differ.</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,276 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="ja">
 <head>
-    <meta charset="UTF-8" />
-    <title>VC-AD — Value-Continuous AI Development</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/main.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VC-AD | VCDesign</title>
+<meta name="description" content="VC-AD（Value-Continuous AI Development）は、AI による開発で人間が設計と責任の芯を持つための開発プロトコルです。規範は architecture-yaml-protocols リポジトリにあります。">
+<link rel="canonical" href="https://vcdesign.org/vc-ad/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/vc-ad/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/vc-ad/">
+<link rel="stylesheet" href="../assets/site.css">
 </head>
-
 <body>
-    <main class="frame">
+<a class="skip" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../en/vc-ad/" hreflang="en" lang="en">English</a>
+  </div>
+  <nav class="site-nav" aria-label="サイト内">
+    <ul>
+      <li><a href="../">トップ</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/">芯</a></li>
+      <li><a href="../decision/">判断</a></li>
+      <li><a href="../examples/">事例</a></li>
+      <li><a href="../ai/">AI 拡張</a></li>
+      <li><a href="../migration/">v1 からの移行</a></li>
+      <li><a href="../projects/">関連プロジェクト</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">関連プロジェクト</p>
+<h1>VC-AD</h1>
+<p class="lead">Value-Continuous AI Development。実装は AI に任せても、判断と責任の芯は人間が持つための開発プロトコルです。</p>
 
-        <header>
-            <nav class="lang-nav">
-                <a href="../index.html" class="lang-link">← Home</a>
-            </nav>
+<blockquote class="canon">
+  <p>VCDesign は法則であり、VC-AD はその現在技術水準における具体化である。</p>
+  <cite>出典：<a href="https://github.com/VCDesign-org/vcdesign/blob/main/README.ja.md">VCDesign README</a></cite>
+</blockquote>
 
-            <h1 class="hero-title">VC-AD</h1>
-            <p class="hero-subtitle">(Value-Continuous AI Development)</p>
-            <p class="hero-tagline">
-                Implementations are disposable, but value is continuous. A "Boundary-Driven" development protocol for
-                the AI era.
-            </p>
-        </header>
+<h2 id="what">VC-AD がすること</h2>
+<p>AI エージェントにコードを書かせるとき、何を決めたのか、何をしてはいけないのか、どこでつながるのか、どのファイルに適用するのかを、リポジトリの中の YAML として渡します。AI はその範囲の内側で実装し、範囲を守っているかを道具で確かめます。</p>
+<p>VCDesign の言葉でいえば、人間が閉じた判断で許可された範囲（公理 A2）を、開発の現場で機械が読める形にしたものです。</p>
 
-        <section>
-            <section>
-                <h2 class="usage-title">Overview</h2>
-                <p>
-                    <strong>VC-AD (Value-Continuous AI Development)</strong> is a development protocol that allows
-                    humans
-                    to maintain control over the "core" of design and responsibility while enjoying the overwhelming
-                    implementation speed of AI.
-                </p>
-                <p>
-                    While leaving implementation details to AI, humans focus on defining the following
-                    <strong>"Structure of Value (Skeleton)"</strong>:
-                </p>
-                <ul>
-                    <li><strong>Decision:</strong> Why was it decided (Fixing intent)</li>
-                    <li><strong>Boundary:</strong> How far is freedom allowed (Defining safe zones)</li>
-                    <li><strong>Connection:</strong> How systems connect to each other (Managing crossings)</li>
-                    <li><strong>Closure:</strong> How to take responsibility upon failure (Safe shutdown)</li>
-                    <li><strong>Component:</strong> Where do these apply (Scope of application)</li>
-                </ul>
-                <p>
-                    By structuring these, we realize development where "implementations are disposable by AI at high
-                    speed, but only valuable designs are continuous."
-                </p>
-            </section>
+<h2 id="repository">リポジトリ</h2>
+<p>規範は <a href="https://github.com/VCDesign-org/architecture-yaml-protocols">VCDesign-org/architecture-yaml-protocols</a> にあります。使い方と最新の構成は、リポジトリの README を参照してください。2026年9月時点の主な構成は次のとおりです。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">ディレクトリ</th><th scope="col">役割</th></tr></thead>
+  <tbody>
+    <tr><td><code>decisions/</code></td><td>Why / What。アーキテクチャ上の判断、方針、技術選定</td></tr>
+    <tr><td><code>contracts/</code></td><td>Must / Must Not。言語に依存しない方針（資源、副作用）と入出力の契約</td></tr>
+    <tr><td><code>connections/</code></td><td>How / Interface。構成要素の間の接続、データの流れ、API の契約</td></tr>
+    <tr><td><code>components/</code></td><td>Where。上の規則を実際のコード（ファイルパス）に割り当てる</td></tr>
+    <tr><td><code>tools/</code></td><td>Gatekeeper。契約が守られているかを検査する道具</td></tr>
+  </tbody>
+</table>
+</div>
 
-            <section id="constitution-link">
-                <h2 class="usage-title">VC-AD Constitution</h2>
-                <ul class="link-list">
-                    <li>
-                        <a class="link-anchor" href="../constitution/">
-                            <span class="label">Value Continuity Design Basic Constitution</span>
-                            <span class="desc">The Constitution of VCDesign</span>
-                        </a>
-                    </li>
-                </ul>
-            </section>
-
-            <section>
-                <h2 class="usage-title">Relationship with VCDesign</h2>
-                <p>
-                    While <strong>VCDesign</strong> is the "design principle (philosophy/constitution) for sustaining
-                    value",
-                    <strong>VC-AD</strong> is the <strong>implementation-oriented methodology that concretizes it as an
-                        AI
-                        development process</strong>.
-                </p>
-                <ul>
-                    <li>
-                        <strong>VCDesign:</strong>
-                        Where is value born and lost / Where is the boundary of judgment (Human/AI)
-                    </li>
-                    <li>
-                        <strong>VC-AD:</strong>
-                        Even if AI generates implementation, how to preserve value and responsibility / How to manage it
-                        as
-                        a protocol
-                    </li>
-                </ul>
-                <p>VC-AD plays the role of <strong>connecting VCDesign's philosophy to the field of AI
-                        implementation</strong>.</p>
-                <p>
-                    In the current authority, that connection is explained as a four-loop operating model:
-                    Physical, Semantic, Value, and Responsibility. LLMs belong primarily in the Semantic Loop,
-                    while halt authority remains with accountable humans.
-                </p>
-                <ul class="link-list">
-                    <li>
-                        <a class="link-anchor" href="../reality-fit/">
-                            <span class="label">Reality Fit / Adaptive Loop Model</span>
-                            <span class="desc">How Core, Policies, and Metrics connect to real AI operating loops</span>
-                        </a>
-                    </li>
-                </ul>
-            </section>
-
-            <section>
-                <h2 class="usage-title">Why VC-AD?</h2>
-                <p>
-                    "Issues with AI-Era Development" and "Basic Structure of VC-AD (11 Boundaries)" are explained in
-                    detail on the following page.
-                </p>
-                <ul class="link-list">
-                    <li>
-                        <a class="link-anchor" href="why.html">
-                            <span class="label">Why VC-AD?</span>
-                            <span class="desc">Development Challenges in the AI Era and the Reason for 11
-                                Boundaries</span>
-                        </a>
-                    </li>
-                </ul>
-            </section>
-
-            <section>
-                <h2 class="usage-title">Usage (Quickstart)</h2>
-                <p>
-                    VC-AD is not a "design everything first" method.<br>
-                    We proceed while separating <strong>the freedom for AI to build implementation</strong> and
-                    <strong>the
-                        boundaries where humans hold responsibility</strong>.<br>
-                    Paste the following prompt to Generative AI for assistance.<br>
-                </p>
-
-                <h3>Minimum Prompt (Template)</h3>
-                <div class="prompt-wrapper">
-                    <textarea id="vc-ad-prompt" class="prompt-box" readonly>Please read the following VC-AD protocols (YAML):
-
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/decisions/decisions.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/boundaries/boundaries.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/connections/connections.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/closures/closures.yaml
-- https://raw.githubusercontent.com/VCDesign-org/architecture-yaml-protocols/refs/heads/refactor/split-by-role/components/components.yaml
-
-Target: <component_id> (e.g., comp-payment-01)
-Implement the paths under this component.
-You must follow the applied Boundaries / Connections / Closures.
-In case of failure, close the responsibility according to the Closure definition.</textarea>
-
-                    <div class="prompt-actions">
-                        <button type="button" class="btn-copy" id="copy-btn">Copy</button>
-                    </div>
-                    <div class="prompt-note">* Pressing the button copies the entire prompt.</div>
-                </div>
-
-                <h3>Step 0: Unbounded Generation (Let AI run wild first)</h3>
-                <ul>
-                    <li><strong>Purpose:</strong> Prioritize speed and build something that works as fast as possible
-                    </li>
-                    <li>Let AI generate the minimal implementation running on-memory/dummy IO/local</li>
-                    <li>Do not instruct fine details midway, pass the TODOs until completion together</li>
-                    <li>Do not fix "Boundaries" at this stage (assume it's breakable)</li>
-                </ul>
-
-                <h3>Step 1: Define Boundary (Draw the line to protect)</h3>
-                <ul>
-                    <li><strong>Purpose:</strong> Protect irreversible areas such as persistent data and external
-                        integration</li>
-                    <li>Find points where persistence/operation/responsibility occur</li>
-                    <li>Define "Conditions that must not be broken (must/must-not)" as Boundary there</li>
-                    <li>Ex: Do not output PII / Audit log required / Do not write directly to OT control system</li>
-                </ul>
-
-                <h3>Step 2: Define Connection (Decide routes to cross)</h3>
-                <ul>
-                    <li><strong>Purpose:</strong> Clarify connection points (crossing points) between components</li>
-                    <li>Declare crossing points A->B (API/Event/Batch) as Connection</li>
-                    <li>Write only the "flow" for Connection (do not write principles or accident handling)</li>
-                </ul>
-
-                <h3>Step 3: Implement Closure (End safely even if it fails)</h3>
-                <ul>
-                    <li><strong>Purpose:</strong> Safely stop the system without breaking the whole even if an
-                        abnormality occurs</li>
-                    <li>Define how to end upon failure for each Connection as Closure</li>
-                    <li>Retry/Timeout/Circuit Breaker/Idempotency/Compensation/Escalation to human</li>
-                    <li>Goal is to create a state where "responsibility closes even if it fails"</li>
-                </ul>
-
-                <h3>Step 4: Apply Component (Decide where it runs)</h3>
-                <ul>
-                    <li><strong>Purpose:</strong> Determine the specific place (directory/service) where the
-                        implementation applies</li>
-                    <li>Define which Boundary/Connection/Closure applies to which directory/service using Component</li>
-                    <li>This determines the "executable context unit" passed to AI</li>
-                </ul>
-            </section>
-
-            <section>
-                <h2 class="usage-title">Implementation via YAML Protocol</h2>
-                <p>
-                    VC-AD is concretized as protocols like <code>decisions.yaml</code>,
-                    <code>boundaries.yaml</code>.<br>
-                </p>
-
-                <h3>Example: boundaries.yaml (Snippet)</h3>
-                <pre class="code-block"><code>boundaries:
-  # Do not log PII (Personally Identifiable Information) without masking
-  - id: "b-logging-04"
-    name: "pii-privacy-protection"
-    description: "Do not log PII (Personally Identifiable Information) without masking"
-    type: "invariant"
-    derived_from_decisions: ["d-logging-04"]</code></pre>
-
-                <p>
-                    These are published as "Reference Protocol Set" in the following repository.
-                </p>
-                <ul class="link-list">
-                    <li>
-                        <a class="link-anchor" href="https://github.com/VCDesign-org/architecture-yaml-protocols">
-                            <span class="label">architecture-yaml-protocols (GitHub)</span>
-                            <span class="desc">VC-AD Reference Implementation</span>
-                        </a>
-                    </li>
-                </ul>
-            </section>
-
-            <section>
-                <h2 class="usage-title">Research</h2>
-                <ul class="link-list">
-                    <li>
-                        <a class="link-anchor" href="2026-01deepreserch.pdf">
-                            <span class="label">2026-01 Deep Research</span>
-                            <span class="desc">Academic consideration of Value Continuous Design (VCDesign) and Boundary
-                                Oriented Architecture (VC-AD/BOA) in the era of generative AI automated coding</span>
-                        </a>
-                    </li>
-                </ul>
-            </section>
-
-            <section>
-                <h2 class="usage-title">Summary</h2>
-                <p>
-                    <strong>VC-AD</strong> is a <strong>"development method where judgment and responsibility continue
-                        as
-                        value even if implementation keeps changing"</strong>.<br>
-                    It is positioned as a <strong>practical protocol</strong> to connect VCDesign's philosophy and the
-                    AI
-                    development field.
-                </p>
-            </section>
-
-            <footer>
-                <div class="copyright">© 2026 VCDesign</div>
-            </footer>
-
-    </main>
-    <script>
-        (function () {
-            const btn = document.getElementById('copy-btn');
-            const ta = document.getElementById('vc-ad-prompt');
-
-            if (btn && ta) {
-                btn.addEventListener('click', async () => {
-                    ta.focus();
-                    ta.select();
-                    try {
-                        await navigator.clipboard.writeText(ta.value);
-                        const original = btn.textContent;
-                        btn.textContent = 'Copied';
-                        setTimeout(() => { btn.textContent = original; }, 1400);
-                    } catch (e) {
-                        // fallback
-                    }
-                });
-            }
-        })();
-    </script>
+<h2 id="history">以前の解説について</h2>
+<p>このサイトにあった VC-AD の解説（Quickstart のプロンプト、「11の境界」と <code>.vc-ad/boundaries.yaml</code> による Static Badge、VCDesign 基本憲法）は、リポジトリの以前の構成に基づいていました。いまのリポジトリには <code>boundaries/</code> と <code>closures/</code> がないため、<a href="../legacy/vc-ad/">過去の資料</a>へ移しました。2026年1月の調査資料も<a href="../legacy/#research">過去の資料</a>から辿れます。</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">仕様（GitHub）</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity 正本（GitHub）</a></li>
+      <li><a href="../legacy/">過去の資料</a></li>
+    </ul>
+    <p>このサイトは説明です。規範は GitHub の <code>specs/</code> にあり、食い違う場合は仕様が優先します。</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
 </body>
-
 </html>

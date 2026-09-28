@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>VCDesign</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0e0e0e;
+            --bg-2: #151515;
+            --bg-3: #1c1c1c;
+            --border: #2a2a2a;
+            --border-light: #333;
+            --text: #d4d0c8;
+            --text-muted: #7a7670;
+            --text-dim: #4a4844;
+            --accent: #c8a96e;
+            --accent-dim: #8a7248;
+            --accent-bright: #e8c87e;
+            --red: #c0594a;
+            --mono: 'IBM Plex Mono', monospace;
+            --serif: 'Noto Serif JP', serif;
+            --sans: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            font-weight: 300;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        /* ── LAYOUT ── */
+        .frame {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* ── NAV ── */
+        .top-nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 32px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+        .lang-link {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--text-dim);
+            padding-bottom: 1px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .lang-link:hover { color: var(--accent); border-color: var(--accent-dim); }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 64px 0 80px;
+            border-bottom: 1px solid var(--border);
+        }
+        .hero-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            color: var(--accent-dim);
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+        .hero-title {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(36px, 6vw, 58px);
+            letter-spacing: 0.06em;
+            color: #e8e4dc;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        .hero-sub {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            margin-bottom: 36px;
+        }
+        .hero-tagline {
+            font-family: var(--serif);
+            font-size: 17px;
+            color: var(--text);
+            line-height: 2;
+            max-width: 560px;
+            font-weight: 300;
+        }
+        .hero-tagline strong {
+            color: var(--accent);
+            font-weight: 400;
+        }
+
+        /* ── SECTION BASE ── */
+        section {
+            padding: 72px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            color: var(--accent-dim);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: 24px;
+            color: #e8e4dc;
+            letter-spacing: 0.04em;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+        h3 {
+            font-family: var(--sans);
+            font-weight: 400;
+            font-size: 14px;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            margin: 32px 0 12px;
+            text-transform: uppercase;
+        }
+        p { margin-bottom: 16px; color: var(--text); }
+
+        /* ── INCIDENT SECTION ── */
+        #incident { background: var(--bg); }
+
+        .incident-quote {
+            border-left: 2px solid var(--accent-dim);
+            padding: 24px 32px;
+            margin: 32px 0;
+            background: var(--bg-2);
+        }
+        .incident-quote p {
+            font-family: var(--serif);
+            font-size: 16px;
+            line-height: 2;
+            color: #c8c4bc;
+            margin-bottom: 8px;
+        }
+        .incident-quote p:last-child { margin-bottom: 0; }
+        .incident-quote .highlight {
+            color: var(--accent-bright);
+        }
+
+        .incident-note {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 24px;
+            padding: 16px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-3);
+        }
+
+        /* ── ENTRY POINTS ── */
+        .entry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2px;
+            margin-top: 32px;
+        }
+        .entry-card {
+            display: block;
+            padding: 28px 24px;
+            background: var(--bg-2);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: border-color 0.2s, background 0.2s;
+            position: relative;
+        }
+        .entry-card:hover {
+            border-color: var(--accent-dim);
+            background: var(--bg-3);
+        }
+        .entry-card-tag {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            color: var(--accent-dim);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .entry-card-title {
+            font-family: var(--serif);
+            font-size: 17px;
+            color: #e0dcd4;
+            font-weight: 300;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .entry-card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .entry-card-arrow {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--accent-dim);
+            margin-top: 16px;
+            display: block;
+        }
+
+        /* ── FLOW SECTION ── */
+        .flow-steps {
+            margin-top: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .flow-step {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 24px;
+            align-items: start;
+            padding: 20px 0;
+            border-top: 1px solid var(--border);
+        }
+        .flow-step:last-child { border-bottom: 1px solid var(--border); }
+        .flow-num {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            letter-spacing: 0.1em;
+            padding-top: 2px;
+        }
+        .flow-content-title {
+            font-family: var(--sans);
+            font-weight: 400;
+            font-size: 15px;
+            color: #d8d4cc;
+            margin-bottom: 6px;
+        }
+        .flow-content-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+        .flow-link {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--accent-dim);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        .flow-link:hover { color: var(--accent); }
+
+        /* ── PHILOSOPHY ── */
+        .constitution-block {
+            margin-top: 32px;
+        }
+        .constitution-entry {
+            padding: 24px 0;
+            border-top: 1px solid var(--border);
+        }
+        .constitution-entry:last-child { border-bottom: 1px solid var(--border); }
+        .constitution-entry h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: var(--accent);
+        }
+        .constitution-entry p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.9;
+            margin-bottom: 6px;
+        }
+        .constitution-entry p:last-child { margin-bottom: 0; }
+
+        /* ── RESEARCH / SPECS ── */
+        .link-list {
+            list-style: none;
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .link-list a, .link-anchor {
+            display: block;
+            padding: 20px 24px;
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            transition: border-color 0.2s;
+        }
+        .link-list a:hover, .link-anchor:hover { border-color: var(--accent-dim); }
+        .link-list .label {
+            display: block;
+            font-size: 14px;
+            color: #d0ccc4;
+            margin-bottom: 6px;
+            font-weight: 400;
+        }
+        .link-list .desc {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+        .link-list code {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--accent-dim);
+        }
+
+        /* ── MATURITY TABLE ── */
+        .maturity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 13px;
+        }
+        .maturity-table th {
+            text-align: left;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-light);
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .maturity-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+        .maturity-table td:first-child {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--accent-dim);
+        }
+        pre {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            padding: 20px 24px;
+            font-family: var(--mono);
+            font-size: 12px;
+            line-height: 1.9;
+            color: var(--text-muted);
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+        pre .warn { color: var(--red); }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 48px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        footer .note {
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.8;
+            max-width: 480px;
+        }
+        footer .copyright {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-dim);
+            letter-spacing: 0.1em;
+        }
+
+        /* ── UTILS ── */
+        .tag {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            color: var(--accent-dim);
+            border: 1px solid var(--accent-dim);
+            padding: 2px 8px;
+            text-transform: uppercase;
+            margin-right: 8px;
+            margin-bottom: 4px;
+        }
+        .warning-note {
+            background: var(--bg-2);
+            border-left: 2px solid var(--red);
+            padding: 12px 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 16px 0;
+        }
+
+        @media (max-width: 600px) {
+            .frame { padding: 0 20px; }
+            .top-nav { padding: 16px 20px; }
+            .entry-grid { grid-template-columns: 1fr; }
+            footer { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+    <style>
+        .warning-box { max-width: 960px; margin: 16px auto 8px; padding: 12px 16px; border: 1px solid #d97706; background: rgba(217, 119, 6, 0.12); border-radius: 6px; font: 14px/1.7 system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", sans-serif; }
+        .legacy-intro { max-width: 960px; margin: 0 auto; padding: 0 16px; font: 14px/1.7 system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", sans-serif; }
+        .legacy-intro p { margin: 4px 0; }
+        .warning-box a { color: inherit; text-decoration: underline; }
+    </style>
+</head>
+<body>
+<div class="legacy-intro">
+    <div class="warning-box">
+        <strong>⚠️ Historical Document Notice</strong><br>
+        This page predates VCDesign v2 and is not the current norm. The current authority is specs/core/core.yaml, specs/core/policies.yaml and specs/core/metrics.yaml. To read older terms, see <a href="../../migration/">From v1</a>.
+    </div>
+    <p><em>This page has been superseded by VCDesign v2. The current entry point is the home page.</em></p>
+    <p><em>This document represents the conceptual lineage that led to the current model.</em></p>
+</div>
+
+    <nav class="top-nav">
+        <a href="../../../legacy/v1/" class="lang-link">日本語</a>
+    </nav>
+
+    <main class="frame">
+
+        <!-- ── HERO ── -->
+        <header class="hero">
+            <p class="hero-label">Value Continuity Design</p>
+            <h1 class="hero-title">VCDesign</h1>
+            <p class="hero-sub">(Value Continuity Design)</p>
+            <p class="hero-tagline">
+                Design principles not for "how to build", but for <strong>how to protect the created value</strong><br>
+                over time.
+            </p>
+        </header>
+
+        <!-- ── INCIDENT ── -->
+        <section id="incident">
+            <p class="section-label">Why is it necessary?</p>
+            <h2>AI isn't the only one crossing boundaries</h2>
+
+            <div class="incident-quote">
+                <p>I asked to "fix the UI".</p>
+                <p>The code changed. It worked.</p>
+                <p>I noticed a while later. <span class="highlight">The DB write validation had silently changed.</span></p>
+            </div>
+
+            <p>This isn't just about AI. The same thing happens when you ask a person.</p>
+            <p>There is no malice. <strong>They cross boundaries with good intentions.</strong></p>
+            <p>
+                If boundaries are not designed, anyone will cross them.<br>
+                If "how far you can go" is not explicitly stated, optimization spreads endlessly.
+            </p>
+
+            <div class="incident-note">
+                * The more capable AI becomes, the harder this gap is to see.<br>
+                Capability is not authority. An Agent without designed execution boundaries, responsible owners, and halt conditions becomes a source of accidents.
+            </div>
+        </section>
+
+        <!-- ── ENTRY POINTS ── -->
+        <section id="entry">
+            <p class="section-label">Choose your entry point</p>
+            <h2>Start from your symptoms</h2>
+
+            <div class="entry-grid">
+                <a class="entry-card" href="https://idk-lamp.org/en/">
+                    <p class="entry-card-tag">From everyday situations</p>
+                    <p class="entry-card-title">Give AI an "I don't know" lamp</p>
+                    <p class="entry-card-desc">Approval and responsibility are not the same. Understand the concept of boundaries through a story about expense approval.</p>
+                    <span class="entry-card-arrow">→ idk-lamp.org</span>
+                </a>
+                <a class="entry-card" href="../vc-ad/">
+                    <p class="entry-card-tag">Development design collapses</p>
+                    <p class="entry-card-title">Boundary design to maximize AI</p>
+                    <p class="entry-card-desc">Hand the design document to AI and refine boundaries and responsibility placement through dialogue. The VC-AD YAML is the starting point.</p>
+                    <span class="entry-card-arrow">→ VC-AD Getting Started</span>
+                </a>
+                <a class="entry-card" href="../../vms/">
+                    <p class="entry-card-tag">Management decisions stagnate</p>
+                    <p class="entry-card-title">Structure management troubles</p>
+                    <p class="entry-card-desc">"No money left", "No passion bubbling up". Design responsibilities and Decisions from symptoms.</p>
+                    <span class="entry-card-arrow">→ VMS</span>
+                </a>
+                <a class="entry-card" href="../../re-derivation-layer/">
+                    <p class="entry-card-tag">Field judgment cannot be explained</p>
+                    <p class="entry-card-title">Make a robot's judgment explainable afterward</p>
+                    <p class="entry-card-desc">“P-102 inspection complete” — but under whose authority, and on what basis? Design the layer that converts motion into meaning and responsibility.</p>
+                    <span class="entry-card-arrow">→ Re-derivation Layer</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ── HOW TO USE ── -->
+        <section id="flow">
+            <p class="section-label">How to Use</p>
+            <h2>Bring your design documents and dialogue with AI</h2>
+
+            <p>VCDesign is not a design document to read, but a design tool to pass to AI.<br>
+            There's no need to memorize difficult concepts. Just start moving your hands.</p>
+
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <span class="flow-num">01</span>
+                    <div>
+                        <p class="flow-content-title">Define value and boundaries</p>
+                        <p class="flow-content-desc">Articulate what you want to protect and what constitutes failure if broken. Use the Value Review Sheet to finalize Chapter Preconditions.</p>
+                        <a class="flow-link" href="../../value-review/">→ value-review</a>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <span class="flow-num">02</span>
+                    <div>
+                        <p class="flow-content-title">Hand design docs to AI and refine boundaries</p>
+                        <p class="flow-content-desc">Ask AI: "Tell me what's missing based on VCDesign." Create decisions.yaml and boundaries.yaml through dialogue. These become instructions for the AI agent.</p>
+                        <a class="flow-link" href="../vc-ad/">→ VC-AD</a>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <span class="flow-num">03</span>
+                    <div>
+                        <p class="flow-content-title">Run development with boundaries as a premise</p>
+                        <p class="flow-content-desc">Separate Loop A (Boundary Decision) from Loop B (Implementation by AI). Observe Δ (deviation) and select Action in Loop C.</p>
+                        <a class="flow-link" href="../../tddd/">→ TDDD</a>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <span class="flow-num">04</span>
+                    <div>
+                        <p class="flow-content-title">Check deviations from reality</p>
+                        <p class="flow-content-desc">Verify how Core and Policies connect to the actual AI operational loops.</p>
+                        <a class="flow-link" href="../../ai/">→ Reality Fit / Adaptive Loop Model</a>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <span class="flow-num">05</span>
+                    <div>
+                        <p class="flow-content-title">Keep decisions held over time</p>
+                        <p class="flow-content-desc">Approval is a point; custody is a line. Record who holds each decision now, what a successor needs to re-derive it, and which events force a review.</p>
+                        <a class="flow-link" href="#tenure">→ Gate / Tenure</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── AGENT ERA ── -->
+        <section id="agent-era">
+            <p class="section-label">Agent Era</p>
+            <h2>Capability is not authority</h2>
+
+            <p>VCDesign applies not only to the era of standalone AI models, but also to the era of <strong>AI agents</strong> that perform tool execution, chained operations, and long-running tasks.</p>
+            <p>As agents become more capable, decisions like "entrust it because it has capability" increase. However, an agent without designed execution boundaries, responsible owners, and halt conditions becomes a source of accidents.</p>
+
+            <h3>5-Layer Structure (External Explanation Framework)</h3>
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <span class="flow-num">L1</span>
+                    <div>
+                        <p class="flow-content-title">Model Layer</p>
+                        <p class="flow-content-desc">Inference, interpretation, proposal (output only, no execution)</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <span class="flow-num">L2</span>
+                    <div>
+                        <p class="flow-content-title">Agent Layer</p>
+                        <p class="flow-content-desc">Execution boundaries, tool control, Multi-Agent coordination</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <span class="flow-num">L3</span>
+                    <div>
+                        <p class="flow-content-title">Responsibility Layer</p>
+                        <p class="flow-content-desc">Who holds what, and who makes final decisions</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <span class="flow-num">L4</span>
+                    <div>
+                        <p class="flow-content-title">Time Layer</p>
+                        <p class="flow-content-desc">Separation of time scales. A structure to prevent fast loops from overwriting slow loops.</p>
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <span class="flow-num">L5</span>
+                    <div>
+                        <p class="flow-content-title">Human Sovereignty Layer</p>
+                        <p class="flow-content-desc">Sovereignty where humans can ultimately intervene, halt, and explain</p>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 24px; font-size: 13px; color: var(--text-muted);">The capabilities of lower layers must not expand without the governance structure of upper layers.<br>See <code style="font-family: var(--mono); font-size: 11px; color: var(--accent-dim);">specs/core/agent-era-model.md</code> for details.</p>
+        </section>
+
+        <!-- ── TENURE ── -->
+        <section id="tenure">
+            <p class="section-label">Gate / Tenure</p>
+            <h2>Approval is not custody</h2>
+
+            <p>The industry increasingly describes responsibility as the moment of approval: <strong>"Is this correct now?"</strong> That gate matters — but it is a point in time.</p>
+            <p>Value is lost later. The person who approved moves on. Nobody can re-derive why the judgment was made. Drift happens precisely while no one is watching. <strong>The more autonomous the operation, the sharper the question becomes: who holds this now?</strong></p>
+
+            <table class="maturity-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Gate — responsibility as a point</th>
+                        <th>Tenure — responsibility as a line</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Question</td><td>"Is this correct now?"</td><td>"Who holds this, across handovers and time?"</td></tr>
+                    <tr><td>Lives at</td><td>The moment of approval</td><td>Every day after approval</td></tr>
+                    <tr><td>Fails by</td><td>Skipped or hollow approval</td><td>Departed owners, lost rationale, reviews turned ritual</td></tr>
+                </tbody>
+            </table>
+
+            <p>What VCDesign adds is not naming an owner — RACI and change management already do that. It is whether a successor can <strong>re-derive the judgment</strong>: the value it protects, the custody chain of who has held it, the basis to reconstruct the reasoning, and the events — not the calendar — that force a review.</p>
+
+            <p style="margin-top: 24px; font-size: 13px; color: var(--text-muted);">Approval starts responsibility; holding sustains it. Autonomous operation doesn't make this unnecessary — it is exactly what makes it necessary.<br>See <code style="font-family: var(--mono); font-size: 11px; color: var(--accent-dim);">specs/core/value-tenure-model.md</code> and the worked example <code style="font-family: var(--mono); font-size: 11px; color: var(--accent-dim);">specs/examples/custody-handover.md</code>.</p>
+        </section>
+
+        <!-- ── MATURITY ── -->
+        <section id="maturity-profile">
+            <p class="section-label">Implementation Diagnosis</p>
+            <h2>Maturity Profile</h2>
+
+            <p>A framework to diagnose what stage an organization or system is at in each layer of AI governance. Evaluates each of the 5 layers in 4 stages.</p>
+
+            <table class="maturity-table">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Unstructured</td><td>No structure. No corresponding design element exists.</td></tr>
+                    <tr><td>Defined</td><td>Exists in documentation, but is not enforced in actual operation.</td></tr>
+                    <tr><td>Enforced</td><td>Functions in actual operation, and controls trigger upon violation.</td></tr>
+                    <tr><td>Governed</td><td>Includes auditing, improvement, and re-evaluation, and is maintained continuously.</td></tr>
+                </tbody>
+            </table>
+
+            <p>Diagnosis Example:</p>
+            <pre>Model Layer:          Enforced
+Agent Layer:          Defined
+Responsibility Layer: <span class="warn">Unstructured  ← This is the limit of the whole</span>
+Time Layer:           Defined
+Human Sovereignty:    Enforced</pre>
+            <p style="font-size: 13px; color: var(--text-muted);">The layer at the lowest level determines the governance limit of the entire system.<br>See <code style="font-family: var(--mono); font-size: 11px; color: var(--accent-dim);">specs/validation/vcdesign-maturity-profile.md</code> for details.</p>
+        </section>
+
+        <!-- ── PHILOSOPHY ── -->
+        <section id="philosophy">
+            <p class="section-label">Design Philosophy</p>
+            <h2>VCDesign Constitution and Manifesto</h2>
+
+            <h3>Constitution</h3>
+            <div class="constitution-block">
+                <div class="constitution-entry">
+                    <h3>Article 1: Continuity of Value</h3>
+                    <p>The purpose of the system is not the maintenance of function, but the continuity of value.</p>
+                    <p>When value is impaired, the system bears the obligation to transform itself using Δ (deviation) as a starting point.</p>
+                </div>
+                <div class="constitution-entry">
+                    <h3>Article 2: Locality of Responsibility</h3>
+                    <p>For every behavior, there must be a "Chapter" that assumes responsibility for it.</p>
+                    <p>Leaving ambiguous responsibility (owner_missing) unchecked means the demise of the system.</p>
+                </div>
+                <div class="constitution-entry">
+                    <h3>Article 3: Human Sovereignty</h3>
+                    <p>AI and automation aid judgment but do not hold responsibility.</p>
+                    <p>Final determination of meaning and structural changes (Reframe / Retire) must always be led by a human and be explainable.</p>
+                </div>
+            </div>
+
+            <h3>Manifesto</h3>
+            <div class="constitution-block">
+                <div class="constitution-entry">
+                    <h3>1. Embrace Finite Chapters</h3>
+                    <p>Chapters are not immutable truths. Due to divergence from reality and the accumulation of Δ, chapters will inevitably drift.</p>
+                    <p>Change is not a failure, but a premise for transition (Reframe) for value continuity.</p>
+                </div>
+                <div class="constitution-entry">
+                    <h3>2. Celebrate Delta Signals</h3>
+                    <p>Δ (deviation) is the gateway to evolution. Observe discrepancies using responsibility metrics and declare drifting.</p>
+                    <p>Prioritize observed anomalies over silent normality.</p>
+                </div>
+                <div class="constitution-entry">
+                    <h3>3. Consistency over Legacy</h3>
+                    <p>The Decision Log is not for reproducing the past, but for recording the "Purpose Linkage" to value.</p>
+                    <p>All decisions hold accountability for the future.</p>
+                </div>
+                <div class="constitution-entry">
+                    <h3>4. Close or Defer</h3>
+                    <p>Ambiguous responsibility degrades the system. If you can solve it, Fix it. If not, Defer it.</p>
+                    <p>Leaving things unchecked while holding responsibility is prohibited.</p>
+                </div>
+                <div class="constitution-entry">
+                    <h3>5. Retire the Meaningless</h3>
+                    <p>Chapters, code, and data that do not generate value must not be maintained.</p>
+                    <p>Not continuing is also a design choice.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── SPECS ── -->
+        <section id="specs">
+            <p class="section-label">Reference Specs</p>
+            <h2>Refer to Specs</h2>
+
+            <p>Specs are not reading material, but tools for design and implementation support.<br>When passing to generative AI, the YAML in the GitHub repository is the shortest path.</p>
+
+            <ul class="link-list">
+                <li>
+                    <a href="https://github.com/VCDesign-org/vcdesign">
+                        <span class="label">vcdesign-core (GitHub)</span>
+                        <span class="desc">VCDesign specs / protocols / patterns (Original) — Includes Core, Metrics, Policies</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/VCDesign-org/continuity-claim-protocol">
+                        <span class="label">continuity-claim-protocol (GitHub)</span>
+                        <span class="desc">Protocol and implementation guidelines for continuity claims</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ── RESEARCH ── -->
+        <section id="research">
+            <p class="section-label">Research &amp; Analysis</p>
+            <h2>Independent Reviews &amp; Research Materials</h2>
+
+            <p>Third-party research, analytical reviews, and independent evaluation materials regarding VCDesign.</p>
+            <div class="warning-note">
+                These indicators and research materials are propositional and exploratory, and do not represent formal definitions or pass/fail judgments.
+            </div>
+
+            <ul class="link-list">
+                <li>
+                    <a href="../../../research/deepresearch-2026-03.pdf">
+                        <span class="label">2026-03 — Value Continuity Design in Autonomous Systems (VCDesign)</span>
+                        <span class="desc">Next-generation OS for responsibility governance and industrial resilience</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../../../research/deepresearch-2026-01.pdf">
+                        <span class="label">2026-01 — System Design Theory in a World of Unstable Value</span>
+                        <span class="desc">Comprehensive analysis report on VCDesign and Boundary-Oriented Architecture (BOA)</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            <div class="note">
+                This site has been restructured based on the "design premised on recreation".<br>
+                Reading materials are added later, while specs (protocols) are persisted in the repository.
+            </div>
+            <div class="copyright">© 2026 VCDesign</div>
+        </footer>
+
+    </main>
+
+</body>
+</html>
