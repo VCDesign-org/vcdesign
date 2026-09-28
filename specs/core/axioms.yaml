@@ -25,7 +25,9 @@ axioms:
     corollary: >
       If an owner cannot be identified for a Negative Delta, the system halts or
       escalates rather than proceeding. A Positive Delta without a holder is not
-      halted; it is recorded as not yet held.
+      halted; it is recorded as not yet held. Holding does not lapse between
+      confirmation and the decision that closes the Delta (core.yaml
+      closure_loop).
     conformance_test: >
       For every confirmed Delta: is there a named owner (or holder) in the case?
 

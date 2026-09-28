@@ -47,6 +47,12 @@ recorded polarity is treated as negative.
 Retire (`core.yaml decision`). No other decision vocabulary is used. Expand and
 Limit are recorded as updates of `blast_radius` (before / after).
 
+**Closure Loop** — The core of v1's Responsibility Closure Loop, kept in
+`core.yaml closure_loop`: a confirmed Δ must not remain ownerless or
+unresolved; it remains under responsibility until closed by a decision. It
+applies both in operation and at design time, where an undefined point (a
+definition gap) is a Δ to be closed before implementation starts.
+
 **Judgment Gate** — The single gate through which every decision is closed by a
 human (`policies.yaml judgment_gate`). Its review follows the five principles.
 

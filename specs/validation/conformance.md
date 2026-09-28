@@ -14,7 +14,7 @@ blocking は Negative Δ に対してのみ用いる。
 
 | # | チェック | 失敗時 | 根拠 |
 | --- | --- | --- | --- |
-| A1 | 確定した Δ（負・正とも）に、名前のある owner（Positive Δ では holder）がいる | Negative Δ は blocking、Positive Δ は warning | axioms A1 |
+| A1 | 確定した Δ（負・正とも）に、名前のある owner（Positive Δ では holder）がいて、判断で閉じるまで保有が途切れていない。実装開始時に閉じていない設計上の未定義がない | Negative Δ は blocking、Positive Δ は warning | axioms A1、core closure_loop |
 | A2 | すべての実行が、人間が閉じた判断で許可された範囲（宣言）の内側にある。範囲を越える変化は Δ として再判断されている。越えた境界で pass があり、unknown を pass として扱っていない | blocking | axioms A2 |
 | A3 | すべての decision の decided_by が人間である | blocking | axioms A3 |
 | A4 | 速いループが遅いループの制約を書き換える前に、再判断の機会がある | blocking | axioms A4 |

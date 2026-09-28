@@ -132,7 +132,7 @@ v2 は互換性を切っている。v1 の語彙と記録は次のように読�
 | decision posture: abandon | retire |
 | decision_size: no_go / small_go / scale_go | retire（開始しない）／ proceed または limit ／ expand |
 | 長期判断の姿勢（small_go / defer_or_experiment / deny_or_reframe） | 判断ゲートで6語のいずれかに確定する |
-| RCL: Close / DeferToPool / Abort | proceed / defer / 停止のあと retire または defer |
+| RCL: Close / DeferToPool / Abort | proceed / defer / 停止のあと retire または defer。RCL の核（確定した Δ は判断で閉じるまで責任の下にある。設計時の未定義も Δ として扱う）は `core.yaml closure_loop` に残した |
 | long_term_decision_gate、scale_gate、reframe / defer / retire_control | `policies.yaml judgment_gate` |
 | tail_signals | spread_signals |
 | action_history | decision_history |

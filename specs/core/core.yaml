@@ -108,6 +108,18 @@ vcdesign_core:
       - a_trial_without_a_narrowed_declaration_is_not_limit
       - no_other_decision_vocabulary_is_used
 
+  closure_loop:   # Responsibility Closure Loop（v1 RCL の核）
+    principle: >
+      Confirmed Δ must not remain ownerless or unresolved.
+      It remains under responsibility until closed by a decision.
+    scope:
+      - operation   # 運用中に観測された Δ
+      - design      # 設計時の未定義（Definition Gap）。実装開始前に判断で閉じる（実装境界事前定義）
+    rules:
+      - holding_does_not_lapse_between_confirmation_and_decision
+      - defer_is_a_closure_path_with_owner_and_review_not_an_escape
+      - a_definition_gap_left_open_at_implementation_start_is_a_confirmed_delta
+
   # ---------------------------------------------------------------
   # 5. lifecycle
   # ---------------------------------------------------------------
