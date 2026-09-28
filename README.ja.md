@@ -45,7 +45,7 @@ LLMは主としてSemantic Loopに配置され、成長はモデル性能の増�
 - **AI 非責任原則**: AI は支援するが、責任は負わない。
 - **Δ 駆動原則**: システムは前提条件からの逸脱（Δ）を検出して作動する。
 - **点と線の責任原則（Gate / Tenure）**: 承認の一点（点の責任:「今これは正しいか」）は責任の開始であって維持ではない。価値の継続には、担当交代・無人の自律運用・時間経過を生き延びる継続保有（線の責任）が必要である。自律化が進むほど、線の責任は不要になるのではなく重要になる。[specs/core/value-tenure-model.md](specs/core/value-tenure-model.md) を参照。
-- **Value Asymmetry Principle**: upside は伝播可能にする。downside は伝播させない。VCDesign の名にある価値の継続（Value Continuity）とは、価値を壊さないこと（下振れの裾を切る）と、価値が積み上がること（業務が変わっても残るものが再利用される）を同じ判断で扱うことである。改善は「業務が変わったら何が残るか」で点と線に分かれ、広げる根拠は平均的な成功ではなく裾の兆候である。変更に賭けられる回数は、復旧能力で決まる。[specs/core/value-asymmetry-model.md](specs/core/value-asymmetry-model.md) を参照。
+- **Value Asymmetry Principle**: upside は伝播可能にする。downside は伝播させない。VCDesign の名にある価値の継続（Value Continuity）とは、価値を壊さないこと（下振れの裾を切る）と、価値が次の価値を生むこと（業務が変わっても残るものが、再利用・接続されることで次の価値を生む）を同じ判断で扱うことである。改善は「業務が変わったら何が残るか」で点と線に分かれ、広げる根拠は平均的な成功ではなく裾の兆候である。変更に賭けられる回数は、復旧能力で決まる。[specs/core/value-asymmetry-model.md](specs/core/value-asymmetry-model.md) を参照。
 
 ## どこから読むか (Where to start?)
 全体の俯瞰図については **[Specification Map](specs/map.md)** を参照してください。

@@ -256,7 +256,7 @@ vcdesign_core:
   value_accumulation:
     description: >
       価値の継続は、価値を壊さないこと（downside_containment）だけでは成立しない。
-      業務・担当・技術が変わっても残り、次の判断の入力として積み上がることで成立する。
+      業務・担当・技術が変わっても残り、それが再利用・接続されることで次の価値を生むことで成立する。
       VCDesign における上振れとは、成長施策ではなく「業務が変わっても残るもの」である。
       規範的な実体は schema_case.yaml（residual_assets / tail_signals）、
       metrics.yaml（accumulation_metrics）、policies.yaml（scale_gate）にある。

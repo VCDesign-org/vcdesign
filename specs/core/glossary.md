@@ -241,7 +241,8 @@ responsibility records remain append-only.
 
 Value continuity defined as two things handled on the same judgment record:
 keeping value from breaking (closed downside, `downside_containment`) and
-letting it accumulate (open upside, `value_accumulation`). Coupled by the
+letting it generate further value through reuse and connection (open upside,
+`value_accumulation`). Coupled by the
 principle that the number of changes one can bet on is bounded by recovery
 capability.
 
