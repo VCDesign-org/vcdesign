@@ -8,6 +8,7 @@
 **価値を壊さないこと（下を閉じる）**と**価値が次の価値を生むこと（上に開く）**を
 同じ判断記録の上で同時に扱うこととして定義する設計原則である。
 その中心原則を **Value Asymmetry Principle** と呼ぶ。
+方法論に依存しない思想の正本は [value-continuity/value-continuity](https://github.com/value-continuity/value-continuity) にあり、本文書は VCDesign がそれを判断と責任の面からどう実装するかを定める。
 
 > upside は伝播可能にする。downside は伝播させない。
 
