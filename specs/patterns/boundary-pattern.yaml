@@ -5,7 +5,7 @@ id: "vcdesign-pattern-boundary"
 title: "Boundary Structure Pattern"
 layer: "pattern"
 status: "stable"
-version: "1.1.0"
+version: "1.2.0"
 
 meta:
   concept: "A structural choke point where implicit values are blocked and explicit judgments are required."
@@ -47,16 +47,54 @@ boundary:
             越境・逸脱・境界定義の陳腐化にどう気づくかの観点。
             metrics.yaml の boundary_violation_rate / tenure_metrics と接続する。
 
+    containment:
+      description: >
+        The failure-isolation role of the boundary (v1.2.0) — 結合を切る / 上限の宣言.
+        A guard stops a wrong crossing; containment declares how far a failure
+        on one side may propagate to the other. See core/downside-containment-model.md.
+      fields:
+        failure_domain:
+          description: この境界が閉じ込める障害区画（schema_case.yaml failure_domain と対応）
+        propagation:
+          description: >
+            区画外への伝播の扱い。deny（伝播させない）/ attested_only（証跡付きのみ通す）/ allow。
+            未宣言の場合は deny とみなす。
+        max_loss:
+          description: この境界の内側で許容する損失の上限（schema_case.yaml blast_radius.max_loss と同じ単位系）
+        on_breach:
+          description: >
+            上限超過・伝播発生時の動作。quarantine / halt / deny。
+            protocols/resolution-handshake.yaml の routing_on_failure と対応する。
+        shared_dependencies:
+          description: >
+            区画をまたいで共有されている依存先（隔壁の穴）。
+            空でない場合、その依存先は metrics.yaml dependency_concentration の観測対象になる。
+
+    revalidation:
+      description: >
+        The chain-reset role of the boundary (v1.2.0) — 連鎖のリセット.
+        上流で閉じた判断の結論をそのまま引き継がず、境界で前提・根拠・権限を再検証する。
+        tenure の re_derivation_basis（担当交代をまたぐ時間方向の再導出）とは別概念であり、
+        こちらは境界をまたぐ空間方向の再検証である。
+      fields:
+        upstream_trust:
+          description: >
+            上流の結論をどこまで信頼するか。none（既定。結論を引き継がない）/ attested（証跡があれば引き継ぐ）。
+        re_check:
+          description: 再検証する項目（precondition / evidence_freshness / authority 等）
+        on_mismatch:
+          description: 再検証で不一致が出た場合の扱い。既定は UNKNOWN として IDG に流す。
+
 # -------------------------------------------------------------------
 # Flow
 # -------------------------------------------------------------------
 flow:
   1. **Intercept**: All inputs must pause at the boundary.
-  2. **Assess**: The Guard (RCA) evaluates the input.
+  2. **Assess**: The Guard (RCA) evaluates the input, re-checking upstream basis per `revalidation` (upstream ACCEPTED is not inherited).
   3. **Close**: The Guard issues ACCEPTED, DENIED, or UNKNOWN.
   4. **Act**: 
      - If ACCEPTED -> Handshake (Resolution).
-     - If DENIED -> Block.
+     - If DENIED -> Block, and contain per `containment.on_breach` (no propagation outside failure_domain).
      - If UNKNOWN -> Escalate.
 
 # -------------------------------------------------------------------

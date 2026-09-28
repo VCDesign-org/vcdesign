@@ -1,5 +1,5 @@
 vcdesign_case:
-  version: 0.2
+  version: 0.3
 
   concept:
     description: >
@@ -8,6 +8,9 @@ vcdesign_case:
       version 0.2 で、承認の一点（Gate）だけでなく
       承認後の継続保有（Tenure）を記録する optional フィールド群を追加した。
       背景は core/value-tenure-model.md を参照。
+      version 0.3 で、下振れの裾を切るための宣言フィールド群
+      （blast_radius / reversibility / failure_domain / upstream_basis_refs / depends_on）を
+      optional として追加した。背景は core/downside-containment-model.md を参照。
 
   required_fields:
     - case_id
@@ -32,6 +35,12 @@ vcdesign_case:
     - re_derivation_basis
     - review_triggers
     - last_reaffirmed
+    # containment fields (v0.3): 下振れの裾を切る宣言。downside-containment-model.md 参照
+    - blast_radius
+    - reversibility
+    - failure_domain
+    - upstream_basis_refs
+    - depends_on
 
   field_definitions:
 
@@ -150,6 +159,68 @@ vcdesign_case:
         at: 確認時刻
         basis: 確認の根拠（review_trigger の評価結果 等）
 
+    # ---- containment fields (v0.3) ----
+
+    blast_radius:
+      type: object
+      description: >
+        この案件の判断が失敗した場合に「最大でどこまで壊れてよいか」の事前宣言（上限の宣言）。
+        scope が影響の範囲を表すのに対し、max_loss は損失の大きさの上限を表す。
+        長期判断の bet_size はこの max_loss の一種である。
+        未宣言の場合、その判断は high_impact として扱う。
+      fields:
+        scope: 影響が及んでよい範囲（例 "line_3 only"）
+        max_loss:
+          unit: 損失の単位（hours_downtime / JPY / records / units 等、章で定義）
+          value: 上限値
+        declared_by: 宣言した責任主体
+        approved_by: 上限を承認した責任主体（final_decider と同一でもよい）
+        on_exceed: 上限超過時の動作（halt / quarantine / escalate）
+
+    reversibility:
+      type: object
+      description: >
+        判断を撤回・縮小・修正できるかの宣言。
+        policies.yaml の reversibility_assessed は、このフィールドが埋まっていることで満たされる。
+        システム状態の巻き戻しと責任記録の扱いは policies/temporal-governance.md に従う
+        （状態は戻せるが、責任記録は追記のみ）。
+      fields:
+        class:
+          type: enum
+          values:
+            - reversible
+            - costly
+            - irreversible
+        reversal_path: 撤回の技術的・運用的手段
+        reversal_window: いつまで撤回できるか（例 "24h"、irreversible の場合は none）
+        reversal_owner: 撤回を実行・判断する責任主体
+
+    failure_domain:
+      type: string
+      description: >
+        この案件が属する障害区画（結合を切る）。
+        同じ failure_domain の外へ失敗を伝播させないことが境界の責務になる。
+        patterns/boundary-pattern.yaml の containment.failure_domain と対応する。
+
+    upstream_basis_refs:
+      type: array
+      description: >
+        この案件が前提として受け取った上流の判断と、境界での再検証結果（連鎖のリセット）。
+        上流で ACCEPTED だったことは、下流で ACCEPTED であることを意味しない。
+      item_fields:
+        case_id: 上流の案件ID
+        revalidated_at_boundary: 再検証した境界ID
+        result: yes / no / partial
+
+    depends_on:
+      type: array
+      description: >
+        この案件が依存する共通資源・外部主体・判断経路（集中を避ける）。
+        同じ依存先を多数の案件が共有していることは metrics.yaml の
+        dependency_concentration で検知する。
+        owner が 1 人であること（A5 single_owner_per_delta）は義務であり、
+        依存や判断経路が一点に集まることとは区別する。
+
   invariants:
     - every_case_must_have_owner_or_temporary_owner
     - deferred_case_must_have_next_review_at
@@ -161,3 +232,7 @@ vcdesign_case:
     - review_triggers_must_be_event_based_not_calendar_based
     - case_with_custody_chain_must_have_re_derivation_basis
     - reaffirmation_is_required_on_custody_transfer_and_trigger_fire_not_on_calendar
+    # containment invariants (v0.3)
+    - irreversible_case_must_declare_blast_radius_max_loss
+    - case_without_blast_radius_is_treated_as_high_impact
+    - upstream_acceptance_must_not_be_inherited_without_revalidation

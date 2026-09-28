@@ -482,6 +482,125 @@ vcdesign_metrics:
           - defer
         policy_link: core/schema_case.yaml / field_definitions / review_triggers
 
+  containment_metrics:
+    description: >
+      下振れの裾が内部で増幅・伝播しうる構造を観測する指標群。
+      失敗そのものではなく「失敗が掛け算で広がる条件」が揃っているかを見る。
+      背景は core/downside-containment-model.md、フィールド定義は schema_case.yaml (v0.3) と
+      patterns/boundary-pattern.yaml (v1.2.0) を参照。
+      いずれも base_metrics と同じ evaluation_model に従う。
+    metrics:
+      - id: blast_radius_undeclared
+        name: Blast Radius Undeclared
+        description: >
+          irreversible または costly な判断が、blast_radius.max_loss を宣言しないまま
+          実行・承認された状態。
+        intent: >
+          上限の宣言が抜けた判断を、事故の前に検知する。
+        typical_signals:
+          - irreversible_case_without_max_loss
+          - resolution_without_blast_radius_on_irreversible_action
+          - long_term_decision_bet_size_without_max_loss
+        meaning:
+          - downside_unbounded
+          - loss_ceiling_decided_after_the_fact
+        default_threshold:
+          type: immediate
+        candidate_actions:
+          - fix
+          - defer
+        policy_link: core/schema_case.yaml / invariants / irreversible_case_must_declare_blast_radius_max_loss
+
+      - id: blast_radius_exceeded
+        name: Blast Radius Exceeded
+        description: >
+          実際の損失または影響範囲が、宣言された blast_radius を超えた状態。
+        intent: >
+          宣言が現実に守られていないこと、または宣言自体が甘かったことを検知する。
+        typical_signals:
+          - observed_loss_above_max_loss
+          - impact_outside_declared_scope
+          - propagation_outside_failure_domain
+        meaning:
+          - containment_failed
+          - declared_ceiling_not_credible
+        default_threshold:
+          type: immediate
+        candidate_actions:
+          - fix
+          - reframe
+        policy_link: core/schema_case.yaml / field_definitions / blast_radius
+
+      - id: transitive_trust
+        name: Transitive Trust
+        description: >
+          上流で ACCEPTED だった判断が、境界で再検証されないまま下流でも ACCEPTED として扱われている状態。
+        intent: >
+          連鎖のリセットが行われず、上流の誤りが掛け算で下流に渡る経路を検知する。
+        typical_signals:
+          - upstream_basis_refs_without_revalidation_result
+          - boundary_upstream_trust_undeclared
+          - downstream_acceptance_copied_from_upstream
+        meaning:
+          - error_amplification_path_open
+          - boundary_acts_as_pass_through
+        default_threshold:
+          type: repeated_or_rate
+          example:
+            unrevalidated_ratio: 0.2
+        candidate_actions:
+          - fix
+          - reframe
+        policy_link: core/schema_case.yaml / invariants / upstream_acceptance_must_not_be_inherited_without_revalidation
+
+      - id: dependency_concentration
+        name: Dependency Concentration
+        description: >
+          多数の案件・境界が同一の依存先（共通資源・外部主体・基盤）を共有している状態。
+          boundary-pattern の containment.shared_dependencies が空でない境界も対象とする。
+        intent: >
+          独立に見える失敗が、共通の依存先で同時に起きる（common-mode）条件を検知する。
+        typical_signals:
+          - same_dependency_across_many_failure_domains
+          - shared_dependency_crossing_bulkhead
+        meaning:
+          - failures_not_independent
+          - hidden_single_point_of_failure
+        default_threshold:
+          type: ratio
+          example:
+            shared_ratio: 0.5
+        candidate_actions:
+          - fix
+          - reframe
+        notes:
+          - domain_specific_threshold_required
+        policy_link: core/schema_case.yaml / field_definitions / depends_on
+
+      - id: judgment_concentration
+        name: Judgment Concentration
+        description: >
+          多数の案件が同一の final_decider または同一の RCA 経路を通って閉じている状態。
+        intent: >
+          判断経路の一点集中を検知する。owner が 1 人であること（A5 single_owner_per_delta）は義務であり、
+          本 metric はそれを否定しない。問題にするのは、異なる章・区画の判断が一点を通ることである。
+        typical_signals:
+          - single_final_decider_across_failure_domains
+          - single_rca_path_for_many_chapters
+        meaning:
+          - judgment_single_point_of_failure
+          - correlated_judgment_errors
+        default_threshold:
+          type: ratio
+          example:
+            concentration_ratio: 0.5
+        candidate_actions:
+          - reframe
+          - fix
+        notes:
+          - distinct_from_operator_overload_which_measures_load_not_structure
+        policy_link: core/core.yaml / downside_containment / rules / single_owner_is_required_but_single_point_of_dependency_is_detected
+
   operational_fit_metrics:
 
     - id: delta_detection_quality
@@ -597,6 +716,8 @@ vcdesign_metrics:
           判断主体が、その領域を十分に理解し責任を取れる範囲内にいるか。
 
       - metric_id: downside_survivability
+        # 同じ軸の用語: core.yaml criteria.survive_downside（判断基準）/ policies downside_review（ゲート手順）
+        #   / policies hard_stops.fatal_downside（停止条件）。glossary.md「Downside Containment」参照
         description: >
           判断が失敗した場合でも、章・責任・価値継続が破壊されないか。
 
@@ -605,6 +726,8 @@ vcdesign_metrics:
           判断する主体と、結果の痛みを受ける主体が乖離していないか。
 
       - metric_id: reversibility_score
+        # 同じ軸の用語: core.yaml criteria.reversible / policies reversibility_assessed
+        #   / schema_case.yaml reversibility（記録）。glossary.md「Reversibility」参照
         description: >
           判断が撤退・縮小・修正可能な形で実行されているか。
 
@@ -648,6 +771,8 @@ vcdesign_metrics:
       - human_override_recovery_quality
     boundary_crossing:
       - boundary_violation_rate
+      - transitive_trust
+      - blast_radius_exceeded
     fields:
       - metric_id
       - status

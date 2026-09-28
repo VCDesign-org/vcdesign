@@ -19,7 +19,8 @@ VCDesignの現行authorityは以下で構成される
 - **[AI Adaptive Loop Model](core/ai-adaptive-loop-model.md)**: A readable guide that explains how the authority connects to real AI operating loops without becoming a new authority.
 - **[Agent Era Model](core/agent-era-model.md)**: Reading aid for 2026 agent governance. Defines the 5-layer external explanation frame and 12 principles for governable AI agents. Connects to existing 4-loop model without replacing it.
 - **[Value Tenure Model](core/value-tenure-model.md)**: Design principle separating gate responsibility (点の責任: "is this correct now?") from tenure (線の責任: "who holds this over time?"). Anchors VCDesign's differentiation — tracking the movement of responsibility custody, which neither ADR nor SRE records.
-- **[Case Schema](core/schema_case.yaml)**: Data structure for cases. v0.2 adds tenure fields (value_intent, custody_chain, re_derivation_basis, review_triggers, last_reaffirmed).
+- **[Downside Containment Model](core/downside-containment-model.md)**: Design principle for cutting the downside tail rather than predicting it — open upside, closed downside. Defines four mechanisms (isolate / cap / revalidate / deconcentrate) and maps same-axis terms across layers.
+- **[Case Schema](core/schema_case.yaml)**: Data structure for cases. v0.2 adds tenure fields (value_intent, custody_chain, re_derivation_basis, review_triggers, last_reaffirmed). v0.3 adds containment fields (blast_radius, reversibility, failure_domain, upstream_basis_refs, depends_on).
 - **[Log Schema](core/schema_log.yaml)**: Data structure for decision logs. v0.2 adds tenure_event (custody transfer / reaffirmation / review trigger fired).
 
 > **Note**: **[RCL (Responsibility Closure Loop)](patterns/rcl/responsibility_closure_loop.yaml)** is a cross-cutting Standard.

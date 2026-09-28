@@ -189,3 +189,48 @@ recorded in `last_reaffirmed` (by whom, when, on what basis).
 
 Reaffirmation must name a human confirmer. A decision that has passed its
 gate but is never reaffirmed is not held — it is only approved.
+
+---
+
+## Downside Containment（下振れの封じ込め）
+
+Design for cutting the tail of downside outcomes, not for predicting them.
+Fat tails arise from multiplicative amplification and propagation; containment
+turns them back into additive, independent failures through four mechanisms:
+isolate (failure domains), cap (declared max loss), revalidate (no inherited
+upstream acceptance), and deconcentrate (detect single points of dependency
+or judgment).
+
+Terms on the same axis at different layers: `survive_downside` (criterion),
+`downside_review` (gate step), `fatal_downside` (hard stop, regardless of owner),
+`downside_survivability` (metric), `blast_radius` (record).
+
+Defined in `downside-containment-model.md`.
+
+---
+
+## Blast Radius
+
+The pre-declared ceiling of how far a decision may fail: `scope` (range of
+impact) and `max_loss` (size of loss). Scope does not substitute for max loss.
+A long-term decision's bet size is a kind of max loss. An undeclared blast
+radius is treated as high impact.
+
+---
+
+## Revalidation
+
+Re-checking upstream basis at a boundary so that upstream ACCEPTED is not
+inherited downstream as-is (spatial, across boundaries). Distinct from
+`re_derivation_basis` in tenure (temporal, across handovers) and from the
+Re-derivation Layer.
+
+---
+
+## Reversibility
+
+Whether a decision can be withdrawn, reduced, or corrected, recorded in
+`schema_case.yaml` as `reversibility` (class, reversal_path, reversal_window,
+reversal_owner). Same axis as `reversible` (criterion), `reversibility_assessed`
+(gate check), and `reversibility_score` (metric). System state may be reverted;
+responsibility records remain append-only.

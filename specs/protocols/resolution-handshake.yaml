@@ -6,7 +6,7 @@ id: "vcdesign-protocol-resolution-handshake"
 title: "Resolution Handshake Protocol"
 layer: "protocol"
 status: "stable"
-version: "2.1.0"
+version: "2.2.0"
 
 meta:
   goal: "Promote a Closed Judgment to a Resolution (Responsibility Commitment)."
@@ -64,6 +64,13 @@ resolution_object:
     - scope
     - expiry (time-bound)
     - trace_reference (provenance)
+  optional_fields:
+    # v2.2.0: 下振れ封じ込め（core/downside-containment-model.md）
+    - blast_radius (scope, max_loss, on_exceed) - required when reversibility.class is irreversible
+    - reversibility (class, reversal_path, reversal_window, reversal_owner)
+  note: >
+    scope は影響の範囲、blast_radius.max_loss は損失の大きさの上限であり、別物として扱う。
+    フィールド定義は core/schema_case.yaml (v0.3) に従う。
 
 # -------------------------------------------------------------------
 # Routing (When Handshake Fails)

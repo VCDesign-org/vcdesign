@@ -215,11 +215,41 @@ vcdesign_core:
     principle:
       - long_term_decision_must_not_be_treated_as_prediction
       - long_term_decision_must_define_bet_size
+      - bet_size_is_declared_as_max_loss_not_only_as_decision_size
       - irreversible_action_requires_human_final_decider
       - ai_may_score_but_must_not_close_long_term_judgment
 
     note: >
       ここで重要なのは、Go / No-Go ではなく、Go の大きさを決めることです。
+      Go の大きさは「どれだけ賭けるか」であると同時に「最大でどこまで失ってよいか」である。
+      後者は schema_case.yaml の blast_radius.max_loss として記録する
+      （core/downside-containment-model.md 参照）。
+
+  downside_containment:
+    description: >
+      上振れ（価値の複利・接続による正のフィードバック）は開いたままにし、
+      下振れの裾は境界で切る。べき乗的な裾は掛け算的増幅と連鎖・伝播から生じるため、
+      封じ込めはそれを足し算に戻す 4 機構として定義する。
+      規範的な実体は schema_case.yaml（containment 系フィールド）、
+      patterns/boundary-pattern.yaml（containment / revalidation）、
+      metrics.yaml（containment_metrics）にある。背景は core/downside-containment-model.md。
+    mechanisms:
+      isolate:
+        description: 境界を越えて失敗が伝播しないよう障害区画を宣言する（結合を切る）
+      cap:
+        description: 判断・境界ごとに最大損失（blast radius）を事前に宣言する（上限の宣言）
+      revalidate:
+        description: 境界で上流の根拠を再検証し、上流の誤りを下流に掛け算で渡さない（連鎖のリセット）
+      deconcentrate:
+        description: 判断経路・依存先の一点集中を構造的に検知する（集中を避ける）
+    rules:
+      - fatal_downside_is_a_hard_stop_regardless_of_owner
+      - irreversible_action_requires_declared_max_loss
+      - upstream_acceptance_is_not_downstream_acceptance
+      - single_owner_is_required_but_single_point_of_dependency_is_detected
+    scope_note: >
+      外部から来る裾（自然災害・突発故障）は消せない。
+      本機構が扱うのは、その事象が内部でどこまで増幅・伝播するかである。
 
   boundary_mediation:
     description: >

@@ -106,7 +106,8 @@ vcdesign_policies:
       required_checks:
         - action_within_declared_boundary
         - responsible_actor_identified
-        - reversibility_assessed
+        - reversibility_assessed       # schema_case.yaml reversibility ブロックが埋まっていることで満たす
+        - blast_radius_declared_if_irreversible
         - halt_path_confirmed
 
     anti_patterns:
@@ -139,8 +140,9 @@ vcdesign_policies:
 
     required_before_commit:
       - human_final_decider
-      - explicit_bet_size
+      - explicit_bet_size          # = blast_radius.max_loss の長期判断版（downside-containment-model.md）
       - downside_review
+      - reversibility_declared     # schema_case.yaml reversibility
       - competence_boundary_review
       - lindy_aspect_review
       - exit_condition
@@ -148,7 +150,12 @@ vcdesign_policies:
       - decision_log
 
     hard_stops:
-      - fatal_downside_without_owner
+      # 致命的な下振れは、責任者の有無にかかわらず停止する。
+      # core.yaml long_term_judgment_model.criteria.survive_downside (hard_stop_if: false) と一致させる。
+      # 旧 fatal_downside_without_owner は「責任者がいれば致命的下振れを許容する」と読めたため廃止。
+      - fatal_downside
+      - downside_without_owner
+      - undeclared_max_loss_and_irreversible
       - low_trust_counterparty
       - outside_competence_circle_and_irreversible
       - non_lindy_action_and_irreversible
