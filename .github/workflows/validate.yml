@@ -7,14 +7,18 @@ on:
       - 'specs/**/*.json'
       - 'README.md'
       - 'specs/map.md'
-      - 'site/**/*.html'
+      - 'site/**'
+      - '.github/scripts/**'
+      - '.github/workflows/validate.yml'
   pull_request:
     paths:
       - 'specs/**/*.yaml'
       - 'specs/**/*.json'
       - 'README.md'
       - 'specs/map.md'
-      - 'site/**/*.html'
+      - 'site/**'
+      - '.github/scripts/**'
+      - '.github/workflows/validate.yml'
 
 jobs:
   validate:

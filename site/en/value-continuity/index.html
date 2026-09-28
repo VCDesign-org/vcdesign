@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Value Continuity | VCDesign</title>
+<meta name="description" content="Value Continuity: the definition, the Value Asymmetry Principle, Δ, the five principles, the six decisions and the Review Output, with the canonical English summary and an unofficial translation.">
+<link rel="canonical" href="https://vcdesign.org/en/value-continuity/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/value-continuity/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/value-continuity/">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../../value-continuity/" hreflang="ja" lang="ja">日本語</a>
+  </div>
+  <nav class="site-nav" aria-label="Site">
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../value-continuity/" aria-current="page">Value Continuity</a></li>
+      <li><a href="../core/">Core</a></li>
+      <li><a href="../decision/">Decisions</a></li>
+      <li><a href="../examples/">Examples</a></li>
+      <li><a href="../ai/">AI extension</a></li>
+      <li><a href="../migration/">From v1</a></li>
+      <li><a href="../projects/">Related projects</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">The principle</p>
+<h1>Value Continuity</h1>
+<p class="lead">The principle above VCDesign. It is independent of any method and is published at <a href="https://github.com/value-continuity/value-continuity">value-continuity/value-continuity</a>.</p>
+
+<div class="note">
+  <p>The canonical repository has no site of its own, so this page serves as an entry point. It does not rewrite or add to the definitions. The canonical documents are written in Japanese (MIT License); the only official English is the <strong>English summary</strong> at the top of the README, quoted below. Everything else on this page marked <em>unofficial translation</em> is our translation, and the Japanese original prevails.</p>
+</div>
+
+<nav class="toc" aria-labelledby="toc-title">
+  <h2 id="toc-title">On this page</h2>
+  <ol>
+    <li><a href="#definition">Value Continuity</a></li>
+    <li><a href="#asymmetry">The Value Asymmetry Principle</a></li>
+    <li><a href="#delta">Δ (the gap from expectation)</a></li>
+    <li><a href="#principles">The five principles</a></li>
+    <li><a href="#decision">Decision</a></li>
+    <li><a href="#review">Review Output</a></li>
+    <li><a href="#documents">Canonical and applied documents</a></li>
+    <li><a href="#implementation">Relation to VCDesign</a></li>
+  </ol>
+</nav>
+
+<h2 id="summary">The official English summary</h2>
+<blockquote class="canon">
+  <p>Value Continuity is a principle for checking, before implementation, whether a plan, investment, improvement or system keeps generating value through change and failure. It is defined as <em>keeping the ability to create the next value, even as work, people, technology and products change or fail</em>. Its central principle, the <strong>Value Asymmetry Principle</strong>, is: <em>make upside propagable; do not let downside propagate.</em> It is independent of any specific method; VCDesign implements it on the side of judgment and responsibility. The documents are written in Japanese.</p>
+  <cite>Canonical README, "English summary"</cite>
+</blockquote>
+
+<h2 id="definition">1. Value Continuity</h2>
+<blockquote class="canon">
+  <p>Value Continuity is not about preserving present value as it is.</p>
+  <p class="big">It is keeping the ability to create the next value, even through change and failure.</p>
+  <p>If what can be used to generate the next value remains even when the current work, people, technology and products change, value is continuing.</p>
+  <cite>Canonical README §1 — unofficial translation</cite>
+</blockquote>
+<p>The question the canonical text asks at the planning stage is:</p>
+<blockquote class="canon">
+  <p class="big">Can this effort carry good results on to the next value while stopping the chain of bad results?</p>
+  <cite>Canonical README, "Purpose" — unofficial translation</cite>
+</blockquote>
+
+<h2 id="asymmetry">2. The Value Asymmetry Principle</h2>
+<blockquote class="canon">
+  <p class="big">Make upside propagable. Do not let downside propagate.</p>
+  <p>Good results and bad results are not treated the same way.</p>
+  <ul>
+    <li>Good results are given paths to the next value through reuse, connection and learning.</li>
+    <li>Bad results are kept from spreading further by boundaries, ceilings and recovery.</li>
+  </ul>
+  <p>"Making propagable" means keeping open a path for a good result to spread; it does not mean spreading it automatically. Whether to actually spread it is decided by a decision (Expand).</p>
+  <p><strong>The ability to close the downside is the capital for continuing to bet on the upside.</strong></p>
+  <cite>Canonical README §2 — unofficial translation</cite>
+</blockquote>
+
+<h2 id="delta">3. Δ (the gap from expectation)</h2>
+<blockquote class="canon">
+  <p><strong>Δ</strong> is the gap between the expectation declared at the start of an effort and what actually happened. The expectation includes both the conditions assumed as premises and the value the effort aimed to create.</p>
+  <ul>
+    <li>A gap below expectation is called <strong>Negative Δ</strong>. It is not propagated.</li>
+    <li>A gap above expectation is called <strong>Positive Δ</strong>. It is made propagable: observing and holding it are never stopped, and whether to spread it is decided by a decision.</li>
+  </ul>
+  <cite>Canonical README §2 — unofficial translation</cite>
+</blockquote>
+<p>VCDesign takes this general meaning and fixes the baseline, polarity and handling of Δ as an implementation concept (<a href="../core/#delta">Core: Δ</a>).</p>
+
+<h2 id="principles">4. The five principles</h2>
+<p>The Value Asymmetry Principle is practised as five principles (canonical README §3 — unofficial translation).</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Principle</th><th scope="col">In the canonical text</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">1. Keep</th><td>Decide first what remains when work, owners or technology change: standards, rationale, data, connections, skills. Nothing remains without someone who keeps holding it.</td></tr>
+    <tr><th scope="row">2. Find</th><td>Look for signs of wide spread through reuse, not the average improvement: the second time is cheaper; requests come from places you did not ask; it becomes input to another decision; value per item rises with each connection.</td></tr>
+    <tr><th scope="row">3. Close</th><td>Do not predict bad spread; stop it at boundaries. Set the ceiling of loss first, localize failures, re-check premises at boundaries, avoid dependence on a single point.</td></tr>
+    <tr><th scope="row">4. Try</th><td>Change within the range you can revert. The ability to recover, switch over and withdraw decides how many times you can try.</td></tr>
+    <tr><th scope="row">5. Pass on</th><td>Hand the basis, not the conclusion, to the next decision. The receiver re-decides it in their own context.</td></tr>
+  </tbody>
+</table>
+</div>
+<blockquote class="canon">
+  <p>The order matters. Without deciding what to keep, you cannot find signs of spread. Without stopping bad spread, you cannot try again. And the basis you pass on becomes the starting point of what the next effort keeps.</p>
+  <cite>Canonical README §3 — unofficial translation</cite>
+</blockquote>
+
+<h2 id="decision">5. Decision</h2>
+<p>A review ends in a decision, not a score. The decisions are these six words (canonical README §8 — unofficial translation).</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Decision</th><th scope="col">In the canonical text</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Proceed</th><td>Value Continuity is satisfied; proceed with the current structure at the current scale.</td></tr>
+    <tr><th scope="row">Expand</th><td>Signs of upside have been observed; widen the target, scale and connections within the ceiling of downside and the recovery capability. An average effect alone is not a basis for Expand.</td></tr>
+    <tr><th scope="row">Limit</th><td>There is value, but the downside could spread too far; limit the target, authority, scale, period and so on.</td></tr>
+    <tr><th scope="row">Reframe</th><td>The value, target, boundary or premises need to be redefined.</td></tr>
+    <tr><th scope="row">Defer</th><td>External conditions or material for judgment are missing; do not settle it now.</td></tr>
+    <tr><th scope="row">Retire</th><td>Continuing will not lead to the next value; ending it better fits Value Continuity. For an effort not yet started, this includes deciding not to start.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>How VCDesign handles each decision (declaration updates and next states) is on the <a href="../decision/">Decisions</a> page.</p>
+
+<h2 id="review">6. Review Output</h2>
+<p>A review using the canonical text outputs at least the following five items, each marked <code>ok</code> / <code>warning</code> / <code>blocking</code> with its basis (canonical README §9 — unofficial translation).</p>
+<ol>
+  <li><strong>Upside</strong> — what leads to the next value, what is reusable, what the signs of upside are</li>
+  <li><strong>Downside</strong> — the maximum loss, how far it spreads, where it can be stopped, whether you can recover or withdraw</li>
+  <li><strong>Continuity</strong> — what remains after work, people, technology or products change</li>
+  <li><strong>Asymmetry</strong> — whether upside propagation and downside containment hold together</li>
+  <li><strong>Decision</strong> — one of the six words</li>
+</ol>
+<p>The canonical text is meant to be used not only for human planning decisions but also as the criteria for AI-assisted plan reviews. An example instruction for AI is included in the canonical README.</p>
+
+<h2 id="documents">7. Canonical and applied documents</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Document</th><th scope="col">Content</th></tr></thead>
+  <tbody>
+    <tr><td><a href="https://github.com/value-continuity/value-continuity/blob/main/README.md">README.md</a></td><td>Definition, central principle, five principles, review structure. The canonical definitions</td></tr>
+    <tr><td><a href="https://github.com/value-continuity/value-continuity/blob/main/value-continuity-business-planning.md">value-continuity-business-planning.md</a></td><td>Application to business planning and investment decisions</td></tr>
+    <tr><td><a href="https://github.com/value-continuity/value-continuity/blob/main/value-continuity-system-design.md">value-continuity-system-design.md</a></td><td>Application to system design</td></tr>
+  </tbody>
+</table>
+</div>
+<p>The applied documents restate the canonical definitions in the language of each domain, keeping the five principles in the same order and number.</p>
+
+<h2 id="implementation">8. Relation to VCDesign</h2>
+<blockquote class="canon">
+  <p>Value Continuity is implemented by different methods at different layers: management decisions, planning, organization design, system design, operations design. Individual methods are means of satisfying this principle; they are not Value Continuity itself.</p>
+  <p>VCDesign (Value Continuity Design) is positioned as a method that implements Value Continuity specifically on the side of <strong>judgment and responsibility</strong>.</p>
+  <cite>Canonical README §10 "Implementation Boundary" — unofficial translation</cite>
+</blockquote>
+<p>Which VCDesign mechanism implements each principle is summarized in <a href="../core/#implementation">Core: implementation by principle</a>.</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">Specifications (GitHub)</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity, canonical (GitHub)</a></li>
+      <li><a href="../legacy/">Archive</a></li>
+    </ul>
+    <p>This site explains; it does not define. The norms live in <code>specs/</code> on GitHub, and the specs prevail where they differ.</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VCDesign — 判断と責任で価値をつなぐ</title>
+<meta name="description" content="VCDesign は、Value Continuity を判断と責任の面から実装する方法論です。誰が、何を根拠に、6つの判断のどれで閉じ、残ったものを誰が持ち続けるかを定めます。">
+<link rel="canonical" href="https://vcdesign.org/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="./">VCDesign</a>
+    <a class="lang" href="en/" hreflang="en" lang="en">English</a>
+  </div>
+  <nav class="site-nav" aria-label="サイト内">
+    <ul>
+      <li><a href="./" aria-current="page">トップ</a></li>
+      <li><a href="./value-continuity/">Value Continuity</a></li>
+      <li><a href="./core/">芯</a></li>
+      <li><a href="./decision/">判断</a></li>
+      <li><a href="./examples/">事例</a></li>
+      <li><a href="./ai/">AI 拡張</a></li>
+      <li><a href="./migration/">v1 からの移行</a></li>
+      <li><a href="./projects/">関連プロジェクト</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<section class="hero" aria-labelledby="top-title">
+  <p class="eyebrow">Value Continuity Design · v2</p>
+  <h1 id="top-title">VCDesign</h1>
+  <p class="lead">VCDesign は、<a href="./value-continuity/">Value Continuity</a> を<strong>判断と責任</strong>の面から実装する方法論です。</p>
+
+  <blockquote class="canon">
+    <p>Value Continuity とは、</p>
+    <p class="big">変化や失敗があっても、次の価値を生み出せる状態を継続すること。</p>
+    <p>その中心原則（Value Asymmetry Principle）は、</p>
+    <p class="big">Upside は伝播可能にする。Downside は伝播させない。</p>
+    <cite>出典：<a href="https://github.com/value-continuity/value-continuity/blob/main/README.md">value-continuity/value-continuity README</a>（定義と原則の正本）</cite>
+  </blockquote>
+
+  <p>「伝播可能にする」は、自動で広げることではありません。良い結果が次へ広がれる道を開いておき、実際に広げるかどうかは判断（Expand）で決めます。</p>
+</section>
+
+<h2 id="what">VCDesign が定めること</h2>
+<p class="lead"><strong>誰が、何を根拠に、6つの判断のどれで閉じ、残ったものを誰が持ち続けるか。</strong></p>
+<p>Value Continuity の定義と原則は正本にあり、VCDesign では定義し直しません。VCDesign は、それを現場の判断と責任の記録として実装し、検査できる形にします。</p>
+<p>判断の所在と責任の帰属が説明できない状態では、実装を始めません（実装境界事前定義）。</p>
+
+<h2 id="six">芯の6つ</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">芯</th><th scope="col">VCDesign が定めること</th></tr></thead>
+  <tbody>
+    <tr><th scope="row"><a href="./core/#delta">Δ</a></th><td>宣言した期待（前提と価値）との差。向きを持つ。Negative Δ は伝播させず、Positive Δ は伝播可能にする</td></tr>
+    <tr><th scope="row"><a href="./core/#responsibility">責任</a></th><td>owner、人間の最終判断者、担当交代をまたぐ継続保有（点の責任は開始、線の責任が維持）</td></tr>
+    <tr><th scope="row"><a href="./core/#boundary">境界</a></th><td>損失は止め（containment）、根拠は通し（basis_flow）、結論は確かめ直す（revalidation）</td></tr>
+    <tr><th scope="row"><a href="./decision/">判断</a></th><td>6語（Proceed / Expand / Limit / Reframe / Defer / Retire）だけを使い、判断ゲート1つで閉じる</td></tr>
+    <tr><th scope="row"><a href="./core/#declaration">宣言</a></th><td>案件ごとに、残すもの（保有者付き）、広がりの兆候、最大損失、可逆性、依存先</td></tr>
+    <tr><th scope="row"><a href="./core/#metrics">指標</a></th><td>5原則（残す・見つける・閉じる・試す・伝える）の順に並ぶ芯の17件</td></tr>
+  </tbody>
+</table>
+</div>
+<p>AI 統制（AI は最終責任を持たない、LLM の配置、時間定数の分離、エージェントの実行ゲート）は、芯の外に置いた VCDesign 固有の<a href="./ai/">拡張</a>です。</p>
+
+<h2 id="order">5原則の順に確かめる</h2>
+<p>Value Continuity の5原則は、この順番に意味があります。VCDesign の判断ゲートも、指標も、この順に並んでいます。</p>
+<ol class="steps">
+  <li><strong>残す</strong><span>業務・担当・技術が変わっても残るものを、先に決める</span></li>
+  <li><strong>見つける</strong><span>平均的な改善量ではなく、再利用によって大きく広がる兆候を見る</span></li>
+  <li><strong>閉じる</strong><span>悪い広がりは予測せず、境界で止める</span></li>
+  <li><strong>試す</strong><span>戻せる範囲で変更する</span></li>
+  <li><strong>伝える</strong><span>結論ではなく、根拠を次の判断へ渡す</span></li>
+</ol>
+<p class="source">各原則の一文は正本 README §3 から引用しています。</p>
+<p>確認を終えたら、人間が6語のいずれかで判断を閉じます。詳しくは<a href="./decision/">判断</a>へ。</p>
+
+<h2 id="start">どこから読むか</h2>
+<ul class="cards">
+  <li class="card">
+    <h3><a href="./examples/">製造・OT/IT の現場で</a></h3>
+    <p>設備データの収集、担当交代、工場の AI エージェント。架空の現場で、宣言と判断がどう記録されるかを見る。</p>
+  </li>
+  <li class="card">
+    <h3><a href="./ai/">AI エージェントを業務に入れる</a></h3>
+    <p>能力は権限ではない。4つのループ、LLM の置き場所、実行前のゲート、停止の設計。</p>
+  </li>
+  <li class="card">
+    <h3><a href="./value-continuity/">思想から読む</a></h3>
+    <p>Value Continuity の定義、非対称の原則、5原則、判断の6語を正本の言葉で。</p>
+  </li>
+  <li class="card">
+    <h3><a href="./core/">仕組みを知る</a></h3>
+    <p>芯の6つを1ページで。5原則ごとに、VCDesign のどの仕組みで実装しているか。</p>
+  </li>
+  <li class="card">
+    <h3><a href="./migration/">v1 を使っていた</a></h3>
+    <p>v2 は v1 と互換性がありません。語彙と記録の読み替え表と、旧ページの行き先。</p>
+  </li>
+  <li class="card">
+    <h3><a href="./projects/">関連プロジェクト</a></h3>
+    <p>VC-AD、TDDD、VMS、Value Review、Re-derivation Layer、Continuity Claim Protocol、idk-lamp.org。</p>
+  </li>
+</ul>
+
+<h2 id="specs">Specs を参照する</h2>
+<p>このサイトは説明です。規範は <a href="https://github.com/VCDesign-org/vcdesign">github.com/VCDesign-org/vcdesign</a> の仕様にあります。設計支援や判断支援、コード生成のために生成 AI へ渡すときは、GitHub の YAML をそのまま渡すのが最短です。</p>
+<p>VCDesign v2 の authority は次の3ファイルです（Core, Metrics, Policies）。</p>
+<ul>
+  <li><a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/core.yaml"><code>specs/core/core.yaml</code></a> — Δ・判断・宣言・責任・境界の規則</li>
+  <li><a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/policies.yaml"><code>specs/core/policies.yaml</code></a> — 判断ゲート、責任・説明・停止の規則、AI 拡張</li>
+  <li><a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/metrics.yaml"><code>specs/core/metrics.yaml</code></a> — 5原則の順に並ぶ芯の指標</li>
+</ul>
+<p>適合判定の起点は <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/axioms.yaml"><code>specs/core/axioms.yaml</code></a>（A1〜A5）です。全体の地図は <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/map.md">Specification Map</a>、正本との対応表は <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/implementation.md">implementation.md</a> にあります。</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">仕様（GitHub）</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity 正本（GitHub）</a></li>
+      <li><a href="./legacy/">過去の資料</a></li>
+    </ul>
+    <p>このサイトは説明です。規範は GitHub の <code>specs/</code> にあり、食い違う場合は仕様が優先します。</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

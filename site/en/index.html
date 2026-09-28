@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VCDesign — Carrying value through judgment and responsibility</title>
+<meta name="description" content="VCDesign implements Value Continuity on the side of judgment and responsibility: who decides, on what basis, with which of the six decisions, and who keeps holding what remains.">
+<link rel="canonical" href="https://vcdesign.org/en/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="./">VCDesign</a>
+    <a class="lang" href="../" hreflang="ja" lang="ja">日本語</a>
+  </div>
+  <nav class="site-nav" aria-label="Site">
+    <ul>
+      <li><a href="./" aria-current="page">Home</a></li>
+      <li><a href="./value-continuity/">Value Continuity</a></li>
+      <li><a href="./core/">Core</a></li>
+      <li><a href="./decision/">Decisions</a></li>
+      <li><a href="./examples/">Examples</a></li>
+      <li><a href="./ai/">AI extension</a></li>
+      <li><a href="./migration/">From v1</a></li>
+      <li><a href="./projects/">Related projects</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<section class="hero" aria-labelledby="top-title">
+  <p class="eyebrow">Value Continuity Design · v2</p>
+  <h1 id="top-title">VCDesign</h1>
+  <p class="lead">VCDesign implements <a href="./value-continuity/">Value Continuity</a> on the side of <strong>judgment and responsibility</strong>.</p>
+
+  <blockquote class="canon">
+    <p>Value Continuity is defined as</p>
+    <p class="big">keeping the ability to create the next value, even as work, people, technology and products change or fail.</p>
+    <p>Its central principle, the Value Asymmetry Principle, is:</p>
+    <p class="big">make upside propagable; do not let downside propagate.</p>
+    <cite>Source: the English summary of <a href="https://github.com/value-continuity/value-continuity/blob/main/README.md">value-continuity/value-continuity</a> (the canonical definitions)</cite>
+  </blockquote>
+
+  <p>"Propagable" does not mean "spread automatically". A good result is given a path to spread; whether it actually spreads is decided by a decision (Expand).</p>
+</section>
+
+<h2 id="what">What VCDesign specifies</h2>
+<p class="lead"><strong>Who decides, on what basis, with which of the six decisions, and who keeps holding what remains.</strong></p>
+<p>The definitions and principles of Value Continuity live in the canonical repository and are not redefined by VCDesign. VCDesign implements them as records of judgment and responsibility that can be checked.</p>
+<p>Implementation must not begin unless the locus of judgment and the attribution of responsibility are explainable (Implementation Boundary Predefinition).</p>
+
+<h2 id="six">The core in six parts</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Part</th><th scope="col">What VCDesign specifies</th></tr></thead>
+  <tbody>
+    <tr><th scope="row"><a href="./core/#delta">Δ</a></th><td>The gap from the declared expectation (premises and value), with polarity: Negative Δ is not propagated; Positive Δ is made propagable</td></tr>
+    <tr><th scope="row"><a href="./core/#responsibility">Responsibility</a></th><td>Owner, human final decider, custody across handovers (gate starts responsibility; tenure sustains it)</td></tr>
+    <tr><th scope="row"><a href="./core/#boundary">Boundary</a></th><td>Losses are stopped (containment), basis passes (basis_flow), conclusions are revalidated</td></tr>
+    <tr><th scope="row"><a href="./decision/">Decision</a></th><td>Only the six words — Proceed, Expand, Limit, Reframe, Defer, Retire — through one judgment gate</td></tr>
+    <tr><th scope="row"><a href="./core/#declaration">Declaration</a></th><td>Per case: what remains (with a holder), spread signals, max loss, reversibility, dependencies</td></tr>
+    <tr><th scope="row"><a href="./core/#metrics">Metrics</a></th><td>Seventeen core metrics ordered by the five principles: keep, find, close, try, pass on</td></tr>
+  </tbody>
+</table>
+</div>
+<p>AI governance (AI never holds final responsibility, LLM placement, temporal separation, agent execution gates) is a VCDesign-specific <a href="./ai/">extension</a> kept outside the core.</p>
+
+<h2 id="order">Check in the order of the five principles</h2>
+<p>The order of Value Continuity's five principles matters. VCDesign's judgment gate and its metrics follow the same order.</p>
+<ol class="steps">
+  <li><strong>Keep</strong><span>Decide first what remains when work, owners or technology change</span></li>
+  <li><strong>Find</strong><span>Look for signs of wide spread through reuse, not the average improvement</span></li>
+  <li><strong>Close</strong><span>Do not predict bad spread; stop it at boundaries</span></li>
+  <li><strong>Try</strong><span>Change within the range you can revert</span></li>
+  <li><strong>Pass on</strong><span>Hand the basis, not the conclusion, to the next decision</span></li>
+</ol>
+<p class="source">Unofficial translation of the canonical README §3 (written in Japanese).</p>
+<p>After the review, a human closes the decision with one of the six words. See <a href="./decision/">Decisions</a>.</p>
+
+<h2 id="start">Where to start</h2>
+<ul class="cards">
+  <li class="card">
+    <h3><a href="./examples/">In manufacturing and OT/IT</a></h3>
+    <p>Equipment data collection, handovers, a factory AI agent. See how declarations and decisions are recorded at fictional sites.</p>
+  </li>
+  <li class="card">
+    <h3><a href="./ai/">Bringing AI agents into operations</a></h3>
+    <p>Capability is not authority. Four loops, where LLMs belong, gates before execution, designing the halt.</p>
+  </li>
+  <li class="card">
+    <h3><a href="./value-continuity/">Start from the principle</a></h3>
+    <p>The definition, the asymmetry principle, the five principles and the six decisions of Value Continuity.</p>
+  </li>
+  <li class="card">
+    <h3><a href="./core/">Learn the mechanisms</a></h3>
+    <p>The six core parts on one page, and which VCDesign mechanism implements each principle.</p>
+  </li>
+  <li class="card">
+    <h3><a href="./migration/">Coming from v1</a></h3>
+    <p>v2 is not compatible with v1. The mapping of vocabulary and records, and where the old pages went.</p>
+  </li>
+  <li class="card">
+    <h3><a href="./projects/">Related projects</a></h3>
+    <p>VC-AD, TDDD, VMS, Value Review, Re-derivation Layer, Continuity Claim Protocol, idk-lamp.org.</p>
+  </li>
+</ul>
+
+<h2 id="specs">Refer to Specs</h2>
+<p>This site explains; the norms live in the specifications at <a href="https://github.com/VCDesign-org/vcdesign">github.com/VCDesign-org/vcdesign</a>. When handing VCDesign to generative AI for design assistance, judgment support or code generation, the YAML in the repository is the shortest path.</p>
+<p>The authority of VCDesign v2 is these three files (Core, Metrics, Policies):</p>
+<ul>
+  <li><a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/core.yaml"><code>specs/core/core.yaml</code></a> — rules for Δ, decisions, declarations, responsibility and boundaries</li>
+  <li><a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/policies.yaml"><code>specs/core/policies.yaml</code></a> — the judgment gate; rules for responsibility, explanation and halting; the AI extension</li>
+  <li><a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/metrics.yaml"><code>specs/core/metrics.yaml</code></a> — core metrics ordered by the five principles</li>
+</ul>
+<p>Conformance starts from <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/axioms.yaml"><code>specs/core/axioms.yaml</code></a> (A1–A5). The overview is the <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/map.md">Specification Map</a>; the mapping to the canonical principle is in <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/implementation.md">implementation.md</a>. Much of the specification is written in Japanese.</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">Specifications (GitHub)</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity, canonical (GitHub)</a></li>
+      <li><a href="./legacy/">Archive</a></li>
+    </ul>
+    <p>This site explains; it does not define. The norms live in <code>specs/</code> on GitHub, and the specs prevail where they differ.</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

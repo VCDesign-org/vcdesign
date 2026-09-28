@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>v1 からの移行 | VCDesign</title>
+<meta name="description" content="VCDesign v2 は v1 と互換性がありません。v1 の語彙と記録の読み替え表と、旧ページの行き先をまとめます。">
+<link rel="canonical" href="https://vcdesign.org/migration/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/migration/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/migration/">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../en/migration/" hreflang="en" lang="en">English</a>
+  </div>
+  <nav class="site-nav" aria-label="サイト内">
+    <ul>
+      <li><a href="../">トップ</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/">芯</a></li>
+      <li><a href="../decision/">判断</a></li>
+      <li><a href="../examples/">事例</a></li>
+      <li><a href="../ai/">AI 拡張</a></li>
+      <li><a href="../migration/" aria-current="page">v1 からの移行</a></li>
+      <li><a href="../projects/">関連プロジェクト</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">移行</p>
+<h1>v1 からの移行</h1>
+<p class="lead">VCDesign v2 は、v1 と互換性がありません。v1 の語彙と記録は、次の表のように読み替えます。</p>
+<p class="source">出典：<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/implementation.md">implementation.md</a> §6「v1 からの移行」。表は仕様のものをそのまま載せています。</p>
+
+<div class="note">
+  <p>v1 の語彙は、このページと<a href="../legacy/">過去の資料</a>の中だけで使います。ほかのページでは v2 の語彙だけを使います。</p>
+</div>
+
+<h2 id="table">語彙と記録の読み替え</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">v1</th><th scope="col">v2</th></tr></thead>
+  <tbody>
+    <tr><td>action: fix</td><td>decision: proceed</td></tr>
+    <tr><td>action: reframe / defer / retire</td><td>decision: reframe / defer / retire</td></tr>
+    <tr><td>decision posture: commit</td><td>proceed（範囲を狭めて即時に止める場合は limit）</td></tr>
+    <tr><td>decision posture: reconsider</td><td>defer（境界の判定は unknown）</td></tr>
+    <tr><td>decision posture: abandon</td><td>retire</td></tr>
+    <tr><td>decision_size: no_go / small_go / scale_go</td><td>retire（開始しない）／ proceed または limit ／ expand</td></tr>
+    <tr><td>長期判断の姿勢（small_go / defer_or_experiment / deny_or_reframe）</td><td>判断ゲートで6語のいずれかに確定する</td></tr>
+    <tr><td>RCL: Close / DeferToPool / Abort</td><td>proceed / defer / 停止のあと retire または defer。RCL の核（確定した Δ は判断で閉じるまで責任の下にある。設計時の未定義も Δ として扱う）は <code>core.yaml closure_loop</code> に残した</td></tr>
+    <tr><td>long_term_decision_gate、scale_gate、reframe / defer / retire_control</td><td><code>policies.yaml judgment_gate</code></td></tr>
+    <tr><td>tail_signals</td><td>spread_signals</td></tr>
+    <tr><td>action_history</td><td>decision_history</td></tr>
+    <tr><td>why_action</td><td>decision.basis</td></tr>
+    <tr><td>promise_broken</td><td>precondition_broken</td></tr>
+    <tr><td>unresolved_duration_exceeded、defer_stagnation、retirement_pending_too_long</td><td>stagnation</td></tr>
+    <tr><td>dependency_concentration、judgment_concentration</td><td>concentration</td></tr>
+    <tr><td>upside_signal_observed、tail_signal_absent_on_success、scale_beyond_recovery</td><td>spread_signal_observed、success_without_spread_signal、expand_beyond_recovery</td></tr>
+    <tr><td>long_term_judgment_metrics、repeated_reframe、reaffirmation_decay</td><td>削除（判断ゲートと芯の指標で代替）</td></tr>
+    <tr><td>Judgment Closure（ACCEPTED / DENIED / UNKNOWN）</td><td>越境の検査は境界の guard verdict（pass / deny / unknown）、案件の Δ を閉じるのは判断6語</td></tr>
+    <tr><td>Judgment Proposal、Responsibility Asset、Resolution、Resolution Handshake</td><td>AI の出力は人間が判断を閉じるまで提案。閉じた判断の範囲・期限・証跡は、宣言（blast_radius、next_review_at、reversal_window）と判断ログ</td></tr>
+    <tr><td>RCA パターン、IDG パターン</td><td><code>patterns/boundary-pattern.yaml</code> の guard と determinability</td></tr>
+    <tr><td>protocols/（judgment-closure、resolution-handshake）</td><td>削除（上の2行に吸収。組織をまたぐ越境は boundary の external_crossing）</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="pages">旧ページの行き先</h2>
+<p>サイトの構成も v2 に合わせて変えました。日本語がルート、英語が <code>/en/</code> です。旧 URL は、新しい行き先へ案内するページとして残しています。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">旧ページ</th><th scope="col">いまの場所</th></tr></thead>
+  <tbody>
+    <tr><td>トップ（v1）</td><td><a href="../legacy/v1/">過去の資料：v1 のトップページ</a>。v2 の入口は<a href="../">トップ</a></td></tr>
+    <tr><td>Reality Fit / Adaptive Loop Model</td><td><a href="../ai/">AI 拡張</a>に統合</td></tr>
+    <tr><td>VC-AD、Why VC-AD?、VCDesign 基本憲法</td><td><a href="../legacy/vc-ad/">過去の資料：VC-AD の旧解説</a>。VC-AD の現在の紹介は<a href="../vc-ad/">VC-AD</a></td></tr>
+    <tr><td>Agent Era（5層）、Maturity Profile、Gate / Tenure</td><td>5層と12原則は<a href="../ai/">AI 拡張</a>、点の責任と線の責任は<a href="../core/#responsibility">芯：責任</a>。Maturity Profile は v2 で削除</td></tr>
+    <tr><td>憲法とマニフェスト（トップページ内）</td><td><a href="../legacy/v1/">過去の資料：v1 のトップページ</a></td></tr>
+    <tr><td><code>/ja/</code> の下のページ</td><td>同じ名前のルートのページ（例：<code>/ja/tddd/</code> → <code>/tddd/</code>）</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="specs">削除・統合された仕様ファイル</h2>
+<p>v1 の <code>specs/core/decision-posture.yaml</code>、<code>agent-era-model.md</code>、<code>ai-adaptive-loop-model.md</code>、<code>value-tenure-model.md</code>、<code>validation/vcdesign-maturity-profile.md</code>、<code>patterns/rcl/</code>、<code>protocols/</code> などは v2 で削除または統合されました。変更の全体は <a href="https://github.com/VCDesign-org/vcdesign/pull/5">VCDesign-org/vcdesign#5</a> を参照してください。</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">仕様（GitHub）</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity 正本（GitHub）</a></li>
+      <li><a href="../legacy/">過去の資料</a></li>
+    </ul>
+    <p>このサイトは説明です。規範は GitHub の <code>specs/</code> にあり、食い違う場合は仕様が優先します。</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

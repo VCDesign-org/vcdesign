@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VC-AD | VCDesign</title>
+<meta name="description" content="VC-AD（Value-Continuous AI Development）は、AI による開発で人間が設計と責任の芯を持つための開発プロトコルです。規範は architecture-yaml-protocols リポジトリにあります。">
+<link rel="canonical" href="https://vcdesign.org/vc-ad/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/vc-ad/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/vc-ad/">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../en/vc-ad/" hreflang="en" lang="en">English</a>
+  </div>
+  <nav class="site-nav" aria-label="サイト内">
+    <ul>
+      <li><a href="../">トップ</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/">芯</a></li>
+      <li><a href="../decision/">判断</a></li>
+      <li><a href="../examples/">事例</a></li>
+      <li><a href="../ai/">AI 拡張</a></li>
+      <li><a href="../migration/">v1 からの移行</a></li>
+      <li><a href="../projects/">関連プロジェクト</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">関連プロジェクト</p>
+<h1>VC-AD</h1>
+<p class="lead">Value-Continuous AI Development。実装は AI に任せても、判断と責任の芯は人間が持つための開発プロトコルです。</p>
+
+<blockquote class="canon">
+  <p>VCDesign は法則であり、VC-AD はその現在技術水準における具体化である。</p>
+  <cite>出典：<a href="https://github.com/VCDesign-org/vcdesign/blob/main/README.ja.md">VCDesign README</a></cite>
+</blockquote>
+
+<h2 id="what">VC-AD がすること</h2>
+<p>AI エージェントにコードを書かせるとき、何を決めたのか、何をしてはいけないのか、どこでつながるのか、どのファイルに適用するのかを、リポジトリの中の YAML として渡します。AI はその範囲の内側で実装し、範囲を守っているかを道具で確かめます。</p>
+<p>VCDesign の言葉でいえば、人間が閉じた判断で許可された範囲（公理 A2）を、開発の現場で機械が読める形にしたものです。</p>
+
+<h2 id="repository">リポジトリ</h2>
+<p>規範は <a href="https://github.com/VCDesign-org/architecture-yaml-protocols">VCDesign-org/architecture-yaml-protocols</a> にあります。使い方と最新の構成は、リポジトリの README を参照してください。2026年9月時点の主な構成は次のとおりです。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">ディレクトリ</th><th scope="col">役割</th></tr></thead>
+  <tbody>
+    <tr><td><code>decisions/</code></td><td>Why / What。アーキテクチャ上の判断、方針、技術選定</td></tr>
+    <tr><td><code>contracts/</code></td><td>Must / Must Not。言語に依存しない方針（資源、副作用）と入出力の契約</td></tr>
+    <tr><td><code>connections/</code></td><td>How / Interface。構成要素の間の接続、データの流れ、API の契約</td></tr>
+    <tr><td><code>components/</code></td><td>Where。上の規則を実際のコード（ファイルパス）に割り当てる</td></tr>
+    <tr><td><code>tools/</code></td><td>Gatekeeper。契約が守られているかを検査する道具</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="history">以前の解説について</h2>
+<p>このサイトにあった VC-AD の解説（Quickstart のプロンプト、「11の境界」と <code>.vc-ad/boundaries.yaml</code> による Static Badge、VCDesign 基本憲法）は、リポジトリの以前の構成に基づいていました。いまのリポジトリには <code>boundaries/</code> と <code>closures/</code> がないため、<a href="../legacy/vc-ad/">過去の資料</a>へ移しました。2026年1月の調査資料も<a href="../legacy/#research">過去の資料</a>から辿れます。</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">仕様（GitHub）</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity 正本（GitHub）</a></li>
+      <li><a href="../legacy/">過去の資料</a></li>
+    </ul>
+    <p>このサイトは説明です。規範は GitHub の <code>specs/</code> にあり、食い違う場合は仕様が優先します。</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

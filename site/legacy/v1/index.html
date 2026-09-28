@@ -4,9 +4,6 @@
     <meta charset="UTF-8" />
     <title>VCDesign</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=IBM+Plex+Mono:wght@300;400&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -418,11 +415,25 @@
             footer { flex-direction: column; align-items: flex-start; }
         }
     </style>
+    <style>
+        .warning-box { max-width: 960px; margin: 16px auto 8px; padding: 12px 16px; border: 1px solid #d97706; background: rgba(217, 119, 6, 0.12); border-radius: 6px; font: 14px/1.7 system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", sans-serif; }
+        .legacy-intro { max-width: 960px; margin: 0 auto; padding: 0 16px; font: 14px/1.7 system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", sans-serif; }
+        .legacy-intro p { margin: 4px 0; }
+        .warning-box a { color: inherit; text-decoration: underline; }
+    </style>
 </head>
 <body>
+<div class="legacy-intro">
+    <div class="warning-box">
+        <strong>⚠️ 歴史的ドキュメントのお知らせ</strong><br>
+        このページは VCDesign v2 以前の資料で、現在の規範ではありません。現在の規範は specs/core/core.yaml、specs/core/policies.yaml、specs/core/metrics.yaml にあります。語彙の読み替えは <a href="../../migration/">v1 からの移行</a>を参照してください。
+    </div>
+    <p><em>本ページの内容は VCDesign v2 に置き換えられています。現在の入口はトップページです。</em></p>
+    <p><em>このドキュメントは現在のモデルに至る概念的系譜を表しています。</em></p>
+</div>
 
     <nav class="top-nav">
-        <a href="/" class="lang-link">English</a>
+        <a href="../../en/legacy/v1/" class="lang-link">English</a>
     </nav>
 
     <main class="frame">
@@ -475,19 +486,19 @@
                     <p class="entry-card-desc">承認と責任は同じではない。境界の考え方を、経費承認の話から理解する。</p>
                     <span class="entry-card-arrow">→ idk-lamp.org</span>
                 </a>
-                <a class="entry-card" href="./vc-ad/">
+                <a class="entry-card" href="../vc-ad/">
                     <p class="entry-card-tag">開発の設計が崩れる</p>
                     <p class="entry-card-title">AIを最大限活かす境界設計</p>
                     <p class="entry-card-desc">設計書をAIに渡し、境界と責任の配置を対話で詰める。VC-ADのYAMLが起点になる。</p>
                     <span class="entry-card-arrow">→ VC-AD Getting Started</span>
                 </a>
-                <a class="entry-card" href="https://vcdesign.org/ja/vms/">
+                <a class="entry-card" href="../../vms/">
                     <p class="entry-card-tag">経営の判断が滞る</p>
                     <p class="entry-card-title">経営の悩みを構造化する</p>
                     <p class="entry-card-desc">「お金が残らない」「情熱が湧かない」。症状から責任とDecisionを設計する。</p>
                     <span class="entry-card-arrow">→ VMS</span>
                 </a>
-                <a class="entry-card" href="./re-derivation-layer/">
+                <a class="entry-card" href="../../re-derivation-layer/">
                     <p class="entry-card-tag">現場の判断が説明できない</p>
                     <p class="entry-card-title">ロボットの判断を、後から説明できるように</p>
                     <p class="entry-card-desc">「P-102の点検、完了」——だが誰の権限で、どの根拠で？ 動作を意味と責任ごと変換する層を設計する。</p>
@@ -510,7 +521,7 @@
                     <div>
                         <p class="flow-content-title">価値と境界を定義する</p>
                         <p class="flow-content-desc">何を守りたいか、何が崩れたら失敗かを言葉にする。Value Review Sheetを使い、ChapterのPreconditionを確定する。</p>
-                        <a class="flow-link" href="./value-review/">→ value-review</a>
+                        <a class="flow-link" href="../../value-review/">→ value-review</a>
                     </div>
                 </div>
                 <div class="flow-step">
@@ -518,7 +529,7 @@
                     <div>
                         <p class="flow-content-title">設計書をAIに渡し、境界を詰める</p>
                         <p class="flow-content-desc">「VCDesignに基づいて不足を教えて」とAIに問う。対話でdecisions.yamlとboundaries.yamlを作る。これがAIエージェントへの指示書になる。</p>
-                        <a class="flow-link" href="./vc-ad/">→ VC-AD</a>
+                        <a class="flow-link" href="../vc-ad/">→ VC-AD</a>
                     </div>
                 </div>
                 <div class="flow-step">
@@ -526,7 +537,7 @@
                     <div>
                         <p class="flow-content-title">境界を前提に開発を回す</p>
                         <p class="flow-content-desc">Loop A（境界決定）をLoop B（AIによる実装）と分離する。Δ（ズレ）を観測し、Loop CでActionを選ぶ。</p>
-                        <a class="flow-link" href="./tddd/">→ TDDD</a>
+                        <a class="flow-link" href="../../tddd/">→ TDDD</a>
                     </div>
                 </div>
                 <div class="flow-step">
@@ -534,7 +545,7 @@
                     <div>
                         <p class="flow-content-title">現実との乖離を確認する</p>
                         <p class="flow-content-desc">CoreとPoliciesが実際のAI運用ループとどう接続するかを確認する。</p>
-                        <a class="flow-link" href="./reality-fit/">→ Reality Fit / Adaptive Loop Model</a>
+                        <a class="flow-link" href="../../ai/">→ Reality Fit / Adaptive Loop Model</a>
                     </div>
                 </div>
                 <div class="flow-step">
@@ -745,13 +756,13 @@ Human Sovereignty:    Enforced</pre>
 
             <ul class="link-list">
                 <li>
-                    <a href="./research/deepresearch-2026-03.pdf">
+                    <a href="../../research/deepresearch-2026-03.pdf">
                         <span class="label">2026-03 — 自律型システムにおける価値継続設計（VCDesign）</span>
                         <span class="desc">責任ガバナンスと産業的レジリエンスの次世代OS</span>
                     </a>
                 </li>
                 <li>
-                    <a href="./research/deepresearch-2026-01.pdf">
+                    <a href="../../research/deepresearch-2026-01.pdf">
                         <span class="label">2026-01 — 不安定な価値の世界におけるシステム設計論</span>
                         <span class="desc">VCDesignと境界指向アーキテクチャ（BOA）の包括的分析レポート</span>
                     </a>

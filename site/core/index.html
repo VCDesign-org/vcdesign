@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VCDesign の芯 | VCDesign</title>
+<meta name="description" content="Δ、責任、境界、判断、宣言、指標。VCDesign の芯の6つと、5原則ごとに VCDesign のどの仕組みで実装しているかを1ページで示します。">
+<link rel="canonical" href="https://vcdesign.org/core/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/core/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/core/">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../en/core/" hreflang="en" lang="en">English</a>
+  </div>
+  <nav class="site-nav" aria-label="サイト内">
+    <ul>
+      <li><a href="../">トップ</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/" aria-current="page">芯</a></li>
+      <li><a href="../decision/">判断</a></li>
+      <li><a href="../examples/">事例</a></li>
+      <li><a href="../ai/">AI 拡張</a></li>
+      <li><a href="../migration/">v1 からの移行</a></li>
+      <li><a href="../projects/">関連プロジェクト</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">VCDesign の芯</p>
+<h1>芯の6つ</h1>
+<p class="lead">Value Continuity を判断と責任の面から実装するために、VCDesign が定めるのは Δ・責任・境界・判断・宣言・指標の6つです。</p>
+<p class="source">規範：<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/core.yaml">core.yaml</a>、<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/policies.yaml">policies.yaml</a>、<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/metrics.yaml">metrics.yaml</a>、<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/axioms.yaml">axioms.yaml</a>。読解補助：<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/implementation.md">implementation.md</a>、<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/glossary.md">glossary.md</a>。</p>
+
+<nav class="toc" aria-labelledby="toc-title">
+  <h2 id="toc-title">このページの内容</h2>
+  <ol>
+    <li><a href="#six">芯の6つ</a></li>
+    <li><a href="#flow">基本の流れ（PDΔD）</a></li>
+    <li><a href="#delta">Δ</a></li>
+    <li><a href="#responsibility">責任</a></li>
+    <li><a href="#boundary">境界</a></li>
+    <li><a href="#decision">判断</a></li>
+    <li><a href="#declaration">宣言</a></li>
+    <li><a href="#metrics">指標</a></li>
+    <li><a href="#implementation">5原則ごとの実装</a></li>
+    <li><a href="#axioms">公理 A1〜A5</a></li>
+  </ol>
+</nav>
+
+<h2 id="six">1. 芯の6つ</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">芯</th><th scope="col">VCDesign が定めること</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Δ</th><td>宣言した期待（前提と価値）との差。向きを持つ。Negative Δ は伝播させず、Positive Δ は伝播可能にする</td></tr>
+    <tr><th scope="row">責任</th><td>owner、人間の最終判断者、担当交代をまたぐ継続保有（点の責任は開始、線の責任が維持）</td></tr>
+    <tr><th scope="row">境界</th><td>損失は止め（containment）、根拠は通し（basis_flow）、結論は確かめ直す（revalidation）</td></tr>
+    <tr><th scope="row">判断</th><td>6語（Proceed / Expand / Limit / Reframe / Defer / Retire）だけを使い、判断ゲート1つで閉じる</td></tr>
+    <tr><th scope="row">宣言</th><td>案件ごとに、残すもの（保有者付き）、広がりの兆候、最大損失、可逆性、依存先</td></tr>
+    <tr><th scope="row">指標</th><td>5原則（残す・見つける・閉じる・試す・伝える）の順に並ぶ芯の17件</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="flow">2. 基本の流れ（PDΔD）</h2>
+<p>VCDesign では、価値を続けるための責任の置き場所を<strong>章</strong>（chapter）と呼び、章の中で扱う一件一件を<strong>案件</strong>（case）と呼びます。案件は次の順に進みます（<code>core.yaml flow</code>）。</p>
+<figure class="diagram">
+  <svg viewBox="0 0 640 110" role="img" aria-labelledby="pddd-t pddd-d">
+    <title id="pddd-t">PDΔD の流れ</title>
+    <desc id="pddd-d">precondition（期待の宣言）、do（実行）、delta（差の観測）、decision（判断）の4段。decision から precondition へ、宣言の更新として戻る。</desc>
+    <g font-size="14">
+      <rect class="svg-box" x="4" y="14" width="140" height="52" rx="8"/>
+      <text class="svg-text" x="74" y="37" text-anchor="middle" font-weight="700">precondition</text>
+      <text class="svg-text svg-muted" x="74" y="56" text-anchor="middle" font-size="12">期待を宣言する</text>
+      <rect class="svg-box" x="168" y="14" width="140" height="52" rx="8"/>
+      <text class="svg-text" x="238" y="37" text-anchor="middle" font-weight="700">do</text>
+      <text class="svg-text svg-muted" x="238" y="56" text-anchor="middle" font-size="12">実行・判断・表示</text>
+      <rect class="svg-box" x="332" y="14" width="140" height="52" rx="8"/>
+      <text class="svg-text" x="402" y="37" text-anchor="middle" font-weight="700">delta</text>
+      <text class="svg-text svg-muted" x="402" y="56" text-anchor="middle" font-size="12">差を向き付きで観測</text>
+      <rect class="svg-box" x="496" y="14" width="140" height="52" rx="8"/>
+      <text class="svg-text" x="566" y="37" text-anchor="middle" font-weight="700">decision</text>
+      <text class="svg-text svg-muted" x="566" y="56" text-anchor="middle" font-size="12">6語で閉じる</text>
+      <path class="svg-line" d="M144 40 H168 M308 40 H332 M472 40 H496" stroke-width="2"/>
+      <path class="svg-line" d="M566 66 V92 H74 V66" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text class="svg-text svg-muted" x="320" y="106" text-anchor="middle" font-size="12">宣言と状態を更新する</text>
+    </g>
+  </svg>
+  <figcaption>precondition → do → delta → decision。判断は宣言と状態を更新して閉じる。</figcaption>
+</figure>
+
+<h2 id="delta">3. Δ</h2>
+<p>Δ は、正本の一般的な意味（期待との差）を受けたうえで、VCDesign が基準線・向き・扱いを定めた実装概念です。期待は、前提（<code>precondition</code>：章の成立条件と責任配置を含む）と価値（<code>value_intent</code>）として宣言し、両方の向きを同じ基準線で観測します。</p>
+
+<h3>Δ として扱う条件</h3>
+<ul>
+  <li>観測は <code>observation</code> → <code>candidate</code> → <code>confirmed</code> の3段階で進む</li>
+  <li>一時的なノイズは Δ ではない。持続する逸脱であること</li>
+  <li>責任への影響があること（Negative Δ ではどの責任配置が崩れるか、Positive Δ では誰が保有するか）</li>
+</ul>
+
+<h3>向き（polarity）</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col"></th><th scope="col">Negative Δ</th><th scope="col">Positive Δ</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">伝播</th><td>伝播させない</td><td>伝播可能にする。広げるのは Expand 判断（自動では広げない）</td></tr>
+    <tr><th scope="row">扱い</th><td>局所化する・緩和する・必要なら閉じる</td><td>観測する・意味づける・再利用可能にする</td></tr>
+    <tr><th scope="row">経路</th><td>境界の guard（unknown は止めて上げる）→ containment → 判断</td><td>観測 → value_intent に照らした意味づけ → 保有者付きで記録。広げるときは Expand</td></tr>
+    <tr><th scope="row">止めるか</th><td>止める対象になる</td><td>観測と保有は止めない。Expand の前提が欠けていれば、止めるのは Expand の方</td></tr>
+  </tbody>
+</table>
+</div>
+<ul>
+  <li>上下が混ざった観測は、Positive Δ と Negative Δ に分けて記録する</li>
+  <li>向きが記録されていない Δ は Negative Δ として扱う</li>
+</ul>
+
+<h3>確定した Δ は、判断で閉じるまで責任の下にある</h3>
+<p>確定した Δ を、責任者のいない状態や未解決のまま放置しません。確定から判断までの間も保有は途切れません。設計時の未定義（定義の空白）も Δ として扱い、実装を始める前に判断で閉じます（<code>core.yaml closure_loop</code>）。</p>
+
+<h2 id="responsibility">4. 責任</h2>
+<p>章と案件には、必ず <strong>owner</strong>（いま保有している主体）と <strong>final_decider</strong>（判断を閉じる人間）がいます。final_decider は必ず人間です。<strong>supervisor</strong> は責任の最終収束点で、責任が消えるのを防ぎます。</p>
+
+<h3>点の責任と線の責任</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col"></th><th scope="col">点の責任（Gate）</th><th scope="col">線の責任（Tenure）</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">問い</th><td>今これは正しいか</td><td>誰がこれを持ち続けるか</td></tr>
+    <tr><th scope="row">場所</th><td>承認の一点</td><td>承認の後の毎日。担当交代、無人の自律運用、時間経過</td></tr>
+    <tr><th scope="row">役割</th><td>責任の開始</td><td>責任の維持</td></tr>
+  </tbody>
+</table>
+</div>
+<p>線の責任は次の4つで記録します。</p>
+<ul>
+  <li><code>custody_chain</code> — 担当交代の追記記録。後任が判断を再導出できると確認したかを含む</li>
+  <li><code>re_derivation_basis</code> — 後任が判断を再導出できる根拠</li>
+  <li><code>review_triggers</code> — 何が変われば見直すか（カレンダーではなく事象で書く）</li>
+  <li><code>last_reaffirmed</code> — 今も有効だと、名前のある人間が確認した記録</li>
+</ul>
+<p>自律化が進むほど人はループの外に出るので、継続保有の必要は減らずに増えます。また、責任を保有する力には限りがあります。一人に持たせすぎると、その人が持つすべての判断が劣化します（公理 A5）。</p>
+
+<h2 id="boundary">5. 境界</h2>
+<p>境界は、越境を検査し、損失を止め、根拠を通し、上流の結論を確かめ直す点です（<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/patterns/boundary-pattern.yaml">boundary-pattern.yaml</a>）。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">働き</th><th scope="col">対象</th><th scope="col">既定</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">guard</th><td>越境そのもの</td><td>pass / deny / unknown で判定。unknown は止めて上げ、pass として扱わない</td></tr>
+    <tr><th scope="row">containment</th><td>失敗・指令</td><td>通さない（deny）</td></tr>
+    <tr><th scope="row">basis_flow</th><td>根拠・残るもの</td><td>通す（allow）</td></tr>
+    <tr><th scope="row">revalidation</th><td>上流の結論</td><td>引き継がず、確かめ直す</td></tr>
+  </tbody>
+</table>
+</div>
+<figure class="diagram">
+  <svg viewBox="0 0 640 182" role="img" aria-labelledby="bd-t bd-d">
+    <title id="bd-t">境界の非対称</title>
+    <desc id="bd-d">左の区画から右の区画へ。失敗と指令は境界で止まり（containment）、根拠と残るものは通り（basis_flow）、上流の結論は受け手の境界で確かめ直される（revalidation）。</desc>
+    <g font-size="13">
+      <rect class="svg-box" x="4" y="10" width="190" height="150" rx="10"/>
+      <text class="svg-text" x="99" y="32" text-anchor="middle" font-weight="700">上流の区画</text>
+      <rect class="svg-box" x="446" y="10" width="190" height="150" rx="10"/>
+      <text class="svg-text" x="541" y="32" text-anchor="middle" font-weight="700">受け手の区画</text>
+      <line class="svg-line" x1="320" y1="6" x2="320" y2="164" stroke-width="3" stroke-dasharray="6 5"/>
+      <text class="svg-text svg-muted" x="320" y="178" text-anchor="middle" font-size="12">境界</text>
+      <rect class="svg-down" x="24" y="48" width="150" height="28" rx="6"/>
+      <text class="svg-text" x="99" y="67" text-anchor="middle">失敗・指令</text>
+      <path d="M174 62 H304" stroke="currentColor" class="svg-line" stroke-width="2"/>
+      <text class="svg-text" x="312" y="67" text-anchor="end" font-weight="700">×</text>
+      <text class="svg-text svg-muted" x="240" y="55" text-anchor="middle" font-size="11">containment</text>
+      <rect class="svg-up" x="24" y="88" width="150" height="28" rx="6"/>
+      <text class="svg-text" x="99" y="107" text-anchor="middle">根拠・残るもの</text>
+      <path class="svg-line" d="M174 102 H440" stroke-width="2"/>
+      <path class="svg-line" d="M432 96 L442 102 L432 108" stroke-width="2"/>
+      <text class="svg-text svg-muted" x="240" y="95" text-anchor="middle" font-size="11">basis_flow</text>
+      <rect class="svg-box" x="24" y="124" width="150" height="28" rx="6"/>
+      <text class="svg-text" x="99" y="143" text-anchor="middle">上流の結論</text>
+      <path class="svg-line" d="M174 138 H440" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <text class="svg-text svg-muted" x="388" y="132" text-anchor="middle" font-size="11">revalidation</text>
+      <text class="svg-text" x="541" y="107" text-anchor="middle">受け取って使う</text>
+      <text class="svg-text" x="541" y="143" text-anchor="middle">確かめ直してから使う</text>
+    </g>
+  </svg>
+  <figcaption>損失は止め、根拠は通す。これが境界の非対称です。</figcaption>
+</figure>
+<p>このほか、境界の定義そのものを誰が持ち続けるか（<code>tenure</code>）と、別の組織やエージェントをまたぐときに識別・境界・権限を先に宣言すること（<code>external_crossing</code>、Continuity Claim Protocol）も境界パターンに含まれます。</p>
+<p>境界での判定（pass / deny / unknown）は、一回ごとの越境に対する検査で、案件の Δ を閉じる判断とは別のものです。deny や unknown が繰り返される場合や、責任に影響する場合は、Δ として観測し、判断の6語で閉じます。</p>
+
+<h3>「境界」という語の使い分け</h3>
+<ul>
+  <li><strong>責任境界（B1〜B17）</strong> — 責任を明示しなければならない点の型（<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/catalog/boundaries/taxonomy.md">taxonomy.md</a>）</li>
+  <li><strong>境界の構造</strong> — 責任境界を実装する形。上の guard、tenure、containment、basis_flow、revalidation</li>
+  <li><strong>障害区画</strong>（failure domain） — 失敗を外へ伝播させない区画。責任境界と一致するとは限らない</li>
+  <li><strong>連続と離散の境界</strong> — AI の推論が現実の実行と出会う点（<a href="../ai/">AI 拡張</a>）</li>
+</ul>
+
+<h2 id="decision">6. 判断</h2>
+<p>Δ を受けて、人間が Proceed / Expand / Limit / Reframe / Defer / Retire の6語のいずれかで閉じます。ほかの語彙は使いません。すべての判断は一つの判断ゲートを通ります。Expand と Limit は宣言の更新として記録します。詳しくは<a href="../decision/">判断</a>のページへ。</p>
+
+<h2 id="declaration">7. 宣言</h2>
+<p>案件ごとに、開始時に次を宣言します（フィールドの定義は <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/schema_case.yaml">schema_case.yaml</a>）。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">面</th><th scope="col">宣言</th><th scope="col">意味</th></tr></thead>
+  <tbody>
+    <tr><th scope="row" rowspan="3">Upside<br>（残す・見つける）</th><td><code>value_intent</code></td><td>生み出そうとしている価値</td></tr>
+    <tr><td><code>residual_assets</code></td><td>業務・担当・技術が変わっても残るもの（記録、標準、根拠、接続、技能）。保有者（holder）が必須。保有者がいなければ残らない。空の案件は点の改善として扱う</td></tr>
+    <tr><td><code>spread_signals</code></td><td>広がりの兆候（二回目が安くなる、頼んでいない所から引き合いが来る、別の判断の材料になる、接続するほど一件あたりの価値が上がる）。<code>expected</code> として先に宣言し、<code>observed</code> と <code>unexpected</code> で記録する。平均的な効果（<code>average_outcome</code>）とは別に評価する</td></tr>
+    <tr><th scope="row" rowspan="4">Downside<br>（閉じる・試す）</th><td><code>blast_radius</code></td><td>失敗の上限を先に宣言する。範囲（scope）と大きさ（max_loss）。未宣言なら影響が大きいものとして扱う</td></tr>
+    <tr><td><code>reversibility</code></td><td>撤回・縮小・修正できるか。不可逆な案件では max_loss の宣言が必須</td></tr>
+    <tr><td><code>failure_domain</code></td><td>失敗を外へ伝播させない区画</td></tr>
+    <tr><td><code>depends_on</code></td><td>依存先。同じ依存先への集中を見るために使う</td></tr>
+    <tr><th scope="row" rowspan="4">Continuity<br>（残す・伝える）</th><td><code>owner</code></td><td>いまの保有者</td></tr>
+    <tr><td><code>custody_chain</code></td><td>担当交代の追記記録</td></tr>
+    <tr><td><code>re_derivation_basis</code></td><td>後任が判断を再導出できる根拠</td></tr>
+    <tr><td><code>review_triggers</code></td><td>何が変われば見直すか</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="metrics">8. 指標</h2>
+<p>指標は Δ の観測装置であり、判断の入力です。判断を置き換えません。芯の指標は5原則の順に並びます（<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/metrics.yaml">metrics.yaml</a>）。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">原則</th><th scope="col">指標</th><th scope="col">捉えるもの</th></tr></thead>
+  <tbody>
+    <tr><th scope="row" rowspan="4">残す</th><td><code>owner_missing</code></td><td>章の owner が不在、未割当、または事実上機能していない</td></tr>
+    <tr><td><code>custody_gap</code></td><td>担当が交代したのに引き渡しの記録がない。または再導出の確認なしに保有が始まった</td></tr>
+    <tr><td><code>one_shot_improvement</code></td><td>業務・担当・技術の変化で改善が無効になり、何も残らなかった</td></tr>
+    <tr><td><code>positive_delta_without_holder</code></td><td>Positive Δ を観測したが、保有者が決まっていない</td></tr>
+    <tr><th scope="row" rowspan="3">見つける</th><td><code>spread_signal_observed</code></td><td>宣言した兆候、または宣言していなかった兆候を観測した（Positive Δ の検知）</td></tr>
+    <tr><td><code>success_without_spread_signal</code></td><td>平均的な効果は出たが、宣言した兆候が一つも観測されない</td></tr>
+    <tr><td><code>reuse_cost_trend</code></td><td>残したものを別の場所に適用するコストの推移</td></tr>
+    <tr><th scope="row" rowspan="5">閉じる</th><td><code>precondition_broken</code></td><td>宣言した成立条件・禁止条件・引き受け条件が破られた</td></tr>
+    <tr><td><code>blast_radius_undeclared</code></td><td>不可逆または高コストの判断が、最大損失の宣言なしに実行・承認された</td></tr>
+    <tr><td><code>blast_radius_exceeded</code></td><td>実際の損失や影響範囲が、宣言した上限を超えた</td></tr>
+    <tr><td><code>transitive_trust</code></td><td>上流の結論が、境界で確かめ直されないまま下流の前提になっている</td></tr>
+    <tr><td><code>concentration</code></td><td>多くの案件・境界が、同じ依存先や同じ判断経路を共有している</td></tr>
+    <tr><th scope="row" rowspan="2">試す</th><td><code>expand_beyond_recovery</code></td><td>適用範囲の拡大に、復旧・撤回の能力が追いついていない</td></tr>
+    <tr><td><code>halt_readiness</code></td><td>停止命令、人間の介入、安全退避が実際に発動できる状態にあるか</td></tr>
+    <tr><th scope="row" rowspan="2">伝える</th><td><code>decision_without_basis</code></td><td>判断の根拠が記録されていない。または結論だけが渡されている</td></tr>
+    <tr><td><code>review_trigger_missing</code></td><td>長く続く案件が、事象による見直し条件を持っていない</td></tr>
+    <tr><th scope="row">運用</th><td><code>stagnation</code></td><td>閉じられるべき案件が止まっている（未解決の Δ、期限を過ぎた Defer、終わらない Retire）</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Positive Δ を捉える指標は、停止や blocking を引き起こしません。最大でも warning です。</p>
+
+<h2 id="implementation">9. 5原則ごとの実装</h2>
+<p>正本の5原則を、VCDesign がどの仕組みで実装しているかの対応です（<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/implementation.md">implementation.md</a> §2 より）。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">原則</th><th scope="col">VCDesign の仕組み</th><th scope="col">指標</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">残す</th><td><code>residual_assets</code>（保有者付き）。点の責任と線の責任：<code>custody_chain</code>、<code>re_derivation_basis</code>、<code>review_triggers</code>、<code>last_reaffirmed</code></td><td>owner_missing、custody_gap、one_shot_improvement、positive_delta_without_holder</td></tr>
+    <tr><th scope="row">見つける</th><td>Positive Δ を異常として扱わず、観測 → 意味づけ → 保有者付きで再利用可能にする。<code>spread_signals</code> を開始時に宣言し、平均的な効果と分けて評価する。原因が特定できない上振れは guard で unknown とし、拡大の根拠にしない</td><td>spread_signal_observed、success_without_spread_signal、reuse_cost_trend</td></tr>
+    <tr><th scope="row">閉じる</th><td>分布を予測せず、増幅を下の4つで切る。致命的な下振れは、責任者の有無によらず停止する（<code>judgment_gate.hard_stops</code>）</td><td>precondition_broken、blast_radius_undeclared、blast_radius_exceeded、transitive_trust、concentration</td></tr>
+    <tr><th scope="row">試す</th><td><code>reversibility</code> を宣言する。状態は戻せるが、責任記録は追記のみ。Expand は拡大後の範囲でも復旧できることが条件。すべての運用経路に停止責任者を置く（<code>haltability</code>）</td><td>expand_beyond_recovery、halt_readiness</td></tr>
+    <tr><th scope="row">伝える</th><td>境界は損失を止め、根拠は通す（<code>basis_flow</code>）。結論は受け手の境界で確かめ直す（<code>revalidation</code>）。判断ごとに Upside / Downside / Continuity / Asymmetry の観点で根拠を残す（<code>decision.basis</code>）</td><td>decision_without_basis、review_trigger_missing</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>閉じる：増幅を切る4つの機構</h3>
+<p>極端な下振れは、連鎖・再利用・集中・フィードバックによって、一つの失敗が次の失敗を生むことで起きます。VCDesign はその増幅を次の4つで切ります。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">機構</th><th scope="col">何を切るか</th><th scope="col">宣言・仕組み</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">区画を分ける</th><td>区画をまたぐ伝播</td><td><code>failure_domain</code>、境界の containment</td></tr>
+    <tr><th scope="row">上限を宣言する</th><td>損失の大きさ</td><td><code>blast_radius</code>（scope と max_loss）</td></tr>
+    <tr><th scope="row">境界で確かめ直す</th><td>上流の誤りの増幅</td><td>境界の revalidation、<code>upstream_basis_refs</code></td></tr>
+    <tr><th scope="row">集中を避ける</th><td>共通原因による同時故障</td><td><code>depends_on</code>、指標 concentration</td></tr>
+  </tbody>
+</table>
+</div>
+<p>外から来る極端な事象は消せません。扱うのは、それが内部でどこまで広がるかです。</p>
+
+<h2 id="axioms">10. 公理 A1〜A5</h2>
+<p>公理は適合判定の起点です。いずれかに反する実装は、ほかの仕様を満たしていても適合しません（<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/axioms.yaml">axioms.yaml</a>）。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">公理</th><th scope="col">内容</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">A1 責任を消さない</th><td>すべての Δ（負・正とも）に名前のある owner を付ける。Negative Δ は owner が閉じ、Positive Δ は owner が生まれたものを保有する。責任は移したり解放したりできるが、黙って無所有にはならない</td></tr>
+    <tr><th scope="row">A2 実行は人間の判断が許可した範囲の中</th><td>人間が閉じた判断で許可された範囲を越える実行は行わない。範囲の内側では、ループは必要なだけ自律的に動いてよい。範囲を越える変化は Δ として観測し、判断し直す。越えた境界ごとに guard の判定があり、unknown は止めて上げる</td></tr>
+    <tr><th scope="row">A3 AI は最終責任を持たない</th><td>AI は提案・分析・検知をしてよいが、最終責任を持ったり割り当てたりしない。すべての判断の final_decider は人間</td></tr>
+    <tr><th scope="row">A4 時間の分離</th><td>速いループ（物理・意味）は、遅いループ（価値・責任）が定めた制約を、しかるべき層での明示的な再判断なしに書き換えない</td></tr>
+    <tr><th scope="row">A5 責任は希少な資源</th><td>責任を保有し果たす力には限りがある。過負荷は、その人が持つすべての判断を劣化させる</td></tr>
+  </tbody>
+</table>
+</div>
+<p>公理が衝突して見えるときの優先順位は A2 &gt; A3 &gt; A1 &gt; A4 &gt; A5 です。衝突は supervisor か final_decider が解き、どちらかを黙って上書きしません。</p>
+<p class="source">公理の原文は英語です。上の表は要約で、判定には原文を使います。適合チェックの一覧は <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/validation/conformance.md">conformance.md</a> にあります。</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">仕様（GitHub）</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity 正本（GitHub）</a></li>
+      <li><a href="../legacy/">過去の資料</a></li>
+    </ul>
+    <p>このサイトは説明です。規範は GitHub の <code>specs/</code> にあり、食い違う場合は仕様が優先します。</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

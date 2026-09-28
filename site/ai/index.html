@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 拡張 | VCDesign</title>
+<meta name="description" content="AI は判断を支援するが、責任を持たない。4つのループと時間スケール、LLM の配置、エージェントの実行ゲート、統治できる AI エージェントの12原則。">
+<link rel="canonical" href="https://vcdesign.org/ai/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/ai/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/ai/">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../en/ai/" hreflang="en" lang="en">English</a>
+  </div>
+  <nav class="site-nav" aria-label="サイト内">
+    <ul>
+      <li><a href="../">トップ</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/">芯</a></li>
+      <li><a href="../decision/">判断</a></li>
+      <li><a href="../examples/">事例</a></li>
+      <li><a href="../ai/" aria-current="page">AI 拡張</a></li>
+      <li><a href="../migration/">v1 からの移行</a></li>
+      <li><a href="../projects/">関連プロジェクト</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">VCDesign 固有の拡張</p>
+<h1>AI 拡張</h1>
+<p class="lead">AI は判断を支援しますが、責任を持ちません。能力の大きさは権限を意味しません。</p>
+
+<div class="note">
+  <p>AI 統制は、芯の6つ（Δ・責任・境界・判断・宣言・指標）の外側に置いた、VCDesign 固有の拡張です。規範は <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/policies.yaml">policies.yaml</a>（<code>ai_extension</code>、<code>haltability</code>）、<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/metrics.yaml">metrics.yaml</a>（<code>ai_extension</code>）、<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/axioms.yaml">axioms.yaml</a>（A3、A4）にあります。このページは <a href="https://github.com/VCDesign-org/vcdesign/blob/main/docs/ai-extension.md">docs/ai-extension.md</a> の説明枠をもとにしています。</p>
+</div>
+
+<nav class="toc" aria-labelledby="toc-title">
+  <h2 id="toc-title">このページの内容</h2>
+  <ol>
+    <li><a href="#premise">前提：AI の導入は境界設計の問題</a></li>
+    <li><a href="#loops">4つのループと時間スケール</a></li>
+    <li><a href="#llm">LLM の配置</a></li>
+    <li><a href="#agent">モデルとエージェント、実行前のゲート</a></li>
+    <li><a href="#halt">停止できること</a></li>
+    <li><a href="#layers">外部説明のための5層</a></li>
+    <li><a href="#twelve">統治できる AI エージェントの12原則</a></li>
+    <li><a href="#boundaries">関係する責任境界</a></li>
+    <li><a href="#growth">成長の定義</a></li>
+  </ol>
+</nav>
+
+<h2 id="premise">1. 前提：AI の導入は境界設計の問題</h2>
+<p>非連続な推論（AI）を、連続して動く現実のシステムにつなぐとき、説明できること・止められること・責任を失わないこと。これが AI 統制の中心の問いです。</p>
+<p>AI は分析、パターンの検出、推奨、異常の検知、広がりの兆候の証拠集めをしてよく、自動分類や優先順位付けはレビューを条件に行えます。最終判断、責任の割り当て、Reframe・Retire・Expand の実行はしません。</p>
+
+<h2 id="loops">2. 4つのループと時間スケール</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">ループ</th><th scope="col">役割</th><th scope="col">時間スケール</th><th scope="col">主なリスク</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Physical</th><td>実行、安定、連続する動き</td><td>ミリ秒〜時間</td><td>現実の不安定化、取り返しのつかない被害</td></tr>
+    <tr><th scope="row">Semantic</th><td>解釈、Δ の意味づけ、非連続な推論</td><td>秒〜日</td><td>ノイズを Δ と読む、意味のある変化を見落とす</td></tr>
+    <tr><th scope="row">Value</th><td>目的、制約、最適化の方向</td><td>日〜四半期</td><td>目的の隠れた書き換え</td></tr>
+    <tr><th scope="row">Responsibility</th><td>最終判断、停止、説明責任</td><td>即時〜ライフサイクル全体</td><td>止められない運用、責任の消失</td></tr>
+  </tbody>
+</table>
+</div>
+<ul>
+  <li>ループを一つの時計に潰しません。<strong>速いループは遅いループの制約を書き換えません</strong>（公理 A4）。意味の更新は価値のレビューを迂回しません。</li>
+  <li>遅い統治のループは、いつでも速い実行のループを止められます。</li>
+  <li>各ループで許される構成要素と禁じられる構成要素は <code>policies.yaml ai_extension.loops</code> にあります。</li>
+</ul>
+
+<h2 id="llm">3. LLM の配置</h2>
+<p>LLM は主に Semantic ループに置きます。解釈し推奨してよいですが、物理の制御、目的の設定、最終権限は持たせません。LLM の出力が現実に作用する前には、明示的なゲートを置きます（<code>ai_extension.llm_placement</code>）。</p>
+
+<h2 id="agent">4. モデルとエージェント、実行前のゲート</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">観点</th><th scope="col">モデル</th><th scope="col">エージェント</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">作用範囲</th><td>出力テキスト、分類、推論</td><td>ツール実行、外部システムへの書き込み、連鎖操作</td></tr>
+    <tr><th scope="row">時間軸</th><td>単一の推論</td><td>複数ステップ、長時間の動作</td></tr>
+    <tr><th scope="row">境界の数</th><td>入力と出力の2面</td><td>操作ごとに境界が生じる</td></tr>
+    <tr><th scope="row">責任経路</th><td>最終判断者が1層上</td><td>判断者が複数ステップに散らばる</td></tr>
+    <tr><th scope="row">停止の難しさ</th><td>低い</td><td>高い（実行途中の安全な中断が要る）</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>計画が合理的であることと、実行が許可されていることは別です。</strong>エージェントには、実行の前に次を確かめるゲートを置きます（<code>ai_extension.agent_execution_gate</code>）。</p>
+<ul>
+  <li>行動が宣言された権限の内側にある（責任境界 B17 Impact ↔ Accountability）</li>
+  <li>責任を持つ主体が特定されている</li>
+  <li>可逆性が宣言されている。不可逆なら最大損失が宣言されている</li>
+  <li>開始前に停止責任者が指名されている</li>
+</ul>
+<p>避けるのは、LLM から実行機器への直接の経路、目的の黙った書き換え、エージェントの計画を実行の承認として扱うこと、の3つです。supervisor は責任の最終収束点で、最終判断を AI に委ねません。</p>
+
+<h2 id="halt">5. 停止できること</h2>
+<p>停止できることは、責任統治が成り立つための条件です（<code>policies.yaml haltability</code>）。</p>
+<ul>
+  <li>すべての運用経路に、名前のある停止責任者がいる</li>
+  <li>緊急停止は、必須でない自動化を迂回する</li>
+  <li>人間による上書きは、劣化した状況でも働く</li>
+  <li>巻き戻し先、または安全な状態が定義されている</li>
+  <li>停止の後に、理由と責任をレビューして記録する</li>
+</ul>
+
+<h2 id="layers">6. 外部説明のための5層</h2>
+<p>4つのループを、外部に説明するために5層に並べ直したものです。規範は4つのループの側にあります。</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">層</th><th scope="col">内容</th><th scope="col">対応</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">5. Human Sovereignty</th><td>人間が最終的に介入・停止・説明できる</td><td>Responsibility ループ、haltability</td></tr>
+    <tr><th scope="row">4. Time</th><td>時間スケールの分離と、遅いループの保護</td><td>temporal_separation</td></tr>
+    <tr><th scope="row">3. Responsibility</th><td>誰が何を保有し、説明するか</td><td>責任、担当交代の記録</td></tr>
+    <tr><th scope="row">2. Agent</th><td>実行境界、ツール制御、複数エージェントの協調</td><td>境界パターン、agent_execution_gate</td></tr>
+    <tr><th scope="row">1. Model</th><td>推論・解釈・提案（出力のみ、実行なし）</td><td>Semantic ループ</td></tr>
+  </tbody>
+</table>
+</div>
+<p>下の層の能力は、上の層の統治なしに広げません。</p>
+
+<h2 id="twelve">7. 統治できる AI エージェントの12原則</h2>
+<ol>
+  <li><strong>能力は権限ではない</strong> — 推論や実行の能力は、承認の権限とは別である。</li>
+  <li><strong>行動には境界が要る</strong> — 外部へ作用する範囲を、先に定義する。</li>
+  <li><strong>すべての行動に責任者を付ける</strong> — 責任者のいない自律は、組織では採用できない。</li>
+  <li><strong>最終決定は人間に残す</strong> — AI は提案・分析・優先順位付けまで。</li>
+  <li><strong>ログは構造記憶である</strong> — なぜその判断になったかを、未来へ引き継ぐ。</li>
+  <li><strong>局所最適より価値の継続</strong> — 再利用・保守・引継ぎができ、信頼が積み上がる AI の方が価値が高い。</li>
+  <li><strong>不確実性を隠さない</strong> — 迷っているときは、判定できないことを明示する（境界の guard：unknown）。</li>
+  <li><strong>時間は第一級の制約</strong> — 同じ判断でも、今すぐ・今週・来月・年次で最適解が変わる。</li>
+  <li><strong>エスカレーションは機能である</strong> — 人へ戻すことは能力不足ではなく、設計された安全機構である。</li>
+  <li><strong>複数エージェントには憲法が要る</strong> — 優先順位、衝突解決、権限分離、共通の禁止事項。</li>
+  <li><strong>交換可能性が主権を守る</strong> — 特定のベンダーやモデルへの過度な依存を避ける（指標 concentration）。</li>
+  <li><strong>説明と責任</strong> — 内部の推論は不透明でもよい。採用理由・実行履歴・責任経路・停止条件は説明できなければならない。</li>
+</ol>
+
+<h2 id="boundaries">8. 関係する責任境界</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">B#</th><th scope="col">境界</th><th scope="col">エージェントで問題になる場面</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">B1</th><td>Human ↔ AI Judgment</td><td>エージェントが自律的に判断を閉じる</td></tr>
+    <tr><th scope="row">B5</th><td>Decision ↔ Action</td><td>判断と実行の間のゲートが消える</td></tr>
+    <tr><th scope="row">B6</th><td>Responsibility Assignment</td><td>複数エージェントで責任が拡散する</td></tr>
+    <tr><th scope="row">B10</th><td>Temporal</td><td>長時間の動作で「今の判断」が永続する</td></tr>
+    <tr><th scope="row">B16</th><td>Model ↔ Reality</td><td>エージェントの行動が学習データを汚染する</td></tr>
+    <tr><th scope="row">B17</th><td>Impact ↔ Accountability</td><td>影響範囲が権限を超える</td></tr>
+  </tbody>
+</table>
+</div>
+<p>定義は <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/catalog/boundaries/taxonomy.md">taxonomy.md</a>、一覧は <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/catalog/boundaries/registry.md">registry.md</a> にあります。</p>
+
+<h2 id="growth">9. 成長の定義</h2>
+<p>AI の成長は、モデル能力の増大ではなく、責任制約の下での運用適合の改善として評価します（<code>metrics.yaml ai_extension</code>）。</p>
+<p>製造現場での適用は<a href="../examples/#factory">事例：製造現場の AI エージェント</a>を参照してください。</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">仕様（GitHub）</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity 正本（GitHub）</a></li>
+      <li><a href="../legacy/">過去の資料</a></li>
+    </ul>
+    <p>このサイトは説明です。規範は GitHub の <code>specs/</code> にあり、食い違う場合は仕様が優先します。</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Examples | VCDesign</title>
+<meta name="description" content="Point versus line improvement, custody across handovers, and a factory AI agent: three examples showing how VCDesign declarations and decisions are recorded at fictional sites.">
+<link rel="canonical" href="https://vcdesign.org/en/examples/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/examples/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/examples/">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../../examples/" hreflang="ja" lang="ja">日本語</a>
+  </div>
+  <nav class="site-nav" aria-label="Site">
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/">Core</a></li>
+      <li><a href="../decision/">Decisions</a></li>
+      <li><a href="../examples/" aria-current="page">Examples</a></li>
+      <li><a href="../ai/">AI extension</a></li>
+      <li><a href="../migration/">From v1</a></li>
+      <li><a href="../projects/">Related projects</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">Applications</p>
+<h1>Examples</h1>
+<p class="lead">Three examples of how declarations and decisions are recorded. All factories, organizations, people and figures are fictional.</p>
+<p class="source">This page is a summary. The full records and YAML are in <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/examples/">specs/examples/</a> (written in Japanese).</p>
+
+<nav class="toc" aria-labelledby="toc-title">
+  <h2 id="toc-title">On this page</h2>
+  <ol>
+    <li><a href="#point-line">Point versus line improvement — what remains when work changes</a></li>
+    <li><a href="#custody">Custody across handovers — who holds it after approval</a></li>
+    <li><a href="#factory">A factory AI agent — separating the physical and semantic loops</a></li>
+  </ol>
+</nav>
+
+<h2 id="point-line">1. Point versus line improvement</h2>
+<p class="source">Keep, find, try / <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/examples/point-vs-line-improvement.md">point-vs-line-improvement.md</a></p>
+
+<h3>Situation</h3>
+<p>At Kitahara, a fictional parts factory, two improvements start at the same time. Improvement A automates daily reports with a spreadsheet macro. Improvement B collects equipment operating data on a small industrial PC to make stoppage causes visible. Three months later both are judged effective, and on average A (30 minutes a day) looks larger than B (20 minutes a day).</p>
+<p>A year later, the company changes its report format. A's macro stops working, its author has moved to another team, and the reports go back to manual work. <strong>When the work changed, nothing remained.</strong> B is rolled out to line 2 in about half the effort of line 1, and the quality control section, which nobody asked, requests the data. When the PC's operating system reaches end of support, the team updates it without stopping the line.</p>
+
+<h3>What was declared</h3>
+<ul>
+  <li>A: <code>residual_assets</code> empty, no spread signals declared → treated as a point improvement</li>
+  <li>B: a standard OS image, a factory-wide stoppage code system, the skill to switch to a spare unit, and the equipment configuration record are each declared in <code>residual_assets</code> with a holder. <code>spread_signals.expected</code>: cheaper second use, unsolicited pull. <code>blast_radius</code> declares that it never writes to control systems</li>
+</ul>
+
+<h3>Decisions</h3>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col"></th><th scope="col">Average effect</th><th scope="col">Spread signals</th><th scope="col">What remains</th><th scope="col">Decision</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">A</th><td>Yes</td><td>None</td><td>None</td><td>Proceed (kept small); Retire when the format changes</td></tr>
+    <tr><th scope="row">B</th><td>Yes</td><td>Two observed</td><td>Four, with holders</td><td>Expand (line 4 and a read-only feed to quality control)</td></tr>
+  </tbody>
+</table>
+</div>
+<p>B's Expand is recorded as a decision that updates the <code>blast_radius</code> declaration, before and after, without changing the chapter. The signals were not the only basis: switchover drills had shown that the widened scope could still be recovered. A is not a bad improvement. It is enough to decide in advance whether to keep it small or end it when the format next changes.</p>
+
+<h2 id="custody">2. Custody across handovers</h2>
+<p class="source">Keep, pass on / <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/examples/custody-handover.md">custody-handover.md</a> (<a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/examples/custody-handover-case.yaml">machine-readable case</a>)</p>
+
+<h3>Situation</h3>
+<p>A company lets an LLM-based auto-responder handle first-line customer inquiries, running at night and on holidays with nobody watching. A person in the IT department closes the decision "refund and cancellation inquiries are never completed by the auto-responder; they are always escalated to a human" (Proceed). When the model is replaced, classification behaviour changes; when that person moves on, nobody knows the basis.</p>
+
+<h3>What was declared</h3>
+<ul>
+  <li><code>value_intent</code>: what is protected is not the automation rate but the continuity of customer trust</li>
+  <li><code>re_derivation_basis</code>: the premises and evidence, such as the need for humans to absorb what the classifier of the time missed</li>
+  <li><code>review_triggers</code>: model replacement, a change of refund or cancellation policy, a large shift in the escalation rate, a change in the underlying regulation — events, not the calendar</li>
+</ul>
+
+<h3>Decisions</h3>
+<ol>
+  <li>The owner's transfer is appended to <code>custody_chain</code>, with confirmation that the successor can re-derive the judgment</li>
+  <li>The vendor replaces the model and a review trigger fires. The new model is more accurate, but what is protected is trust, not accuracy, so the successor rejects the shortcut "more accurate, so automate it", updates the basis and decides Proceed</li>
+  <li>The result is recorded as <code>last_reaffirmed</code>, renewing the tenure</li>
+</ol>
+<p>Approval at a gate starts responsibility; it does not sustain it. Without a handover record, it cannot be verified across the handover that responsibility did not disappear (axiom A1).</p>
+
+<h2 id="factory">3. A factory AI agent</h2>
+<p class="source">Close, try, AI extension / <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/examples/factory-agent-safe-loop.md">factory-agent-safe-loop.md</a></p>
+
+<h3>Situation</h3>
+<p>A factory introduces an AI agent that interprets sensor data (temperature, vibration, current), detects anomalies, proposes equipment control actions and plans maintenance. A late decision causes physical damage and production loss; an unnecessary stop from a wrong decision also costs production.</p>
+
+<h3>Design decisions</h3>
+<ul>
+  <li><strong>Separate the physical and semantic loops</strong> — the AI never operates the control system directly. A boundary sits before any AI proposal reaches the real world, and an operator closes the decision before instructions go to the control system</li>
+  <li><strong>Decide in advance which decision closes which severity</strong> — for an imminent safety risk, the on-site operator checks the evidence, stops the equipment and narrows the scope (Limit). For degradation within the safe range, the maintenance engineer holds it until the next maintenance cycle (Defer). For an ambiguous signal, the guard verdict is unknown and it is held until evidence is complete (Defer)</li>
+  <li><strong>Check that sensors reflect reality</strong> before the AI interprets them; if a fault is suspected, stop the AI's interpretation and switch to an on-site check</li>
+  <li><strong>Keep field knowledge</strong> — the AI presents hypotheses and evidence; experienced engineers add context and equipment history and decide. The log keeps the AI's hypothesis and the human assessment separate</li>
+  <li><strong>Design the halt</strong> — the halt owner is a role always present on site. Physical safety interlocks work independently of the AI's halt</li>
+  <li><strong>Do not add to the operators' load</strong> — if alerts increase, improve filtering rather than widening the AI's autonomy</li>
+</ul>
+<p>For the loops, see the <a href="../ai/">AI extension</a>; for the responsibility boundaries involved (B2, B3, B6, B9, B10, B15), see <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/catalog/boundaries/taxonomy.md">taxonomy.md</a>.</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">Specifications (GitHub)</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity, canonical (GitHub)</a></li>
+      <li><a href="../legacy/">Archive</a></li>
+    </ul>
+    <p>This site explains; it does not define. The norms live in <code>specs/</code> on GitHub, and the specs prevail where they differ.</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

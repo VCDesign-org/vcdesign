@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From v1 | VCDesign</title>
+<meta name="description" content="VCDesign v2 is not compatible with v1. The mapping of v1 vocabulary and records to v2, and where the old pages went.">
+<link rel="canonical" href="https://vcdesign.org/en/migration/">
+<link rel="alternate" hreflang="ja" href="https://vcdesign.org/migration/">
+<link rel="alternate" hreflang="en" href="https://vcdesign.org/en/migration/">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="../">VCDesign</a>
+    <a class="lang" href="../../migration/" hreflang="ja" lang="ja">日本語</a>
+  </div>
+  <nav class="site-nav" aria-label="Site">
+    <ul>
+      <li><a href="../">Home</a></li>
+      <li><a href="../value-continuity/">Value Continuity</a></li>
+      <li><a href="../core/">Core</a></li>
+      <li><a href="../decision/">Decisions</a></li>
+      <li><a href="../examples/">Examples</a></li>
+      <li><a href="../ai/">AI extension</a></li>
+      <li><a href="../migration/" aria-current="page">From v1</a></li>
+      <li><a href="../projects/">Related projects</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main">
+<p class="eyebrow">Migration</p>
+<h1>From v1</h1>
+<p class="lead">VCDesign v2 is not compatible with v1. Read v1 vocabulary and records as follows.</p>
+<p class="source">Source: <a href="https://github.com/VCDesign-org/vcdesign/blob/main/specs/core/implementation.md">implementation.md</a> §6 "v1 からの移行". The table is the specification's, translated where it contains Japanese.</p>
+
+<div class="note">
+  <p>v1 vocabulary is used only on this page and in the <a href="../legacy/">archive</a>. Every other page uses v2 vocabulary only.</p>
+</div>
+
+<h2 id="table">Vocabulary and records</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">v1</th><th scope="col">v2</th></tr></thead>
+  <tbody>
+    <tr><td>action: fix</td><td>decision: proceed</td></tr>
+    <tr><td>action: reframe / defer / retire</td><td>decision: reframe / defer / retire</td></tr>
+    <tr><td>decision posture: commit</td><td>proceed (limit when narrowing the scope to stop immediately)</td></tr>
+    <tr><td>decision posture: reconsider</td><td>defer (the guard verdict is unknown)</td></tr>
+    <tr><td>decision posture: abandon</td><td>retire</td></tr>
+    <tr><td>decision_size: no_go / small_go / scale_go</td><td>retire (do not start) / proceed or limit / expand</td></tr>
+    <tr><td>Long-term judgment postures (small_go / defer_or_experiment / deny_or_reframe)</td><td>Settled at the judgment gate as one of the six words</td></tr>
+    <tr><td>RCL: Close / DeferToPool / Abort</td><td>proceed / defer / halt, then retire or defer. The core of RCL (a confirmed Δ stays under responsibility until a decision closes it; an undefined point at design time is also a Δ) is kept as <code>core.yaml closure_loop</code></td></tr>
+    <tr><td>long_term_decision_gate, scale_gate, reframe / defer / retire_control</td><td><code>policies.yaml judgment_gate</code></td></tr>
+    <tr><td>tail_signals</td><td>spread_signals</td></tr>
+    <tr><td>action_history</td><td>decision_history</td></tr>
+    <tr><td>why_action</td><td>decision.basis</td></tr>
+    <tr><td>promise_broken</td><td>precondition_broken</td></tr>
+    <tr><td>unresolved_duration_exceeded, defer_stagnation, retirement_pending_too_long</td><td>stagnation</td></tr>
+    <tr><td>dependency_concentration, judgment_concentration</td><td>concentration</td></tr>
+    <tr><td>upside_signal_observed, tail_signal_absent_on_success, scale_beyond_recovery</td><td>spread_signal_observed, success_without_spread_signal, expand_beyond_recovery</td></tr>
+    <tr><td>long_term_judgment_metrics, repeated_reframe, reaffirmation_decay</td><td>Removed (replaced by the judgment gate and the core metrics)</td></tr>
+    <tr><td>Judgment Closure (ACCEPTED / DENIED / UNKNOWN)</td><td>A crossing is checked by the boundary guard verdict (pass / deny / unknown); a case's Δ is closed by the six decisions</td></tr>
+    <tr><td>Judgment Proposal, Responsibility Asset, Resolution, Resolution Handshake</td><td>AI output is a proposal until a human closes the decision. The scope, deadline and evidence of a closed decision are its declaration (blast_radius, next_review_at, reversal_window) and the decision log</td></tr>
+    <tr><td>RCA pattern, IDG pattern</td><td>guard and determinability in <code>patterns/boundary-pattern.yaml</code></td></tr>
+    <tr><td>protocols/ (judgment-closure, resolution-handshake)</td><td>Removed (absorbed by the two rows above; crossings between organizations are the boundary's external_crossing)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="pages">Where the old pages went</h2>
+<p>The site was restructured for v2: Japanese at the root, English under <code>/en/</code>. Old URLs remain as pages that point to the new location.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th scope="col">Old page</th><th scope="col">Now</th></tr></thead>
+  <tbody>
+    <tr><td>Home (v1)</td><td><a href="../legacy/v1/">Archive: the v1 home page</a>. The v2 entry is <a href="../">Home</a></td></tr>
+    <tr><td>Reality Fit / Adaptive Loop Model</td><td>Merged into the <a href="../ai/">AI extension</a></td></tr>
+    <tr><td>VC-AD, Why VC-AD?, Basic Constitution</td><td><a href="../legacy/vc-ad/">Archive: earlier VC-AD pages</a>. The current introduction is <a href="../vc-ad/">VC-AD</a></td></tr>
+    <tr><td>Agent Era (five layers), Maturity Profile, Gate / Tenure</td><td>The five layers and twelve principles are in the <a href="../ai/">AI extension</a>; gate and tenure in <a href="../core/#responsibility">Core: responsibility</a>. The Maturity Profile was removed in v2</td></tr>
+    <tr><td>Constitution and Manifesto (on the home page)</td><td><a href="../legacy/v1/">Archive: the v1 home page</a></td></tr>
+    <tr><td>English pages at the site root (e.g. <code>/tddd/</code>)</td><td>The same name under <code>/en/</code> (e.g. <code>/en/tddd/</code>)</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="specs">Removed or merged specification files</h2>
+<p>v1 files such as <code>specs/core/decision-posture.yaml</code>, <code>agent-era-model.md</code>, <code>ai-adaptive-loop-model.md</code>, <code>value-tenure-model.md</code>, <code>validation/vcdesign-maturity-profile.md</code>, <code>patterns/rcl/</code> and <code>protocols/</code> were removed or merged in v2. See <a href="https://github.com/VCDesign-org/vcdesign/pull/5">VCDesign-org/vcdesign#5</a> for the full change.</p>
+</main>
+<footer class="site-footer">
+  <div class="inner">
+    <ul>
+      <li><a href="https://github.com/VCDesign-org/vcdesign">Specifications (GitHub)</a></li>
+      <li><a href="https://github.com/value-continuity/value-continuity">Value Continuity, canonical (GitHub)</a></li>
+      <li><a href="../legacy/">Archive</a></li>
+    </ul>
+    <p>This site explains; it does not define. The norms live in <code>specs/</code> on GitHub, and the specs prevail where they differ.</p>
+    <p>© 2026 VCDesign</p>
+  </div>
+</footer>
+</body>
+</html>

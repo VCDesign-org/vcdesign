@@ -4,9 +4,6 @@
     <meta charset="UTF-8" />
     <title>VCDesign</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=IBM+Plex+Mono:wght@300;400&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -418,11 +415,25 @@
             footer { flex-direction: column; align-items: flex-start; }
         }
     </style>
+    <style>
+        .warning-box { max-width: 960px; margin: 16px auto 8px; padding: 12px 16px; border: 1px solid #d97706; background: rgba(217, 119, 6, 0.12); border-radius: 6px; font: 14px/1.7 system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", sans-serif; }
+        .legacy-intro { max-width: 960px; margin: 0 auto; padding: 0 16px; font: 14px/1.7 system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", sans-serif; }
+        .legacy-intro p { margin: 4px 0; }
+        .warning-box a { color: inherit; text-decoration: underline; }
+    </style>
 </head>
 <body>
+<div class="legacy-intro">
+    <div class="warning-box">
+        <strong>⚠️ Historical Document Notice</strong><br>
+        This page predates VCDesign v2 and is not the current norm. The current authority is specs/core/core.yaml, specs/core/policies.yaml and specs/core/metrics.yaml. To read older terms, see <a href="../../migration/">From v1</a>.
+    </div>
+    <p><em>This page has been superseded by VCDesign v2. The current entry point is the home page.</em></p>
+    <p><em>This document represents the conceptual lineage that led to the current model.</em></p>
+</div>
 
     <nav class="top-nav">
-        <a href="/ja/" class="lang-link">日本語</a>
+        <a href="../../../legacy/v1/" class="lang-link">日本語</a>
     </nav>
 
     <main class="frame">
@@ -474,19 +485,19 @@
                     <p class="entry-card-desc">Approval and responsibility are not the same. Understand the concept of boundaries through a story about expense approval.</p>
                     <span class="entry-card-arrow">→ idk-lamp.org</span>
                 </a>
-                <a class="entry-card" href="./vc-ad/">
+                <a class="entry-card" href="../vc-ad/">
                     <p class="entry-card-tag">Development design collapses</p>
                     <p class="entry-card-title">Boundary design to maximize AI</p>
                     <p class="entry-card-desc">Hand the design document to AI and refine boundaries and responsibility placement through dialogue. The VC-AD YAML is the starting point.</p>
                     <span class="entry-card-arrow">→ VC-AD Getting Started</span>
                 </a>
-                <a class="entry-card" href="./vms/">
+                <a class="entry-card" href="../../vms/">
                     <p class="entry-card-tag">Management decisions stagnate</p>
                     <p class="entry-card-title">Structure management troubles</p>
                     <p class="entry-card-desc">"No money left", "No passion bubbling up". Design responsibilities and Decisions from symptoms.</p>
                     <span class="entry-card-arrow">→ VMS</span>
                 </a>
-                <a class="entry-card" href="./re-derivation-layer/">
+                <a class="entry-card" href="../../re-derivation-layer/">
                     <p class="entry-card-tag">Field judgment cannot be explained</p>
                     <p class="entry-card-title">Make a robot's judgment explainable afterward</p>
                     <p class="entry-card-desc">“P-102 inspection complete” — but under whose authority, and on what basis? Design the layer that converts motion into meaning and responsibility.</p>
@@ -509,7 +520,7 @@
                     <div>
                         <p class="flow-content-title">Define value and boundaries</p>
                         <p class="flow-content-desc">Articulate what you want to protect and what constitutes failure if broken. Use the Value Review Sheet to finalize Chapter Preconditions.</p>
-                        <a class="flow-link" href="./value-review/">→ value-review</a>
+                        <a class="flow-link" href="../../value-review/">→ value-review</a>
                     </div>
                 </div>
                 <div class="flow-step">
@@ -517,7 +528,7 @@
                     <div>
                         <p class="flow-content-title">Hand design docs to AI and refine boundaries</p>
                         <p class="flow-content-desc">Ask AI: "Tell me what's missing based on VCDesign." Create decisions.yaml and boundaries.yaml through dialogue. These become instructions for the AI agent.</p>
-                        <a class="flow-link" href="./vc-ad/">→ VC-AD</a>
+                        <a class="flow-link" href="../vc-ad/">→ VC-AD</a>
                     </div>
                 </div>
                 <div class="flow-step">
@@ -525,7 +536,7 @@
                     <div>
                         <p class="flow-content-title">Run development with boundaries as a premise</p>
                         <p class="flow-content-desc">Separate Loop A (Boundary Decision) from Loop B (Implementation by AI). Observe Δ (deviation) and select Action in Loop C.</p>
-                        <a class="flow-link" href="./tddd/">→ TDDD</a>
+                        <a class="flow-link" href="../../tddd/">→ TDDD</a>
                     </div>
                 </div>
                 <div class="flow-step">
@@ -533,7 +544,7 @@
                     <div>
                         <p class="flow-content-title">Check deviations from reality</p>
                         <p class="flow-content-desc">Verify how Core and Policies connect to the actual AI operational loops.</p>
-                        <a class="flow-link" href="./reality-fit/">→ Reality Fit / Adaptive Loop Model</a>
+                        <a class="flow-link" href="../../ai/">→ Reality Fit / Adaptive Loop Model</a>
                     </div>
                 </div>
                 <div class="flow-step">
@@ -744,13 +755,13 @@ Human Sovereignty:    Enforced</pre>
 
             <ul class="link-list">
                 <li>
-                    <a href="./research/deepresearch-2026-03.pdf">
+                    <a href="../../../research/deepresearch-2026-03.pdf">
                         <span class="label">2026-03 — Value Continuity Design in Autonomous Systems (VCDesign)</span>
                         <span class="desc">Next-generation OS for responsibility governance and industrial resilience</span>
                     </a>
                 </li>
                 <li>
-                    <a href="./research/deepresearch-2026-01.pdf">
+                    <a href="../../../research/deepresearch-2026-01.pdf">
                         <span class="label">2026-01 — System Design Theory in a World of Unstable Value</span>
                         <span class="desc">Comprehensive analysis report on VCDesign and Boundary-Oriented Architecture (BOA)</span>
                     </a>
