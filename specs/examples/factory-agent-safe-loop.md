@@ -76,7 +76,7 @@ AI は Physical Loop（制御系）を直接操作しない。
                               制御系への指示（境界の guard: pass）
 ```
 
-`core.yaml / adaptive_loop_model` の `physical_loop.forbidden_components: llm_as_direct_controller` の実装。
+`policies.yaml / ai_extension / loops` の `physical_loop.forbidden: llm_as_direct_controller` の実装。
 
 ---
 
@@ -125,7 +125,7 @@ anomaly_response_design:
       追加情報収集と専門家による再評価が必要。
       AI の仮説は参考情報として提示するが、
       確定判断は証拠が揃うまで保留。
-    idg_required: true   # Interface Determinability Gate を通す
+    guard_verdict: unknown   # 境界の guard の determinability。判定できない入力は止めて上げる
 ```
 
 ---
@@ -258,35 +258,26 @@ operator_load_check:
 
 ---
 
-## Maturity Profile（製造業典型例）
+## 現状の点検（製造業典型例）
 
-```yaml
-profile:
-  context: Factory Operations Agent — Process Manufacturing
+判断ゲートと適合チェック（`validation/conformance.md`）に沿って点検すると、典型的な工場ではまず次が見つかる。
 
-  layers:
-    model:            Defined      # AI は提案のみ、但し unknown の判定は未実装
-    agent:            Unstructured # AI から制御系への直接パスが存在する
-    responsibility:   Defined      # 現場責任者は定義済み、承認トレースなし
-    time:             Partial      # 即時異常と長期劣化の分離が不完全
-    human_sovereignty: Enforced   # 物理的停止ボタンは機能、AI 停止経路は別途必要
+| 観点 | 状態 | 判定 |
+| --- | --- | --- |
+| AI の出力から制御系への経路 | AI の推奨から PLC のパラメータ書き込みへの直接経路がある | blocking（A2：人間が閉じた判断で許可された範囲の外で実行される） |
+| 停止責任者 | 物理系の停止責任者はいるが、AI 解釈システムの停止責任者がいない | blocking（haltability） |
+| 責任者と記録 | 現場責任者は決まっているが、判断ログが残っていない | warning（伝える：decision.basis） |
+| 時間スケール | 即時の異常と長期の劣化が同じ流れで扱われている | warning（A4） |
+| 判定できない信号 | guard の unknown が実装されていない | warning（境界の determinability） |
 
-  limiting_layer: agent
-  blocking_conditions:
-    - agent: "Direct path exists from AI recommendation to PLC parameter write"
-    - agent: "No halt_owner named for AI interpretation system (physical halt owner exists separately)"
-
-  recommended_action: >
-    CRITICAL: Remove direct AI-to-PLC path immediately.
-    All AI outputs must pass through an operator decision before physical actuation.
-    Name halt_owner for AI system (separate from physical safety officer).
-```
+最初の一手は、AI から PLC への直接経路をなくし、すべての AI 出力が、オペレーターの判断で許可された範囲を通ってから物理系に届くようにすることである。
+AI 解釈システムの停止責任者は、物理系の安全責任者とは別に名前を置く。
 
 ---
 
-## 「Governed」に到達した状態
+## 目指す状態
 
-- AI と Physical Loop の間に Discrete-to-Continuous Boundary が実装されており、直接パスが存在しない
+- AI と Physical Loop の間に境界（guard と containment）があり、直接の経路が存在しない
 - すべての設備制御提案に判断ログがあり、オペレーター名・証拠・リスク承認が含まれる
 - `operator_overload` メトリクスがシフトごとに観測され、AI のアラート粒度が調整されている
 - センサー較正履歴と AI 解釈の妥当性が月次でレビューされている
@@ -297,8 +288,8 @@ profile:
 
 ## 関連仕様
 
-- `core/core.yaml` — adaptive_loop_model（Physical/Semantic/Value/Responsibility の分離）
+- `core/policies.yaml` — ai_extension.loops（Physical / Semantic / Value / Responsibility の分離）と agent_execution_gate
 - `core/core.yaml` decision — limit（即時の停止と範囲限定）/ defer（計画的保全・曖昧信号）
 - `patterns/boundary-pattern.yaml` — guard の determinability（曖昧なセンサー信号は unknown）
-- `policies.yaml` — boundary_safety.discrete_to_continuous_boundary
+- `validation/conformance.md` — 適合チェック
 - `catalog/boundaries/taxonomy.md` — B2, B3, B6, B9, B10, B15
