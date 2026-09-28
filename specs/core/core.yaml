@@ -20,8 +20,9 @@ vcdesign_core:
 
     delta:
       description: >
-        章の成立条件または責任配置の維持可能性が崩れた兆候（Negative Δ）。
-        宣言した期待を上回るズレ（Positive Δ）も Δ として観測する。
+        開始時に宣言した期待（前提と価値）と、実際に起きたこととの差。定義は Value Continuity 正本に従う。
+        期待を下回る方向（Negative Δ）には、章の成立条件または責任配置の維持可能性が崩れた兆候を含む。
+        期待を上回る方向（Positive Δ）も Δ として観測する。
         向きの区別と扱いの非対称は delta_definition.polarity に定義する。
 
     action:
@@ -362,9 +363,13 @@ vcdesign_core:
 
     polarity:
       description: >
-        Δ は、宣言した前提・期待からのズレであり、向きを持つ。
-        期待との差を一律に異常と見なさない（Value Continuity 正本、システム設計への適用文書の補足
-        「Positive Δ と Negative Δ を区別する」に対応）。
+        Δ と Positive Δ / Negative Δ の定義は Value Continuity 正本（README.md「Δ（期待との差）」）に従う。
+        Δ は、開始時に宣言した期待と実際に起きたこととの差であり、期待は前提と価値の両方を含む。
+        Negative Δ は伝播させず、Positive Δ は伝播可能にする。Δ を一律に異常と見なさない。
+        VCDesign では、期待の前提を precondition（章の成立条件と責任配置を含む）、
+        価値を value_intent として宣言し、両方の向きを同じ基準線で観測する。
+        上振れの側の期待は、schema_case.tail_signals.expected として追加で宣言できる。
+        扱いの区別は正本のシステム設計への適用文書の補足「Positive Δ と Negative Δ を区別する」に対応する。
         levels と rules は両方の向きに共通して適用する。
         responsibility_impact_required は、Negative Δ では「どの責任配置が崩れるか」、
         Positive Δ では「誰がその上振れを保有するか」として評価する。
@@ -372,8 +377,8 @@ vcdesign_core:
       default: negative
       negative:
         description: >
-          章の成立条件・責任配置・価値が崩れる方向のズレ。
-          基準線は precondition と value_intent。
+          期待（前提と価値）を下回る方向の差。VCDesign では、章の成立条件・責任配置・価値が崩れる方向のズレとして現れる。
+          基準線は precondition と value_intent。伝播させない。
         handling:
           - localize   # 局所化する（downside_containment isolate / failure_domain）
           - mitigate   # 緩和する（Fix / Defer、blast_radius の範囲内での対処）
@@ -381,9 +386,11 @@ vcdesign_core:
         route: RCA / IDG → containment → action（fix / reframe / defer / retire）
       positive:
         description: >
-          宣言した期待を上回るズレ。再利用・接続・引き合いなど、次の価値を生む兆候。
-          基準線は value_intent と schema_case.tail_signals.expected。
-          宣言していなかった兆候も Positive Δ として観測する（tail_signals.unexpected）。
+          期待（前提と価値）を上回る方向の差。再利用・接続・引き合いなど、次の価値を生む兆候として現れる。
+          基準線は precondition と value_intent（Negative Δ と同じ）。上振れの側の期待を
+          schema_case.tail_signals.expected として宣言した場合は、それも基準線に含める。
+          tail_signals.expected に宣言していなかった兆候も、期待を上回る差であれば Positive Δ として観測する
+          （tail_signals.unexpected）。伝播可能にする。
         handling:
           - observe            # 観測する（semantic loop。AI は証拠収集を支援してよい）
           - interpret          # 意味づけする（value loop。value_intent に照らして人が判断する）
@@ -485,7 +492,7 @@ vcdesign_core:
       retire:
         action: retire
         decision_posture: abandon
-        decision_size: no_go           # no_go は「始めない」。正本の Retire は「終える」であり、未着手の案件に限って対応させる
+        decision_size: no_go           # 開始前の案件では no_go が Retire（開始しない判断）に対応する
         long_term_posture: low_score   # deny_or_reframe の deny の側
         scale_gate_outcome: neither    # average_success_without_tail_signal の retire の側も含む
         blast_radius: 解除し、retire_control に従って責任を解放する

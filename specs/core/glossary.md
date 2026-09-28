@@ -109,10 +109,12 @@ longer hold.
 Delta is not only numerical deviation.
 For VCDesign conformance, Delta must be evaluated for responsibility impact.
 
-Delta has a polarity (`core.yaml delta_definition.polarity`). A Negative Δ is
-a deviation in the direction of breaking; a Positive Δ is a deviation that
-exceeds the declared expectation. A Delta without a recorded polarity is
-treated as negative. See "Positive Δ / Negative Δ".
+Δ itself is defined in the Value Continuity canonical repository: the
+difference between the expectation declared at the start (both preconditions
+and intended value) and what actually happened. VCDesign declares the
+expectation as `precondition` and `value_intent`. Delta has a polarity
+(`core.yaml delta_definition.polarity`). A Delta without a recorded polarity
+is treated as negative. See "Positive Δ / Negative Δ".
 
 ---
 
@@ -285,9 +287,15 @@ are Positive Δ. Recorded separately from average outcome. Scaling
 
 ## Positive Δ / Negative Δ
 
-A Negative Δ breaks a chapter's validity condition, responsibility placement,
-or value; it is localized, mitigated, and closed if needed (RCA / IDG →
-containment → action). A Positive Δ exceeds the declared expectation; it is
+Defined in the Value Continuity canonical repository: a Negative Δ falls
+below the declared expectation (preconditions and value) and must not
+propagate; a Positive Δ exceeds it and is made propagable. Both are measured
+against the same baseline (`precondition` and `value_intent`, plus
+`tail_signals.expected` when declared).
+
+In VCDesign, a Negative Δ appears as a break in a chapter's validity
+condition, responsibility placement, or value; it is localized, mitigated,
+and closed if needed (RCA / IDG → containment → action). A Positive Δ is
 observed, interpreted, and made reusable (recorded in `residual_assets` with a
 holder), and is expanded only through `scale_gate`.
 

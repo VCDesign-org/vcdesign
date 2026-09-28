@@ -46,14 +46,15 @@ AI の成長の定義など）は、正本を判断と責任で実装するた�
 
 ## 2. Positive Δ と Negative Δ
 
-VCDesign はもともと、前提からのズレ（Δ）を検知して作動する。
-正本のシステム設計への適用文書は、期待との差を一律に異常と見なさず、向きで扱いを分けることを求めている。
-VCDesign はこれを `core.yaml delta_definition.polarity` として実装する。
+Δ と Positive Δ / Negative Δ の定義は正本（README.md「Δ（期待との差）」）にある。
+期待は前提と価値の両方を含み、Negative Δ は伝播させず、Positive Δ は伝播可能にする。
+VCDesign はもともと前提からのズレを検知して作動する仕組みであり、期待の前提を `precondition`、
+価値を `value_intent` として宣言する。向きによる扱いの区別は `core.yaml delta_definition.polarity` に実装する。
 
 | | Negative Δ | Positive Δ |
 |---|---|---|
-| ズレの向き | 前提・価値の成立条件が崩れる | 宣言した期待を上回る |
-| 基準線 | precondition / `value_intent` | `value_intent` / `tail_signals.expected` |
+| 期待との差の向き | 下回る（章の成立条件・責任配置・価値が崩れる） | 上回る |
+| 基準線 | precondition / `value_intent` | precondition / `value_intent`（宣言した場合は `tail_signals.expected` も） |
 | 扱い | 局所化 → 緩和 → 必要なら閉じる | 観測 → 意味づけ → 再利用可能にする |
 | 流れ | RCA / IDG → containment → action | semantic loop → value loop → responsibility loop（`residual_assets` に holder 付きで記録） |
 | 広げるとき | — | decision expand として `scale_gate` を通す |
@@ -162,7 +163,7 @@ VCDesign には、根拠を次の判断へ渡す経路が三つある。いず�
 | Reframe | reframe | reconsider（再検討の段階） | なし | no_success_with_tail_signal |
 | Limit | なし / fix | commit（狭めた範囲で） | small_go（blast_radius を狭める宣言更新を伴うもの） | keep_small の側 |
 | Defer | defer | defer | defer | なし |
-| Retire | retire | abandon | no_go（未着手の場合） | neither |
+| Retire | retire | abandon | no_go（開始前の案件で、開始しない判断） | neither |
 
 Limit は blast_radius を狭める宣言更新を伴う判断である。宣言更新を伴わない small_go は Proceed として記録する。
 長期判断の姿勢 `defer_or_experiment` は、狭めた blast_radius の宣言があれば Limit、なければ Defer として記録する
