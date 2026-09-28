@@ -8,8 +8,8 @@ Example (workshop-ready).
 **担当交代・自律運用・環境変化**をまたいで責任を保有され続ける（Tenure）様子を示す
 エンドツーエンドの実例である。
 
-背景の設計原則は `../core/value-tenure-model.md`、
-フィールド定義は `../core/schema_case.yaml` (v0.2) を参照。
+背景の設計原則は `../core/implementation.md`（残す・伝える）、
+フィールド定義は `../core/schema_case.yaml` (v1.0) を参照。
 本例の機械可読データは `custody-handover-case.yaml` にあり、
 `../schemas/tenure_check.py` で責任空白リスクの検査対象になる。
 
@@ -125,7 +125,7 @@ tenure_event:
       新モデルの返金意図検出精度は 97%。
       ただし value_intent は「誤案内を出さない」であり精度向上は緩和の十分条件ではない。
       誤案内 1 件の影響評価が未実施のため、エスカレーション必須を維持。
-    resulting_action: fix（決定を維持、根拠を更新）
+    resulting_decision: proceed（決定を維持、根拠を更新）
 ```
 
 **ポイント:** 佐藤は田中ではないが、`value_intent` と `re_derivation_basis` があるため、

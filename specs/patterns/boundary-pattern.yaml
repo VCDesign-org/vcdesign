@@ -9,7 +9,7 @@ version: "1.3.0"
 
 meta:
   concept: "A structural choke point where implicit values are blocked and explicit judgments are required."
-  implements: "vcdesign-core-decision-posture"
+  implements: "vcdesign-core boundary"
 
 # -------------------------------------------------------------------
 # Structure
@@ -31,7 +31,7 @@ boundary:
         The continuity attribution of the boundary itself (v1.1.0).
         A guard answers "is this crossing correct now?" (gate);
         tenure answers "who holds this boundary over time?" (line).
-        See core/value-tenure-model.md.
+        See core/implementation.md（残す・伝える）.
       fields:
         owner:
           description: >
@@ -51,7 +51,7 @@ boundary:
       description: >
         The failure-isolation role of the boundary (v1.2.0) — 結合を切る / 上限の宣言.
         A guard stops a wrong crossing; containment declares how far a failure
-        on one side may propagate to the other. See core/downside-containment-model.md.
+        on one side may propagate to the other. See core/implementation.md（閉じる）.
         containment は失敗の伝播だけを対象とする。根拠と残るものの流れは basis_flow が扱い、
         propagation: deny はそれに適用しない。
       fields:
@@ -72,7 +72,7 @@ boundary:
         shared_dependencies:
           description: >
             区画をまたいで共有されている依存先（隔壁の穴）。
-            空でない場合、その依存先は metrics.yaml dependency_concentration の観測対象になる。
+            空でない場合、その依存先は metrics.yaml concentration の観測対象になる。
 
     revalidation:
       description: >
@@ -96,7 +96,7 @@ boundary:
         containment が失敗の伝播を、revalidation が結論の引き継ぎを止めるのに対し、
         basis_flow は判断の根拠と残るもの（residual_assets）を既定で通す。
         受け手は受け取った根拠から自分の文脈で再判断する（revalidation と組で用いる）。
-        core.yaml value_asymmetry.coupling_principles の pass_basis_not_conclusion_across_boundaries の実装である。
+        core.yaml boundary.rules の basis_passes_by_basis_flow の実装である（正本の原則「伝える」）。
       fields:
         passes:
           description: >

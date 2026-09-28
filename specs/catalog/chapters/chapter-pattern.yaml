@@ -36,11 +36,11 @@ chapter_pattern:
       description: Questions to detect the chapter in real operations.
       type: list[string]
 
-    recommended_posture:
-      description: Default VCDesign decision posture when detected.
+    recommended_decision:
+      description: Default decision when detected (Value Continuity の6語).
       type: object
       fields:
-        decision_posture: "defer | commit | abandon | reconsider"
+        decision: "proceed | expand | limit | reframe | defer | retire"
         rationale: string
 
     relevant_boundaries:

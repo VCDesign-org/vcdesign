@@ -8,8 +8,8 @@ Example (workshop-ready). 登場する工場・組織・人物・数値はすべ
 **点の改善**と**線の改善**の違い、そして上に開き下を閉じる判断（value asymmetry）が
 どう記録されるかを示す実例である。
 
-背景の設計原則は `../core/value-continuity-implementation.md`、
-フィールド定義は `../core/schema_case.yaml` (v0.3) と `../core/schema_log.yaml` (v0.3) を参照。
+背景の設計原則は `../core/implementation.md`、
+フィールド定義は `../core/schema_case.yaml` (v1.0) と `../core/schema_log.yaml` (v1.0) を参照。
 
 ---
 
@@ -65,7 +65,7 @@ chapter_id: line1-daily-report
 owner: {role: line1_leader}
 final_decider: {role: section_manager}
 residual_assets: []                 # 何も宣言されていない → 点の改善として扱う
-tail_signals:
+spread_signals:
   expected: []
   observed: []
   average_outcome: met
@@ -104,7 +104,7 @@ residual_assets:
     description: 機器構成と変更履歴
     survives: [owner_change]
     holder: {role: maintenance_team}
-tail_signals:
+spread_signals:
   expected: [reuse_cost_decline, unsolicited_pull]
   observed:
     - signal: reuse_cost_decline
@@ -128,26 +128,26 @@ failure_domain: line-local-data-collection
 
 ---
 
-## scale_gate の判断
+## 判断ゲートでの判断
 
-| | 平均的な効果 | 広がりの兆候 | residual_assets | 復旧能力 | scale_gate | Decision |
+| | 平均的な効果 | 広がりの兆候 | residual_assets | 復旧能力 | Decision |
 |---|---|---|---|---|---|---|
-| 改善 A | あり（30 分） | なし | なし | 手作業に戻せるだけ | keep_small_or_retire | Proceed（小さく留める）、様式変更時に Retire |
-| 改善 B | あり（20 分） | reuse_cost_decline, unsolicited_pull | 4 件、保有者あり | 予備機切替・再構築を訓練済み | scale_go | Expand（4 号ライン・品質管理連携） |
+| 改善 A | あり（30 分） | なし | なし | 手作業に戻せるだけ | Proceed（小さく留める）、様式変更時に Retire |
+| 改善 B | あり（20 分） | reuse_cost_decline, unsolicited_pull | 4 件、保有者あり | 予備機切替・再構築を訓練済み | Expand（4 号ライン・品質管理連携） |
 
 平均的な効果だけで順位をつけると、改善 A が上になる。
 広がりの兆候と残るものを見ると、広げるべきは改善 B である。
 
-改善 A のような「成功したが広がらない」改善は、`tail_signal_absent_on_success` として
+改善 A のような「成功したが広がらない」改善は、`success_without_spread_signal` として
 拡大の前に識別される。改善 A を悪い改善として扱う必要はない。
 小さく留めるか、次に様式が変わるときに終了すると、先に決めておけばよい。
 
 ### Positive Δ としての記録
 
-改善 B の `tail_signals.observed` は Positive Δ である。停止・隔離の流れには入れず、
+改善 B の `spread_signals.observed` は Positive Δ である。停止・隔離の流れには入れず、
 観測 → 意味づけ → 再利用可能にする（`residual_assets` に保有者付きで記録する）の順で扱う。
 品質管理課からの引き合いは宣言していた兆候（`unsolicited_pull`）だったが、
-宣言していない兆候が出た場合も `tail_signals.unexpected` として記録し、捨てない。
+宣言していない兆候が出た場合も `spread_signals.unexpected` として記録し、捨てない。
 
 Expand は、章を替えずに `blast_radius` の宣言を更新する判断として記録する。
 
@@ -156,11 +156,16 @@ log_id: kitahara-log-2026-061
 case_id: kitahara-2025-021
 decision:
   value: expand
-  rationale: >
-    平均的な効果に加え、reuse_cost_decline と unsolicited_pull を観測。
-    予備機切替・再構築は訓練済みで、拡大後も復旧できる。
+  basis:
+    upside: >
+      平均的な効果に加え、reuse_cost_decline と unsolicited_pull を観測。
+      2 号ライン以降の展開工数が下がり、依頼していない部署から引き合いが来た。
+    downside: >
+      予備機切替・再構築は訓練済みで、拡大後も復旧できる。制御系には書き込まない。
+    continuity: 標準 OS イメージ、共通の停止要因コード、切替技能が保有者付きで残る。
+    asymmetry: 収集データと根拠は他部署へ流し、制御への影響は区画内に閉じる。
   positive_delta_refs: [reuse_cost_decline, unsolicited_pull]
-  blast_radius_update:
+  declaration_update:
     before:
       scope: 1〜3 号ラインのデータ収集のみ（制御系には書き込まない）
       max_loss: {unit: hours_data_gap, value: 8}
@@ -177,20 +182,20 @@ decision:
 
 改善 B で拡大を正当化したのは、広がりの兆候だけではない。
 **拡大しても戻せる**ことが確認されていたことが、拡大の前提になっている
-（`scale_gate.required_before_scale.recovery_capability_confirmed`）。
+（`policies.yaml judgment_gate.per_decision.expand` の recovery_capability_confirmed）。
 
 - 切替訓練（下を閉じる仕組み）があったから、OS 更新という変更に踏み出せた
 - 変更できたから、システムは古びずに次のラインへ持っていけた
 - 次のラインへ持っていけたから、展開のたびにコストが下がった
 
 下を閉じる仕組みが、上に賭ける回数を生んでいる。
-逆に、復旧能力を超えて展開を急げば `scale_beyond_recovery` が検知される。
+逆に、復旧能力を超えて展開を急げば `expand_beyond_recovery` が検知される。
 
 ---
 
 ## 読み方のまとめ
 
 - 改善の開始時に「業務が変わったら何が残るか」を `residual_assets` として宣言する
-- 広げる兆候を `tail_signals.expected` として先に決め、平均的な効果とは別に観測する
+- 広げる兆候を `spread_signals.expected` として先に決め、平均的な効果とは別に観測する
 - 広げる前に、広げた後も戻せるかを確認する
 - 改善が業務変更で消えたら、それを Δ として扱い、次の改善の設計に反映する

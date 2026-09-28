@@ -64,8 +64,8 @@ chapter:
     - "Has the total human time increased?"
     - "Are there undefined manual steps required to keep the automation running?"
 
-  recommended_posture:
-    decision_posture: "defer"
+  recommended_decision:
+    decision: "defer"
     rationale: >
       Halt expansion. Map the hidden workload. Re-close B2 boundary.
       Unaccounted human cost invalidates ROI judgment.

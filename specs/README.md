@@ -1,26 +1,19 @@
 # VCDesign Specifications
 
-Welcome to the Value Continuity Design specifications.
-
-## Where to start?
-See the **[Specification Map](map.md)** for the full overview.
+VCDesign v2 は、[Value Continuity](https://github.com/value-continuity/value-continuity) を
+「判断と責任」の面から実装する方法論です。全体像は **[Specification Map](map.md)** を参照してください。
 
 ## Directory Structure
 
-*   **[core/](core/)**: **The Authority.** The minimal, unavoidable definitions of VCDesign.
-    *   Start here to understand *why* and *what*.
-    *   Key files: `core.yaml`, `policies.yaml`, `metrics.yaml`, `axioms.yaml`, `decision-posture.yaml`
-    *   Reading aids: `ai-adaptive-loop-model.md`, `agent-era-model.md`
-*   **[protocols/](protocols/)**: **The Procedures.** Standardized ways to close judgments and hand off responsibility.
-*   **[policies/](policies/)**: **Policy Clarifications.** Operational boundaries such as temporal governance and rollback traceability.
-*   **[patterns/](patterns/)**: **The Structures.** Reference patterns (Boundary, RCA, IDG, RCL) to implement the core.
-*   **[boundaries/](boundaries/)**: **The Boundary Taxonomy.** Canonical B-number registry and case studies of responsibility boundaries (B1–B17).
-*   **[chapters/](chapters/)**: **The Narratives (The "When").**  
-    Time-based design units describing how judgment, meaning, and responsibility shift over time in real operations.
-*   **[glossary/](glossary/)**: Terminology, including the normative action mapping.
-*   **[validation/](validation/)**: **Conformance Checks.** Anti-patterns, conformance cases, and the Maturity Profile for organizational diagnosis.
-*   **[examples/](examples/)**: Concrete applications — minimal lifecycle, LLM approval workflow, AI coding agent, security agent, factory operations agent.
+- **[core/](core/)** — 芯。authority は `core.yaml`、`policies.yaml`、`metrics.yaml`。ほかに `axioms.yaml`、`schema_case.yaml`、`schema_log.yaml`、読解補助の `implementation.md`、`glossary.md`。
+- **[protocols/](protocols/)** — 判断を閉じ、実行可能なコミットに昇格させる手順。
+- **[patterns/](patterns/)** — core を実装する構造（Boundary、RCA、IDG）。
+- **[policies/](policies/)** — 運用上の補足（temporal governance）。
+- **[catalog/](catalog/)** — 領域の事例集（chapters、責任境界 B1〜B17）。芯ではない。
+- **[examples/](examples/)** — 適用例4本。
+- **[validation/](validation/)** — 適合チェック。
+- **[schemas/](schemas/)** — 検査ツール。
 
 ## Status
-Core specifications are **Stable**.
-Protocols, Patterns, and Chapters are **Stable** but extensible.
+
+v2.0。v1 とは互換性がありません。読み替えは `core/implementation.md` の「v1 からの移行」を参照してください。

@@ -1,75 +1,61 @@
 # VCDesign Specification Map
 
 ## VCDesign Authority Declaration
-VCDesignの現行authorityは以下で構成される
+
+VCDesign v2 は、[Value Continuity](https://github.com/value-continuity/value-continuity)
+を「判断と責任」の面から実装する方法論である。定義と原則の正本は Value Continuity にあり、ここでは再定義しない。
+
+VCDesign の現行 authority は次の3ファイルである。
+
 - core/core.yaml
 - core/policies.yaml
 - core/metrics.yaml
-- patterns（RCL等）は「Coreへの適用構造」
-- legacy配下は「歴史的ドキュメントであり現行仕様ではない」
 
-## 1. The Core (The "Why" and "What")
-*Start here. This defines the problem and the unavoidable response.*
-- **[Core](core/core.yaml)**: The basic OS, PDΔA flow, responsibility model, and the reality-fit definition that separates physical / semantic / value / responsibility loops across time scales.
-- **[Axioms](core/axioms.yaml)**: The five irreducible commitments (A1–A5) underlying all of VCDesign. Non-conformance with any axiom overrides conformance with other specs.
-- **[Decision Posture](core/decision-posture.yaml)**: Normative definition of the four postures (defer / commit / reconsider / abandon), selection criteria, and anti-defer-abuse guard.
-- **[Policies](core/policies.yaml)**: Governance, AI boundaries, LLM placement constraints, haltability, and control rules.
-- **[Metrics](core/metrics.yaml)**: Responsibility metrics, Δ detection, and growth measurement as operational fit under responsibility constraints.
-- **[Core Glossary](core/glossary.md)**: Canonical distinctions that affect conformance, especially Judgment Proposal, Responsibility Asset, Resolution, Delta, IDG, RCA, and RCL.
-- **[AI Adaptive Loop Model](core/ai-adaptive-loop-model.md)**: A readable guide that explains how the authority connects to real AI operating loops without becoming a new authority.
-- **[Agent Era Model](core/agent-era-model.md)**: Reading aid for 2026 agent governance. Defines the 5-layer external explanation frame and 12 principles for governable AI agents. Connects to existing 4-loop model without replacing it.
-- **[Value Tenure Model](core/value-tenure-model.md)**: Design principle separating gate responsibility (点の責任: "is this correct now?") from tenure (線の責任: "who holds this over time?"). Anchors VCDesign's differentiation — tracking the movement of responsibility custody, which neither ADR nor SRE records.
-- **[Value Continuity Implementation](core/value-continuity-implementation.md)**: How VCDesign implements [Value Continuity](https://github.com/value-continuity/value-continuity) (defined in its own repository, not redefined here) on the side of judgment and responsibility. Maps the five principles (keep / find / close / try / pass on) to VCDesign elements, distinguishes Positive Δ from Negative Δ, and maps the Decision options (Proceed / Expand / Reframe / Limit / Defer / Retire) to existing vocabularies.
-- **[Downside Containment Model](core/downside-containment-model.md)**: The "close" principle in detail — cutting amplification rather than predicting outcomes. Defines four mechanisms (isolate / cap / revalidate / deconcentrate) and maps same-axis terms across layers.
-- **[Case Schema](core/schema_case.yaml)**: Data structure for cases. v0.2 adds tenure fields (value_intent, custody_chain, re_derivation_basis, review_triggers, last_reaffirmed). v0.3 adds containment fields (blast_radius, reversibility, failure_domain, upstream_basis_refs, depends_on) and accumulation fields (residual_assets, tail_signals).
-- **[Log Schema](core/schema_log.yaml)**: Data structure for decision logs. v0.2 adds tenure_event (custody transfer / reaffirmation / review trigger fired).
+axioms.yaml は適合判定の起点、schema は記録の形、patterns と protocols は core を実装する構造である。
+catalog は領域の事例集であり、芯ではない。
 
-> **Note**: **[RCL (Responsibility Closure Loop)](patterns/rcl/responsibility_closure_loop.yaml)** is a cross-cutting Standard.
-> It is not part of explicit Core/Protocols/Patterns layers, but guarantees design completion
-> by ensuring every Δ (Definition Gap) is assigned to an explicit R (Close / Defer to Pool / Abort).
+## 1. Core — 芯
 
+- **[Core](core/core.yaml)**: 章・責任・Δ（向き付き）・判断6語・ライフサイクル・宣言・境界の規則。
+- **[Axioms](core/axioms.yaml)**: A1〜A5。いずれかに反する実装は、他を満たしていても非適合。
+- **[Policies](core/policies.yaml)**: 判断ゲート1つ（5原則の順のレビュー、判断ごとの必須項目、停止条件）、責任・説明・停止の規則、拡張としての AI 統制。
+- **[Metrics](core/metrics.yaml)**: 5原則を骨格にした芯の指標17件と、拡張としての AI 統制・運用適合の指標。
+- **[Case Schema](core/schema_case.yaml)** / **[Log Schema](core/schema_log.yaml)**: 案件の宣言（Upside / Downside / Continuity）と、判断の根拠の記録。
+- **[Implementation](core/implementation.md)**: 読解補助。Value Continuity の各要素を VCDesign のどこで実装しているかの対応表と、v1 からの移行表。
+- **[Glossary](core/glossary.md)**: 用語集。
 
-## 2. Protocols (The "How" - Procedures)
-*Read this to understand the rules of engagement.*
-- **[Judgment Closure](protocols/judgment-closure.yaml)**: How to close a judgment (Accept/Deny/Unknown).
-- **[Resolution Handshake](protocols/resolution-handshake.yaml)**: How to turn a judgment into a committed resolution.
+## 2. Protocols
 
-## 3. Patterns (The "How" - Structures)
-*Read this to implement the system.*
-- **[Boundary Structure](patterns/boundary-pattern.yaml)**: The generic structure of an Explicit Verification Point.
-- **[RCA Pattern](patterns/rca-pattern.yaml)**: The structure of a Responsibility Closure Agent.
-- **[IDG Pattern](patterns/idg-pattern.yaml)**: The Interface Determinability Gate — blocks forced decisions under uncertainty. Required at B1, B4, and B13 boundaries.
-- **[RCL (Responsibility Closure Loop)](patterns/rcl/responsibility_closure_loop.yaml)**: The design pattern for ensuring responsibility closure.
+- **[Judgment Closure](protocols/judgment-closure.yaml)**: 判断を ACCEPTED / DENIED / UNKNOWN で閉じる。
+- **[Resolution Handshake](protocols/resolution-handshake.yaml)**: 閉じた判断を実行可能なコミットに昇格させる。
 
-## 4. Chapters (The "When" - Narratives)
-*Read this to understand how value, meaning, and responsibility erode or shift over time.*
-- **[Chapter Definitions](chapters/chapter-pattern.yaml)**: The structure of a Chapter.
-- **[C1: Purpose Drift](chapters/c1-purpose-drift.yaml)**: The silent rewriting of purpose.
-- **[C2: Automation Burden](chapters/c2-automation-burden.yaml)**: When automation increases manual workload.
-- **[C3: Trust & Responsibility Erosion](chapters/c3-trust-erosion.yaml)**: When opaque judgments cause rejection.
-- **[C4: Reality Drift](chapters/c4-reality-drift.yaml)**: When model reference diverges from reality (B16).
+## 3. Patterns
 
-## 5. Reference
-- **[Boundary Registry](boundaries/registry.md)**: **The canonical B-number registry.** All B-numbers are assigned and tracked here. Consult before using any B-number.
-- **[Boundary Taxonomy](boundaries/taxonomy.md)**: **The Types.** Authoritative definitions of each boundary (B1-B17).
-- **[Boundary Cases](boundaries/)**: **Knowledge Base.** Raw case studies.
-  - [Purpose Shift](boundaries/purpose-shift.yaml)
-  - [Automation Manual](boundaries/automation-manual.yaml)
-  - [Data Meaning](boundaries/data-meaning.yaml)
-  - [Impact Accountability](boundaries/impact-accountability.yaml) (B17)
-- **[Glossary](glossary/glossary.md)**: Terminology definitions.
-- **[Action Mapping](glossary/action-mapping.md)**: **Normative.** Canonical mapping between Legacy / RCL / Core action terms (Close→Fix/Retire, Defer→Defer, Abort→Retire). Must be consulted when translating between RCL and PDΔA vocabulary.
-- **[Schemas](schemas/)**: Machine-readable schemas and validation tools.
-- **[Examples](examples/llm-change-approval.md)**: Concrete applications.
-  - [Minimal Lifecycle Example](examples/vcdesign-minimal-lifecycle.md)
-  - [Custody Handover](examples/custody-handover.md): How a decision survives a personnel handover — custody_chain, event-driven review_triggers, and reaffirmation in action. Machine-readable case: [custody-handover-case.yaml](examples/custody-handover-case.yaml).
-  - [AI Coding Agent](examples/coding-agent-boundary.md): Execution gate, Judgment Closure, and responsibility assignment for LLM-powered coding agents.
-  - [Security Agent](examples/agent-governance-security.md): Governance for autonomous threat-response agents (Mythos-type). Includes commit posture under high-velocity incidents.
-  - [Factory Operations Agent](examples/factory-agent-safe-loop.md): Physical Loop / Semantic Loop separation for manufacturing AI. Safety-critical halt design.
-  - [Point vs Line Improvement](examples/point-vs-line-improvement.md): Two improvements in a fictional plant — one invalidated by a work change, one that leaves reusable residual assets. Shows residual_assets, tail_signals, and the scale_gate decision, and how recovery capability enables scaling.
-- **[Validation](validation/)**: Conformance and anti-pattern checks.
-  - [Maturity Profile](validation/vcdesign-maturity-profile.md): Organizational diagnosis framework. 4-level scale × 5 layers with evidence, regression signals, and per-layer rubrics. **Start here if you want to evaluate your current AI governance posture before reading the full spec.**
-  - [Maturity Levels](validation/maturity-levels.md): Canonical definitions of Unstructured / Defined / Enforced / Governed shared across all profile assessments.
-  - [Conformance Cases](validation/vcdesign-conformance-cases.md)
-  - [Anti-Patterns](validation/vcdesign-anti-patterns.md)
-- **[Temporal Governance](policies/temporal-governance.md)**: Boundary between technical rollback and append-only responsibility trace.
+- **[Boundary Structure](patterns/boundary-pattern.yaml)**: 判断の受け渡し点。containment（損失を止める）、basis_flow（根拠を通す）、revalidation（結論を確かめ直す）、tenure。
+- **[RCA Pattern](patterns/rca-pattern.yaml)**: 境界を守り、判断の閉包を行うエージェントの構造。
+- **[IDG Pattern](patterns/idg-pattern.yaml)**: 不確定なまま判断を進めないためのゲート。
+
+## 4. Policies clarifications
+
+- **[Temporal Governance](policies/temporal-governance.md)**: 状態の巻き戻しと、追記のみの責任記録の境目。
+
+## 5. Catalog — 領域の事例集
+
+- **[Chapters](catalog/chapters/)**: 価値・意味・責任が時間とともにずれていく典型（C1 目的のずれ、C2 自動化の負担、C3 信頼と責任の侵食、C4 現実とのずれ）。
+- **[Boundary Registry](catalog/boundaries/registry.md)** / **[Taxonomy](catalog/boundaries/taxonomy.md)**: 責任境界 B1〜B17 の正本と、事例。
+
+## 6. Examples
+
+- [Point vs Line Improvement](examples/point-vs-line-improvement.md): 業務変更で消える改善と、残るものを持つ改善。広がりの兆候、判断ゲート、Expand の宣言更新。
+- [Custody Handover](examples/custody-handover.md): 担当交代をまたいで判断が保有され続ける様子（[機械可読の案件](examples/custody-handover-case.yaml)）。
+- [Factory Operations Agent](examples/factory-agent-safe-loop.md): 製造業の AI エージェント。物理と意味のループの分離と、停止の設計。
+- [AI Coding Agent](examples/coding-agent-boundary.md): コーディングエージェントの実行ゲートと責任配置。
+
+## 7. Validation and tools
+
+- **[Conformance](validation/conformance.md)**: v2 の適合チェック（axioms と Review Output に沿う）。
+- **[Schemas](schemas/)**: 案件の責任空白を検査する tenure_check など。
+
+## Outside specs
+
+- `docs/`: 外部向けの説明枠（Agent Era Model、AI Adaptive Loop Model）と解釈の読み物。authority ではない。

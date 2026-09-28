@@ -3,9 +3,9 @@
 This document explains how VCDesign authority connects to real AI operations.
 
 - Authority remains:
-  - `core/core.yaml`
-  - `core/policies.yaml`
-  - `core/metrics.yaml`
+  - `specs/core/core.yaml`
+  - `specs/core/policies.yaml`
+  - `specs/core/metrics.yaml`
 - This document is a structural reading aid for those authority files.
 - It is not a fourth authority and not an independent theory.
 
@@ -155,19 +155,15 @@ A system is not governable unless:
 
 ## VCDesign Core / Policies / Metrics Mapping
 
-- `core/core.yaml`
-  - adaptive loop model
-  - temporal separation
-  - boundary mediation
-  - final definition of AI as a boundary design problem
-- `core/policies.yaml`
-  - LLM placement constraints
-  - boundary safety gates
-  - haltability and override requirements
-- `core/metrics.yaml`
-  - growth as operational fit
-  - loop-linked quality indicators
-  - boundary and haltability observation
+In VCDesign v2 the loop model is part of the AI extension, outside the core.
+
+- `specs/core/policies.yaml` → `ai_extension`
+  - `loops`: allowed and forbidden components per loop
+  - `temporal_separation`, `llm_placement`, `agent_execution_gate`
+  - `haltability` (core)
+- `specs/core/metrics.yaml` → `ai_extension`
+  - growth as operational fit, loop-linked quality indicators
+- `specs/core/axioms.yaml` → A3 (AI does not hold final responsibility), A4 (temporal separation)
 
 ## Conclusion
 

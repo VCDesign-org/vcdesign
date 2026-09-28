@@ -1,14 +1,11 @@
 vcdesign_decision_log:
-  version: 0.3
+  version: 1.0
 
   concept:
     description: >
-      decision_log は、Δ評価と Action選択の理由を記録する
-      説明可能性の監査証跡である。
-      version 0.2 で、責任の継承・再確認を責任イベントとして
-      記録する tenure_event を追加した（core/value-tenure-model.md 参照）。
-      version 0.3 で、判断の選択肢を Value Continuity の Decision で記録する decision を追加した
-      （core.yaml decision_vocabulary、core/value-continuity-implementation.md 参照）。
+      decision_log は、Δ の評価と判断の根拠を記録する監査証跡である。
+      判断の語彙は Value Continuity の6語だけを用いる。
+      根拠は結論ではなく、次の判断や後任が再判断できる形で残す（伝える）。
 
   required_fields:
     - log_id
@@ -16,186 +13,67 @@ vcdesign_decision_log:
     - chapter_id
     - recorded_at
     - why_delta
-    - why_action
-    - policy_applied
-
-  optional_fields:
-    - evaluator
-    - ai_involvement
-    - confidence
-    - long_term_judgment
-    - tenure_event
     - decision
-    - notes
+    - policy_applied
 
   field_definitions:
 
-    log_id:
-      type: string
-      description: 一意なログID
-
-    case_id:
-      type: string
-      description: 対象案件ID
-
-    chapter_id:
-      type: string
-      description: 判断が行われた章ID
-
-    recorded_at:
-      type: datetime
-      description: 記録時刻
+    log_id: {type: string}
+    case_id: {type: string}
+    chapter_id: {type: string}
+    recorded_at: {type: datetime}
 
     why_delta:
       type: object
-      description: >
-        どの signals / metrics / evidence により
-        Δと判断したか
-
-    why_action:
-      type: object
-      description: >
-        # 継承エッセンス: continuity-claim.yaml より
-        # 継続性の証明: ログの why_action フィールドは、単なる理由ではなく「過去の目的との一貫性（Purpose Linkage）」を証明する記述でなければならない。
-        なぜ Fix / Reframe / Defer / Retire の
-        その選択になったか
-
-    policy_applied:
-      type: array
-      description: >
-        適用された policy とその enforcement level
-        例: warning / blocking
-
-    evaluator:
-      type: object
-      description: 判断主体（human / ai / system）
-
-    ai_involvement:
-      type: object
-      description: >
-        AIが関与した場合、その役割と範囲
-
-    confidence:
-      type: number
-      description: >
-        # 継承エッセンス: decision-posture.yaml より
-        # 決定の結実: 曖昧さを残さず状態を確定（Closure）させる姿勢。判断主体の confidence と共に、どのポリシーに基づいたかを明示する。
-        判断の確信度
-
-    notes:
-      type: string
-      description: 補足説明
-
-    long_term_judgment:
-      type: object
-      description: >
-        長期ループに関わる判断について、
-        どの基準で Go / Small Go / Defer / Deny としたかを記録する。
-
+      description: どの兆候・指標・根拠により、どちらの向きの Δ と判断したか
       fields:
-        criteria_score:
-          type: object
-          fields:
-            survive_downside: "yes | no | unknown"
-            within_circle: "yes | no | unknown"
-            lindy_aspect: "yes | no | unknown"
-            compounding_possible: "high | medium | low | unknown"
-            trust_counterparty: "high | medium | low | unknown"
-            learn_asset: "yes | no | unknown"
-            reversible: "yes | no | unknown"
-            energy_fit: "yes | no | unknown"
-
-        decision_size:
-          type: enum
-          values:
-            - no_go
-            - defer
-            - small_go
-            - scale_go
-
-        human_final_decider:
-          type: object
-
-        ai_role:
-          type: enum
-          values:
-            - none
-            - analysis
-            - scoring_support
-            - counterargument
-            - recommendation
-
-        exit_condition:
-          type: string
-
-        next_review_at:
-          type: datetime
+        polarity: negative / positive
+        evidence: 観測と根拠
+        metrics: 参照した metric_id
 
     decision:
       type: object
-      description: >
-        判断の選択肢（v0.3）。値は Value Continuity 正本の Decision。
-        why_action（遷移の理由）とは別に記録する。各値と既存語彙の対応は core.yaml decision_vocabulary に従う。
       fields:
-        value:
-          type: enum
-          values:
-            - proceed
-            - expand
-            - reframe
-            - limit
-            - defer
-            - retire
-        rationale:
-          type: string
-          description: その選択の根拠（Upside / Downside / Continuity / Asymmetry の観点）
-        positive_delta_refs:
-          type: array
-          description: expand の根拠とした Positive Δ（tail_signals.observed / unexpected の項目）
-        blast_radius_update:
-          type: object
+        value: proceed / expand / limit / reframe / defer / retire
+        basis:
           description: >
-            expand / limit の場合は必須。宣言の更新を before / after で記録する
-            （scope / max_loss / approved_by）。case 側の blast_radius は after に更新する。
+            判断の根拠。Value Continuity の Review Output の観点で書く。
           fields:
-            before: 更新前の blast_radius
-            after: 更新後の blast_radius
-        decided_by:
-          type: object
-          description: 判断を閉じた人間の最終判断者
+            upside: 何が次の価値へつながるか、何が残るか
+            downside: 最大損失、伝播範囲、止める場所、撤回の可否
+            continuity: 業務・人・技術が変わった後に何が残るか
+            asymmetry: 上を開く仕組みと下を閉じる仕組みが両立しているか
+        positive_delta_refs:
+          description: expand の根拠とした Positive Δ（spread_signals.observed / unexpected）
+        declaration_update:
+          description: expand / limit では必須。blast_radius の before / after
+          fields: {before: 更新前, after: 更新後}
+        decided_by: 判断を閉じた人間
+
+    policy_applied:
+      type: array
+      description: 適用された policy と enforcement level（advisory / warning / blocking）
+
+    evaluator: {type: object, description: 評価の主体（human / ai / system）}
+    ai_involvement: {type: object, description: AI が関与した場合の役割と範囲（policies.yaml ai_extension）}
+    confidence: {type: number}
+    notes: {type: string}
 
     tenure_event:
       type: object
-      description: >
-        責任の継続保有（Tenure）に関わるイベントの記録。
-        temporal-governance.md に従い、上書きではなく
-        新しいログエントリとして追記する。
+      description: 責任の継続保有に関わるイベント。上書きせず新しいログとして追記する
       fields:
-        event_type:
-          type: enum
-          values:
-            - custody_transfer   # 責任の引き渡し（case の custody_chain と対応）
-            - reaffirmation      # 「今も有効」の再確認（case の last_reaffirmed を更新）
-            - review_trigger_fired  # review_triggers の条件成立と、その評価
-        case_ref:
-          type: string
-          description: 対象 case_id（case 側の custody_chain / last_reaffirmed と相互参照）
-        detail:
-          type: object
-          description: >
-            custody_transfer の場合は from / to / reason / re_derivation_confirmed。
-            reaffirmation の場合は by / basis。
-            review_trigger_fired の場合は fired_trigger / evaluation / resulting_action。
+        event_type: custody_transfer / reaffirmation / review_trigger_fired
+        case_ref: 対象 case_id
+        detail: >
+          custody_transfer は from / to / reason / re_derivation_confirmed。
+          reaffirmation は by / basis。review_trigger_fired は fired_trigger / evaluation / resulting_decision。
 
   invariants:
-    - every_confirmed_delta_should_have_decision_log
-    - every_reframe_should_have_explicit_why_action
-    - every_retire_should_have_explanation
-    - policy_applied_must_be_recorded_when_present
-    # tenure invariants (v0.2)
-    - every_custody_transfer_should_have_decision_log
-    - reaffirmation_must_name_a_human_confirmer
-    # decision invariants (v0.3)
-    - expand_or_limit_decision_must_record_blast_radius_update
-    - expand_decision_must_reference_observed_positive_delta
-    - decision_must_be_closed_by_human
+    - every_confirmed_delta_has_a_decision_log
+    - every_decision_has_a_basis
+    - expand_and_limit_record_declaration_update
+    - expand_references_an_observed_positive_delta
+    - decided_by_is_human
+    - every_custody_transfer_has_a_log
+    - reaffirmation_names_a_human_confirmer

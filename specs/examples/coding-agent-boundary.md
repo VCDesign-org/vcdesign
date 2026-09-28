@@ -176,8 +176,7 @@ profile:
 
 ## 関連仕様
 
-- `core/decision-posture.yaml` — commit/defer の選択（CI 失敗時は commit して止める）
+- `core/core.yaml` decision — limit / defer の選択（CI 失敗時は範囲を限定して止める）
 - `patterns/idg-pattern.yaml` — コード生成出力の不確実性ゲート
 - `protocols/judgment-closure.yaml` — PR 承認を Judgment Closure として設計
-- `boundaries/taxonomy.md` — B1, B5, B6, B11, B17
-- `validation/vcdesign-maturity-profile.md` — 診断フレームワーク
+- `catalog/boundaries/taxonomy.md` — B1, B5, B6, B11, B17

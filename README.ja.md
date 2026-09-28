@@ -1,72 +1,68 @@
 # VCDesign 仕様群
 
 VCDesign（Value Continuity Design）は、
-「どう作るか」ではなく、作られた後の価値を
-時間の中でどう守り抜くかを設計するための仕様群です。
+[Value Continuity](https://github.com/value-continuity/value-continuity) を
+**判断と責任** の面から実装する方法論です。
+
+Value Continuity とは、*変化や失敗があっても、次の価値を生み出せる状態を継続すること* です。
+その中心原則である **Value Asymmetry Principle** は、*upside は伝播可能にする。downside は伝播させない。* です。
+これらの定義は正本にあり、ここでは再定義しません。
+VCDesign が定めるのは、誰が、何を根拠に、6つの判断のどれで閉じ、残ったものを誰が持ち続けるか、です。
 
 > VCDesignは法則であり、VC-ADはその現在技術水準における具体化である。
 
-## VCDesign とは何か
-
-VCDesign は、**高度な自動化を含むシステム**において、
-**判断 (Judgment)**、**責任 (Responsibility)**、そして
-**時間 (Time / Operations)** の連続性を失わないための設計仕様です。
-Core用語: **実装境界事前定義**（実装開始前に境界を意図的に定義すること）。
-
-Core の開始条件として、判断の所在と責任の帰属が説明できない状態で
-実装を開始してはなりません。
-
-システム規模が拡大しても、
-個々の判断がどこで閉じられ、
-誰が責任を引き受け、
-運用の時間の中でどのように変化していくのかを
-明示的に構造化することを目的としています。
-
-これらの仕様は、単なる読み物ではありません。
-人間や高度な自動化支援が**設計支援・判断支援・コード生成**に利用できる、
-**実行可能な設計言語**として定義されています。
+これらの仕様は、人間や高度な自動化支援が **設計支援・判断支援・コード生成** に利用できる
+**実行可能な設計言語** です。
+判断の所在と責任の帰属が説明できない状態で、実装を開始してはなりません（**実装境界事前定義**）。
 
 ### VCDesign Authority 宣言
-VCDesignの現行authorityは以下で構成される
+
+VCDesign v2 の現行 authority は次の3ファイルです。
+
 - core/core.yaml
 - core/policies.yaml
 - core/metrics.yaml
-- patterns（RCL等）は「Coreへの適用構造」
-- legacy配下は「歴史的ドキュメントであり現行仕様ではない」
 
-### VCDesign の中核原則
-VCDesign は、価値の連続性を目的として、章と責任の遷移によってシステムを構造化するための開発 OS です。
-現実のAI運用では、これは Physical / Semantic / Value / Responsibility の4ループを時間スケールごとに分離し、責任統治の下で接続する構造として読まれます。
-LLMは主としてSemantic Loopに配置され、成長はモデル性能の増加ではなく、責任制約下での運用整合の改善として定義されます。
+`core/axioms.yaml`（A1〜A5）は適合判定の起点です。schema は記録の形、patterns と protocols は core を実装する構造、
+catalog は領域の事例集です。
 
-#### 基本原則
-- **責任非消失原則**: 責任は常にどこかに存在しなければならない。
-- **説明可能性原則**: すべての判断は人間に説明可能でなければならない。
-- **AI 非責任原則**: AI は支援するが、責任は負わない。
-- **Δ 駆動原則**: システムは前提条件からの逸脱（Δ）を検出して作動する。
-- **点と線の責任原則（Gate / Tenure）**: 承認の一点（点の責任:「今これは正しいか」）は責任の開始であって維持ではない。価値の継続には、担当交代・無人の自律運用・時間経過を生き延びる継続保有（線の責任）が必要である。自律化が進むほど、線の責任は不要になるのではなく重要になる。[specs/core/value-tenure-model.md](specs/core/value-tenure-model.md) を参照。
-- **Value Asymmetry Principle**: upside は伝播可能にする。downside は伝播させない。VCDesign の名にある Value Continuity（価値の継続）とこの原則の定義は、方法論に依存しない正本 [value-continuity/value-continuity](https://github.com/value-continuity/value-continuity) にある。VCDesign はそれを判断と責任の面から実装する。Positive Δ（観測し、意味づけし、再利用可能にする）と Negative Δ（局所化し、緩和し、必要なら閉じる）を区別し、業務が変わっても残るものを宣言し、観測された兆候に基づいて宣言した最大損失の範囲でのみ広げ、境界では結論ではなく根拠を渡す。[specs/core/value-continuity-implementation.md](specs/core/value-continuity-implementation.md) を参照。
+## 芯の6つ
 
-## どこから読むか (Where to start?)
-全体の俯瞰図については **[Specification Map](specs/map.md)** を参照してください。
+| 芯 | VCDesign が定めること |
+| --- | --- |
+| Δ | 宣言した期待（前提と価値）との差。向きを持つ。Negative Δ は伝播させず、Positive Δ は伝播可能にする |
+| 責任 | owner、人間の最終判断者、担当交代をまたぐ継続保有（点の責任は開始、線の責任が維持） |
+| 境界 | 損失は止め（containment）、根拠は通し（basis_flow）、結論は確かめ直す（revalidation） |
+| 判断 | 6語（Proceed / Expand / Limit / Reframe / Defer / Retire）だけを使い、判断ゲート1つで閉じる |
+| 宣言 | 案件ごとに、残すもの（保有者付き）、広がりの兆候、最大損失、可逆性、依存先 |
+| 指標 | 5原則（残す・見つける・閉じる・試す・伝える）の順に並ぶ芯の17件 |
 
-以下の順序で読むことを推奨します。
-1. **[specs/core/](specs/core/)** (Authority): なぜこの設計が必要か、何を守るべきか。
-   現実のAI運用ループへの接続を読みやすく説明した補助文書として **[specs/core/ai-adaptive-loop-model.md](specs/core/ai-adaptive-loop-model.md)** も参照してください。
-2. **[specs/protocols/](specs/protocols/)** (How / Operations): 判断をいつ閉じ、どう責任を引き渡すか。
-3. **[specs/chapters/](specs/chapters/)** (When): 時間軸の中で、どの設計がいつ必要になるか。
+AI 統制（AI は最終責任を持たない、LLM の配置、時間定数の分離、エージェントの実行ゲート）は、
+VCDesign 固有の **拡張** として芯の外に置いています。
 
-## ディレクトリ構造 (Directory Structure)
+## どこから読むか
 
-* **[specs/core/](specs/core/)**: **The Authority.** VCDesign の最小限かつ不可避な定義。思想を知りたければ各 YAML の冒頭コメントを読み、実装したければスキーマに従ってください。
-* **[specs/protocols/](specs/protocols/)**: **The Procedures.** 判断を閉じ、責任を引き渡すための標準的な手順。
-* **[specs/patterns/](specs/patterns/)**: **The Structures.** コアを実装するための参照パターン（境界構造やRCAなど）。
-* **[specs/chapters/](specs/chapters/)**: **The Narratives (The "When").** フェーズやバージョンではなく、判断や責任の時間的変化（When）を扱う設計単位。
-* **[specs/glossary/](specs/glossary/)**: 用語集。
+全体像は **[Specification Map](specs/map.md)** を参照してください。
 
-## ステータス (Status)
-Core 仕様は **Stable**（安定）です。
-Protocols と Patterns は **Stable** ですが、拡張可能です。
+1. [Value Continuity](https://github.com/value-continuity/value-continuity) — 思想
+2. [specs/core/implementation.md](specs/core/implementation.md) — VCDesign での実装と、v1 からの移行表
+3. [specs/core/core.yaml](specs/core/core.yaml)、[policies.yaml](specs/core/policies.yaml)、[metrics.yaml](specs/core/metrics.yaml) — authority
+4. [specs/examples/](specs/examples/) — 適用例4本
+
+## ディレクトリ構造
+
+- **[specs/core/](specs/core/)** — authority、axioms、schema、実装ガイド、用語集
+- **[specs/protocols/](specs/protocols/)** — 判断を閉じ、コミットに昇格させる手順
+- **[specs/patterns/](specs/patterns/)** — Boundary、RCA、IDG
+- **[specs/catalog/](specs/catalog/)** — chapters と責任境界 B1〜B17
+- **[specs/examples/](specs/examples/)** — 適用例
+- **[specs/validation/](specs/validation/)** — 適合チェック
+- **[docs/](docs/)** — 説明枠と解釈の読み物（authority ではない）
+
+## ステータス
+
+**v2.0**。v1 とは互換性がありません。読み替えは `specs/core/implementation.md` の移行表を参照してください。
 
 ## ライセンス
+
 本リポジトリは **MIT License** です。`LICENSE` を参照してください。

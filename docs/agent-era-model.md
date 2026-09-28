@@ -7,7 +7,7 @@
 このドキュメントは、2026年時点の AI エージェント進化に対して VCDesign がどう読まれるべきかを
 外部説明可能な形で整理したものである。
 
-仕様上の権威は `core.yaml` / `policies.yaml` / `metrics.yaml` にある。
+仕様上の権威は `specs/core/` の `core.yaml` / `policies.yaml` / `metrics.yaml` にある（本文書は v2 で `docs/` に移した説明枠であり、authority ではない）。
 本文書はそれらの reading aid であり、それらを上書きしない。
 
 既存の `ai-adaptive-loop-model.md` との役割分担:
@@ -25,7 +25,7 @@
 - 自律度が上がるほど、停止条件と権限範囲の明示が重要になる
 
 VCDesign の中心命題「AIとは、非連続な知能を連続系へ安全接続するための境界設計問題である」
-（`core.yaml / final_definition`）は、モデル単体の時代よりも Agent の時代においてより強く成立する。
+（v2 では `policies.yaml / ai_extension`）は、モデル単体の時代よりも Agent の時代においてより強く成立する。
 
 ---
 
@@ -47,7 +47,7 @@ VCDesign の中心命題「AIとは、非連続な知能を連続系へ安全接
 ## 3. 5層構造（外部説明フレーム）
 
 この5層は、VCDesign の4ループを外部説明用に再構成したものである。
-運用の権威は4ループ（`core.yaml / adaptive_loop_model`）にある。
+運用の権威は4ループ（`policies.yaml / ai_extension / loops`）にある。
 
 ```
 ┌──────────────────────────────────────┐
@@ -80,7 +80,7 @@ Agent Layer (L2) の実行権限は Responsibility Layer (L3) の明示的な境
 モデルが高性能であることは、意思決定権を持つ理由にならない。
 推論・コーディング・検索などの実行能力は、承認権限とは別である。
 
-`core.yaml` の制約 `ai_cannot_be_final_decider` および
+`core.yaml` の制約 `final_decider_must_be_human` および
 公理 A1（責任は消えてはならない）がこれを支える。
 
 ---
@@ -95,7 +95,7 @@ AI が外部へ作用する場合、必ず範囲を定義する。
 - 金額上限あり
 
 境界なき Agent は事故源である。
-`policies.yaml / boundary_safety` の `discrete_to_continuous_boundary` がこれを義務化する。
+`policies.yaml / ai_extension` の `llm_placement` と `agent_execution_gate` がこれを義務化する。
 
 ---
 
@@ -131,7 +131,7 @@ AI が提案・分析・優先順位付けをしても、
 
 単発で成果を出す AI より、再利用・保守・引継ぎができ信頼が積み上がる AI の方が価値が高い。
 
-VCDesign の `growth_definition`（`metrics.yaml`）はモデル能力の増大ではなく
+VCDesign の `ai_extension.growth_properties`（`metrics.yaml`）はモデル能力の増大ではなく
 責任制約下での運用整合の改善を成長と定義することでこれを制度化する。
 
 ---
@@ -151,7 +151,7 @@ B1（Human ↔ AI Judgment）および B4（Data ↔ Meaning）と直結する�
 同じ判断でも、今すぐ必要・今週でよい・来月見直し・年次計画では最適解が変わる。
 AI は速度だけでなく時間粒度を理解する必要がある。
 
-`core.yaml / adaptive_loop_model / temporal_separation` の
+`policies.yaml / ai_extension / temporal_separation` の
 `fast_loops_must_not_autonomously_rewrite_slow_loop_constraints` がこれを規則化する。
 B10（Temporal Boundary）を参照。
 
@@ -162,7 +162,7 @@ B10（Temporal Boundary）を参照。
 AI が人間へ戻すことは能力不足ではない。それは設計された安全機構である。
 法務判断・倫理判断・高額承認・緊急停止は、戻せることが正しい。
 
-`decision-posture.yaml` の `defer` ポスチャーと `policies.yaml / haltability` がこれを規範化する。
+`core.yaml` の判断 `defer` と `policies.yaml / haltability` がこれを規範化する。
 
 ---
 

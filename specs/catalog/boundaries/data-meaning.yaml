@@ -27,7 +27,7 @@ boundary:
     - No closure point for "is this judgment explainable enough to proceed".
 
   recommended_handling:
-    decision_posture: defer
+    decision: defer
     rationale: >
       Judgments without shared meaning
       cannot be responsibly owned by humans.

@@ -3,192 +3,92 @@ meta:
   title: VCDesign Core Axioms
   layer: core
   status: stable
-  version: 0.1.0
+  version: 2.0.0
   authority: normative
 
-# -------------------------------------------------------------------
-# Purpose
-# -------------------------------------------------------------------
 purpose: >
-  Axioms are the irreducible commitments underlying VCDesign.
-  They are not derived from other principles—they are the starting
-  points from which conformance is judged.
+  Axioms are the irreducible commitments of VCDesign as an implementation of
+  Value Continuity on the side of judgment and responsibility.
+  An implementation that violates an axiom is non-conforming regardless of
+  how well it satisfies other specs.
 
-  An implementation that violates an axiom is non-conforming
-  regardless of how well it satisfies other specs.
-
-# -------------------------------------------------------------------
-# Axioms
-# -------------------------------------------------------------------
 axioms:
 
   A1:
     id: A1
     label: Responsibility Must Not Disappear
     statement: >
-      Every Delta that enters the system must be assigned to an explicit
-      Resolution owner. Responsibility may be transferred, escalated,
-      or released—but it may not silently become unowned.
+      Every Delta, negative or positive, must be assigned to an explicit owner.
+      For a Negative Delta the owner closes it; for a Positive Delta the owner
+      holds what it produced so that it remains. Responsibility may be
+      transferred or released, but it may not silently become unowned.
     corollary: >
-      If an owner cannot be identified, the system must halt or escalate
-      rather than proceed with ownerless execution.
+      If an owner cannot be identified for a Negative Delta, the system halts or
+      escalates rather than proceeding. A Positive Delta without a holder is not
+      halted; it is recorded as not yet held.
     conformance_test: >
-      For every active Delta: is there a named owner in the decision log?
-      If not, the system is non-conforming at this axiom.
+      For every confirmed Delta: is there a named owner (or holder) in the case?
 
   A2:
     id: A2
-    label: Judgment Closure Precedes Action
+    label: Judgment Closure Precedes Execution
     statement: >
-      No Resolution may be committed to execution without a prior
-      Judgment Closure (ACCEPTED, DENIED, or UNKNOWN with escalation).
+      No Resolution may be committed to execution without a prior Judgment
+      Closure (ACCEPTED, DENIED, or UNKNOWN with escalation).
     corollary: >
-      Operational pressure, time constraints, or automation momentum
-      do not override this axiom. An unclosed judgment that produces
-      action is a structural violation.
+      Operational pressure, time constraints, or automation momentum do not
+      override this axiom.
     conformance_test: >
-      For every executed Resolution: does the decision log contain a
-      matching closed Judgment with a responsible actor signature?
+      For every executed Resolution: is there a matching closed Judgment with a
+      responsible actor?
 
   A3:
     id: A3
     label: AI Does Not Hold Final Responsibility
     statement: >
-      AI systems (including LLMs) may propose, analyze, and detect.
-      They may not hold, accept, or assign final responsibility for
-      any Resolution. The final_decider must be a human actor.
+      AI systems may propose, analyze, and detect. They may not hold, accept, or
+      assign final responsibility. The final_decider of every decision is human.
     corollary: >
-      An AI-generated ACCEPTED judgment is a Judgment Proposal, not
-      a closed judgment. It must pass through IDG and Judgment Closure
-      before becoming a Resolution.
+      An AI-generated ACCEPTED judgment is a Judgment Proposal. It must pass
+      through IDG and Judgment Closure before becoming a Resolution.
     conformance_test: >
-      For every closed Judgment: is the final_decider field a human
-      role or person, not an AI system identifier?
+      For every decision: is decided_by a human role or person?
 
   A4:
     id: A4
     label: Temporal Separation Is Inviolable
     statement: >
-      Fast adaptive loops (physical, semantic) must not autonomously
-      rewrite constraints defined by slow loops (value, responsibility)
-      without explicit re-judgment at the appropriate loop level.
-    corollary: >
-      A physical loop control action that implicitly redefines an
-      operational objective is a violation of temporal separation,
-      even if the action is locally safe.
+      Fast loops (physical, semantic) must not autonomously rewrite constraints
+      defined by slow loops (value, responsibility) without explicit re-judgment
+      at the appropriate level.
     conformance_test: >
-      For every cross-loop action: was the slow-loop owner notified
-      and given opportunity to close a judgment before the fast-loop
-      proceeded?
+      For every cross-loop change: was the slow-loop owner given the opportunity
+      to close a judgment first?
 
   A5:
     id: A5
     label: Responsibility Is a Scarce Resource
     statement: >
-      Responsibility cannot be indefinitely multiplied. An actor's
-      capacity to hold, exercise, and honor responsibility is finite.
-      Overloading a responsible actor degrades the quality of every
-      judgment they hold.
-    corollary: >
-      System design must account for responsibility capacity.
-      Distributing responsibility widely without explicit assignment
-      is not the same as ensuring capacity.
-    operational_guidance:
-      capacity_definition: >
-        Responsibility capacity is the number of active Deltas an actor
-        can meaningfully monitor, decide, and remain accountable for
-        within their operational timescale.
-      overload_indicators:
-        - metric: operator_overload
-          description: "Defined in metrics.yaml. Fires when judgment load exceeds operator's capacity to meaningfully decide."
-        - metric: defer_stagnation
-          description: "Fires when deferred items accumulate without review—often a symptom of capacity exhaustion."
-        - signal: repeated_reframe
-          description: "Multiple reframes of the same scope may indicate an owner who cannot hold the chapter."
-      allocation_rules:
-        - rule: single_owner_per_delta
-          statement: >
-            Each active Delta must have exactly one named owner. Shared
-            ownership without a designated lead is non-conforming.
-        - rule: capacity_check_before_assignment
-          statement: >
-            Before assigning a new Delta to an actor, the supervisor must
-            verify the actor's current load against their declared capacity.
-            Assignment that knowingly exceeds capacity is a design error, not
-            an operational one.
-        - rule: supervisor_as_overflow_holder
-          statement: >
-            The supervisor is the fallback owner when no actor has capacity.
-            The supervisor may hold a Delta temporarily but must either
-            redistribute to a capable actor or escalate to final_decider
-            within one review cycle.
-      fallback_procedures:
-        overload_response:
-          trigger: operator_overload metric fires for an actor
-          steps:
-            - step: 1
-              action: >
-                Supervisor reviews the actor's active Delta list within
-                one operational cycle.
-            - step: 2
-              action: >
-                Supervisor reassigns low-priority Deltas to other actors
-                or to a deferred pool with explicit owners and review dates.
-            - step: 3
-              action: >
-                If no redistribution is possible, supervisor escalates to
-                final_decider for authority to retire or abandon lower-priority
-                chapters.
-            - step: 4
-              action: >
-                Log the overload event and its resolution. Repeated overload
-                events for the same actor indicate a structural design problem
-                (too many responsibilities assigned to one role).
-        capacity_exhaustion_response:
-          trigger: >
-            No actor in the system has capacity for a Delta that cannot be deferred
-          steps:
-            - step: 1
-              action: >
-                The system must halt execution of the affected chapter.
-                Proceeding without a capable owner violates A1.
-            - step: 2
-              action: >
-                The final_decider must explicitly authorize either:
-                (a) emergency capacity expansion (new actor onboarding), or
-                (b) chapter retirement (abandon posture).
-            - step: 3
-              action: >
-                Document the capacity gap in the decision log as a structural
-                finding, not an operational failure.
+      An actor's capacity to hold and honor responsibility is finite.
+      Overloading a responsible actor degrades every judgment they hold.
+    rules:
+      - single_owner_per_delta: each active Delta has exactly one named owner
+      - capacity_check_before_assignment: assignment that knowingly exceeds capacity is a design error
+      - supervisor_as_overflow_holder: the supervisor may hold a Delta temporarily but must redistribute or escalate within one review cycle
+      - capacity_exhaustion_halts: if no actor can own a Delta that cannot be deferred, the affected chapter halts until the final_decider authorizes new capacity or decides retire
+    signals: [stagnation, operator_overload]   # metrics.yaml
     conformance_test: >
-      For every actor with active Deltas: is their current load within
-      declared capacity? If the operator_overload metric fires and no
-      redistribution has occurred within one review cycle, the system
-      is non-conforming at this axiom.
+      For every actor with active Deltas: is their load within declared capacity?
 
-# -------------------------------------------------------------------
-# Axiom Hierarchy
-# -------------------------------------------------------------------
 hierarchy_note: >
-  When axioms appear to conflict (e.g., A1 requires naming an owner
-  but A5 says no actor has capacity), the resolution is:
-  A2 > A3 > A1 > A4 > A5.
+  When axioms appear to conflict, the resolution order is A2 > A3 > A1 > A4 > A5.
+  Apparent conflicts are resolved by the supervisor or final_decider, never by
+  silently overriding either axiom.
 
-  Higher-priority axioms constrain how lower-priority axioms are
-  satisfied, but do not permit lower-priority axioms to be violated.
-  Apparent conflicts should be resolved by the supervisor or final_decider,
-  not by silently overriding either axiom.
-
-# -------------------------------------------------------------------
-# Normative References
-# -------------------------------------------------------------------
 normative_links:
   - id: core.yaml
-    relation: "Invariants (responsibility_must_not_disappear, etc.) are axiom instantiations"
+    relation: "invariants instantiate the axioms"
   - id: policies.yaml
-    relation: "defer_control, operator authority rules enforce A4, A5"
+    relation: "judgment_gate and the AI extension enforce A2–A5"
   - id: metrics.yaml
-    relation: "operator_overload, defer_stagnation metrics operationalize A5"
-  - id: decision-posture.yaml
-    relation: "Posture selection must respect A5 capacity constraints"
+    relation: "owner_missing, stagnation and operator_overload operationalize A1 and A5"

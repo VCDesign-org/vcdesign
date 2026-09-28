@@ -1,5 +1,5 @@
 # Machine-readable case for custody-handover.md
-# Conforms to core/schema_case.yaml (v0.2, tenure fields included).
+# Conforms to core/schema_case.yaml (v1.0).
 # Used as a demonstration target for schemas/tenure_check.py.
 
 vcdesign_case_instance:
@@ -23,13 +23,13 @@ vcdesign_case_instance:
     actor: cs_department_head
     type: human
 
-  action_history:
-    - action: fix
+  decision_history:
+    - decision: proceed
       at: 2026-06-15
       reason: モデル入れ替えの review trigger 評価。エスカレーション必須を維持し根拠を更新。
       trace: jc-20260615-002
 
-  # ---- tenure fields (v0.2) ----
+  # ---- 責任（残す・伝える） ----
 
   value_intent: >
     顧客の金銭に関わる判断で誤案内を出さない。

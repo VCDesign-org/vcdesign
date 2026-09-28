@@ -7,9 +7,9 @@ These schemas act as "guardrails" to ensure the specs maintain a consistent stru
 - **[Judgment Closure](judgment-closure.schema.json)**: Validates `../protocols/judgment-closure.yaml`.
 
 ## Tools
-- **[Tenure Check](tenure_check.py)**: Scans case instances (see `../core/schema_case.yaml` v0.2)
+- **[Tenure Check](tenure_check.py)**: Scans case instances (see `../core/schema_case.yaml` v1.0)
   for responsibility blank risk — empty `owner`, custody transfers without trace,
-  missing `review_triggers`. Background: `../core/value-tenure-model.md`.
+  missing `review_triggers`. Background: `../core/implementation.md` (残す・伝える).
 
   Severity model (reaffirmation is **event-driven**, not calendar-driven):
   - `ERROR` — responsibility blank: empty owner, custody entry missing required fields,
@@ -17,8 +17,8 @@ These schemas act as "guardrails" to ensure the specs maintain a consistent stru
   - `WARN` — event-driven obligations missed: no reaffirmation after a custody transfer,
     unconfirmed re-derivation, missing `review_triggers`.
   - `INFO` — weak signal only: pure time decay of `last_reaffirmed` (`--max-age-days`,
-    default 180). Deliberately not WARN — see the decay note in
-    `../core/value-tenure-model.md` §5.
+    default 180). Deliberately not WARN: reaffirmation is required on custody transfer and
+    when a review trigger fires, not on a calendar (`../core/glossary.md`, Reaffirmation).
 
   ```bash
   python3 specs/schemas/tenure_check.py specs/examples [--max-age-days 180]

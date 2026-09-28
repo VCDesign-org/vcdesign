@@ -80,9 +80,9 @@ AI は Physical Loop（制御系）を直接操作しない。
 
 ---
 
-### 2. 異常の深刻度による判断分岐（Decision Posture の実装）
+### 2. 異常の深刻度による判断分岐（判断6語の事前設計）
 
-すべての異常を同じフローで処理しない。深刻度と時間緊急性で posture を事前設計する。
+すべての異常を同じフローで処理しない。深刻度と時間緊急性で、どの判断で閉じるかを事前設計する。
 
 ```yaml
 anomaly_response_design:
@@ -92,13 +92,13 @@ anomaly_response_design:
       - "Temperature exceeds safety threshold"
       - "Pressure beyond design limit"
       - "Vibration indicates imminent bearing failure"
-    posture: commit
+    decision: limit   # 対象設備を止め、影響範囲を狭める（policies.yaml haltability）
     owner: on_site_operator
     rationale: >
       Physical loop の安全を守るため、現場オペレーターが
-      証拠確認後に即時 commit する。停止の遅延は物理損傷・
+      証拠確認後に即時に停止して範囲を限定する。停止の遅延は物理損傷・
       人身事故リスクを高める。
-    required_before_commit:
+    required_before_decision:
       - sensor_reading_verified_not_faulty
       - operator_physically_present_or_reachable
       - action_within_operator_authority
@@ -108,7 +108,7 @@ anomaly_response_design:
     examples:
       - "Efficiency dropping but within safe range"
       - "Wear pattern suggests maintenance in 2 weeks"
-    posture: defer
+    decision: defer
     owner: maintenance_engineer
     rationale: >
       安全上のリスクはないため、次の保全サイクルまで
@@ -119,7 +119,7 @@ anomaly_response_design:
     examples:
       - "Anomaly score elevated but cause unclear"
       - "Multiple competing hypotheses"
-    posture: reconsider
+    decision: defer   # IDG で UNKNOWN とし、証拠が揃うまで保留する
     owner: senior_engineer
     rationale: >
       追加情報収集と専門家による再評価が必要。
@@ -145,7 +145,7 @@ sensor_validity_check:
   failure_handling:
     sensor_fault_detected:
       action: halt_ai_interpretation
-      posture: defer
+      decision: defer
       reason: >
         B3 違反の可能性。センサー値の信頼性が確認されるまで
         AI 解釈を停止し、現場確認に切り替える。
@@ -298,8 +298,7 @@ profile:
 ## 関連仕様
 
 - `core/core.yaml` — adaptive_loop_model（Physical/Semantic/Value/Responsibility の分離）
-- `core/decision-posture.yaml` — commit（即時安全対応）/ defer（計画的保全）/ reconsider（曖昧信号）
+- `core/core.yaml` decision — limit（即時の停止と範囲限定）/ defer（計画的保全・曖昧信号）
 - `patterns/idg-pattern.yaml` — 曖昧センサーシグナルのゲート
 - `policies.yaml` — boundary_safety.discrete_to_continuous_boundary
-- `boundaries/taxonomy.md` — B2, B3, B6, B9, B10, B15
-- `validation/vcdesign-maturity-profile.md` — 診断フレームワーク
+- `catalog/boundaries/taxonomy.md` — B2, B3, B6, B9, B10, B15

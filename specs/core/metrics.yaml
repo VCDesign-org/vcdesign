@@ -1,963 +1,707 @@
 vcdesign_metrics:
-  version: 0.1
-
-  # 継承エッセンス: axioms.yaml より
-  # 思想的背景: 「デジタルモデルと現実は一致しない(A01)」「自動化は認知負荷とゴーストを生む(A02)」。ゆえに、定量的数値だけでなく、責任のズレ（Δ）を観測する本メトリクスが必要となる。
-  # Key Principle: Metrics detect deviation of meaning, not performance.
-
+  version: 2.0
   concept:
-    description: >
-      responsibility_metrics は、章の成立条件および責任配置の維持可能性を
-      観測するための基底指標群である。
-      これらは単なる運用アラートではなく、Δ評価の入力となる。
-      また、AIの成長はモデル能力の増大ではなく、
-      責任制約下での運用整合の改善として評価される。
-
-  growth_definition:
-    implementation_specific: AI の成長の定義。正本の5原則には対応しない VCDesign 固有の定義
-    description: >
-      Growth is not mere model capability increase.
-      Growth means improvement of operational fit under responsibility constraints.
-    required_properties:
-      - better_delta_detection
-      - better_semantic_interpretation
-      - better_value_alignment
-      - better_judgment_consistency
-      - better_halt_readiness
-      - lower_boundary_violation
-
+    description: >-
+      metrics は Δ の観測装置である。芯の指標は Value Continuity 正本の5原則の順に並べる。AI 統制の指標は拡張として分ける。いずれも判断の入力であり、判断を置き換えない。
   evaluation_model:
     levels:
-      - observation
-      - warning
-      - delta_candidate
-      - delta_confirmed
-
+    - observation
+    - warning
+    - delta_candidate
+    - delta_confirmed
     rules:
-      - single_observation_is_not_always_delta
-      - sustained_or_repeated_condition_required
-      - responsibility_impact_must_be_considered
-      - domain_chapter_may_extend_metrics
-
+    - single_observation_is_not_always_delta
+    - sustained_or_repeated_condition_required
+    - responsibility_impact_must_be_considered
+    - domain_chapter_may_extend_metrics
     polarity:
-      description: >
-        各 metric は、観測する Δ の向き（core.yaml delta_definition.polarity）を polarity で示す。
-        polarity を持たない metric は negative として扱う。
-        positive の metric は上振れの観測であり、停止・隔離・blocking の根拠にしない。
-        none は Δ ではなく、判断ゲート（scale_gate 等）への入力であることを示す。
       values:
-        - negative
-        - positive
-        - none
+      - negative
+      - positive
+      - none
       default: negative
-      positive_levels:
-        # positive は warning（異常）の段階を持たない。levels のうち observation / delta_candidate / delta_confirmed のみを用いる
-        - observation
-        - delta_candidate
-        - delta_confirmed
-      positive_max_level: warning
-      positive_max_level_note: >
-        policy_enforcement（advisory / warning / blocking）に写すとき、positive の metric は warning を上限とする。
-        warning は「広げる判断の入力が揃った／保有者を決める必要がある」ことの通知であり、異常ではない。
-
-  base_metrics:
-
-    - id: owner_missing
-      name: Owner Missing
-      description: >
-        章の owner が不在、未割当、または事実上機能していない状態。
-      intent: >
-        責任の消失を検知する。
-      typical_signals:
-        - no_responsible_actor_assigned
-        - assigned_owner_not_acting
-        - work_items_accumulating_without_action
-      meaning:
-        - responsibility_disappearing
-        - chapter_silently_dying
-      default_threshold:
-        type: duration_or_backlog
-        example:
-          duration: "24h"
-          backlog_count: 10
-      candidate_actions:
-        - defer
-        - reframe
-        - fix
-      notes:
-        - domain_specific_threshold_required
-
-    - id: owner_conflict
-      name: Owner Conflict
-      description: >
-        複数主体が同一責任を同時に持つ、または責任境界が矛盾している状態。
-      intent: >
-        二重責任・責任競合を検知する。
-      typical_signals:
-        - multiple_actors_claiming_ownership
-        - inconsistent_role_assignment
-        - contradictory_operational_instructions
-      meaning:
-        - responsibility_boundary_broken
-        - decision_path_unstable
-      default_threshold:
-        type: immediate_or_repeated
-        example:
-          repeated_count: 2
-      candidate_actions:
-        - fix
-        - defer
-        - reframe
-
+      rules:
+      - positive_metric_never_forces_halt_or_blocking
+      - positive_metric_max_level_is_warning
+      - none_means_an_input_to_the_judgment_gate_not_a_delta
+  core_metrics:
+  - id: owner_missing
+    name: Owner Missing
+    principle: 残す
+    description: >-
+      章の owner が不在、未割当、または事実上機能していない状態。
+    intent: >-
+      責任の消失を検知する。
+    typical_signals:
+    - no_responsible_actor_assigned
+    - assigned_owner_not_acting
+    - work_items_accumulating_without_action
+    meaning:
+    - responsibility_disappearing
+    - chapter_silently_dying
+    default_threshold:
+      type: duration_or_backlog
+      example:
+        duration: 24h
+        backlog_count: 10
+    notes:
+    - domain_specific_threshold_required
+    candidate_decisions:
+    - defer
+    - reframe
+    - proceed
+    link: core.yaml / responsibility
+  - id: custody_gap
+    name: Custody Gap
+    principle: 残す
+    description: >-
+      責任保有者の交代が起きたにもかかわらず、custody_chain への追記（引き渡しの責任イベント）が存在しない状態。または引き受け先が re_derivation_basis を確認しないまま保有が始まった状態。
+    intent: >-
+      A1（責任非消失）を、担当交代をまたいで検証可能にする。「静かに無所有になる」の最頻発経路は退職・異動である。
+    typical_signals:
+    - owner_changed_without_custody_chain_entry
+    - custody_entry_without_re_derivation_confirmation
+    - departed_actor_still_recorded_as_owner
+    - no_reaffirmation_after_custody_transfer
+    meaning:
+    - responsibility_transfer_untraceable
+    - successor_cannot_re_derive_judgment
+    default_threshold:
+      type: immediate
+    candidate_decisions:
+    - proceed
+    - defer
+    link: schema_case.yaml / custody_chain
+  - id: one_shot_improvement
+    name: One-shot Improvement
+    principle: 残す
+    polarity: negative
+    description: >-
+      業務・担当・技術の変化によって改善が無効化され、何も残らなかった状態。または residual_assets を宣言しないまま改善が完了扱いになった状態。
+    intent: >-
+      「改善したのに継続しない」「改善したのに人も手間も減らない」を Δ として検知する。点の改善は、その時点では成功に見えるため、放置すると量産される。
+    typical_signals:
+    - improvement_lost_after_work_change
+    - improvement_completed_without_residual_assets
+    - residual_asset_without_holder
+    meaning:
+    - value_did_not_continue
+    - investment_cannot_be_sustained
+    default_threshold:
+      type: event
+    candidate_decisions:
+    - reframe
+    - retire
+    link: schema_case.yaml / residual_assets
+  - id: positive_delta_without_holder
+    name: Positive Delta Without Holder
+    principle: 残す
+    polarity: negative
+    description: >-
+      Positive Δ が観測されたが、それを residual_assets として保有する主体（holder）が決まっていない状態。
+    intent: >-
+      保有者のいない上振れは残らない。観測された上振れが、次の価値を生む前に散逸することを検知する。
+    typical_signals:
+    - observed_spread_signal_without_residual_asset
+    - residual_asset_without_holder_after_positive_delta
+    meaning:
+    - upside_will_not_remain
+    default_threshold:
+      type: at_review
+    candidate_decisions:
+    - proceed
+    - defer
+    link: core.yaml / declaration / rules
+  - id: spread_signal_observed
+    name: Spread Signal Observed
+    principle: 見つける
+    polarity: positive
+    description: >-
+      宣言した spread_signals.expected、または宣言していなかった兆候（spread_signals.unexpected）が観測された状態。Positive Δ の検知である。
+    intent: >-
+      上振れを単発の成功として消費せず、意味づけと再利用可能化（residual_assets への記録）の流れに乗せる。
+    typical_signals:
+    - expected_spread_signal_observed
+    - unexpected_reuse_or_pull_observed
+    - output_used_as_input_by_other_chapter
+    meaning:
+    - upside_available_for_reuse
+    - expand_candidate
+    default_threshold:
+      type: event
+    max_level: warning
+    notes:
+    - must_not_trigger_halt_or_quarantine
+    - unknown_cause_goes_to_idg_as_unknown_and_does_not_justify_expand
+    candidate_decisions:
+    - expand
+    - proceed
+    link: core.yaml / delta / polarity / positive
+  - id: success_without_spread_signal
+    name: Success Without Spread Signal
+    principle: 見つける
+    polarity: none
+    description: >-
+      平均的な効果は出た（average_outcome が met）が、宣言した spread_signals が一つも観測されない状態。
+    intent: >-
+      「成功したが広がらない」案件を、拡大の前に識別する。失敗の検知ではなく、拡大判断の入力である。
+    typical_signals:
+    - average_outcome_met_but_no_observed_spread_signal
+    - expand_proposed_on_average_success_only
+    meaning:
+    - point_improvement_likely
+    - expand_not_justified
+    default_threshold:
+      type: at_review
+      max_level: warning
+    candidate_decisions:
+    - defer
+    - retire
+    link: policies.yaml / judgment_gate / anti_patterns
+  - id: reuse_cost_trend
+    name: Reuse Cost Trend
+    principle: 見つける
+    polarity: positive
+    description: >-
+      同じ residual_asset を別の章・場所に適用するコスト（工数・期間・例外対応）の推移。下がっていれば複利が効いている。下がらない、または上がっている場合は、残ったものが再利用に耐えていない。
+    intent: >-
+      reuse_cost_decline の兆候を定量的に観測する。
+    typical_signals:
+    - nth_application_cost_not_decreasing
+    - each_application_requires_redesign
+    meaning:
+    - residual_asset_not_reusable
+    - compounding_not_working
+    default_threshold:
+      type: trend
+      example:
+        applications_compared: 3
+    max_level: warning
+    candidate_decisions:
+    - proceed
+    - reframe
+    notes:
+    - domain_specific_cost_unit_required
+    - not_decreasing_is_not_a_negative_delta_but_a_reason_not_to_expand
+    - >-
+      candidate_decisions_apply_only_when_the_residual_asset_is_redesigned_for_reuse
+    link: schema_case.yaml / spread_signals
+  - id: precondition_broken
+    name: Precondition Broken
+    principle: 閉じる
+    description: >-
+      Pで定義された成立条件、禁止条件、引き受け条件が破られた状態。
+    intent: >-
+      章の前提破綻を検知する。
+    typical_signals:
+    - required_input_missing
+    - forbidden_operation_detected
+    - precondition_no_longer_true
+    meaning:
+    - chapter_validity_lost
+    - active_state_no_longer_justified
+    default_threshold:
+      type: immediate_or_confirmed
+      example:
+        immediate: true
+    candidate_decisions:
+    - proceed
+    - reframe
+    - retire
+    link: core.yaml / flow / precondition
+  - id: blast_radius_undeclared
+    name: Blast Radius Undeclared
+    principle: 閉じる
+    description: >-
+      irreversible または costly な判断が、blast_radius.max_loss を宣言しないまま 実行・承認された状態。
+    intent: >-
+      上限の宣言が抜けた判断を、事故の前に検知する。
+    typical_signals:
+    - irreversible_case_without_max_loss
+    - resolution_without_blast_radius_on_irreversible_action
+    - irreversible_decision_without_max_loss
+    meaning:
+    - downside_unbounded
+    - loss_ceiling_decided_after_the_fact
+    default_threshold:
+      type: immediate
+    candidate_decisions:
+    - proceed
+    - defer
+    link: schema_case.yaml / blast_radius
+  - id: blast_radius_exceeded
+    name: Blast Radius Exceeded
+    principle: 閉じる
+    description: >-
+      実際の損失または影響範囲が、宣言された blast_radius を超えた状態。
+    intent: >-
+      宣言が現実に守られていないこと、または宣言自体が甘かったことを検知する。
+    typical_signals:
+    - observed_loss_above_max_loss
+    - impact_outside_declared_scope
+    - propagation_outside_failure_domain
+    meaning:
+    - containment_failed
+    - declared_ceiling_not_credible
+    default_threshold:
+      type: immediate
+    candidate_decisions:
+    - proceed
+    - reframe
+    link: schema_case.yaml / blast_radius
+  - id: transitive_trust
+    name: Transitive Trust
+    principle: 閉じる
+    description: >-
+      上流で ACCEPTED だった判断が、境界で再検証されないまま下流でも ACCEPTED として扱われている状態。
+    intent: >-
+      連鎖のリセットが行われず、上流の誤りが増幅されて下流に渡る経路を検知する。
+    typical_signals:
+    - upstream_basis_refs_without_revalidation_result
+    - boundary_upstream_trust_undeclared
+    - downstream_acceptance_copied_from_upstream
+    meaning:
+    - error_amplification_path_open
+    - boundary_acts_as_pass_through
+    default_threshold:
+      type: repeated_or_rate
+      example:
+        unrevalidated_ratio: 0.2
+    candidate_decisions:
+    - proceed
+    - reframe
+    link: patterns/boundary-pattern.yaml / revalidation
+  - id: concentration
+    name: Concentration
+    principle: 閉じる
+    description: 多数の案件・境界が、同一の依存先（共通資源・外部主体・基盤）または同一の判断経路（final_decider・RCA）を共有している状態。
+    intent: >-
+      独立に見える失敗が、共通の依存先や判断経路で同時に起きる条件を検知する。owner が1人であること（A5 single_owner_per_delta）は義務であり、ここで問題にするのは異なる章・区画が一点を通ることである。
+    kinds:
+      dependency: >-
+        多数の案件・境界が同一の依存先（共通資源・外部主体・基盤）を共有している状態。boundary-pattern の containment.shared_dependencies が空でない境界も対象とする。
+      judgment: 多数の案件が同一の final_decider または同一の RCA 経路を通って閉じている状態。
+    typical_signals:
+    - same_dependency_across_many_failure_domains
+    - shared_dependency_crossing_bulkhead
+    - single_final_decider_across_failure_domains
+    - single_rca_path_for_many_chapters
+    meaning:
+    - failures_not_independent
+    - hidden_single_point_of_failure
+    default_threshold:
+      type: ratio
+      example:
+        shared_ratio: 0.5
+    candidate_decisions:
+    - reframe
+    - proceed
+    notes:
+    - domain_specific_threshold_required
+    - distinct_from_operator_overload_which_measures_load_not_structure
+    link: schema_case.yaml / depends_on
+  - id: expand_beyond_recovery
+    name: Expand Beyond Recovery
+    principle: 試す
+    polarity: negative
+    description: >-
+      適用範囲の拡大に、復旧・撤回できる能力（reversibility / 復旧手順 / 技能）が追いついていない状態。
+    intent: >-
+      上に賭けた量が、下を閉じる能力を超えていないかを見る。上下をつなぐ点（正本「下を閉じるから、上に賭けられる」）。
+    typical_signals:
+    - expand_without_recovery_capability_confirmed
+    - applications_growing_faster_than_recovery_capability
+    - change_avoided_because_recovery_uncertain
+    meaning:
+    - upside_bet_exceeds_downside_capacity
+    - system_becomes_untouchable
+    default_threshold:
+      type: immediate
+    candidate_decisions:
+    - proceed
+    - defer
+    link: policies.yaml / judgment_gate / hard_stops
+  - id: halt_readiness
+    name: Halt Readiness
+    principle: 試す
+    description: >-
+      停止命令、人間介入、安全退避が実際に発動可能な状態に保たれている度合い。
+    intent: >-
+      停止可能性を机上要件ではなく運用品質として測る。
+    typical_signals:
+    - halt_drill_success_rate
+    - emergency_stop_latency
+    - override_path_availability
+    meaning:
+    - system_remains_governable_under_failure
+    link: policies.yaml / haltability
+  - id: decision_without_basis
+    name: Decision Without Basis
+    principle: 伝える
+    description: >-
+      decision が記録されているが、その根拠（Upside / Downside / Continuity / Asymmetry の観点）が記録されていない、または結論だけが下流や後任に渡されている状態。
+    intent: 結論ではなく根拠を次の判断へ渡すことを確かめる。根拠のない判断は、後任も下流も再判断できない。
+    typical_signals:
+    - decision_log_without_basis
+    - conclusion_passed_downstream_without_basis
+    - successor_cannot_re_derive
+    meaning:
+    - next_judgment_cannot_re_derive
+    - conclusion_inherited_not_revalidated
+    default_threshold:
+      type: event
+    candidate_decisions:
+    - proceed
+    - defer
+    link: schema_log.yaml / decision / basis
+  - id: review_trigger_missing
+    name: Review Trigger Missing
+    principle: 伝える
+    description: >-
+      長期継続する active 案件が、事象駆動の review_triggers を持たず、カレンダー駆動の next_review_at のみ（または何も）で運用されている状態。
+    intent: >-
+      見直しの形骸化（儀式化した定期レビュー）を検知する。見直しは「いつ」ではなく「何が変われば」で定義されるべきである。
+    typical_signals:
+    - long_lived_case_without_review_triggers
+    - periodic_review_passes_without_condition_evaluation
+    - environment_changed_but_no_trigger_fired
+    meaning:
+    - drift_detection_depends_on_luck
+    - review_is_ceremonial
+    default_threshold:
+      type: duration
+      example:
+        duration: 90d
+    candidate_decisions:
+    - proceed
+    - defer
+    link: schema_case.yaml / review_triggers
+  - id: stagnation
+    name: Stagnation
+    principle: 運用
+    description: 判断されるべき案件が閉じられないまま止まっている状態。未解決の Δ、期限を過ぎた Defer、完了しない Retire を含む。
+    intent: Defer や未処理の名を借りた放置を検知する。責任の容量不足（A5）の兆候でもある。
+    kinds:
+      unresolved: 未解決状態が許容時間を超過している状態。
+      deferred: Deferされた案件が、再評価主体・期限・次回判断時刻を持たないまま停滞している状態。
+      retiring: Retire候補と認識されているが、終了判断が先送りされ続けている状態。
+    typical_signals:
+    - ticket_open_too_long
+    - defer_without_resolution
+    - repeated_review_without_closure
+    - no_next_review_at
+    - no_temporary_owner
+    - defer_without_progress
+    - retire_candidate_not_closed
+    - known_obsolete_scope_still_active
+    - no_successor_but_not_terminated
+    meaning:
+    - decision_not_closed
+    - responsibility_capacity_exhausted
+    default_threshold:
+      type: duration
+      example:
+        duration: 7d
+    candidate_decisions:
+    - defer
+    - retire
+    - reframe
+    link: policies.yaml / judgment_gate / per_decision / defer
+  composition_rules:
+    chapter_minimum:
+      required:
+      - owner_missing
+      - precondition_broken
+      recommended:
+      - stagnation
+      - spread_signal_observed
+    chapter_extension_policy: 各章は芯の指標を継承し、必要に応じて領域固有の指標を追加してよい。追加する指標にも principle を付ける。
+  output_contract:
+    fields:
+    - metric_id
+    - status
+    - observed_at
+    - evidence
+    - suggested_decisions
+    - confidence
+  ai_extension:
+    description: >-
+      VCDesign 固有の拡張：AI 統制と運用適合。成長はモデル能力の増大ではなく、責任制約下での運用適合の改善として評価する。ループ構造の説明は docs/ai-adaptive-loop-model.md。
+    growth_properties:
+    - better_delta_detection
+    - better_semantic_interpretation
+    - better_value_alignment
+    - better_judgment_consistency
+    - better_halt_readiness
+    - lower_boundary_violation
+    metrics:
     - id: ai_overreach
       name: AI Overreach
-      description: >
+      principle: 拡張
+      description: >-
         AIが補助範囲を超えて、実質的な最終判断や責任配置を握っている状態。
-      intent: >
+      intent: >-
         AIの越権を検知する。
       typical_signals:
-        - ai_recommendation_auto_accepted
-        - human_review_nominal_only
-        - decision_reason_not_human_explainable
+      - ai_recommendation_auto_accepted
+      - human_review_nominal_only
+      - decision_reason_not_human_explainable
       meaning:
-        - governance_boundary_broken
-        - final_decision_shifted_to_ai
+      - governance_boundary_broken
+      - final_decision_shifted_to_ai
       default_threshold:
         type: ratio_or_pattern
         example:
           acceptance_ratio: 0.9
-          duration: "1h"
-      candidate_actions:
-        - fix
-        - reframe
-        - defer
+          duration: 1h
       notes:
-        - requires_policy_linkage
-
-    - id: unresolved_duration_exceeded
-      name: Unresolved Duration Exceeded
-      description: >
-        未解決状態が許容時間を超過している状態。
-      intent: >
-        放置と保留の劣化を検知する。
+      - requires_policy_linkage
+      candidate_decisions:
+      - proceed
+      - reframe
+      - defer
+    - id: owner_conflict
+      name: Owner Conflict
+      principle: 拡張
+      description: >-
+        複数主体が同一責任を同時に持つ、または責任境界が矛盾している状態。
+      intent: >-
+        二重責任・責任競合を検知する。
       typical_signals:
-        - ticket_open_too_long
-        - defer_without_resolution
-        - repeated_review_without_closure
+      - multiple_actors_claiming_ownership
+      - inconsistent_role_assignment
+      - contradictory_operational_instructions
       meaning:
-        - closure_loop_failing
-        - defer_stagnation_possible
+      - responsibility_boundary_broken
+      - decision_path_unstable
       default_threshold:
-        type: duration
+        type: immediate_or_repeated
         example:
-          duration: "7d"
-      candidate_actions:
-        - defer
-        - reframe
-        - retire
-      notes:
-        - supervisor_chapter_should_own_this
-
-    - id: promise_broken
-      name: Promise Broken
-      description: >
-        Pで定義された成立条件、禁止条件、引き受け条件が破られた状態。
-      intent: >
-        章の前提破綻を検知する。
-      typical_signals:
-        - required_input_missing
-        - forbidden_operation_detected
-        - precondition_no_longer_true
-      meaning:
-        - chapter_validity_lost
-        - active_state_no_longer_justified
-      default_threshold:
-        type: immediate_or_confirmed
-        example:
-          immediate: true
-      candidate_actions:
-        - fix
-        - reframe
-        - retire
-
-    - id: repeated_reframe
-      name: Repeated Reframe
-      description: >
-        短期間に Reframe が繰り返されている状態。
-      intent: >
-        構造そのものの不安定性を検知する。
-      typical_signals:
-        - multiple_reframes_same_scope
-        - frequent_boundary_changes
-        - chapter_churn
-      meaning:
-        - architecture_instability
-        - poor_boundary_definition
-      default_threshold:
-        type: count_in_window
-        example:
-          count: 3
-          window: "14d"
-      candidate_actions:
-        - reframe
-        - defer
-        - retire
-      notes:
-        - often requires supervisor review
-
+          repeated_count: 2
+      candidate_decisions:
+      - proceed
+      - defer
+      - reframe
     - id: operator_overload
       name: Operator Overload
-      description: >
+      principle: 拡張
+      description: >-
         現場判断主体に、本来構造で吸収すべき負荷が押し戻されている状態。
-      intent: >
+      intent: >-
         現場側の責任過負荷を検知する。
       typical_signals:
-        - excessive_manual_judgment_count
-        - alert_fatigue
-        - decision_latency_increase
+      - excessive_manual_judgment_count
+      - alert_fatigue
+      - decision_latency_increase
       meaning:
-        - chapter_support_failure
-        - quality_control_not_working
+      - chapter_support_failure
+      - quality_control_not_working
       default_threshold:
         type: rate_or_latency
         example:
           latency_growth_ratio: 1.5
           repeated_events: 20
-      candidate_actions:
-        - fix
-        - reframe
       notes:
-        - especially useful for operational domains
-
-    - id: defer_stagnation
-      name: Defer Stagnation
-      description: >
-        Deferされた案件が、再評価主体・期限・次回判断時刻を持たないまま停滞している状態。
-      intent: >
-        Deferの名を借りた放置を検知する。
+      - especially useful for operational domains
+      candidate_decisions:
+      - proceed
+      - reframe
+    - id: authority_confusion_detected
+      name: Authority Confusion Detected
+      principle: 拡張
+      description: >-
+        AI/Agent の能力（実行できる）と権限（実行してよい）が混同されている状態。高性能だから任せる、という決定経路の検知。
+      intent: >-
+        Principle 1 違反（能力 ≠ 権限）を観測する。
       typical_signals:
-        - no_next_review_at
-        - no_temporary_owner
-        - defer_without_progress
+      - agent_acted_outside_declared_boundary
+      - no_explicit_authority_grant_before_execution
+      - capability_cited_as_justification_for_action
       meaning:
-        - meta_responsibility_missing
-        - supervisor_control_failure
+      - boundary_design_skipped
+      - responsibility_path_missing_before_execution
       default_threshold:
-        type: immediate_or_duration
-        example:
-          duration: "48h"
-      candidate_actions:
-        - fix
-        - defer
-        - reframe
-
-    - id: retirement_pending_too_long
-      name: Retirement Pending Too Long
-      description: >
-        Retire候補と認識されているが、終了判断が先送りされ続けている状態。
-      intent: >
-        不要な章や監視対象の残置を検知する。
+        type: immediate
+      candidate_decisions:
+      - proceed
+      - reframe
+    - id: missing_execution_gate
+      name: Missing Execution Gate
+      principle: 拡張
+      description: >-
+        Agent が計画を現実系（ファイル・API・DB 等）へ反映する前に policy 適合チェックおよび責任者承認が存在しない状態。
+      intent: >-
+        boundary_safety の agent_execution_gate 欠如を観測する。
       typical_signals:
-        - retire_candidate_not_closed
-        - known_obsolete_scope_still_active
-        - no_successor_but_not_terminated
+      - agent_plan_directly_executed_without_review
+      - no_policy_check_record_before_real_world_write
+      - tool_invocation_with_no_responsible_actor_log
       meaning:
-        - cost_without_value
-        - false_continuity
+      - discrete_to_continuous_boundary_unguarded
+      - governance_gap_between_plan_and_action
       default_threshold:
-        type: duration
+        type: immediate_or_pattern
         example:
-          duration: "30d"
-      candidate_actions:
-        - retire
-        - defer
-
-  agent_governance_metrics:
-    description: >
-      Agent 時代（ツール実行・連鎖操作・長時間動作）固有の
-      ガバナンス failure を観測する指標群。
-      Performance ではなく governability の劣化を検知することを目的とする。
-      いずれも base_metrics と同じ evaluation_model（observation→warning→delta_candidate→delta_confirmed）に従う。
-    metrics:
-      - id: authority_confusion_detected
-        name: Authority Confusion Detected
-        description: >
-          AI/Agent の能力（実行できる）と権限（実行してよい）が混同されている状態。
-          高性能だから任せる、という決定経路の検知。
-        intent: >
-          Principle 1 違反（能力 ≠ 権限）を観測する。
-        typical_signals:
-          - agent_acted_outside_declared_boundary
-          - no_explicit_authority_grant_before_execution
-          - capability_cited_as_justification_for_action
-        meaning:
-          - boundary_design_skipped
-          - responsibility_path_missing_before_execution
-        default_threshold:
-          type: immediate
-        candidate_actions:
-          - fix
-          - reframe
-        policy_link: policies.yaml / ai_governance.constraints / model_capability_does_not_imply_authority
-
-      - id: missing_execution_gate
-        name: Missing Execution Gate
-        description: >
-          Agent が計画を現実系（ファイル・API・DB 等）へ反映する前に
-          policy 適合チェックおよび責任者承認が存在しない状態。
-        intent: >
-          boundary_safety の agent_execution_gate 欠如を観測する。
-        typical_signals:
-          - agent_plan_directly_executed_without_review
-          - no_policy_check_record_before_real_world_write
-          - tool_invocation_with_no_responsible_actor_log
-        meaning:
-          - discrete_to_continuous_boundary_unguarded
-          - governance_gap_between_plan_and_action
-        default_threshold:
-          type: immediate_or_pattern
-          example:
-            count: 1
-        candidate_actions:
-          - fix
-          - reframe
-        policy_link: policies.yaml / boundary_safety / agent_execution_gate
-
-      - id: missing_halt_owner
-        name: Missing Halt Owner
-        description: >
-          長時間動作 Agent に対して halt_owner が未指定、または
-          部分的障害時に halt_owner が介入できない状態。
-        intent: >
-          Agent の停止可能性が設計要件ではなく運用任せになっていることを検知する。
-        typical_signals:
-          - no_halt_owner_named_at_agent_launch
-          - halt_path_not_tested_under_partial_failure
-          - emergency_stop_requires_agent_cooperation
-        meaning:
-          - haltability_requirement_not_met_for_agent
-          - human_sovereignty_at_risk
-        default_threshold:
-          type: immediate
-        candidate_actions:
-          - fix
-          - defer
-        policy_link: policies.yaml / haltability / halt_owner_must_be_named_for_each_operational_agent
-
-      - id: explainability_insufficient_for_impact
-        name: Explainability Insufficient for Impact Level
-        description: >
-          操作の影響水準（low/medium/high）に対して、
-          充足すべき explainability 要件が満たされていない状態。
-        intent: >
-          Principle 12b（外部責任説明は必須）の違反を影響水準に応じて観測する。
-        typical_signals:
-          - high_impact_action_missing_responsibility_path
-          - medium_impact_action_missing_delta_to_action_mapping
-          - adoption_reason_not_recorded_for_high_impact_agent
-        meaning:
-          - external_accountability_compromised
-          - governance_trace_incomplete
-        default_threshold:
-          type: immediate_for_high_impact
-          example:
-            high_impact: immediate
-            medium_impact: "24h"
-        candidate_actions:
-          - fix
-          - defer
-        policy_link: policies.yaml / explainability / levels
-
-      - id: autonomous_scope_expansion_detected
-        name: Autonomous Scope Expansion Detected
-        description: >
-          Agent が宣言された実行境界を超えて、
-          未承認のスコープへ操作を拡大している状態。
-          特に fast loop が slow loop の制約を書き換えるパターン。
-        intent: >
-          temporal_separation 原則違反と B17（Impact ↔ Accountability）の侵犯を検知する。
-        typical_signals:
-          - agent_accessed_resources_outside_declared_scope
-          - agent_modified_value_objectives_without_review
-          - scope_creep_without_responsibility_reassignment
-        meaning:
-          - temporal_separation_violated
-          - impact_exceeds_authority
-          - b17_boundary_crossed
-        default_threshold:
-          type: immediate
-        candidate_actions:
-          - fix
-          - reframe
-          - retire
-        policy_link: core.yaml / temporal_separation / fast_loops_must_not_autonomously_rewrite_slow_loop_constraints
-
-      - id: policy_bypass_attempt_detected
-        name: Policy Bypass Attempt Detected
-        description: >
-          Agent の計画または実行が、明示的に禁止された操作
-          （AI による最終判断・直接物理制御・責任配置の自律的変更等）を
-          迂回または無効化しようとしている状態。
-        intent: >
-          policies.yaml の blocking 制約が Agent 実行経路で回避されることを検知する。
-        typical_signals:
-          - agent_routed_around_safety_gate
-          - policy_check_disabled_or_mocked_in_agent_plan
-          - forbidden_operation_reframed_as_allowed_by_agent
-        meaning:
-          - governance_constraint_actively_circumvented
-          - policy_enforcement_level_blocking_required
-        default_threshold:
-          type: immediate
-        candidate_actions:
-          - fix
-          - retire
-        policy_link: policies.yaml / policy_enforcement / blocking
-
-  tenure_metrics:
-    description: >
-      承認の一点（Gate）ではなく、承認後の継続保有（Tenure）の劣化を観測する指標群。
-      owner_missing が「いま owner がいない」を検知するのに対し、
-      ここでは「owner はいるが保有が減衰している」「引き渡しが記録されずに交代した」を検知する。
-      背景は core/value-tenure-model.md、フィールド定義は schema_case.yaml (v0.2) を参照。
-      いずれも base_metrics と同じ evaluation_model に従う。
-    metrics:
-      - id: custody_gap
-        name: Custody Gap
-        description: >
-          責任保有者の交代が起きたにもかかわらず、
-          custody_chain への追記（引き渡しの責任イベント）が存在しない状態。
-          または引き受け先が re_derivation_basis を確認しないまま保有が始まった状態。
-        intent: >
-          A1（責任非消失）を、担当交代をまたいで検証可能にする。
-          「静かに無所有になる」の最頻発経路は退職・異動である。
-        typical_signals:
-          - owner_changed_without_custody_chain_entry
-          - custody_entry_without_re_derivation_confirmation
-          - departed_actor_still_recorded_as_owner
-          - no_reaffirmation_after_custody_transfer
-        meaning:
-          - responsibility_transfer_untraceable
-          - successor_cannot_re_derive_judgment
-        default_threshold:
-          type: immediate
-        candidate_actions:
-          - fix
-          - defer
-        policy_link: core/schema_case.yaml / invariants / owner_change_must_append_custody_chain_entry
-
-      - id: reaffirmation_decay
-        name: Reaffirmation Decay
-        description: >
-          active な案件・決定について、last_reaffirmed が長期間更新されていない状態。
-          Tenure は放置で減衰する。承認済みであることは、
-          現在も責任が保有されていることを意味しない。
-          ただし本 metric は設計上「弱いシグナル」である。
-          再確認の義務は事象駆動（custody 交代時・review_trigger 発火時 → custody_gap 側で検知）であり、
-          純粋な時間経過を warning 以上に扱うと、review_triggers で退けた
-          カレンダー儀式が reaffirmation に移るだけになる。
-        intent: >
-          「ゲートを通過しただけの決定」が保有中の決定として扱われ続けることへの注意喚起。
-          単独で Δ を構成しない。
-        typical_signals:
-          - last_reaffirmed_older_than_threshold
-          - value_intent_never_revisited
-        meaning:
-          - tenure_may_be_decaying
-          - attention_signal_not_review_obligation
-        default_threshold:
-          type: duration
-          example:
-            duration: "180d"
-          max_level: observation
-        candidate_actions:
-          - fix
-          - reframe
-          - retire
-        notes:
-          - weak_signal_by_design_maps_to_observation_level_only
-          - reaffirmation_obligation_is_event_driven_see_custody_gap
-          - domain_specific_threshold_required
-        policy_link: core/schema_case.yaml / field_definitions / last_reaffirmed
-
-      - id: review_trigger_missing
-        name: Review Trigger Missing
-        description: >
-          長期継続する active 案件が、事象駆動の review_triggers を持たず、
-          カレンダー駆動の next_review_at のみ（または何も）で運用されている状態。
-        intent: >
-          見直しの形骸化（儀式化した定期レビュー）を検知する。
-          見直しは「いつ」ではなく「何が変われば」で定義されるべきである。
-        typical_signals:
-          - long_lived_case_without_review_triggers
-          - periodic_review_passes_without_condition_evaluation
-          - environment_changed_but_no_trigger_fired
-        meaning:
-          - drift_detection_depends_on_luck
-          - review_is_ceremonial
-        default_threshold:
-          type: duration
-          example:
-            duration: "90d"
-        candidate_actions:
-          - fix
-          - defer
-        policy_link: core/schema_case.yaml / field_definitions / review_triggers
-
-  containment_metrics:
-    description: >
-      下振れの裾が内部で増幅・伝播しうる構造を観測する指標群。
-      失敗そのものではなく「一つの失敗が次の失敗を生む条件」が揃っているかを見る。
-      背景は core/downside-containment-model.md、フィールド定義は schema_case.yaml (v0.3) と
-      patterns/boundary-pattern.yaml (v1.2.0) を参照。
-      いずれも base_metrics と同じ evaluation_model に従う。
-    metrics:
-      - id: blast_radius_undeclared
-        name: Blast Radius Undeclared
-        description: >
-          irreversible または costly な判断が、blast_radius.max_loss を宣言しないまま
-          実行・承認された状態。
-        intent: >
-          上限の宣言が抜けた判断を、事故の前に検知する。
-        typical_signals:
-          - irreversible_case_without_max_loss
-          - resolution_without_blast_radius_on_irreversible_action
-          - long_term_decision_bet_size_without_max_loss
-        meaning:
-          - downside_unbounded
-          - loss_ceiling_decided_after_the_fact
-        default_threshold:
-          type: immediate
-        candidate_actions:
-          - fix
-          - defer
-        policy_link: core/schema_case.yaml / invariants / irreversible_case_must_declare_blast_radius_max_loss
-
-      - id: blast_radius_exceeded
-        name: Blast Radius Exceeded
-        description: >
-          実際の損失または影響範囲が、宣言された blast_radius を超えた状態。
-        intent: >
-          宣言が現実に守られていないこと、または宣言自体が甘かったことを検知する。
-        typical_signals:
-          - observed_loss_above_max_loss
-          - impact_outside_declared_scope
-          - propagation_outside_failure_domain
-        meaning:
-          - containment_failed
-          - declared_ceiling_not_credible
-        default_threshold:
-          type: immediate
-        candidate_actions:
-          - fix
-          - reframe
-        policy_link: core/schema_case.yaml / field_definitions / blast_radius
-
-      - id: transitive_trust
-        name: Transitive Trust
-        description: >
-          上流で ACCEPTED だった判断が、境界で再検証されないまま下流でも ACCEPTED として扱われている状態。
-        intent: >
-          連鎖のリセットが行われず、上流の誤りが増幅されて下流に渡る経路を検知する。
-        typical_signals:
-          - upstream_basis_refs_without_revalidation_result
-          - boundary_upstream_trust_undeclared
-          - downstream_acceptance_copied_from_upstream
-        meaning:
-          - error_amplification_path_open
-          - boundary_acts_as_pass_through
-        default_threshold:
-          type: repeated_or_rate
-          example:
-            unrevalidated_ratio: 0.2
-        candidate_actions:
-          - fix
-          - reframe
-        policy_link: core/schema_case.yaml / invariants / upstream_acceptance_must_not_be_inherited_without_revalidation
-
-      - id: dependency_concentration
-        name: Dependency Concentration
-        description: >
-          多数の案件・境界が同一の依存先（共通資源・外部主体・基盤）を共有している状態。
-          boundary-pattern の containment.shared_dependencies が空でない境界も対象とする。
-        intent: >
-          独立に見える失敗が、共通の依存先で同時に起きる（common-mode）条件を検知する。
-        typical_signals:
-          - same_dependency_across_many_failure_domains
-          - shared_dependency_crossing_bulkhead
-        meaning:
-          - failures_not_independent
-          - hidden_single_point_of_failure
-        default_threshold:
-          type: ratio
-          example:
-            shared_ratio: 0.5
-        candidate_actions:
-          - fix
-          - reframe
-        notes:
-          - domain_specific_threshold_required
-        policy_link: core/schema_case.yaml / field_definitions / depends_on
-
-      - id: judgment_concentration
-        name: Judgment Concentration
-        description: >
-          多数の案件が同一の final_decider または同一の RCA 経路を通って閉じている状態。
-        intent: >
-          判断経路の一点集中を検知する。owner が 1 人であること（A5 single_owner_per_delta）は義務であり、
-          本 metric はそれを否定しない。問題にするのは、異なる章・区画の判断が一点を通ることである。
-        typical_signals:
-          - single_final_decider_across_failure_domains
-          - single_rca_path_for_many_chapters
-        meaning:
-          - judgment_single_point_of_failure
-          - correlated_judgment_errors
-        default_threshold:
-          type: ratio
-          example:
-            concentration_ratio: 0.5
-        candidate_actions:
-          - reframe
-          - fix
-        notes:
-          - distinct_from_operator_overload_which_measures_load_not_structure
-        policy_link: core/core.yaml / downside_containment / rules / single_owner_is_required_but_single_point_of_dependency_is_detected
-
-  accumulation_metrics:
-    description: >
-      上振れ側、すなわち業務が変わっても残るものが実際に残り、再利用・接続によって次の価値を生んでいるかを観測する指標群。
-      平均的な効果ではなく、再利用によって大きく広がる兆候（広がりの兆候）を見る。
-      各 metric の polarity に従い、positive の metric は停止・隔離の根拠にしない。
-      背景は core/value-continuity-implementation.md、フィールド定義は schema_case.yaml (v0.3) を参照。
-      いずれも base_metrics と同じ evaluation_model に従う。
-    metrics:
-      - id: one_shot_improvement
-        name: One-shot Improvement
-        polarity: negative   # 「残す」の失敗。停止系には流さず、reframe / retire で扱う
-        description: >
-          業務・担当・技術の変化によって改善が無効化され、何も残らなかった状態。
-          または residual_assets を宣言しないまま改善が完了扱いになった状態。
-        intent: >
-          「改善したのに継続しない」「改善したのに人も手間も減らない」を Δ として検知する。
-          点の改善は、その時点では成功に見えるため、放置すると量産される。
-        typical_signals:
-          - improvement_lost_after_work_change
-          - improvement_completed_without_residual_assets
-          - residual_asset_without_holder
-        meaning:
-          - value_did_not_continue
-          - investment_cannot_be_sustained
-        default_threshold:
-          type: event
-        candidate_actions:
-          - reframe
-          - retire
-        policy_link: core/core.yaml / value_accumulation / rules / improvement_invalidated_by_work_change_is_a_delta
-
-      - id: tail_signal_absent_on_success
-        name: Tail Signal Absent on Success
-        polarity: none       # Δ ではなく scale_gate への入力
-        description: >
-          平均的な効果は出た（average_outcome が met）が、宣言した tail_signals が一つも観測されない状態。
-        intent: >
-          「成功したが広がらない」案件を、拡大の前に識別する。失敗の検知ではなく、拡大判断の入力である。
-        typical_signals:
-          - average_outcome_met_but_no_observed_tail_signal
-          - scale_proposed_on_average_success_only
-        meaning:
-          - point_improvement_likely
-          - scale_not_justified
-        default_threshold:
-          type: at_review
-          max_level: warning
-        candidate_actions:
-          - defer
-          - retire
-        policy_link: core/policies.yaml / scale_gate / outcomes / average_success_without_tail_signal
-
-      - id: reuse_cost_trend
-        name: Reuse Cost Trend
-        polarity: positive
-        description: >
-          同じ residual_asset を別の章・場所に適用するコスト（工数・期間・例外対応）の推移。
-          下がっていれば複利が効いている。下がらない、または上がっている場合は、残ったものが再利用に耐えていない。
-        intent: >
-          reuse_cost_decline の兆候を定量的に観測する。
-        typical_signals:
-          - nth_application_cost_not_decreasing
-          - each_application_requires_redesign
-        meaning:
-          - residual_asset_not_reusable
-          - compounding_not_working
-        default_threshold:
-          type: trend
-          example:
-            applications_compared: 3
-        candidate_actions:
-          - fix
-          - reframe
-        max_level: warning
-        candidate_decisions:
-          - expand     # 下がっていれば Positive Δ。scale_gate を通して広げる
-          - proceed
-        notes:
-          - domain_specific_cost_unit_required
-          - not_decreasing_is_not_a_negative_delta_but_a_reason_not_to_expand
-          - candidate_actions_apply_only_when_the_residual_asset_is_redesigned_for_reuse
-        policy_link: core/core.yaml / value_accumulation / tail_signals / reuse_cost_decline
-
-      - id: scale_beyond_recovery
-        name: Scale Beyond Recovery
-        polarity: negative   # Expand を Downside の上限と復旧能力の範囲に留める歯止め
-        description: >
-          適用範囲の拡大に、復旧・撤回できる能力（reversibility / 復旧手順 / 技能）が追いついていない状態。
-        intent: >
-          上に賭けた量が、下を閉じる能力を超えていないかを見る。value_asymmetry の結合点。
-        typical_signals:
-          - scale_go_without_recovery_capability_confirmed
-          - applications_growing_faster_than_recovery_capability
-          - change_avoided_because_recovery_uncertain
-        meaning:
-          - upside_bet_exceeds_downside_capacity
-          - system_becomes_untouchable
-        default_threshold:
-          type: immediate
-        candidate_actions:
-          - fix
-          - defer
-        policy_link: core/core.yaml / value_asymmetry / coupling_principles / change_is_bounded_by_recovery_capability
-
-      - id: upside_signal_observed
-        name: Upside Signal Observed
-        polarity: positive
-        description: >
-          宣言した tail_signals.expected、または宣言していなかった兆候（tail_signals.unexpected）が観測された状態。
-          Positive Δ の検知である。
-        intent: >
-          上振れを単発の成功として消費せず、意味づけと再利用可能化（residual_assets への記録）の流れに乗せる。
-        typical_signals:
-          - expected_tail_signal_observed
-          - unexpected_reuse_or_pull_observed
-          - output_used_as_input_by_other_chapter
-        meaning:
-          - upside_available_for_reuse
-          - expand_candidate
-        default_threshold:
-          type: event
-        max_level: warning
-        candidate_decisions:
-          - expand
-          - proceed
-        notes:
-          - must_not_trigger_halt_or_quarantine
-          - unknown_cause_goes_to_idg_as_unknown_and_does_not_justify_expand
-        policy_link: core/core.yaml / delta_definition / polarity / positive
-
-      - id: positive_delta_without_holder
-        name: Positive Delta Without Holder
-        polarity: negative   # 上振れが残らなくなる崩れ（「残す」の失敗）を検知する
-        description: >
-          Positive Δ が観測されたが、それを residual_assets として保有する主体（holder）が決まっていない状態。
-        intent: >
-          保有者のいない上振れは残らない。観測された上振れが、次の価値を生む前に散逸することを検知する。
-        typical_signals:
-          - observed_tail_signal_without_residual_asset
-          - residual_asset_without_holder_after_positive_delta
-        meaning:
-          - upside_will_not_remain
-        default_threshold:
-          type: at_review
-        candidate_actions:
-          - fix
-          - defer
-        policy_link: core/core.yaml / delta_definition / polarity / asymmetry_rules / positive_delta_requires_a_holder_or_it_does_not_remain
-
-  operational_fit_metrics:
-    # implementation_specific: AI の運用整合の指標。正本の5原則には対応しない VCDesign 固有の指標群
-
+          count: 1
+      candidate_decisions:
+      - proceed
+      - reframe
+    - id: missing_halt_owner
+      name: Missing Halt Owner
+      principle: 拡張
+      description: >-
+        長時間動作 Agent に対して halt_owner が未指定、または 部分的障害時に halt_owner が介入できない状態。
+      intent: >-
+        Agent の停止可能性が設計要件ではなく運用任せになっていることを検知する。
+      typical_signals:
+      - no_halt_owner_named_at_agent_launch
+      - halt_path_not_tested_under_partial_failure
+      - emergency_stop_requires_agent_cooperation
+      meaning:
+      - haltability_requirement_not_met_for_agent
+      - human_sovereignty_at_risk
+      default_threshold:
+        type: immediate
+      candidate_decisions:
+      - proceed
+      - defer
+    - id: explainability_insufficient_for_impact
+      name: Explainability Insufficient for Impact Level
+      principle: 拡張
+      description: >-
+        操作の影響水準（low/medium/high）に対して、充足すべき explainability 要件が満たされていない状態。
+      intent: >-
+        Principle 12b（外部責任説明は必須）の違反を影響水準に応じて観測する。
+      typical_signals:
+      - high_impact_action_missing_responsibility_path
+      - medium_impact_action_missing_delta_to_action_mapping
+      - adoption_reason_not_recorded_for_high_impact_agent
+      meaning:
+      - external_accountability_compromised
+      - governance_trace_incomplete
+      default_threshold:
+        type: immediate_for_high_impact
+        example:
+          high_impact: immediate
+          medium_impact: 24h
+      candidate_decisions:
+      - proceed
+      - defer
+    - id: autonomous_scope_expansion_detected
+      name: Autonomous Scope Expansion Detected
+      principle: 拡張
+      description: >-
+        Agent が宣言された実行境界を超えて、未承認のスコープへ操作を拡大している状態。特に fast loop が slow loop の制約を書き換えるパターン。
+      intent: >-
+        temporal_separation 原則違反と B17（Impact ↔ Accountability）の侵犯を検知する。
+      typical_signals:
+      - agent_accessed_resources_outside_declared_scope
+      - agent_modified_value_objectives_without_review
+      - scope_creep_without_responsibility_reassignment
+      meaning:
+      - temporal_separation_violated
+      - impact_exceeds_authority
+      - b17_boundary_crossed
+      default_threshold:
+        type: immediate
+      candidate_decisions:
+      - proceed
+      - reframe
+      - retire
+    - id: policy_bypass_attempt_detected
+      name: Policy Bypass Attempt Detected
+      principle: 拡張
+      description: >-
+        Agent の計画または実行が、明示的に禁止された操作 （AI による最終判断・直接物理制御・責任配置の自律的変更等）を 迂回または無効化しようとしている状態。
+      intent: >-
+        policies.yaml の blocking 制約が Agent 実行経路で回避されることを検知する。
+      typical_signals:
+      - agent_routed_around_safety_gate
+      - policy_check_disabled_or_mocked_in_agent_plan
+      - forbidden_operation_reframed_as_allowed_by_agent
+      meaning:
+      - governance_constraint_actively_circumvented
+      - policy_enforcement_level_blocking_required
+      default_threshold:
+        type: immediate
+      candidate_decisions:
+      - proceed
+      - retire
     - id: delta_detection_quality
       name: Delta Detection Quality
-      primary_loop: semantic_loop
-      description: >
+      principle: 拡張
+      description: >-
         現実のズレをノイズと区別しつつ、責任影響のあるΔを適切に検出できている度合い。
-      intent: >
+      intent: >-
         Δ観測の過検知と見逃しの双方を抑える。
       typical_signals:
-        - confirmed_delta_precision
-        - confirmed_delta_recall
-        - low_false_alarm_rate
+      - confirmed_delta_precision
+      - confirmed_delta_recall
+      - low_false_alarm_rate
       meaning:
-        - semantic_loop_is_fitted_to_operational_reality
-
+      - semantic_loop_is_fitted_to_operational_reality
     - id: semantic_interpretation_quality
       name: Semantic Interpretation Quality
-      primary_loop: semantic_loop
-      description: >
+      principle: 拡張
+      description: >-
         観測されたΔ候補を、文脈・章・責任に沿って意味解釈できている度合い。
-      intent: >
+      intent: >-
         Δから意味への変換品質を測る。
       typical_signals:
-        - interpretation_agreement_with_human_review
-        - low_context_loss
-        - stable_delta_classification
+      - interpretation_agreement_with_human_review
+      - low_context_loss
+      - stable_delta_classification
       meaning:
-        - discontinuous_inference_is_kept_explainable
-
+      - discontinuous_inference_is_kept_explainable
     - id: value_alignment_quality
       name: Value Alignment Quality
-      primary_loop: value_loop
-      description: >
+      principle: 拡張
+      description: >-
         運用中の判断や改善が、明示された目的・制約・価値継続要件に整合している度合い。
-      intent: >
+      intent: >-
         目的ドリフトと隠れた最適化を検知する。
       typical_signals:
-        - review_pass_rate
-        - explicit_objective_traceability
-        - low_goal_shift_incidents
+      - review_pass_rate
+      - explicit_objective_traceability
+      - low_goal_shift_incidents
       meaning:
-        - optimization_remains_inside_stated_value_constraints
-
+      - optimization_remains_inside_stated_value_constraints
     - id: judgment_consistency
       name: Judgment Consistency
-      primary_loop: responsibility_loop
-      description: >
+      principle: 拡張
+      description: >-
         類似事例に対する判断理由、介入条件、Action選択が一貫している度合い。
-      intent: >
+      intent: >-
         責任判断の恣意化を抑える。
       typical_signals:
-        - decision_reason_similarity
-        - policy_conformance_rate
-        - low_conflicting_resolution_rate
+      - decision_reason_similarity
+      - policy_conformance_rate
+      - low_conflicting_resolution_rate
       meaning:
-        - accountable_governance_is_stable
-
-    - id: halt_readiness
-      name: Halt Readiness
-      primary_loop: responsibility_loop
-      description: >
-        停止命令、人間介入、安全退避が実際に発動可能な状態に保たれている度合い。
-      intent: >
-        停止可能性を机上要件ではなく運用品質として測る。
-      typical_signals:
-        - halt_drill_success_rate
-        - emergency_stop_latency
-        - override_path_availability
-      meaning:
-        - system_remains_governable_under_failure
-
+      - accountable_governance_is_stable
     - id: boundary_violation_rate
       name: Boundary Violation Rate
-      primary_loop: boundary_crossing
-      description: >
+      principle: 拡張
+      description: >-
         LLM越権、無審査実行、責任経路欠落などの境界破りが発生する頻度。
-      intent: >
+      intent: >-
         安全ゲートの実効性を測る。
       typical_signals:
-        - direct_execution_without_gate
-        - missing_policy_check
-        - missing_trace_on_cross_boundary_actions
+      - direct_execution_without_gate
+      - missing_policy_check
+      - missing_trace_on_cross_boundary_actions
       meaning:
-        - boundary_design_is_failing
-
+      - boundary_design_is_failing
     - id: human_override_recovery_quality
       name: Human Override Recovery Quality
-      primary_loop: responsibility_loop
-      description: >
+      principle: 拡張
+      description: >-
         人間介入後に、システムが責任を保ったまま安全状態へ復帰できる度合い。
-      intent: >
+      intent: >-
         override後の運用回復品質を測る。
       typical_signals:
-        - recovery_time_after_override
-        - post_override_incident_rate
-        - completeness_of_review_record
+      - recovery_time_after_override
+      - post_override_incident_rate
+      - completeness_of_review_record
       meaning:
-        - human_sovereignty_is_operationally_effective
-
-  long_term_judgment_metrics:
-    description: >
-      長期判断の質を評価するための指標群。
-      既存の metrics は「意味のズレを観測するもので、単なる性能指標ではない」という思想になっているため、
-      ここに長期判断系メトリクスを追加するのは整合します。
-    metrics:
-      - metric_id: lindy_alignment
-        description: >
-          判断が、時間を超えて残った原理・需要・運用知に接続しているか。
-
-      - metric_id: competence_boundary_fit
-        description: >
-          判断主体が、その領域を十分に理解し責任を取れる範囲内にいるか。
-
-      - metric_id: downside_survivability
-        # 同じ軸の用語: core.yaml criteria.survive_downside（判断基準）/ policies downside_review（ゲート手順）
-        #   / policies hard_stops.fatal_downside（停止条件）。glossary.md「Downside Containment」参照
-        description: >
-          判断が失敗した場合でも、章・責任・価値継続が破壊されないか。
-
-      - metric_id: skin_in_the_game_alignment
-        description: >
-          判断する主体と、結果の痛みを受ける主体が乖離していないか。
-
-      - metric_id: reversibility_score
-        # 同じ軸の用語: core.yaml criteria.reversible / policies reversibility_assessed
-        #   / schema_case.yaml reversibility（記録）。glossary.md「Reversibility」参照
-        description: >
-          判断が撤退・縮小・修正可能な形で実行されているか。
-
-      - metric_id: compounding_value_potential
-        description: >
-          知識・信頼・資産・関係性が残り、再利用・接続によって次の価値を生むか。
-
-  interpretation_rules:
-    - multiple_warnings_may_form_delta_candidate
-    - confirmed_delta_requires_contextual_judgment
-    - no_metric_alone_forces_reframe_except_policy_defined_cases
-    - metrics_are_inputs_to_rca_not_replacements_for_rca
-    - growth_metrics_must_be_read_with_responsibility_constraints
-    - positive_polarity_metric_never_forces_halt_or_blocking
-    - positive_polarity_metric_is_input_to_scale_gate_not_to_containment
-
-  composition_rules:
-    chapter_minimum:
-      required:
-        - owner_missing
-        - promise_broken
-      recommended:
-        - unresolved_duration_exceeded
-        - ai_overreach
-
-    chapter_extension_policy:
-      description: >
-        各章は base_metrics を継承し、必要に応じてドメイン固有の metrics を追加してよい。
-
-  output_contract:
-    description: >
-      各 metric の評価結果は、少なくとも status, observed_at, evidence, suggested_actions を返せること。
-
-  loop_metric_mapping:
-    semantic_loop:
-      - delta_detection_quality
-      - semantic_interpretation_quality
-    value_loop:
-      - value_alignment_quality
-    responsibility_loop:
-      - judgment_consistency
-      - halt_readiness
-      - human_override_recovery_quality
-    value_asymmetry:
-      - one_shot_improvement
-      - tail_signal_absent_on_success
-      - reuse_cost_trend
-      - scale_beyond_recovery
-      - upside_signal_observed
-      - positive_delta_without_holder
-    boundary_crossing:
-      - boundary_violation_rate
-      - transitive_trust
-      - blast_radius_exceeded
-    fields:
-      - metric_id
-      - status
-      - observed_at
-      - evidence
-      - suggested_actions
-      - confidence
+      - human_sovereignty_is_operationally_effective

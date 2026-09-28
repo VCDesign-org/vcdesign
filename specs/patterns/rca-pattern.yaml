@@ -13,9 +13,8 @@ meta:
 
 
 preconditions:
-  - "Responsibility Closure Loop (RCL) is defined and operational."
 notes:
-  - "RCA does not substitute RCL. RCA assumes responsibility only after Δ is assigned to R."
+  - "RCA assumes responsibility only after the Δ has an owner (axioms A1)."
 
 # -------------------------------------------------------------------
 # Constitutional Definition

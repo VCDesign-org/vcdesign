@@ -61,8 +61,8 @@ chapter:
     - "Has the purpose changed without re-judgment?"
     - "Can the original judgment still be explained?"
 
-  recommended_posture:
-    decision_posture: "defer"
+  recommended_decision:
+    decision: "defer"
     rationale: "Explicitly re-close the 'Meaning' boundary (B4) before proceeding. Continued operation on shifted purpose is unauthorized."
 
   relevant_boundaries:

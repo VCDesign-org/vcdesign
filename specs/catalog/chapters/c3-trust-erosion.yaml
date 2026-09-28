@@ -58,8 +58,8 @@ chapter:
     - "Can the user explain *why* they accepted the system's output?"
     - "Is there a named owner for the outcome of the system's advice?"
 
-  recommended_posture:
-    decision_posture: "defer"
+  recommended_decision:
+    decision: "defer"
     rationale: "Require 'Explainability' or 'Meaning' artifacts before enabling Judgment Closure. Action without understanding allows impact without accountability."
 
   relevant_boundaries:

@@ -5,6 +5,13 @@ This directory contains explanatory readings of VCDesign for specific audiences.
 These documents are not authority specifications.
 They do not override files under `specs/`.
 
+## Vocabulary note
+
+These readings were written for VCDesign v1. Where they mention the actions
+Fix / Reframe / Defer / Retire, read them with the v2 decisions: Fix is now
+Proceed, and Expand and Limit are added. See the migration table in
+`specs/core/implementation.md`.
+
 ## Provenance
 
 These interpretation documents were added on 2026-04-17 as explanatory material

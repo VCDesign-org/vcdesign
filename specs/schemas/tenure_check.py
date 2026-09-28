@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """VCDesign tenure check: 責任空白リスクの検出.
 
-schema_case.yaml (v0.2) の tenure フィールドに基づき、case インスタンスを走査して
-「責任の所在が拡散しつつある」状態を洗い出す。背景は core/value-tenure-model.md。
+schema_case.yaml (v1.0) の責任フィールドに基づき、case インスタンスを走査して
+「責任の所在が拡散しつつある」状態を洗い出す。背景は core/implementation.md（残す・伝える）。
 
 設計判断（2026-07 決定）: reaffirmation は事象駆動である。
   - custody 交代の後に reaffirmation が無い       → WARN（事象駆動の再確認義務）
@@ -154,7 +154,7 @@ def check_case(case, location, max_age_days, today):
             # 純粋な時間減衰は弱いシグナル。WARN にすると reaffirmation が儀式化する
             info(
                 f"last_reaffirmed が {(today - reaffirmed_at).days} 日前です"
-                f"（閾値 {max_age_days} 日。弱いシグナル: reaffirmation_decay）"
+                f"（閾値 {max_age_days} 日。弱いシグナル。再確認の義務は事象駆動）"
             )
 
     return errors, warnings, infos

@@ -21,8 +21,8 @@ boundary:
     - Responsibility becomes diffused or contested.
     - Decisions continue without a clear accountable actor.
 
-  default_posture:
-    decision_posture: defer
+  default_decision:
+    decision: defer
     rationale: >
       Decisions whose impact exceeds accountable authority
       must not proceed without explicit re-assignment of responsibility.

@@ -21,7 +21,7 @@ AIの出力を「判断」として成立させるかどうかの境界。
 
 **推奨対処（典型）:**  
 - Judgment Closure を必須化  
-- Unknown をデフォルトにする Decision Posture
+- Unknown をデフォルトにする判断（IDG で UNKNOWN とし、Defer で保留する）
 
 ---
 
