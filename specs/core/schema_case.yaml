@@ -11,6 +11,8 @@ vcdesign_case:
       version 0.3 で、下振れの裾を切るための宣言フィールド群
       （blast_radius / reversibility / failure_domain / upstream_basis_refs / depends_on）を
       optional として追加した。背景は core/downside-containment-model.md を参照。
+      同じく v0.3 で、上振れ（業務が変わっても残るもの）を宣言・観測するフィールド
+      （residual_assets / tail_signals）を追加した。背景は core/value-asymmetry-model.md を参照。
 
   required_fields:
     - case_id
@@ -41,6 +43,9 @@ vcdesign_case:
     - failure_domain
     - upstream_basis_refs
     - depends_on
+    # accumulation fields (v0.3): 上振れの宣言と観測。value-asymmetry-model.md 参照
+    - residual_assets
+    - tail_signals
 
   field_definitions:
 
@@ -221,6 +226,35 @@ vcdesign_case:
         owner が 1 人であること（A5 single_owner_per_delta）は義務であり、
         依存や判断経路が一点に集まることとは区別する。
 
+    # ---- accumulation fields (v0.3) ----
+
+    residual_assets:
+      type: array
+      description: >
+        業務・担当・技術が変わったとき、この案件から何が残るかの宣言（線の改善）。
+        空の場合、その改善は点の改善（業務変更で無効化される）として扱う。
+        種類は core.yaml value_accumulation.residual_asset_kinds に従う。
+      item_fields:
+        kind: record / standard / basis / connection / capability
+        description: 残るものの内容
+        survives: どの変化をまたいで残るか（work_change / owner_change / technology_change）
+        holder: それを保有し続ける責任主体（tenure と同じく、保有者のいない資産は残らない）
+
+    tail_signals:
+      type: object
+      description: >
+        べき乗的に広がりうる兆候の宣言と観測。
+        開始時に「どの兆候が出れば広げるか」を宣言し、レビュー時に観測結果を記録する。
+        平均的な成功（効果が出た）とは別に評価する。
+        兆候の種類は core.yaml value_accumulation.tail_signals に従う。
+      fields:
+        expected:
+          description: 拡大の根拠として見る兆候（reuse_cost_decline / unsolicited_pull / output_as_input / value_per_connection）
+        observed:
+          description: レビュー時点で観測された兆候と根拠（signal / evidence / observed_at）
+        average_outcome:
+          description: 平均的な効果の評価（met / partial / not_met）。tail_signals とは独立に記録する
+
   invariants:
     - every_case_must_have_owner_or_temporary_owner
     - deferred_case_must_have_next_review_at
@@ -236,3 +270,6 @@ vcdesign_case:
     - irreversible_case_must_declare_blast_radius_max_loss
     - case_without_blast_radius_is_treated_as_high_impact
     - upstream_acceptance_must_not_be_inherited_without_revalidation
+    # accumulation invariants (v0.3)
+    - scale_go_requires_observed_tail_signal
+    - case_without_residual_assets_is_treated_as_point_improvement

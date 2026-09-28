@@ -601,6 +601,99 @@ vcdesign_metrics:
           - distinct_from_operator_overload_which_measures_load_not_structure
         policy_link: core/core.yaml / downside_containment / rules / single_owner_is_required_but_single_point_of_dependency_is_detected
 
+  accumulation_metrics:
+    description: >
+      上振れ側、すなわち「業務が変わっても残るもの」が実際に残り、積み上がっているかを観測する指標群。
+      平均的な効果ではなく、べき乗的に広がりうる兆候（裾の形）を見る。
+      背景は core/value-asymmetry-model.md、フィールド定義は schema_case.yaml (v0.3) を参照。
+      いずれも base_metrics と同じ evaluation_model に従う。
+    metrics:
+      - id: one_shot_improvement
+        name: One-shot Improvement
+        description: >
+          業務・担当・技術の変化によって改善が無効化され、何も残らなかった状態。
+          または residual_assets を宣言しないまま改善が完了扱いになった状態。
+        intent: >
+          「改善したのに継続しない」「改善したのに人も手間も減らない」を Δ として検知する。
+          点の改善は、その時点では成功に見えるため、放置すると量産される。
+        typical_signals:
+          - improvement_lost_after_work_change
+          - improvement_completed_without_residual_assets
+          - residual_asset_without_holder
+        meaning:
+          - value_did_not_continue
+          - investment_cannot_be_sustained
+        default_threshold:
+          type: event
+        candidate_actions:
+          - reframe
+          - retire
+        policy_link: core/core.yaml / value_accumulation / rules / improvement_invalidated_by_work_change_is_a_delta
+
+      - id: tail_signal_absent_on_success
+        name: Tail Signal Absent on Success
+        description: >
+          平均的な効果は出た（average_outcome が met）が、宣言した tail_signals が一つも観測されない状態。
+        intent: >
+          「成功したが広がらない」案件を、拡大の前に識別する。失敗の検知ではなく、拡大判断の入力である。
+        typical_signals:
+          - average_outcome_met_but_no_observed_tail_signal
+          - scale_proposed_on_average_success_only
+        meaning:
+          - point_improvement_likely
+          - scale_not_justified
+        default_threshold:
+          type: at_review
+          max_level: warning
+        candidate_actions:
+          - defer
+          - retire
+        policy_link: core/policies.yaml / scale_gate / outcomes / average_success_without_tail_signal
+
+      - id: reuse_cost_trend
+        name: Reuse Cost Trend
+        description: >
+          同じ residual_asset を別の章・場所に適用するコスト（工数・期間・例外対応）の推移。
+          下がっていれば複利が効いている。下がらない、または上がっている場合は、残ったものが再利用に耐えていない。
+        intent: >
+          reuse_cost_decline の兆候を定量的に観測する。
+        typical_signals:
+          - nth_application_cost_not_decreasing
+          - each_application_requires_redesign
+        meaning:
+          - residual_asset_not_reusable
+          - compounding_not_working
+        default_threshold:
+          type: trend
+          example:
+            applications_compared: 3
+        candidate_actions:
+          - fix
+          - reframe
+        notes:
+          - domain_specific_cost_unit_required
+        policy_link: core/core.yaml / value_accumulation / tail_signals / reuse_cost_decline
+
+      - id: scale_beyond_recovery
+        name: Scale Beyond Recovery
+        description: >
+          適用範囲の拡大に、復旧・撤回できる能力（reversibility / 復旧手順 / 技能）が追いついていない状態。
+        intent: >
+          上に賭けた量が、下を閉じる能力を超えていないかを見る。value_asymmetry の結合点。
+        typical_signals:
+          - scale_go_without_recovery_capability_confirmed
+          - applications_growing_faster_than_recovery_capability
+          - change_avoided_because_recovery_uncertain
+        meaning:
+          - upside_bet_exceeds_downside_capacity
+          - system_becomes_untouchable
+        default_threshold:
+          type: immediate
+        candidate_actions:
+          - fix
+          - defer
+        policy_link: core/core.yaml / value_asymmetry / coupling_principles / change_is_bounded_by_recovery_capability
+
   operational_fit_metrics:
 
     - id: delta_detection_quality
@@ -769,6 +862,11 @@ vcdesign_metrics:
       - judgment_consistency
       - halt_readiness
       - human_override_recovery_quality
+    value_asymmetry:
+      - one_shot_improvement
+      - tail_signal_absent_on_success
+      - reuse_cost_trend
+      - scale_beyond_recovery
     boundary_crossing:
       - boundary_violation_rate
       - transitive_trust

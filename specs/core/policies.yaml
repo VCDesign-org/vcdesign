@@ -166,6 +166,38 @@ vcdesign_policies:
       これは既存の AIは判断を支援するが責任を持たない 方針と自然に接続できます。
       既存 policies でも、AIの final_decision、responsibility_assignment、reframe_execution、retire_execution は禁止されています。
 
+  scale_gate:
+    principle:
+      description: >
+        小さく始めた判断（small_go）を広げる（scale_go）ときの門。
+        広げる根拠は平均的な成功ではなく、べき乗的に広がりうる兆候（tail_signals）の観測である。
+        平均的に成功しても兆候のない改善は、点の改善として縮小または終了を検討する。
+        背景は core/value-asymmetry-model.md。
+
+    required_before_scale:
+      - observed_tail_signal           # schema_case.yaml tail_signals.observed が 1 つ以上
+      - declared_residual_assets       # schema_case.yaml residual_assets が空でない
+      - declared_max_loss_for_scale   # 拡大後の blast_radius.max_loss
+      - recovery_capability_confirmed  # 拡大後も復旧・撤回できること（reversibility）
+      - human_final_decider
+
+    outcomes:
+      tail_signal_observed: scale_go_within_declared_max_loss
+      average_success_without_tail_signal: keep_small_or_retire
+      no_success_with_tail_signal: reframe_and_retry_small
+      neither: retire
+
+    anti_patterns:
+      - scale_on_average_success_only
+      - pilot_success_declared_without_residual_assets
+      - scale_beyond_recovery_capability
+
+    ai_allowed:
+      - tail_signal_evidence_collection
+      - residual_asset_inventory_support
+    ai_forbidden:
+      - final_scale_decision
+
   reframe_control:
 
     principle:

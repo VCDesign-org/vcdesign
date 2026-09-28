@@ -233,6 +233,7 @@ vcdesign_core:
       規範的な実体は schema_case.yaml（containment 系フィールド）、
       patterns/boundary-pattern.yaml（containment / revalidation）、
       metrics.yaml（containment_metrics）にある。背景は core/downside-containment-model.md。
+      上振れ側は value_accumulation、両者の関係は value_asymmetry を参照。
     mechanisms:
       isolate:
         description: 境界を越えて失敗が伝播しないよう障害区画を宣言する（結合を切る）
@@ -250,6 +251,58 @@ vcdesign_core:
     scope_note: >
       外部から来る裾（自然災害・突発故障）は消せない。
       本機構が扱うのは、その事象が内部でどこまで増幅・伝播するかである。
+
+  value_accumulation:
+    description: >
+      価値の継続は、価値を壊さないこと（downside_containment）だけでは成立しない。
+      業務・担当・技術が変わっても残り、次の判断の入力として積み上がることで成立する。
+      VCDesign における上振れとは、成長施策ではなく「業務が変わっても残るもの」である。
+      規範的な実体は schema_case.yaml（residual_assets / tail_signals）、
+      metrics.yaml（accumulation_metrics）、policies.yaml（scale_gate）にある。
+      背景は core/value-asymmetry-model.md。
+    distinction:
+      point_improvement:
+        description: >
+          その時点の業務に紐づく改善。業務が変われば無効化され、何も残らない。
+          成果は足し算で散らばり、継続投資・継続運用の根拠にならない。
+      line_improvement:
+        description: >
+          業務・担当・技術の変化をまたいで残るものに紐づく改善。
+          残ったものが再利用されるたびに次の適用が安くなり、成果は掛け算で積み上がる。
+    residual_asset_kinds:
+      - record          # 記録（履歴・構成・判断ログ）
+      - standard        # 標準（手順・受入条件・構成の型）
+      - basis           # 判断の根拠（re_derivation_basis を含む）
+      - connection      # 接続（他の章・システム・主体とのつながり）
+      - capability      # 技能・能力（復旧・変更を実行できる力）
+    tail_signals:
+      reuse_cost_decline:
+        description: 同じ仕組みを別の場所に適用するコストが、回を追って下がっている
+      unsolicited_pull:
+        description: 依頼していない章・部署・主体から適用の引き合いが来る
+      output_as_input:
+        description: 成果が別の判断・システムの入力として使われ始めている
+      value_per_connection:
+        description: 接続・利用が増えるほど、一件あたりの価値が上がる
+    rules:
+      - improvement_must_declare_what_remains_when_work_changes
+      - success_on_average_without_tail_signal_does_not_justify_scale
+      - scale_requires_observed_tail_signal_and_declared_max_loss
+      - improvement_invalidated_by_work_change_is_a_delta
+
+  value_asymmetry:
+    description: >
+      上に開き、下を閉じる。value_accumulation（上）と downside_containment（下）を
+      同じ判断記録の上で同時に扱うことを、価値の継続の定義とする。
+      背景は core/value-asymmetry-model.md。
+    coupling_principles:
+      - change_is_bounded_by_recovery_capability
+      - recovery_capability_increases_the_number_of_changes_one_can_bet_on
+      - declared_max_loss_is_the_budget_for_upside_trials
+      - pass_basis_not_conclusion_across_boundaries
+    note: >
+      復旧できる範囲でしか変更に賭けない。復旧能力を上げることが、賭けられる回数を増やす。
+      下を閉じる仕組みは守りではなく、上に賭けるための原資である。
 
   boundary_mediation:
     description: >

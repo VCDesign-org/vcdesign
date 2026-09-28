@@ -234,3 +234,38 @@ Whether a decision can be withdrawn, reduced, or corrected, recorded in
 reversal_owner). Same axis as `reversible` (criterion), `reversibility_assessed`
 (gate check), and `reversibility_score` (metric). System state may be reverted;
 responsibility records remain append-only.
+
+---
+
+## Value Asymmetry（価値の非対称）
+
+Value continuity defined as two things handled on the same judgment record:
+keeping value from breaking (closed downside, `downside_containment`) and
+letting it accumulate (open upside, `value_accumulation`). Coupled by the
+principle that the number of changes one can bet on is bounded by recovery
+capability.
+
+Defined in `value-asymmetry-model.md`.
+
+---
+
+## Point Improvement / Line Improvement（点の改善・線の改善）
+
+A point improvement is anchored to the work as it is now; when the work
+changes, it is invalidated and nothing remains. A line improvement leaves
+residual assets (record, standard, basis, connection, capability) that survive
+changes of work, owner, or technology and are reused. The test question:
+"When the work changes, what of this improvement remains?"
+
+An improvement invalidated by a work change is treated as a Δ
+(`one_shot_improvement`).
+
+---
+
+## Tail Signal（裾の兆候）
+
+Observable business facts suggesting that an improvement can spread with
+compounding returns: `reuse_cost_decline`, `unsolicited_pull`,
+`output_as_input`, `value_per_connection`. Recorded separately from average
+outcome. Scaling (`scale_gate`) requires an observed tail signal, not average
+success alone.
