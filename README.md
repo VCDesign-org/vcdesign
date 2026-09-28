@@ -9,8 +9,6 @@ Its central principle, the **Value Asymmetry Principle**, is: *make upside propa
 Those definitions live in the canonical repository and are not redefined here.
 VCDesign specifies who decides, on what basis, with which of the six decisions, and who keeps holding what remains.
 
-> VCDesign is law; VC-AD is its implementation at the current technical level.
-
 These specifications are an **executable design language** for humans and automation:
 design assistance, judgment support, and code generation.
 Implementation must not begin unless the locus of judgment and the attribution of responsibility are explainable
