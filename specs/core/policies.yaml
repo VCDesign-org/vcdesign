@@ -47,7 +47,7 @@ vcdesign_policies:
         - related_chapters_notified
         - residual_assets_handed_over       # 終了しても残すものは保有者を移す
 
-    hard_stops:  # Negative Δ に対してのみ適用する
+    hard_stops:  # Negative Δ の伝播、および不正な Expand 判断を停止する（Positive Δ の観測と保有は止めない）
       - fatal_downside                      # 責任者の有無によらない
       - no_owner
       - no_human_final_decider
