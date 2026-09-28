@@ -20,7 +20,7 @@ Example (workshop-ready).
 ある企業が、顧客問い合わせの一次対応を LLM ベースの自動応答に委ねている。
 自動応答は夜間・休日も**誰も見ていない状態で**稼働する。
 
-2025 年 11 月、情報システム部の田中は次の決定を閉じた（Judgment Closure = ACCEPTED）:
+2025 年 11 月、情報システム部の田中は次の判断を閉じた（decision: proceed）:
 
 ```text
 決定: 返金・解約に関する問い合わせは、自動応答で完結させず必ず人間へエスカレーションする
@@ -34,7 +34,7 @@ Example (workshop-ready).
 
 ## 1. Gate: 決定の成立（2025-11）
 
-通常の VCDesign ライフサイクル（Judgment Closure → Responsibility Asset → Resolution）で決定が成立する。
+判断ゲートを通り、人間が判断を閉じて決定が成立する。
 ここまでは点の責任であり、既存仕様の範囲である。
 
 Tenure はここから始まる。成立と同時に、継続保有のための記録を作る:
@@ -55,7 +55,7 @@ re_derivation_basis:
   context:
     - 2025-10 に競合他社で自動応答の誤案内が炎上した事案を受けた判断
   evidence_refs:
-    - jc-20251110-004（Judgment Closure トレース）
+    - log-20251110-004（判断ログ）
 
 review_triggers:
   - 応答・分類モデルの入れ替えまたはメジャーアップデート
@@ -174,7 +174,7 @@ owner: tanaka（3ヶ月前に異動済み。記録上は今も owner）
 ## Summary Flow
 
 ```text
-Judgment Closure（Gate: 点の責任）
+判断を閉じる（Gate: 点の責任）
 -> value_intent / re_derivation_basis / review_triggers を決定時点で記録
 -> 無人運用（accountability_on_cross が帰属を事前宣言）
 -> custody_transfer（append-only の責任イベント、再導出確認つき）

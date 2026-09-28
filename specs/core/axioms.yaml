@@ -31,16 +31,17 @@ axioms:
 
   A2:
     id: A2
-    label: Judgment Closure Precedes Execution
+    label: A Closed Decision Precedes Execution
     statement: >
-      No Resolution may be committed to execution without a prior Judgment
-      Closure (ACCEPTED, DENIED, or UNKNOWN with escalation).
+      Nothing that acts on a case reaches execution without a decision closed
+      by a human, and nothing crosses a boundary without a guard verdict.
+      A verdict of unknown stops and escalates; it is never treated as pass.
     corollary: >
       Operational pressure, time constraints, or automation momentum do not
       override this axiom.
     conformance_test: >
-      For every executed Resolution: is there a matching closed Judgment with a
-      responsible actor?
+      For every executed change: is there a closed decision with a basis and a
+      human decided_by, and a pass verdict at each boundary it crossed?
 
   A3:
     id: A3
@@ -49,8 +50,8 @@ axioms:
       AI systems may propose, analyze, and detect. They may not hold, accept, or
       assign final responsibility. The final_decider of every decision is human.
     corollary: >
-      An AI-generated ACCEPTED judgment is a Judgment Proposal. It must pass
-      through IDG and Judgment Closure before becoming a Resolution.
+      Whatever an AI produces about a case is a proposal until a human closes
+      the decision.
     conformance_test: >
       For every decision: is decided_by a human role or person?
 

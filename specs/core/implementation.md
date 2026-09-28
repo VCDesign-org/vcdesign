@@ -40,7 +40,7 @@ VCDesign は「誰が、何を根拠に、どの判断で閉じ、何を保有�
 
 - **Positive Δ**：期待を上回る差も Δ として観測し、異常として扱わない。観測 → 意味づけ → 保有者付きで再利用可能にする、の順で扱う。
 - **spread_signals**：広がりの兆候（二回目が安くなる、頼んでいない所から引き合いが来る、別の判断の材料になる、接続するほど一件あたりの価値が上がる）を、開始時に `expected` として宣言し、`observed` と `unexpected` で記録する。平均的な効果（`average_outcome`）とは別に評価する。
-- 原因が特定できない上振れは IDG で UNKNOWN とし、拡大の根拠にしない。
+- 原因が特定できない上振れは、境界の guard で unknown とし、拡大の根拠にしない。
 - 指標：`spread_signal_observed`、`success_without_spread_signal`、`reuse_cost_trend`
 
 ### 閉じる
@@ -62,7 +62,7 @@ VCDesign は分布を予測せず、その増幅を次の4つで切る。
 
 ### 試す
 
-- **reversibility**：撤回・縮小・修正できるかを宣言する。状態は戻せるが、責任記録は追記のみ（`policies/temporal-governance.md`）。
+- **reversibility**：撤回・縮小・修正できるかを宣言する。状態は戻せるが、責任記録は追記のみ（`policies.yaml temporal_governance`）。
 - **Expand の条件**：拡大後の範囲でも復旧できること。復旧できる範囲でしか変更に賭けない。復旧能力を上げることが、賭けられる回数を増やす。
 - **停止可能性**：すべての運用経路に停止責任者がいる（`policies.yaml haltability`）。
 - 指標：`expand_beyond_recovery`、`halt_readiness`
@@ -93,10 +93,11 @@ VCDesign は分布を予測せず、その増幅を次の4つで切る。
 
 ---
 
-## 4. 境界の3つの働き
+## 4. 境界の働き
 
 | 働き | 対象 | 既定 |
 | --- | --- | --- |
+| guard | 越境そのもの | pass / deny / unknown で判定。unknown は止めて上げる |
 | containment | 失敗・指令 | 通さない（deny） |
 | basis_flow | 根拠・残るもの | 通す（allow） |
 | revalidation | 上流の結論 | 引き継がず、確かめ直す |
@@ -111,7 +112,7 @@ VCDesign は分布を予測せず、その増幅を次の4つで切る。
 
 - AI は判断を支援するが、責任を持たない（axioms A3）
 - LLM は意味のループに置き、物理・価値・責任のループを直接操作しない
-- 速いループは遅いループの制約を書き換えない（axioms A4、`docs/ai-adaptive-loop-model.md`）
+- 速いループは遅いループの制約を書き換えない（axioms A4、`docs/ai-extension.md`）
 - エージェントの実行前に、権限・責任者・可逆性・停止責任者を確認する
 - supervisor が責任の最終収束点になる
 
@@ -126,7 +127,7 @@ v2 は互換性を切っている。v1 の語彙と記録は次のように読�
 | action: fix | decision: proceed |
 | action: reframe / defer / retire | decision: reframe / defer / retire |
 | decision posture: commit | proceed（範囲を狭めて即時に止める場合は limit） |
-| decision posture: reconsider | defer（IDG で UNKNOWN） |
+| decision posture: reconsider | defer（境界の判定は unknown） |
 | decision posture: abandon | retire |
 | decision_size: no_go / small_go / scale_go | retire（開始しない）／ proceed または limit ／ expand |
 | 長期判断の姿勢（small_go / defer_or_experiment / deny_or_reframe） | 判断ゲートで6語のいずれかに確定する |
@@ -140,3 +141,7 @@ v2 は互換性を切っている。v1 の語彙と記録は次のように読�
 | dependency_concentration、judgment_concentration | concentration |
 | upside_signal_observed、tail_signal_absent_on_success、scale_beyond_recovery | spread_signal_observed、success_without_spread_signal、expand_beyond_recovery |
 | long_term_judgment_metrics、repeated_reframe、reaffirmation_decay | 削除（判断ゲートと芯の指標で代替） |
+| Judgment Closure（ACCEPTED / DENIED / UNKNOWN） | 越境の検査は境界の guard verdict（pass / deny / unknown）、案件の Δ を閉じるのは判断6語 |
+| Judgment Proposal、Responsibility Asset、Resolution、Resolution Handshake | AI の出力は人間が判断を閉じるまで提案。閉じた判断の範囲・期限・証跡は、宣言（blast_radius、next_review_at、reversal_window）と判断ログ |
+| RCA パターン、IDG パターン | `patterns/boundary-pattern.yaml` の guard と determinability |
+| protocols/（judgment-closure、resolution-handshake） | 削除（上の2行に吸収。組織をまたぐ越境は boundary の external_crossing） |

@@ -1,10 +1,6 @@
-# VCDesign Schemas
+# VCDesign Tools
 
-This directory contains machine-readable schemas to validate the specifications.
-These schemas act as "guardrails" to ensure the specs maintain a consistent structure, but they are not the specification itself (the Prose/YAML in `../core` is authoritative).
-
-## Available Schemas
-- **[Judgment Closure](judgment-closure.schema.json)**: Validates `../protocols/judgment-closure.yaml`.
+Tools that check case records against the specifications. They are guardrails, not the specification itself (`../core` is authoritative).
 
 ## Tools
 - **[Tenure Check](tenure_check.py)**: Scans case instances (see `../core/schema_case.yaml` v1.0)
@@ -29,16 +25,11 @@ These schemas act as "guardrails" to ensure the specs maintain a consistent stru
 
 ## How to Validate
 
-### Using NPM (Recommended)
-```bash
-npm install
-npm run validate
-```
+The same checks run in CI (`.github/workflows/validate.yml`):
 
-### Using script
 ```bash
-./validate.sh
+yamllint -c .yamllint specs/**/*.yaml
+python3 specs/schemas/tenure_check.py --self-test
+python3 specs/schemas/tenure_check.py specs/examples
+bash .github/scripts/validate_docs.sh
 ```
-
-### CI/CD
-Validation runs automatically on Pull Requests via GitHub Actions (`.github/workflows/validate.yml`).

@@ -28,12 +28,8 @@ boundary:
       must not proceed without explicit re-assignment of responsibility.
 
   recommended_handling:
-    protocols:
-      - judgment-closure
-      - resolution-handshake
     patterns:
       - boundary-pattern
-      - rca-pattern
 
   monitoring_signals:
     - Increase in affected stakeholders or departments.

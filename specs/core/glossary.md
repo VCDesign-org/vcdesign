@@ -47,28 +47,19 @@ human (`policies.yaml judgment_gate`). Its review follows the five principles.
 
 ---
 
-## Closure and commitment
+## Boundary checks
 
-**Judgment Proposal** — A judgment that may be reviewed but is not yet closed.
-AI may produce one; AI must not convert it into final responsibility.
+**Guard verdict** — The check on each crossing at a boundary: `pass`, `deny`
+(with a reason, contained), or `unknown` (stop, expose, escalate; never treated
+as pass). A verdict is not a decision. Repeated deny or unknown, or any verdict
+that affects responsibility, is observed as a Δ and closed with one of the six
+decisions (`patterns/boundary-pattern.yaml`).
 
-**Judgment Closure** — Closing a proposal as `ACCEPTED`, `DENIED` or `UNKNOWN`
-(`protocols/judgment-closure.yaml`). Only `ACCEPTED` is promotable.
+**Determinability** — Whether the input is sufficient for a verdict. If not, the
+verdict is unknown. An upside whose cause is unknown does not justify Expand.
 
-**Responsibility Asset** — An accepted, responsibility-bearing judgment with its
-owner, evidence, timestamp, trace and scope. Not yet an executable commitment.
-
-**Resolution** — A Responsibility Asset promoted by the Resolution Handshake
-into an executable commitment with a responsible actor, scope, expiry and trace
-(`protocols/resolution-handshake.yaml`).
-
-**IDG** — Interface Determinability Gate. Decides whether an interface is
-determinate enough for judgment to continue. Indeterminacy halts or escalates;
-it is never implicit acceptance. An upside whose cause is unknown is UNKNOWN
-here and does not justify Expand.
-
-**RCA** — Responsibility Closure Agent. Guards a boundary and performs or
-supports Judgment Closure without replacing the human final decider.
+**Proposal** — Whatever an AI produces about a case is a proposal until a human
+closes the decision (axioms A3).
 
 ---
 
@@ -127,7 +118,7 @@ propagate.
 - **Responsibility boundary (B1–B17)** — A type of point where responsibility
   must be made explicit (`catalog/boundaries/taxonomy.md`).
 - **Boundary structure** — The pattern that implements a responsibility
-  boundary: guard, handshake, tenure, containment, basis_flow, revalidation
+  boundary: guard, tenure, containment, basis_flow, revalidation
   (`patterns/boundary-pattern.yaml`). Failures are stopped by default
   (containment), basis and residual assets pass by default (basis_flow), and
   upstream conclusions are revalidated, not inherited.
@@ -142,7 +133,7 @@ propagate.
 
 **Loops** — Physical (execution, continuous dynamics), Semantic (interpretation
 of deltas), Value (objectives and constraints), Responsibility (final decision,
-halt, accountability). Explained in `docs/ai-adaptive-loop-model.md`.
+halt, accountability). Explained in `docs/ai-extension.md`.
 
 **Temporal Separation** — Fast loops must not rewrite constraints set by slower
 loops without explicit re-judgment (axioms A4).

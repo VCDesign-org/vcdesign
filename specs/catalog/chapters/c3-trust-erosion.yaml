@@ -48,7 +48,7 @@ chapter:
 
   missing_actions:
     - "Creation of a shared Interpretive Frame (Meaning)."
-    - "Explicit Judgment Closure on 'Is this explainable enough?'"
+    - "An explicit decision on 'Is this explainable enough?'"
 
   canonical_triggers:
     - "Black-box AI models."
@@ -60,7 +60,7 @@ chapter:
 
   recommended_decision:
     decision: "defer"
-    rationale: "Require 'Explainability' or 'Meaning' artifacts before enabling Judgment Closure. Action without understanding allows impact without accountability."
+    rationale: "Require 'Explainability' or 'Meaning' artifacts before a decision is closed. Action without understanding allows impact without accountability."
 
   relevant_boundaries:
     - B3
@@ -68,5 +68,4 @@ chapter:
     - B6
 
   relevant_specs:
-    protocols: ["judgment-closure"]
-    patterns: ["boundary-pattern", "rca-pattern"]
+    patterns: ["boundary-pattern"]

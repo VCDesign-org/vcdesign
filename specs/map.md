@@ -11,7 +11,7 @@ VCDesign の現行 authority は次の3ファイルである。
 - core/policies.yaml
 - core/metrics.yaml
 
-axioms.yaml は適合判定の起点、schema は記録の形、patterns と protocols は core を実装する構造である。
+axioms.yaml は適合判定の起点、schema は記録の形、boundary pattern は core を実装する構造である。
 catalog は領域の事例集であり、芯ではない。
 
 ## 1. Core — 芯
@@ -24,38 +24,26 @@ catalog は領域の事例集であり、芯ではない。
 - **[Implementation](core/implementation.md)**: 読解補助。Value Continuity の各要素を VCDesign のどこで実装しているかの対応表と、v1 からの移行表。
 - **[Glossary](core/glossary.md)**: 用語集。
 
-## 2. Protocols
+## 2. Pattern
 
-- **[Judgment Closure](protocols/judgment-closure.yaml)**: 判断を ACCEPTED / DENIED / UNKNOWN で閉じる。
-- **[Resolution Handshake](protocols/resolution-handshake.yaml)**: 閉じた判断を実行可能なコミットに昇格させる。
+- **[Boundary](patterns/boundary-pattern.yaml)**: VCDesign 唯一の構造パターン。guard（越境を pass / deny / unknown で判定）、containment（損失を止める）、basis_flow（根拠を通す）、revalidation（結論を確かめ直す）、tenure（境界を持ち続ける）、external_crossing（組織をまたぐ越境）。
 
-## 3. Patterns
-
-- **[Boundary Structure](patterns/boundary-pattern.yaml)**: 判断の受け渡し点。containment（損失を止める）、basis_flow（根拠を通す）、revalidation（結論を確かめ直す）、tenure。
-- **[RCA Pattern](patterns/rca-pattern.yaml)**: 境界を守り、判断の閉包を行うエージェントの構造。
-- **[IDG Pattern](patterns/idg-pattern.yaml)**: 不確定なまま判断を進めないためのゲート。
-
-## 4. Policies clarifications
-
-- **[Temporal Governance](policies/temporal-governance.md)**: 状態の巻き戻しと、追記のみの責任記録の境目。
-
-## 5. Catalog — 領域の事例集
+## 3. Catalog — 領域の事例集
 
 - **[Chapters](catalog/chapters/)**: 価値・意味・責任が時間とともにずれていく典型（C1 目的のずれ、C2 自動化の負担、C3 信頼と責任の侵食、C4 現実とのずれ）。
 - **[Boundary Registry](catalog/boundaries/registry.md)** / **[Taxonomy](catalog/boundaries/taxonomy.md)**: 責任境界 B1〜B17 の正本と、事例。
 
-## 6. Examples
+## 4. Examples
 
 - [Point vs Line Improvement](examples/point-vs-line-improvement.md): 業務変更で消える改善と、残るものを持つ改善。広がりの兆候、判断ゲート、Expand の宣言更新。
 - [Custody Handover](examples/custody-handover.md): 担当交代をまたいで判断が保有され続ける様子（[機械可読の案件](examples/custody-handover-case.yaml)）。
 - [Factory Operations Agent](examples/factory-agent-safe-loop.md): 製造業の AI エージェント。物理と意味のループの分離と、停止の設計。
-- [AI Coding Agent](examples/coding-agent-boundary.md): コーディングエージェントの実行ゲートと責任配置。
 
-## 7. Validation and tools
+## 5. Validation and tools
 
 - **[Conformance](validation/conformance.md)**: v2 の適合チェック（axioms と Review Output に沿う）。
 - **[Schemas](schemas/)**: 案件の責任空白を検査する tenure_check など。
 
 ## Outside specs
 
-- `docs/`: 外部向けの説明枠（Agent Era Model、AI Adaptive Loop Model）と解釈の読み物。authority ではない。
+- [docs/ai-extension.md](../docs/ai-extension.md): AI 拡張の外部向け説明枠（4つのループ、5層、12原則）。authority ではない。

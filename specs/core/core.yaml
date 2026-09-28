@@ -52,7 +52,7 @@ vcdesign_core:
       negative:
         propagation: 伝播させない
         handling: [localize, mitigate, close_if_needed]
-        route: RCA / IDG → boundary containment → decision
+        route: 境界の guard（unknown は止めて上げる）→ containment → decision
       positive:
         propagation: 伝播可能にする
         handling: [observe, interpret, make_reusable]   # 保有者を付けて residual_assets に記録する

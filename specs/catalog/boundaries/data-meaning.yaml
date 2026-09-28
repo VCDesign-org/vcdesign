@@ -31,11 +31,8 @@ boundary:
     rationale: >
       Judgments without shared meaning
       cannot be responsibly owned by humans.
-    protocols:
-      - judgment-closure
     patterns:
       - boundary-pattern
-      - rca-pattern
 
   expiry_and_revisit:
     required: true

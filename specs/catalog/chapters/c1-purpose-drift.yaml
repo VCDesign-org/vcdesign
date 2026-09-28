@@ -50,7 +50,7 @@ chapter:
 
   missing_actions:
     - "Re-judgment (Closure) at the moment of purpose change."
-    - "Resolution handshake across the organization."
+    - "An explicit decision, with its basis passed on, across the organization."
 
   canonical_triggers:
     - "KPI change."
@@ -71,5 +71,4 @@ chapter:
     - B7
 
   relevant_specs:
-    protocols: ["judgment-closure", "resolution-handshake"]
     patterns: ["boundary-pattern"]

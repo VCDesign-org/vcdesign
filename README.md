@@ -25,7 +25,7 @@ The current authority of VCDesign v2 is:
 - core/metrics.yaml
 
 `core/axioms.yaml` (A1–A5) is the starting point of conformance. Schemas define the records;
-patterns and protocols are structures that implement the core; the catalog is a collection of domain cases.
+the boundary pattern implements the core; the catalog is a collection of domain cases.
 
 ## The core in six parts
 
@@ -48,17 +48,16 @@ See the **[Specification Map](specs/map.md)**.
 1. [Value Continuity](https://github.com/value-continuity/value-continuity) — the principle
 2. [specs/core/implementation.md](specs/core/implementation.md) — how VCDesign implements it, and the migration table from v1
 3. [specs/core/core.yaml](specs/core/core.yaml), [policies.yaml](specs/core/policies.yaml), [metrics.yaml](specs/core/metrics.yaml) — the authority
-4. [specs/examples/](specs/examples/) — four worked examples
+4. [specs/examples/](specs/examples/) — three worked examples
 
 ## Directory Structure
 
 - **[specs/core/](specs/core/)** — authority, axioms, schemas, implementation guide, glossary
-- **[specs/protocols/](specs/protocols/)** — closing judgments and committing resolutions
-- **[specs/patterns/](specs/patterns/)** — Boundary, RCA, IDG
+- **[specs/patterns/](specs/patterns/)** — the boundary pattern (guard, containment, basis_flow, revalidation)
 - **[specs/catalog/](specs/catalog/)** — chapters and responsibility boundaries (B1–B17)
 - **[specs/examples/](specs/examples/)** — applications
 - **[specs/validation/](specs/validation/)** — conformance checklist
-- **[docs/](docs/)** — explanatory frames and interpretations (not authority)
+- **[docs/](docs/)** — explanatory frame for the AI extension (not authority)
 
 ## Status
 

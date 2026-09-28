@@ -29,11 +29,8 @@ boundary:
       continued learning or optimization cannot be responsibly assumed valid.
 
   recommended_handling:
-    protocols:
-      - judgment-closure
     patterns:
       - boundary-pattern
-      - rca-pattern
 
   monitoring_signals:
     - Ratio of generated data in training inputs.

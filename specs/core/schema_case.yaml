@@ -54,7 +54,7 @@ vcdesign_case:
     custody_chain:
       type: array
       description: >
-        責任の継承履歴。owner の交代ごとに追記する（追記のみ、policies/temporal-governance.md）。
+        責任の継承履歴。owner の交代ごとに追記する（追記のみ、policies.yaml temporal_governance）。
       item_fields:
         from: 引き渡し元
         to: 引き受け先

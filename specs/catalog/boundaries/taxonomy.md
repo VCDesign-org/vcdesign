@@ -20,8 +20,8 @@ AIの出力を「判断」として成立させるかどうかの境界。
 - 暗黙承認（silent commit）
 
 **推奨対処（典型）:**  
-- Judgment Closure を必須化  
-- Unknown をデフォルトにする判断（IDG で UNKNOWN とし、Defer で保留する）
+- 人間が閉じる判断を必須化  
+- 判定できないときは unknown を既定にする（境界の guard。判断は Defer）
 
 ---
 
@@ -34,7 +34,7 @@ AIの出力を「判断」として成立させるかどうかの境界。
 - 逆に人が常時張り付く
 
 **対処例:**  
-- Expiry 付き Resolution  
+- 期限付きの宣言（next_review_at、reversal_window）  
 - 閾値超過時の強制ハンドオフ
 
 ---
@@ -62,21 +62,21 @@ AIの出力を「判断」として成立させるかどうかの境界。
 - Context Drift が無視される
 
 **対処例:**  
-- Judgment Proposal を明示  
+- AI の出力は提案であることを明示  
 - Context を logging に含める
 
 ---
 
 ## B5. Decision ↔ Action Boundary
 **説明:**  
-判断（Judgment）が行動（Resolution）に変換される境界。
+判断（decision）が実行に変換される境界。
 
 **Failure Mode:**  
 - 判断しただけで実行された扱いになる  
 - 誰も責任を持たない Action
 
 **対処例:**  
-- Resolution Handshake を必須化  
+- 越境前の宣言（範囲・期限・責任者）を必須化  
 - Responsible Actor を明示
 
 ---
@@ -90,7 +90,7 @@ AIの出力を「判断」として成立させるかどうかの境界。
 - “みんなの判断”になる
 
 **対処例:**  
-- RCA Pattern  
+- 境界の guard（patterns/boundary-pattern.yaml）  
 - 単一 Owner 原則
 
 ---
@@ -104,7 +104,7 @@ AIの出力を「判断」として成立させるかどうかの境界。
 - 引き継ぎ時の責任消失
 
 **対処例:**  
-- Resolution Handshake を契約的に扱う  
+- 組織をまたぐ越境を external_crossing として扱う  
 - Expiry を必ず設定
 
 ---
@@ -132,7 +132,7 @@ AIの出力を「判断」として成立させるかどうかの境界。
 - 専門性のブラックボックス化
 
 **対処例:**  
-- Judgment Proposal を言語化  
+- 提案の内容を言語化  
 - Evidence を必須化
 
 ---
@@ -160,7 +160,7 @@ AIの出力を「判断」として成立させるかどうかの境界。
 - 誰もリスクを引き受けていない
 
 **対処例:**  
-- Risk を Judgment Proposal に含める  
+- リスクを提案に含める  
 - Responsible Actor に明示的承認
 
 ---
@@ -244,5 +244,5 @@ AIの出力を「判断」として成立させるかどうかの境界。
 - 誰も止められない
 
 **対処例:**  
-- 責任範囲の再定義（Resolution Handshake）  
+- 責任範囲の再定義（宣言の更新）  
 - 影響範囲の明示的クローズ

@@ -31,11 +31,8 @@ boundary:
     rationale: >
       Automation without explicit workload integration
       creates hidden human cost and responsibility leakage.
-    protocols:
-      - judgment-closure
     patterns:
       - boundary-pattern
-      - rca-pattern
 
   expiry_and_revisit:
     required: true

@@ -6,11 +6,9 @@ VCDesign v2 は、[Value Continuity](https://github.com/value-continuity/value-c
 ## Directory Structure
 
 - **[core/](core/)** — 芯。authority は `core.yaml`、`policies.yaml`、`metrics.yaml`。ほかに `axioms.yaml`、`schema_case.yaml`、`schema_log.yaml`、読解補助の `implementation.md`、`glossary.md`。
-- **[protocols/](protocols/)** — 判断を閉じ、実行可能なコミットに昇格させる手順。
-- **[patterns/](patterns/)** — core を実装する構造（Boundary、RCA、IDG）。
-- **[policies/](policies/)** — 運用上の補足（temporal governance）。
+- **[patterns/](patterns/)** — core を実装する構造（Boundary）。
 - **[catalog/](catalog/)** — 領域の事例集（chapters、責任境界 B1〜B17）。芯ではない。
-- **[examples/](examples/)** — 適用例4本。
+- **[examples/](examples/)** — 適用例3本。
 - **[validation/](validation/)** — 適合チェック。
 - **[schemas/](schemas/)** — 検査ツール。
 

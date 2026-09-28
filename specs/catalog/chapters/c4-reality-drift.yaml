@@ -86,9 +86,5 @@ chapter:
   relevant_specs:
     core:
       - ../../core/core.yaml
-    protocols:
-      - ../../protocols/judgment-closure.yaml
-      - ../../protocols/resolution-handshake.yaml
     patterns:
       - ../../patterns/boundary-pattern.yaml
-      - ../../patterns/rca-pattern.yaml

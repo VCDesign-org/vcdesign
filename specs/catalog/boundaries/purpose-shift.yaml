@@ -41,12 +41,8 @@ boundary:
     rationale: >
       Purpose redefinition without explicit closure
       invalidates prior judgments and responsibilities.
-    protocols:
-      - judgment-closure
-      - resolution-handshake
     patterns:
       - boundary-pattern
-      - rca-pattern
 
   expiry_and_revisit:
     required: true

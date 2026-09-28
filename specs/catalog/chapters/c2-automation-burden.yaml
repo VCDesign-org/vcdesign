@@ -53,8 +53,8 @@ chapter:
     - "Disconnect between 'Automated Status' and reality."
 
   missing_actions:
-    - "Judgment Closure on the *integration* workload."
-    - "Explicit Resolution defining who owns the bridge tasks."
+    - "A human decision closing the *integration* workload Δ."
+    - "An explicit owner and declaration for the bridge tasks."
 
   canonical_triggers:
     - "Top-down DX mandates."
@@ -76,5 +76,4 @@ chapter:
     - B9
 
   relevant_specs:
-    protocols: ["judgment-closure"]
     patterns: ["boundary-pattern"]

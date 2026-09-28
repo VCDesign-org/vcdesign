@@ -94,6 +94,15 @@ vcdesign_policies:
       - rollback_or_safe_state_is_defined
       - post_halt_review_records_reason_and_responsibility
 
+  temporal_governance:
+    principle: システムの状態は巻き戻せる。責任の記録は追記のみ
+    may_roll_back: [deployment_state, runtime_configuration, database_contents, generated_artifacts, reversible_external_commands]
+    must_not_delete: [proposal, decision_and_basis, owner, evidence_at_the_time, guard_verdict, reason_for_rollback, supersession_or_retirement_event]
+    rules:
+      - rollback_is_part_of_a_decision_or_an_emergency_halt
+      - rollback_is_recorded_as_a_new_event_pointing_to_the_prior_trace
+      - correction_adds_a_transition_it_never_erases_one
+
   enforcement:
     levels: [advisory, warning, blocking]
     rules:
@@ -128,7 +137,7 @@ vcdesign_policies:
       forbidden_direct_control: [physical_loop, value_loop, responsibility_loop]
       rule: llm_outputs_require_an_explicit_gate_before_real_world_effect
 
-    loops:  # 各ループで許される構成要素と禁じられる構成要素。説明は docs/ai-adaptive-loop-model.md
+    loops:  # 各ループで許される構成要素と禁じられる構成要素。説明は docs/ai-extension.md
       physical_loop:
         timescale: ms_to_hours
         allowed: [sensors, actuators, transactional_services, deterministic_control]
@@ -146,7 +155,7 @@ vcdesign_policies:
         allowed: [human_final_decider, supervisors, audit_logs, escalation_paths]
         forbidden: [ai_final_authority, untraceable_decision, irreversible_action_without_halt_path]
 
-    temporal_separation:  # axioms A4。ループ構造の説明は docs/ai-adaptive-loop-model.md
+    temporal_separation:  # axioms A4。ループ構造の説明は docs/ai-extension.md
       rules:
         - fast_loops_do_not_rewrite_slow_loop_constraints
         - semantic_updates_do_not_bypass_value_review
