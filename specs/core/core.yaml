@@ -5,9 +5,11 @@ vcdesign_core:
     description: >
       VCDesign は、Value Continuity（https://github.com/value-continuity/value-continuity）を
       「判断と責任」の面から実装する方法論である。
-      Value Continuity の定義、Value Asymmetry Principle、5原則、Δ、Decision は正本に従い、
-      VCDesign では再定義しない。本ファイルは、それを章・責任・Δ・判断・境界・宣言として
-      どう実装するかだけを定める。
+      Value Continuity の定義、Value Asymmetry Principle、5原則、Decision は正本に従い、
+      VCDesign では再定義しない。
+      VCDesign はそれらを実装するために、Δ・Chapter・Responsibility・Boundary・Declaration を定義する。
+      Δ は正本の一般的な意味（期待との差）を受けたうえで、その基準線・向き・扱いを
+      VCDesign の実装概念として定める。
     skeleton: [残す, 見つける, 閉じる, 試す, 伝える]   # 正本の5原則。policies / metrics もこの順に並べる
 
   # ---------------------------------------------------------------
@@ -19,7 +21,7 @@ vcdesign_core:
     responsibility:
       description: 章と案件を成立させる主体とその配置（owner / final_decider / custody）
     delta:
-      description: 期待（前提と価値）と実際との差。向き（polarity）を持つ。定義は正本の「Δ（期待との差）」
+      description: 期待（前提と価値）と実際との差。向き（polarity）を持つ。VCDesign の実装概念（正本の一般的な意味を受ける）
     decision:
       description: Δ を受けて人間が閉じる判断。値は正本の Decision の6語だけを用いる
 
@@ -54,12 +56,16 @@ vcdesign_core:
         handling: [localize, mitigate, close_if_needed]
         route: 境界の guard（unknown は止めて上げる）→ containment → decision
       positive:
-        propagation: 伝播可能にする
-        handling: [observe, interpret, make_reusable]   # 保有者を付けて residual_assets に記録する
+        observation: never_blocked      # 観測は止めない
+        preservation: never_blocked     # 保有者を付けて residual_assets に記録することは止めない
+        propagation:
+          requires: decision_expand     # 伝播可能にする＝伝播は Expand 判断で制御する（自動では広げない）
+          may_be_blocked: true          # Expand の前提が欠ければ Expand を止める
+        handling: [observe, interpret, make_reusable]
         route: 観測 → value_intent に照らした意味づけ → 保有者付きで記録。広げるときは decision expand
     asymmetry_rules:
-      - positive_delta_is_never_halted_quarantined_or_blocked
-      - positive_delta_is_widened_only_by_decision_expand
+      - observing_and_holding_a_positive_delta_are_never_halted_quarantined_or_blocked
+      - propagating_a_positive_delta_requires_decision_expand_which_may_be_blocked
       - mixed_observation_is_split_into_separate_positive_and_negative_deltas
     unrecorded_polarity: negative
 
@@ -93,6 +99,9 @@ vcdesign_core:
         next_state: retired
     rules:
       - decision_is_closed_by_a_human_final_decider
+      - a_closed_decision_authorizes_an_execution_scope_through_its_declaration
+      - execution_within_the_authorized_scope_needs_no_further_decision
+      - a_change_that_would_exceed_the_authorized_scope_is_a_delta_and_is_re_decided
       - expand_and_limit_are_declaration_updates_recorded_as_before_and_after
       - expand_widens_the_declaration_and_limit_narrows_it
       - average_outcome_alone_never_justifies_expand

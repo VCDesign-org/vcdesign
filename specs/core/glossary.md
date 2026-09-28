@@ -4,10 +4,10 @@
 
 Terminology reference for VCDesign v2.
 
-Value Continuity, the Value Asymmetry Principle, the five principles, Δ and
+Value Continuity, the Value Asymmetry Principle, the five principles and
 Decision are defined in the canonical repository
 [value-continuity/value-continuity](https://github.com/value-continuity/value-continuity).
-This glossary does not redefine them. It defines only the terms VCDesign uses
+This glossary does not redefine them. It defines the terms VCDesign uses
 to implement them on the side of judgment and responsibility.
 
 ---
@@ -28,15 +28,20 @@ words).
 
 ## Delta and decision
 
-**Delta (Δ)** — The gap between the declared expectation and what happened, as
-defined canonically. VCDesign declares the expectation as `precondition`
-(including responsibility placement) and `value_intent`.
+**Delta (Δ)** — A VCDesign implementation concept. It takes the general
+meaning given canonically (the gap between the declared expectation and what
+happened) and fixes its baseline, polarity and handling: the expectation is
+declared as `precondition` (including responsibility placement) and
+`value_intent`.
 
 **Negative Δ / Positive Δ** — The two polarities of a Delta. A Negative Δ is not
 propagated: localize, mitigate, close if needed. A Positive Δ is made
-propagable: observe, interpret, make reusable with a holder. A Positive Δ is
-never halted, quarantined or blocked, and is widened only by the decision
-Expand. A Delta without a recorded polarity is treated as negative.
+propagable: observe, interpret, make reusable with a holder.
+Observing and holding a Positive Δ are never halted, quarantined or
+blocked. Propagating it is not automatic: it requires the decision Expand,
+which may be blocked when its preconditions are missing. "Propagable" means
+able to spread by decision, not spreading by itself. A Delta without a
+recorded polarity is treated as negative.
 
 **Decision** — The six canonical words: Proceed, Expand, Limit, Reframe, Defer,
 Retire (`core.yaml decision`). No other decision vocabulary is used. Expand and

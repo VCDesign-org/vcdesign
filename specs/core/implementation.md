@@ -4,8 +4,9 @@
 
 **Reading aid — not authority.**
 
-Value Continuity の定義、Value Asymmetry Principle、5原則、Δ、Decision は正本
+Value Continuity の定義、Value Asymmetry Principle、5原則、Decision は正本
 （[value-continuity/value-continuity](https://github.com/value-continuity/value-continuity)）にある。
+Δ は正本の一般的な意味（期待との差）を受け、その基準線・向き・扱いを VCDesign が実装概念として定める。
 VCDesign の規範は `core.yaml` / `policies.yaml` / `metrics.yaml` にある。
 この文書は、正本の各要素を VCDesign がどの仕組みで実装しているかを対応づけるだけで、新しい規範を置かない。
 

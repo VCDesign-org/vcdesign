@@ -106,8 +106,8 @@ vcdesign_policies:
   enforcement:
     levels: [advisory, warning, blocking]
     rules:
-      - blocking_applies_to_negative_delta_only
-      - positive_delta_is_at_most_warning
+      - blocking_applies_to_negative_delta_and_to_the_decision_expand
+      - observing_or_holding_a_positive_delta_is_never_blocked_and_is_at_most_warning
       - a_missing_expand_precondition_blocks_the_expand_not_the_observation
     examples:
       missing_owner: blocking

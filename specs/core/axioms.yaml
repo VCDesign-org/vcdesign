@@ -31,17 +31,20 @@ axioms:
 
   A2:
     id: A2
-    label: A Closed Decision Precedes Execution
+    label: Execution Stays Within a Scope Authorized by a Human Decision
     statement: >
-      Nothing that acts on a case reaches execution without a decision closed
-      by a human, and nothing crosses a boundary without a guard verdict.
-      A verdict of unknown stops and escalates; it is never treated as pass.
+      No execution may exceed the scope authorized by a decision closed by a
+      human. Within that scope, loops may act autonomously as often as needed;
+      a change that would exceed it is observed as a Delta and re-decided.
+      Every boundary crossing has a guard verdict. A verdict of unknown stops
+      and escalates; it is never treated as pass.
     corollary: >
       Operational pressure, time constraints, or automation momentum do not
       override this axiom.
     conformance_test: >
-      For every executed change: is there a closed decision with a basis and a
-      human decided_by, and a pass verdict at each boundary it crossed?
+      For every execution: does it fall within the declared scope of a decision
+      closed by a human, and did it receive a pass verdict at each boundary it
+      crossed?
 
   A3:
     id: A3
